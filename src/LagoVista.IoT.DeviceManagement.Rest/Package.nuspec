@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LagoVista.IoT.DeviceManagement.Rest</id>
+    <version>0.8.116-alpha00969</version>
+    <authors>Software Logistics, LLC</authors>
+    <owners>Software Logistics, LLC</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/LagoVista/IoTEngine</projectUrl>
+    <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
+    <description>Provides ASP.NET Core MVC Services for Managing Devices for the LagoVista IoT, Devices and Home Automation Frameworks</description>
+    <releaseNotes>Initial and Unstable Release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>HomeAutomation IoT Cloud LagoVista</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\release\netstandard1.6\LagoVista.IoT.DeviceManagement.Rest.xml" target="contentFiles\wwwroot\xmldocs" />
+    <file src="bin\release\netstandard1.6\*.dll" target="lib\netstandard1.6" />
+  </files>
+</package>
