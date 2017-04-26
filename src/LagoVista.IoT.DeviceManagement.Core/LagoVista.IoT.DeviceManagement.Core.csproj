@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="0.8.144-alpha00856" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.144-alpha00970" />
+    <PackageReference Include="LagoVista.Core" Version="0.8.146-alpha01178" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.146-alpha01256" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
   </ItemGroup>
 

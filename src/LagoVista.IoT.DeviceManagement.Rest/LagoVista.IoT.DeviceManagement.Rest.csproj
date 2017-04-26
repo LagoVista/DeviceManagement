@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.IoT.Web.Common" Version="0.8.144-alpha00967" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="0.8.144-alpha00892" />
+    <PackageReference Include="LagoVista.IoT.Web.Common" Version="0.8.146-alpha01269" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="0.8.146-alpha01244" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
   </ItemGroup>

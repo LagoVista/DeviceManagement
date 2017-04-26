@@ -8,7 +8,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/LagoVista</projectUrl>
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
-    <description>Provides Models, Mangers and Business Rules for Managing Device Registration and Manipulation for the LagoVista IoT, Devices and Home Automation Frameworks.</description>
+    <description>Provides Models, Mangers and Business Rules for Managing Device Registration and Manipulation for the LagoVista Devices, IoT  and Home Automation Frameworks.</description>
     <releaseNotes>Initial and Unstable Release</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>HomeAutomation IoT Cloud</tags>

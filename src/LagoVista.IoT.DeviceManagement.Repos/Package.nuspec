@@ -8,7 +8,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/LagoVista</projectUrl>
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
-    <description>Provides Cloud Based Repositories for creating, reading, updating and managing Devices in the the LagoVista IoT, Devices and Home Automation Frameworks</description>
+    <description>Provides Cloud Based Repositories for creating, reading, updating and managing Devices in the the LagoVista Devices, IoT and Home Automation Frameworks</description>
     <releaseNotes>Initial and Unstable Release</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>HomeAutomation IoT Cloud</tags>

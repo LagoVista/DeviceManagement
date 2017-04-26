@@ -5,9 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="0.8.123-alpha01179" />
-    <PackageReference Include="LagoVista.Core" Version="0.8.144-alpha00856" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="0.8.146-alpha01216" />
+    <PackageReference Include="LagoVista.Core" Version="0.8.146-alpha01178" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
   </ItemGroup>
 
   <ItemGroup>
