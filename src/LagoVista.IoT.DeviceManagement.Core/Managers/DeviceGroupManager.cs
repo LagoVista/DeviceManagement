@@ -7,7 +7,6 @@ using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.Core.Authentication.Exceptions;
 using LagoVista.Core.Validation;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers

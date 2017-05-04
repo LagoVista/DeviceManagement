@@ -7,7 +7,6 @@ using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using static LagoVista.Core.Models.AuthorizeResult;
 using LagoVista.Core.Models;
-using LagoVista.Core.Authentication.Exceptions;
 using System.Collections.Generic;
 using System;
 
