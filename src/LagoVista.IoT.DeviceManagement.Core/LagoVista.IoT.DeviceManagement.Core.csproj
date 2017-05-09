@@ -3,8 +3,8 @@
     <TargetFramework>netstandard1.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="0.8.158-alpha1657" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.158-alpha1657" />
+    <PackageReference Include="LagoVista.Core" Version="0.8.159-alpha1720" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.159-alpha1720" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
