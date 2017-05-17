@@ -12,8 +12,8 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.IoT.Web.Common" Version="0.8.167-alpha1248" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="0.8.167-alpha1248" />
+    <PackageReference Include="LagoVista.IoT.Web.Common" Version="0.8.167-alpha1734" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="0.8.167-alpha1734" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
   </ItemGroup>
