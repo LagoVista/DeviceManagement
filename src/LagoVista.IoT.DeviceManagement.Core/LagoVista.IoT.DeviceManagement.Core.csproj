@@ -3,9 +3,9 @@
     <TargetFramework>netstandard1.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="0.8.176-alpha1628" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.176-alpha1628" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
+    <PackageReference Include="LagoVista.Core" Version="0.8.180-alpha1517" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="0.8.180-alpha1517" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="T4ResourceGenerator.cs">
