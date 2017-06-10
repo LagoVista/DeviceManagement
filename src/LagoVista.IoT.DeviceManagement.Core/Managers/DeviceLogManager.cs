@@ -5,6 +5,7 @@ using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using System.Threading.Tasks;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -12,7 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         IDeviceLogRepo _logRepo;
 
-        public DeviceLogManager(IDeviceLogRepo logRepo, ILogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
+        public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
             base(logger, appConfig, depmanager, security)
         {
             _logRepo = logRepo;

@@ -6,13 +6,14 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
 using LagoVista.Core.PlatformSupport;
 using LagoVista.CloudStorage.DocumentDB;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceGroupRepo : DocumentDBRepoBase<DeviceGroup>, IDeviceGroupRepo
     {
         private bool _shouldConsolidateCollections;
-        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, ILogger logger) : base(repoSettings.DeviceManagementDocDbStorage.Uri, repoSettings.DeviceManagementDocDbStorage.AccessKey, repoSettings.DeviceManagementDocDbStorage.ResourceName, logger)
+        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(repoSettings.DeviceManagementDocDbStorage.Uri, repoSettings.DeviceManagementDocDbStorage.AccessKey, repoSettings.DeviceManagementDocDbStorage.ResourceName, logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
         }

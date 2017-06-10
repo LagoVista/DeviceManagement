@@ -6,6 +6,7 @@ using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using System.Threading.Tasks;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -13,7 +14,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         IDeviceArchiveRepo _archiveRepo;
 
-        public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo, ILogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
+        public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
         {
             _archiveRepo = archiveRepo;
         }

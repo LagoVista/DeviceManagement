@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.Models;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -25,7 +26,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         IDeviceManager _deviceManager;
 
-        public DeviceManagementController(IDeviceManager deviceManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, LagoVista.Core.PlatformSupport.ILogger logger) : base(userManager, logger)
+        public DeviceManagementController(IDeviceManager deviceManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceManager = deviceManager;
         }

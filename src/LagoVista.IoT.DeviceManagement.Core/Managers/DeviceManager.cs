@@ -9,6 +9,7 @@ using static LagoVista.Core.Models.AuthorizeResult;
 using LagoVista.Core.Models;
 using System.Collections.Generic;
 using System;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -16,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         IDeviceManagementRepo _deviceRepo;
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo, ILogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
+        public DeviceManager(IDeviceManagementRepo deviceRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
             base(logger, appConfig, depmanager, security)
         {
             _deviceRepo = deviceRepo;
@@ -72,13 +73,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public Task<Device> GetDeviceByIdAsync(string id)
         {
-            /* This should only be called from internal services, since we are not authorizing access....feel a bit uncomfortable here, will likely revistit.  Maybe have a "virtual user" that the server side processes run under. */
+            /*  TODO: This should only be called from internal services, since we are not authorizing access....feel a bit uncomfortable here, will likely revist.  Maybe have a "virtual user" that the server side processes run under. */
             return _deviceRepo.GetDeviceByIdAsync(id);
         }
 
         public Task<Device> GetDeviceByDeviceIdAsync(string deviceId)
         {
-            /* This should only be called from internal services, since we are not authorizing access....feel a bit uncomfortable here, will likely revistit.  Maybe have a "virtual user" that the server side processes run under. */
+            /* TODO: This should only be called from internal services, since we are not authorizing access....feel a bit uncomfortable here, will likely revist.  Maybe have a "virtual user" that the server side processes run under. */
             return _deviceRepo.GetDeviceByDeviceIdAsync(deviceId);
         }
 

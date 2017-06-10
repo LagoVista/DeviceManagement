@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using LagoVista.Core.Validation;
 using LagoVista.Core;
 using LagoVista.Core.Models;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -23,7 +24,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         IDeviceGroupManager _deviceGroupManager;
 
-        public DeviceGroupsController(IDeviceGroupManager deviceGroupManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, LagoVista.Core.PlatformSupport.ILogger logger) : base(userManager, logger)
+        public DeviceGroupsController(IDeviceGroupManager deviceGroupManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceGroupManager = deviceGroupManager;
         }

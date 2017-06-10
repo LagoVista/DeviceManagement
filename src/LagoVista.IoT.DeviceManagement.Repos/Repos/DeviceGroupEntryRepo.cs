@@ -9,12 +9,13 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.PlatformSupport;
 using LagoVista.Core;
 using LagoVista.CloudStorage.Storage;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceGroupEntryRepo : LagoVista.CloudStorage.Storage.TableStorageBase<DeviceGroupEntry>, IDeviceGroupEntryRepo
     {
-        public DeviceGroupEntryRepo(IDeviceManagementSettings settings, ILogger logger) : base(settings.DeviceManagementTableStorage.AccountId, settings.DeviceManagementTableStorage.AccessKey, logger)
+        public DeviceGroupEntryRepo(IDeviceManagementSettings settings, IAdminLogger logger) : base(settings.DeviceManagementTableStorage.AccountId, settings.DeviceManagementTableStorage.AccessKey, logger)
         {
 
         }

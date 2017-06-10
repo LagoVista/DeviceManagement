@@ -8,6 +8,7 @@ using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.Validation;
+using LagoVista.IoT.Logging.Loggers;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -17,7 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceManagementRepo _deviceManagementRepo;
         IDeviceGroupEntryRepo _deviceGroupEntryRepo;
 
-        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IDeviceGroupEntryRepo deviceGroupEntryRepo, ILogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
+        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IDeviceGroupEntryRepo deviceGroupEntryRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
             base(logger, appConfig, depmanager, security)
         {
             _deviceGroupRepo = deviceGroupRepo;

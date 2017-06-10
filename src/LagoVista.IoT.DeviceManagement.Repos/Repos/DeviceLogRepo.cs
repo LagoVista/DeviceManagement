@@ -2,6 +2,7 @@
 using LagoVista.Core.PlatformSupport;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceLogRepo : LagoVista.CloudStorage.Storage.TableStorageBase<DeviceLog>, IDeviceLogRepo
     {
-        public DeviceLogRepo(IDeviceManagementSettings settings, ILogger logger) : base(settings.DeviceManagementLogTableStorage.AccountId,  settings.DeviceManagementLogTableStorage.AccessKey, logger)
+        public DeviceLogRepo(IDeviceManagementSettings settings, IAdminLogger logger) : base(settings.DeviceManagementLogTableStorage.AccountId,  settings.DeviceManagementLogTableStorage.AccessKey, logger)
         {
 
         }
