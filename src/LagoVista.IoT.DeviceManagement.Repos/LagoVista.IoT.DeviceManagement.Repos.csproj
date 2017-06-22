@@ -3,9 +3,9 @@
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="1.2.36-alpha1150" />
-    <PackageReference Include="LagoVista.Core" Version="1.2.36-alpha1150" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.36-alpha1150" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="1.2.36-alpha1852" />
+    <PackageReference Include="LagoVista.Core" Version="1.2.36-alpha1852" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.36-alpha1852" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.3.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
