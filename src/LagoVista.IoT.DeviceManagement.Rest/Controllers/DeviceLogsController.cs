@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
-        [HttpGet("devicelogs/{deviceid}")]
+        [HttpGet("devices/logs/{deviceid}")]
         public async Task<ListResponse<DeviceLog>> GetDevicesForOrg(String deviceid)
         {
             //TODO: Need to add paging.

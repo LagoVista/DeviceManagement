@@ -168,6 +168,9 @@
   <data name="Device_DeviceId" xml:space="preserve">
     <value>Device Id</value>
   </data>
+  <data name="Device_DeviceType" xml:space="preserve">
+    <value>Device Type</value>
+  </data>
   <data name="Device_FirmwareVersion" xml:space="preserve">
     <value>Firmware Version</value>
   </data>

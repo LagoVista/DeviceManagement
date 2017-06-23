@@ -80,6 +80,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_DeviceId
 
 		public static string Device_DeviceId { get { return GetResourceString("Device_DeviceId"); } }
+//Resources:DeviceManagementResources:Device_DeviceType
+
+		public static string Device_DeviceType { get { return GetResourceString("Device_DeviceType"); } }
 //Resources:DeviceManagementResources:Device_FirmwareVersion
 
 		public static string Device_FirmwareVersion { get { return GetResourceString("Device_FirmwareVersion"); } }
@@ -188,6 +191,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_DeviceConfiguration = "Device_DeviceConfiguration";
 			public const string Device_DeviceConfiguration_Select = "Device_DeviceConfiguration_Select";
 			public const string Device_DeviceId = "Device_DeviceId";
+			public const string Device_DeviceType = "Device_DeviceType";
 			public const string Device_FirmwareVersion = "Device_FirmwareVersion";
 			public const string Device_Help = "Device_Help";
 			public const string Device_IsConnected = "Device_IsConnected";
