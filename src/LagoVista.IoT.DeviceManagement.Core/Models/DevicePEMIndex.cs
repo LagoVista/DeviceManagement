@@ -8,7 +8,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     public interface IDevicePEMIndex
     {
-        String PEMURI { get; set; }
+        String PEM_URI { get; set; }
         String Status { get; set; }
         String MessageId { get; set; }
         String CreatedTimeStamp { get; set; }
@@ -17,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     public class DevicePEMIndex : TableStorageEntity, IDevicePEMIndex
     {
-        public String PEMURI { get; set; }
+        public String PEM_URI { get; set; }
 
         public String Status { get; set; }
 
