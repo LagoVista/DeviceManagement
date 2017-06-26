@@ -153,6 +153,39 @@
   <data name="DeviceNotes_TitleField" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="Device_Capacity_1000000_Units" xml:space="preserve">
+    <value>1,000,000 </value>
+  </data>
+  <data name="Device_Capacity_100000_Units" xml:space="preserve">
+    <value>100,000</value>
+  </data>
+  <data name="Device_Capacity_10000_Units" xml:space="preserve">
+    <value>10,000</value>
+  </data>
+  <data name="Device_Capacity_1000_Units" xml:space="preserve">
+    <value>1,000</value>
+  </data>
+  <data name="Device_Capacity_100_Units" xml:space="preserve">
+    <value>100</value>
+  </data>
+  <data name="Device_Capacity_500000_Units" xml:space="preserve">
+    <value>500,000</value>
+  </data>
+  <data name="Device_Capacity_50000_Units" xml:space="preserve">
+    <value>50,000</value>
+  </data>
+  <data name="Device_Capacity_5000_Units" xml:space="preserve">
+    <value>5,000</value>
+  </data>
+  <data name="Device_Capacity_500_Units" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="Device_Capacity_5_Units" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="Device_Capacity_Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
   <data name="Device_DateProvisioned" xml:space="preserve">
     <value>Date Provisioned</value>
   </data>
@@ -201,6 +234,39 @@
   <data name="Device_Properties" xml:space="preserve">
     <value>Properties</value>
   </data>
+  <data name="Device_RepoTitle" xml:space="preserve">
+    <value>Device Repository</value>
+  </data>
+  <data name="Device_Repo_AuthKey1" xml:space="preserve">
+    <value>Authorization Key 1</value>
+  </data>
+  <data name="Device_Repo_AuthKey2" xml:space="preserve">
+    <value>Authorization Key 2</value>
+  </data>
+  <data name="Device_Repo_Description" xml:space="preserve">
+    <value>You use the Device Repository to allocate storage for your devices and device data.</value>
+  </data>
+  <data name="Device_Repo_Help" xml:space="preserve">
+    <value>You use the Device Repository to allocate storage for your devices and device data.</value>
+  </data>
+  <data name="Device_Repo_StorageCapacity" xml:space="preserve">
+    <value>Storage Capacity</value>
+  </data>
+  <data name="Device_Repo_StorageCapacity_Select" xml:space="preserve">
+    <value>-select storage capacity-</value>
+  </data>
+  <data name="Device_Repo_Subscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="Device_Repo_SubscriptionSelect" xml:space="preserve">
+    <value>-select subscription-</value>
+  </data>
+  <data name="Device_Repo_UnitCapacity" xml:space="preserve">
+    <value>Device Capacity</value>
+  </data>
+  <data name="Device_Repo_UnitCapacity_Select" xml:space="preserve">
+    <value>-select unit capacity-</value>
+  </data>
   <data name="Device_SerialNumber" xml:space="preserve">
     <value>Serial Number</value>
   </data>
@@ -239,6 +305,30 @@
   </data>
   <data name="Device_Stauts_Degraded" xml:space="preserve">
     <value>Degraded</value>
+  </data>
+  <data name="Device_Storage_100GB" xml:space="preserve">
+    <value>100GB</value>
+  </data>
+  <data name="Device_Storage_1GB" xml:space="preserve">
+    <value>1GB</value>
+  </data>
+  <data name="Device_Storage_1TB" xml:space="preserve">
+    <value>1TB</value>
+  </data>
+  <data name="Device_Storage_20GB" xml:space="preserve">
+    <value>20GB</value>
+  </data>
+  <data name="Device_Storage_20MB" xml:space="preserve">
+    <value>20MB</value>
+  </data>
+  <data name="Device_Storage_500GB" xml:space="preserve">
+    <value>500GB</value>
+  </data>
+  <data name="Device_Storage_5TB" xml:space="preserve">
+    <value>5TB</value>
+  </data>
+  <data name="Device_Storage_Custom" xml:space="preserve">
+    <value>Custom</value>
   </data>
   <data name="Device_Title" xml:space="preserve">
     <value>Title</value>

@@ -12,6 +12,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 
         Task UpdateDeviceRepositoryAsync(DeviceRepository deviceRepo);
 
-        Task<DeviceRepository> GetDeviceRepositoryAsync(DeviceRepository deviceRepo);
+        Task<DeviceRepository> GetDeviceRepositoryAsync(string repoId);
+
+        Task<IEnumerable<DeviceRepositorySummary>> GetDeviceRepositoriesForOrgAsync(string orgid);
+
+        Task DeleteAsync(String repoId);
+
+        Task<bool> QueryRepoKeyInUseAsync(string key, string orgId);
     }
 }

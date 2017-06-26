@@ -65,6 +65,39 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
+//Resources:DeviceManagementResources:Device_Capacity_100_Units
+
+		public static string Device_Capacity_100_Units { get { return GetResourceString("Device_Capacity_100_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_1000_Units
+
+		public static string Device_Capacity_1000_Units { get { return GetResourceString("Device_Capacity_1000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_10000_Units
+
+		public static string Device_Capacity_10000_Units { get { return GetResourceString("Device_Capacity_10000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_100000_Units
+
+		public static string Device_Capacity_100000_Units { get { return GetResourceString("Device_Capacity_100000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_1000000_Units
+
+		public static string Device_Capacity_1000000_Units { get { return GetResourceString("Device_Capacity_1000000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_5_Units
+
+		public static string Device_Capacity_5_Units { get { return GetResourceString("Device_Capacity_5_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_500_Units
+
+		public static string Device_Capacity_500_Units { get { return GetResourceString("Device_Capacity_500_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_5000_Units
+
+		public static string Device_Capacity_5000_Units { get { return GetResourceString("Device_Capacity_5000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_50000_Units
+
+		public static string Device_Capacity_50000_Units { get { return GetResourceString("Device_Capacity_50000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_500000_Units
+
+		public static string Device_Capacity_500000_Units { get { return GetResourceString("Device_Capacity_500000_Units"); } }
+//Resources:DeviceManagementResources:Device_Capacity_Custom
+
+		public static string Device_Capacity_Custom { get { return GetResourceString("Device_Capacity_Custom"); } }
 //Resources:DeviceManagementResources:Device_DateProvisioned
 
 		public static string Device_DateProvisioned { get { return GetResourceString("Device_DateProvisioned"); } }
@@ -113,6 +146,39 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Properties
 
 		public static string Device_Properties { get { return GetResourceString("Device_Properties"); } }
+//Resources:DeviceManagementResources:Device_Repo_AuthKey1
+
+		public static string Device_Repo_AuthKey1 { get { return GetResourceString("Device_Repo_AuthKey1"); } }
+//Resources:DeviceManagementResources:Device_Repo_AuthKey2
+
+		public static string Device_Repo_AuthKey2 { get { return GetResourceString("Device_Repo_AuthKey2"); } }
+//Resources:DeviceManagementResources:Device_Repo_Description
+
+		public static string Device_Repo_Description { get { return GetResourceString("Device_Repo_Description"); } }
+//Resources:DeviceManagementResources:Device_Repo_Help
+
+		public static string Device_Repo_Help { get { return GetResourceString("Device_Repo_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_StorageCapacity
+
+		public static string Device_Repo_StorageCapacity { get { return GetResourceString("Device_Repo_StorageCapacity"); } }
+//Resources:DeviceManagementResources:Device_Repo_StorageCapacity_Select
+
+		public static string Device_Repo_StorageCapacity_Select { get { return GetResourceString("Device_Repo_StorageCapacity_Select"); } }
+//Resources:DeviceManagementResources:Device_Repo_Subscription
+
+		public static string Device_Repo_Subscription { get { return GetResourceString("Device_Repo_Subscription"); } }
+//Resources:DeviceManagementResources:Device_Repo_SubscriptionSelect
+
+		public static string Device_Repo_SubscriptionSelect { get { return GetResourceString("Device_Repo_SubscriptionSelect"); } }
+//Resources:DeviceManagementResources:Device_Repo_UnitCapacity
+
+		public static string Device_Repo_UnitCapacity { get { return GetResourceString("Device_Repo_UnitCapacity"); } }
+//Resources:DeviceManagementResources:Device_Repo_UnitCapacity_Select
+
+		public static string Device_Repo_UnitCapacity_Select { get { return GetResourceString("Device_Repo_UnitCapacity_Select"); } }
+//Resources:DeviceManagementResources:Device_RepoTitle
+
+		public static string Device_RepoTitle { get { return GetResourceString("Device_RepoTitle"); } }
 //Resources:DeviceManagementResources:Device_SerialNumber
 
 		public static string Device_SerialNumber { get { return GetResourceString("Device_SerialNumber"); } }
@@ -152,6 +218,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Stauts_Degraded
 
 		public static string Device_Stauts_Degraded { get { return GetResourceString("Device_Stauts_Degraded"); } }
+//Resources:DeviceManagementResources:Device_Storage_100GB
+
+		public static string Device_Storage_100GB { get { return GetResourceString("Device_Storage_100GB"); } }
+//Resources:DeviceManagementResources:Device_Storage_1GB
+
+		public static string Device_Storage_1GB { get { return GetResourceString("Device_Storage_1GB"); } }
+//Resources:DeviceManagementResources:Device_Storage_1TB
+
+		public static string Device_Storage_1TB { get { return GetResourceString("Device_Storage_1TB"); } }
+//Resources:DeviceManagementResources:Device_Storage_20GB
+
+		public static string Device_Storage_20GB { get { return GetResourceString("Device_Storage_20GB"); } }
+//Resources:DeviceManagementResources:Device_Storage_20MB
+
+		public static string Device_Storage_20MB { get { return GetResourceString("Device_Storage_20MB"); } }
+//Resources:DeviceManagementResources:Device_Storage_500GB
+
+		public static string Device_Storage_500GB { get { return GetResourceString("Device_Storage_500GB"); } }
+//Resources:DeviceManagementResources:Device_Storage_5TB
+
+		public static string Device_Storage_5TB { get { return GetResourceString("Device_Storage_5TB"); } }
+//Resources:DeviceManagementResources:Device_Storage_Custom
+
+		public static string Device_Storage_Custom { get { return GetResourceString("Device_Storage_Custom"); } }
 //Resources:DeviceManagementResources:Device_Title
 
 		public static string Device_Title { get { return GetResourceString("Device_Title"); } }
@@ -186,6 +276,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Common_Key_Help = "Common_Key_Help";
 			public const string Common_Key_Validation = "Common_Key_Validation";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
+			public const string Device_Capacity_100_Units = "Device_Capacity_100_Units";
+			public const string Device_Capacity_1000_Units = "Device_Capacity_1000_Units";
+			public const string Device_Capacity_10000_Units = "Device_Capacity_10000_Units";
+			public const string Device_Capacity_100000_Units = "Device_Capacity_100000_Units";
+			public const string Device_Capacity_1000000_Units = "Device_Capacity_1000000_Units";
+			public const string Device_Capacity_5_Units = "Device_Capacity_5_Units";
+			public const string Device_Capacity_500_Units = "Device_Capacity_500_Units";
+			public const string Device_Capacity_5000_Units = "Device_Capacity_5000_Units";
+			public const string Device_Capacity_50000_Units = "Device_Capacity_50000_Units";
+			public const string Device_Capacity_500000_Units = "Device_Capacity_500000_Units";
+			public const string Device_Capacity_Custom = "Device_Capacity_Custom";
 			public const string Device_DateProvisioned = "Device_DateProvisioned";
 			public const string Device_Description = "Device_Description";
 			public const string Device_DeviceConfiguration = "Device_DeviceConfiguration";
@@ -202,6 +303,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";
 			public const string Device_Properties = "Device_Properties";
+			public const string Device_Repo_AuthKey1 = "Device_Repo_AuthKey1";
+			public const string Device_Repo_AuthKey2 = "Device_Repo_AuthKey2";
+			public const string Device_Repo_Description = "Device_Repo_Description";
+			public const string Device_Repo_Help = "Device_Repo_Help";
+			public const string Device_Repo_StorageCapacity = "Device_Repo_StorageCapacity";
+			public const string Device_Repo_StorageCapacity_Select = "Device_Repo_StorageCapacity_Select";
+			public const string Device_Repo_Subscription = "Device_Repo_Subscription";
+			public const string Device_Repo_SubscriptionSelect = "Device_Repo_SubscriptionSelect";
+			public const string Device_Repo_UnitCapacity = "Device_Repo_UnitCapacity";
+			public const string Device_Repo_UnitCapacity_Select = "Device_Repo_UnitCapacity_Select";
+			public const string Device_RepoTitle = "Device_RepoTitle";
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_Status = "Device_Status";
 			public const string Device_Status_Commissioned = "Device_Status_Commissioned";
@@ -215,6 +327,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Status_Ready = "Device_Status_Ready";
 			public const string Device_Status_Select = "Device_Status_Select";
 			public const string Device_Stauts_Degraded = "Device_Stauts_Degraded";
+			public const string Device_Storage_100GB = "Device_Storage_100GB";
+			public const string Device_Storage_1GB = "Device_Storage_1GB";
+			public const string Device_Storage_1TB = "Device_Storage_1TB";
+			public const string Device_Storage_20GB = "Device_Storage_20GB";
+			public const string Device_Storage_20MB = "Device_Storage_20MB";
+			public const string Device_Storage_500GB = "Device_Storage_500GB";
+			public const string Device_Storage_5TB = "Device_Storage_5TB";
+			public const string Device_Storage_Custom = "Device_Storage_Custom";
 			public const string Device_Title = "Device_Title";
 			public const string DeviceGroup_Description = "DeviceGroup_Description";
 			public const string DeviceGroup_Help = "DeviceGroup_Help";
