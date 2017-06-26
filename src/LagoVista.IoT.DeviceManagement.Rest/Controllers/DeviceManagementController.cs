@@ -57,84 +57,93 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Management - Get For Org
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="orgId">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("org/{orgid}/devices")]
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(String orgId)
+        [HttpGet("org/{orgid}/{devicerepoid}/devices")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(String orgId, string devicerepoid)
         {
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForOrgIdAsync(orgId, 0, 100, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForOrgIdAsync(devicerepoid, orgId, 0, 100, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
         /// <summary>
         /// Device Management - Get For a Location
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="locationid">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("location/{locationid}/devices")]
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(String locationid)
+        [HttpGet("location/{locationid}/{devicerepoid}/devices")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(String locationid, string devicerepoid)
         {
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForLocationIdAsync(locationid, 0, 100, OrgEntityHeader, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForLocationIdAsync(devicerepoid, locationid, 0, 100, OrgEntityHeader, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
         /// <summary>
         /// Device Management - Get By Id
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("device/{id}")]
-        public async Task<DetailResponse<Device>> GetDeviceByIdAsync(String id)
+        [HttpGet("device/{devicerepoid}/{id}")]
+        public async Task<DetailResponse<Device>> GetDeviceByIdAsync(String id, string devicerepoid)
         {
-            var device = await _deviceManager.GetDeviceByIdAsync(id, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(devicerepoid, id, OrgEntityHeader, UserEntityHeader);
             return DetailResponse<Device>.Create(device);
         }
 
         /// <summary>
         /// Device Management - Get By DeviceId
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("devicebyid/{deviceid}")]
-        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(String deviceid)
+        [HttpGet("devicebyid/{devicerepoid}/{deviceid}")]
+        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(String deviceid, string devicerepoid)
         {
-            var device = await _deviceManager.GetDeviceByDeviceIdAsync(deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByDeviceIdAsync(devicerepoid,deviceid, OrgEntityHeader, UserEntityHeader);
             return DetailResponse<Device>.Create(device);
         }
 
         /// <summary>
         /// Device Management - Check Device Id in Use
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("deviceidinuse/{deviceid}")]
-        public Task<DependentObjectCheckResult> GetDeviceIdInUse(string deviceid)
+        [HttpGet("deviceidinuse/{devicerepoid}/{deviceid}")]
+        public Task<DependentObjectCheckResult> GetDeviceIdInUse(string deviceid, string devicerepoid)
         {
-            return _deviceManager.CheckIfDeviceIdInUse(deviceid, OrgEntityHeader, UserEntityHeader);
+            return _deviceManager.CheckIfDeviceIdInUse(devicerepoid, deviceid, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
         /// Device Management - Delete
         /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("device/{id}")]
-        public Task<InvokeResult> DeleteDeviceAsync(string id)
+        public Task<InvokeResult> DeleteDeviceAsync(string id, string devicerepoid)
         {
-            return _deviceManager.DeleteDeviceAsync(id, OrgEntityHeader, UserEntityHeader);
+            return _deviceManager.DeleteDeviceAsync(devicerepoid, id, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
         /// Device Management - Create
         /// </summary>
         /// <returns></returns>
-        [HttpGet("device/factory")]
-        public DetailResponse<Device> CreateDevice()
+        [HttpGet("device/factory/{devicerepoid}")]
+        public DetailResponse<Device> CreateDevice(string devicerepoid)
         {
             var response = DetailResponse<Device>.Create();
             response.Model.Id = Guid.NewGuid().ToId();
-
+            /* Note we just create it here for now then the record gets inserted we go ahead assign the name */
+            response.Model.DeviceRepository = new EntityHeader() { Id = devicerepoid, Text = "TBD" };
+            
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 

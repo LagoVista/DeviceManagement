@@ -57,6 +57,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader LastUpdatedBy { get; set; }
 
 
+        public EntityHeader DeviceRepository { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Status, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<DeviceStates> Status { get; set; }
 
@@ -69,13 +72,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired:true)]
         public string DeviceId { get; set; }
 
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
-
-
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceType { get; set; }
     
+
+
         public bool IsPublic { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Organization, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: true, WaterMark: DeviceManagementResources.Names.Device_Organization_Select)]
@@ -86,8 +90,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader OwnerUser { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
-        public List<CustomField> Properties { get; set; }
+
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string SerialNumber { get; set; }
@@ -100,6 +104,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string LastContact { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        public List<CustomField> Properties { get; set; }
+
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
