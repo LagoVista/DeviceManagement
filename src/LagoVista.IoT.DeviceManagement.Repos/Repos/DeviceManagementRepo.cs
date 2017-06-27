@@ -18,7 +18,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
         }
 
-        protected override bool ShouldConsolidateCollections => _shouldConsolidateCollections;
+        protected override String GetCollectionName()
+        {
+            return "Devices";
+        }
 
         public Task AddDeviceAsync(DeviceRepository deviceRepo, Device device)
         {

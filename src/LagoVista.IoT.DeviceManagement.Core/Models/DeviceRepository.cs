@@ -73,9 +73,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerOrganization { get; set; }
         public EntityHeader OwnerUser { get; set; }
 
-        public IConnectionSettings DeviceStorageSettings { get; set; }
-        public IConnectionSettings DeviceArchiveStorageSettings { get; set; }    
-        public IConnectionSettings PEMStorageSettings { get; set; }
+        public ConnectionSettings DeviceStorageSettings { get; set; }
+        public ConnectionSettings DeviceArchiveStorageSettings { get; set; }    
+        public ConnectionSettings PEMStorageSettings { get; set; }
 
         [FormField(LabelResource: Resources.DeviceManagementResources.Names.Common_Key, HelpResource: Resources.DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: Resources.DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Key { get; set; }

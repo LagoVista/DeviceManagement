@@ -15,10 +15,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private bool _shouldConsolidateCollections;
         public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
         {
-            _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
+            
         }
 
-        protected override bool ShouldConsolidateCollections => _shouldConsolidateCollections;
+        protected override String GetCollectionName()
+        {
+            return "Devices";
+        }
 
         public Task AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
         {
