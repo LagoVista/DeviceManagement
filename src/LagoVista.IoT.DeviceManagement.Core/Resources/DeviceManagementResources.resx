@@ -204,6 +204,9 @@
   <data name="Device_DeviceType" xml:space="preserve">
     <value>Device Type</value>
   </data>
+  <data name="Device_DeviceType_Select" xml:space="preserve">
+    <value>-select device type-</value>
+  </data>
   <data name="Device_FirmwareVersion" xml:space="preserve">
     <value>Firmware Version</value>
   </data>

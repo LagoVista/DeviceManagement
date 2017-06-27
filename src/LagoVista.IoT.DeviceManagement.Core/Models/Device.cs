@@ -76,7 +76,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceType { get; set; }
     
 
@@ -123,7 +123,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceId = this.DeviceId,
                 SerialNumber = SerialNumber,
                 DeviceConfiguration = DeviceConfiguration.Text,
-                Status = Status.Text
+                Status = Status.Text,
+                DeviceType = DeviceType.Text
             };
         }
 
@@ -142,10 +143,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         public string Id { get; set; }
         public string DeviceConfiguration { get; set; }
+
+        public String DeviceType { get; set; }
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
-
-
     }
 }
