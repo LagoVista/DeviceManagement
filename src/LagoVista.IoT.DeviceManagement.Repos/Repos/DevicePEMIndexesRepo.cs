@@ -16,13 +16,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return "PEMIndex";
         }
 
-        public DevicePEMIndexesRepo(IDeviceManagementSettings settings, IAdminLogger logger) : base(settings.PEMStorage.AccountId, settings.PEMStorage.AccessKey, logger)
+        public DevicePEMIndexesRepo(IAdminLogger logger) : base(logger)
         {
 
         }
 
-        public Task<IEnumerable<Core.Models.DevicePEMIndex>> GetPEMIndexForDeviceAsync(string deviceId, int take, string dateStampAfter)
+        public Task<IEnumerable<Core.Models.DevicePEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, int take, string dateStampAfter)
         {
+            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey);
             return GetByParitionIdAsync(deviceId);
         }
     }

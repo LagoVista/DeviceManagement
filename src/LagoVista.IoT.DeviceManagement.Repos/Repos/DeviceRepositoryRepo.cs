@@ -13,7 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     public class DeviceRepositoryRepo : DocumentDBRepoBase<DeviceRepository>, IDeviceRepositoryRepo
     {
         private bool _shouldConsolidateCollections;
-        public DeviceRepositoryRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(repoSettings.DeviceManagementDocDbStorage.Uri, repoSettings.DeviceManagementDocDbStorage.AccessKey, repoSettings.DeviceManagementDocDbStorage.ResourceName, logger)
+        public DeviceRepositoryRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(repoSettings.DeviceRepoStorage.Uri, repoSettings.DeviceRepoStorage.AccessKey, repoSettings.DeviceRepoStorage.ResourceName, logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
         }

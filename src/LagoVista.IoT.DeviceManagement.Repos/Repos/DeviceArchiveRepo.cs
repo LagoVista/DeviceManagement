@@ -10,22 +10,23 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceArchiveRepo : LagoVista.CloudStorage.Storage.TableStorageBase<DeviceArchive>, IDeviceArchiveRepo
     {
-        public DeviceArchiveRepo(IDeviceManagementSettings settings, IAdminLogger logger) : base(settings.DeviceManagementArchiveTableStorage.AccountId,  settings.DeviceManagementArchiveTableStorage.AccessKey, logger)
+        public DeviceArchiveRepo(IAdminLogger logger) : base(logger)
         {
 
         }
 
-        public Task AddArchiveAsync(DeviceArchive archiveEntry)
+        public Task AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive archiveEntry)
         {
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(archiveEntry);
         }
 
-        public Task<IEnumerable<DeviceArchive>> GetForDateRangeAsync(string deviceId, int maxReturnCount, string start, string end)
+        public Task<IEnumerable<DeviceArchive>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount, string start, string end)
         {
             //TODO: Need to implement filtering
             //TODO: Need to add some bounds here so it won't run forever.
             //return base.GetByFilterAsync(FilterOptions.Create("DateStamp", FilterOptions.Operators.GreaterThan, start), FilterOptions.Create("DateStamp", FilterOptions.Operators.LessThan, end));
-
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return GetByParitionIdAsync(deviceId);
         }
     }

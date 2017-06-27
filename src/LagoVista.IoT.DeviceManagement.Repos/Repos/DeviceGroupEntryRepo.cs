@@ -15,14 +15,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceGroupEntryRepo : LagoVista.CloudStorage.Storage.TableStorageBase<DeviceGroupEntry>, IDeviceGroupEntryRepo
     {
-        public DeviceGroupEntryRepo(IDeviceManagementSettings settings, IAdminLogger logger) : base(settings.DeviceManagementTableStorage.AccountId, settings.DeviceManagementTableStorage.AccessKey, logger)
+        public DeviceGroupEntryRepo(IAdminLogger logger) : base(logger)
         {
 
         }
 
 
-        public Task AddDeviceToGroupAsync(EntityHeader device, EntityHeader deviceGroup)
+        public Task AddDeviceToGroupAsync(DeviceRepository deviceRepo, EntityHeader device, EntityHeader deviceGroup)
         {
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             var groupEntry = new DeviceGroupEntry()
             {
                 RowKey = Guid.NewGuid().ToId(),
@@ -36,8 +37,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return InsertAsync(groupEntry);
         }
 
-        public async Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(string deviceGroupId)
+        public async Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(DeviceRepository deviceRepo, string deviceGroupId)
         {
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             var devices = new List<EntityHeader>();
 
             var results = await base.GetByParitionIdAsync(deviceGroupId);
@@ -49,8 +51,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return devices;
         }
 
-        public async Task RemoveDeviceFromGroupAsync(string deviceGroupId, string deviceId)
+        public async Task RemoveDeviceFromGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId)
         {
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             var result = await base.GetByFilterAsync(FilterOptions.Create("PartitionKey", FilterOptions.Operators.Equals, deviceGroupId), FilterOptions.Create("DeviceId", FilterOptions.Operators.Equals, deviceId));
 
             if (result.Any())

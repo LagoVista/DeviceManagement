@@ -8,6 +8,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDevicePEMIndexesRepo
     {
-        Task<IEnumerable<DevicePEMIndex>> GetPEMIndexForDeviceAsync(string deviceId, int take, string dateStampAfter);
+        Task<IEnumerable<DevicePEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, int take, string dateStampAfter);
     }
 }

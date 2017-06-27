@@ -21,22 +21,26 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class DeviceLogsController : LagoVistaBaseController
     {
         IDeviceLogManager _deviceLogManager;
+        IDeviceRepositoryManager _repoManager;
 
-        public DeviceLogsController(IDeviceLogManager deviceLogManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceLogsController(IDeviceRepositoryManager repoManager, IDeviceLogManager deviceLogManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceLogManager = deviceLogManager;
+            _repoManager = repoManager;
         }
 
         /// <summary>
         /// Device Logs - Get For Device (Currently returns 100 most recent, will have filtering
         /// </summary>
+        /// <param name="devicerepoid"></param>
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
-        [HttpGet("devices/logs/{deviceid}")]
-        public async Task<ListResponse<DeviceLog>> GetDevicesForOrg(String deviceid)
+        [HttpGet("device/{devicerepoid}/logs/{deviceid}")]
+        public async Task<ListResponse<DeviceLog>> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceLogManager.GetForDateRangeAsync(deviceid);
+            var devices = await _deviceLogManager.GetForDateRangeAsync(repo, deviceid);
             var response = ListResponse<DeviceLog>.Create(devices);
 
             return response;

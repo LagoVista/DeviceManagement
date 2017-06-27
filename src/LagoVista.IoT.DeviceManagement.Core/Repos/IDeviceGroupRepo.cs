@@ -7,16 +7,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDeviceGroupRepo
     {
-        Task AddDeviceGroupAsync(DeviceGroup deviceGroup);
+        Task AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup);
 
-        Task UpdateDeviceGroupAsync(DeviceGroup deviceGroup);
+        Task UpdateDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup);
 
-        Task<DeviceGroup> GetDeviceGroupAsync(string id);
+        Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string id);
 
-        Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string orgId);
+        Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId);
         
-        Task DeleteDeviceGroupAsync(string deviceGroupId);
+        Task DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId);
 
-        Task<bool> QueryKeyInUseAsync(string key, string orgId);
+        Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, string orgId);
     }
 }

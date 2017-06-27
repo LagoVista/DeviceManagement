@@ -75,6 +75,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceType { get; set; }
     

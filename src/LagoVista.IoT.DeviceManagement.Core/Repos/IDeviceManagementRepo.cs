@@ -7,26 +7,28 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDeviceManagementRepo
     {
-        Task AddDeviceAsync(Device device);
+        Task AddDeviceAsync(DeviceRepository repo, Device device);
 
-        Task DeleteDeviceAsync(string id);
+        Task DeleteDeviceAsync(DeviceRepository repo, string id);
 
-        Task UpdateDeviceAsync(Device device);
+        Task UpdateDeviceAsync(DeviceRepository repo, Device device);
 
-        Task DeleteDeviceByIdAsync(string deviceId);
+        Task DeleteDeviceByIdAsync(DeviceRepository repo, string deviceId);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(string orgId, int top, int take);
+        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository repo, string orgId, int top, int take);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(string locationId, int top, int take);
+        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository repo, string locationId, int top, int take);
 
-        Task<Device> GetDeviceByDeviceIdAsync(string id);
+        Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository repo, string id);
 
-        Task<bool> CheckIfDeviceIdInUse(string id, string orgid);
+        Task<bool> CheckIfDeviceIdInUse(DeviceRepository repo, string id, string orgid);
 
-        Task<Device> GetDeviceByIdAsync(string id);
+        Task<Device> GetDeviceByIdAsync(DeviceRepository repo, string id);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(string status, int top, int take);
+        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository repo, string status, int top, int take);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(string configurationId, int top, int take);
+        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository repo, string configurationId, int top, int take);
+
+        Task<IEnumerable<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository repo, string deviceTypeId, int top, int take);
     }
 }

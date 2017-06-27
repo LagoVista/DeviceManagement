@@ -10,8 +10,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public interface IDevicePEMManager
     {
-        Task<InvokeResult<string>> GetPEMAsync(String pemURI, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<string>> GetPEMAsync(DeviceRepository deviceRepo, String pemURI, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DevicePEMIndex>> GetPEMIndexesforDeviceAsync(string deviceId, EntityHeader org, EntityHeader user, int maxReturnCount = 100, String returnAfter = "");
+        Task<IEnumerable<DevicePEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, int maxReturnCount = 100, String returnAfter = "");
     }
 }

@@ -10,23 +10,23 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public interface IDeviceGroupManager
     {
-        Task<InvokeResult> AddDeviceGroupAsync(DeviceGroup deviceGroup, EntityHeader org, EntityHeader user);
-        Task<InvokeResult> UpdateDeviceGroupAsync(DeviceGroup deviceGroup, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> UpdateDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string orgId, EntityHeader user);
+        Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId, EntityHeader user);
 
-        Task<DeviceGroup> GetDeviceGroupAsync(string groupId, EntityHeader org, EntityHeader user);
+        Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user);
 
-        Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(string groupId, EntityHeader org, EntityHeader user);
+        Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult> AddDeviceToGroupAsync(string deviceGroupId, string deviceId, EntityHeader org,  EntityHeader user);
+        Task<InvokeResult> AddDeviceToGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org,  EntityHeader user);
 
-        Task<InvokeResult> RemoveDeviceFromGroupAsync(string deviceGroupId, string deviceId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> RemoveDeviceFromGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(string deviceGroupId, EntityHeader org, EntityHeader user);
+        Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult> DeleteDeviceGroupAsync(string deviceGroupId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, EntityHeader org, EntityHeader user);
 
-        Task<bool> QueryKeyInUseAsync(string key, EntityHeader org);
+        Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, EntityHeader org);
     }
 }

@@ -4,6 +4,7 @@ using LagoVista.Core.Models;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.DeviceManagement.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,38 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DeviceRepositoryManager : ManagerBase, IDeviceRepositoryManager
     {
 
+        IDeviceManagementSettings _deviceMgmtSettings;
         IDeviceRepositoryRepo _deviceRepositoryRepo;
-        public DeviceRepositoryManager(IDeviceRepositoryRepo deviceRepositoryRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
+        public DeviceRepositoryManager(IDeviceManagementSettings deviceMgmtSettings, IDeviceRepositoryRepo deviceRepositoryRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
         {
             _deviceRepositoryRepo = deviceRepositoryRepo;
+            _deviceMgmtSettings = deviceMgmtSettings;
         }
         
-        public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
-            ValidationCheck(host, Actions.Create);
-            await AuthorizeAsync(host, AuthorizeResult.AuthorizeActions.Create, user, org);
-            await _deviceRepositoryRepo.AddDeviceRepositoryAsync(host);
+            repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+            {
+                AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+            };
+
+            repo.PEMStorageSettings = new ConnectionSettings()
+            {
+                AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+            };
+
+            repo.DeviceStorageSettings = new ConnectionSettings()
+            {
+                Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
+                AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
+                ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
+            };
+
+            ValidationCheck(repo, Actions.Create);
+            await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Create, user, org);
+            await _deviceRepositoryRepo.AddDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }
 
@@ -62,11 +84,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _deviceRepositoryRepo.QueryRepoKeyInUseAsync(key, org.Id);
         }
 
-        public async Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
-            ValidationCheck(host, Actions.Update);
-            await AuthorizeAsync(host, AuthorizeResult.AuthorizeActions.Update, user, org);
-            await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(host);
+            ValidationCheck(repo, Actions.Update);
+            await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Update, user, org);
+            await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }
     }

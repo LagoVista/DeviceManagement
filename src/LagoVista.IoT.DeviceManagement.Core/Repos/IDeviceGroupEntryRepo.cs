@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceAdmin.Models;
+using LagoVista.IoT.DeviceManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +11,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     public interface IDeviceGroupEntryRepo
     {
         
-        Task AddDeviceToGroupAsync(EntityHeader deviceGroup, EntityHeader device);
+        Task AddDeviceToGroupAsync(DeviceRepository deviceRepo, EntityHeader deviceGroup, EntityHeader device);
 
-        Task RemoveDeviceFromGroupAsync(string groupId, string deviceId);
+        Task RemoveDeviceFromGroupAsync(DeviceRepository deviceRepo, string groupId, string deviceId);
 
-        Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(string deviceGroupId);
+        Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(DeviceRepository deviceRepo, string deviceGroupId);
     }
 }

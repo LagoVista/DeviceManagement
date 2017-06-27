@@ -13,29 +13,29 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     public class DeviceGroupRepo : DocumentDBRepoBase<DeviceGroup>, IDeviceGroupRepo
     {
         private bool _shouldConsolidateCollections;
-        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(repoSettings.DeviceManagementDocDbStorage.Uri, repoSettings.DeviceManagementDocDbStorage.AccessKey, repoSettings.DeviceManagementDocDbStorage.ResourceName, logger)
+        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
         }
 
         protected override bool ShouldConsolidateCollections => _shouldConsolidateCollections;
 
-        public Task AddDeviceGroupAsync(DeviceGroup deviceGroup)
+        public Task AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
         {
             return CreateDocumentAsync(deviceGroup);
         }
 
-        public Task DeleteDeviceGroupAsync(string deviceGroupId)
+        public Task DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId)
         {
             return DeleteDocumentAsync(deviceGroupId);
         }
 
-        public Task<DeviceGroup> GetDeviceGroupAsync(string id)
+        public Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string id)
         {
             return GetDocumentAsync(id);
         }
 
-        public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string orgId)
+        public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId)
         {
             var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId);
 
@@ -43,13 +43,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                    select item.CreateSummary();
         }
 
-        public async Task<bool> QueryKeyInUseAsync(string key, string orgId)
+        public async Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, string orgId)
         {
             var items = await base.QueryAsync(attr => (attr.OwnerOrganization.Id == orgId || attr.IsPublic == true) && attr.Key == key);
             return items.Any();
         }
 
-        public Task UpdateDeviceGroupAsync(DeviceGroup deviceGroup)
+        public Task UpdateDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
         {
             return UpsertDocumentAsync(deviceGroup);
         }

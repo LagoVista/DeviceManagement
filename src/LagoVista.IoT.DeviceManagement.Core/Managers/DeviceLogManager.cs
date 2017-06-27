@@ -19,14 +19,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _logRepo = logRepo;
         }
 
-        public Task AddEntryAsync(DeviceLog logEntry)
+        public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry)
         {
-            return _logRepo.AddLogEntryAsync(logEntry);
+            return _logRepo.AddLogEntryAsync(deviceRepo, logEntry);
         }
 
-        public Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(string deviceId, int maxReturnCount = 100, string start = null, string end = null)
+        public Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, string start = null, string end = null)
         {
-            return _logRepo.GetForDateRangeAsync(deviceId, maxReturnCount, start, end);
+            return _logRepo.GetForDateRangeAsync(deviceRepo, deviceId, maxReturnCount, start, end);
         }
     }
 }

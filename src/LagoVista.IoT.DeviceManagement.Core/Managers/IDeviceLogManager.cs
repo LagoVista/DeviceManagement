@@ -8,8 +8,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public interface IDeviceLogManager
     {
-        Task AddEntryAsync(DeviceLog logEntry);
+        Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry);
 
-        Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(string deviceId, int maxReturnCount = 100, String start = null, String end = null);
+        Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, String start = null, String end = null);
     }
 }

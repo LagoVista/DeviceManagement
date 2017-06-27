@@ -26,45 +26,45 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceManagementRepo = deviceManagementRepo;
         }
 
-        public async Task<InvokeResult> AddDeviceGroupAsync(DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Create, user, org);
-            await _deviceGroupRepo.AddDeviceGroupAsync(deviceGroup);
+            await _deviceGroupRepo.AddDeviceGroupAsync(deviceRepo, deviceGroup);
             ValidationCheck(deviceGroup, Actions.Create);
             return InvokeResult.Success;
         }
 
-        public async Task<InvokeResult> UpdateDeviceGroupAsync(DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> UpdateDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Update, user, org);
             ValidationCheck(deviceGroup, Actions.Update);
-            await _deviceGroupRepo.UpdateDeviceGroupAsync(deviceGroup);
+            await _deviceGroupRepo.UpdateDeviceGroupAsync(deviceRepo, deviceGroup);
             return InvokeResult.Success;
         }
 
 
-        public async Task<DeviceGroup> GetDeviceGroupAsync(string groupId, EntityHeader org, EntityHeader user)
+        public async Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user)
         {
-            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(groupId);
+            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, groupId);
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Read, user, org);
             return deviceGroup;
         }
 
-        public async Task<InvokeResult> AddDeviceToGroupAsync(String deviceGroupId, String deviceId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> AddDeviceToGroupAsync(DeviceRepository deviceRepo, String deviceGroupId, String deviceId, EntityHeader org, EntityHeader user)
         {
-            var group = await GetDeviceGroupAsync(deviceGroupId, org, user);
-            var device = await _deviceManagementRepo.GetDeviceByIdAsync(deviceId);
+            var group = await GetDeviceGroupAsync(deviceRepo, deviceGroupId, org, user);
+            var device = await _deviceManagementRepo.GetDeviceByIdAsync(deviceRepo, deviceId);
 
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Update, user, org);
             await AuthorizeAsync(device, AuthorizeResult.AuthorizeActions.Read, user, org);
-            await _deviceGroupEntryRepo.AddDeviceToGroupAsync(group.ToEntityHeader(), device.ToEntityHeader());
+            await _deviceGroupEntryRepo.AddDeviceToGroupAsync(deviceRepo, group.ToEntityHeader(), device.ToEntityHeader());
 
             return InvokeResult.Success;
         }
 
-        public async Task<InvokeResult> DeleteDeviceGroupAsync(string deviceGroupId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, EntityHeader org, EntityHeader user)
         {
-            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceGroupId);
+            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, deviceGroupId);
 
             //TODO: This one also needs to cleanup the table storage for the devices.
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Delete, user, org);
@@ -72,35 +72,35 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string orgId, EntityHeader user)
+        public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId, EntityHeader user)
         {
             await AuthorizeOrgAccess(user, orgId, typeof(DeviceGroupSummary));
-            return await _deviceGroupRepo.GetDeviceGroupsForOrgAsync(orgId);
+            return await _deviceGroupRepo.GetDeviceGroupsForOrgAsync(deviceRepo, orgId);
         }
 
-        public async Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(string deviceGroupId, EntityHeader org, EntityHeader user)
+        public async Task<IEnumerable<EntityHeader>> GetDevicesInGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, EntityHeader org, EntityHeader user)
         {
-            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceGroupId);
+            var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, deviceGroupId);
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Read, user, org);
-            return await _deviceGroupEntryRepo.GetDevicesInGroupAsync(deviceGroupId);
+            return await _deviceGroupEntryRepo.GetDevicesInGroupAsync(deviceRepo, deviceGroupId);
         }
 
-        public async Task<InvokeResult> RemoveDeviceFromGroupAsync(string deviceGroupId, string deviceId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> RemoveDeviceFromGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org, EntityHeader user)
         {
-            var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceGroupId);
+            var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, deviceGroupId);
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Update, user, org);
-            await _deviceGroupEntryRepo.RemoveDeviceFromGroupAsync(deviceGroupId, deviceId);
+            await _deviceGroupEntryRepo.RemoveDeviceFromGroupAsync(deviceRepo, deviceGroupId, deviceId);
             return InvokeResult.Success;
         }
 
-        public Task<bool> QueryKeyInUseAsync(string key, EntityHeader org)
+        public Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, EntityHeader org)
         {
-            return _deviceGroupRepo.QueryKeyInUseAsync(key, org.Id);
+            return _deviceGroupRepo.QueryKeyInUseAsync(deviceRepo, key, org.Id);
         }
 
-        public async Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(string groupId, EntityHeader org, EntityHeader user)
+        public async Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user)
         {
-            var group = await _deviceGroupRepo.GetDeviceGroupAsync(groupId);
+            var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, groupId);
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Read, user, org);
             return await CheckForDepenenciesAsync(group);
         }

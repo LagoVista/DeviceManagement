@@ -8,24 +8,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public interface IDeviceManager
     {
-        Task<InvokeResult> AddDeviceAsync(Device device, EntityHeader user, EntityHeader org);
+        Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader user, EntityHeader org);
 
-        Task<InvokeResult> UpdateDeviceAsync( Device device, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult> DeleteDeviceAsync(string deviceRepositoryId, string id, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(string repositoryId, string orgId,  int top, int take, EntityHeader user);
+        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId,  int top, int take, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(string repositoryId, string locationId, int top, int take, EntityHeader org, EntityHeader user);
+        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, int top, int take, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(string repositoryId, string status, int top, int take, EntityHeader org, EntityHeader user);
+        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, int top, int take, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(string repositoryId, string configurationId, int top, int take, EntityHeader org, EntityHeader user);
+        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, int top, int take, EntityHeader org, EntityHeader user);
 
-        Task<Device> GetDeviceByDeviceIdAsync(string repositoryId, string id, EntityHeader org, EntityHeader user);
+        Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
-        Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(string repositoryId, string id, EntityHeader org, EntityHeader user);
+        Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
-        Task<Device> GetDeviceByIdAsync(string repositoryId, string id, EntityHeader org, EntityHeader user);
+        Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo,  string id, EntityHeader org, EntityHeader user);
     }
 }

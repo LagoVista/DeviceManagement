@@ -21,37 +21,42 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     /// </summary>
     [Authorize]
     [ConfirmedUser]
-    [Route("api")]
     public class DeviceManagementController : LagoVistaBaseController
     {
         IDeviceManager _deviceManager;
+        IDeviceRepositoryManager _repoManager;
 
-        public DeviceManagementController(IDeviceManager deviceManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceManager = deviceManager;
+            _repoManager = repoManager;
         }
 
         /// <summary>
         /// Device Management - Add New
         /// </summary>
+        /// <param name="devicerepoid"></param>
         /// <param name="device"></param>
         /// <returns></returns>
-        [HttpPost("device")]
-        public Task<InvokeResult> AddDeviceAsync([FromBody] Device device)
+        [HttpPost("/api/device/{devicerepoid}")]
+        public async Task<InvokeResult> AddDeviceAsync(string devicerepoid, [FromBody] Device device)
         {
-            return _deviceManager.AddDeviceAsync(device, UserEntityHeader, OrgEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddDeviceAsync(repo, device, UserEntityHeader, OrgEntityHeader);
         }
 
         /// <summary>
         /// Device Management - Update
         /// </summary>
+        /// <param name="devicerepoid"></param>
         /// <param name="device"></param>
         /// <returns></returns>
-        [HttpPut("device")]
-        public Task<InvokeResult> UpdateDeviceAsync([FromBody] Device device)
+        [HttpPut("/api/device/{devicerepoid}")]
+        public async Task<InvokeResult> UpdateDeviceAsync(string devicerepoid, [FromBody] Device device)
         {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             SetUpdatedProperties(device);
-            return _deviceManager.UpdateDeviceAsync(device, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -60,11 +65,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="orgId">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("org/{orgid}/{devicerepoid}/devices")]
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(String orgId, string devicerepoid)
+        [HttpGet("/api/org/{orgid}/devices/{devicerepoid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(string devicerepoid, String orgId)
         {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForOrgIdAsync(devicerepoid, orgId, 0, 100, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForOrgIdAsync(repo, orgId, 0, 100, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
@@ -74,11 +80,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="locationid">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("location/{locationid}/{devicerepoid}/devices")]
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(String locationid, string devicerepoid)
+        [HttpGet("/api/location/{locationid}/devices/{devicerepoid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(string devicerepoid, String locationid)
         {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForLocationIdAsync(devicerepoid, locationid, 0, 100, OrgEntityHeader, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, 0, 100, OrgEntityHeader, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
@@ -88,10 +95,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("device/{devicerepoid}/{id}")]
-        public async Task<DetailResponse<Device>> GetDeviceByIdAsync(String id, string devicerepoid)
+        [HttpGet("/api/device/{devicerepoid}/{id}")]
+        public async Task<DetailResponse<Device>> GetDeviceByIdAsync(string devicerepoid, String id)
         {
-            var device = await _deviceManager.GetDeviceByIdAsync(devicerepoid, id, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
             return DetailResponse<Device>.Create(device);
         }
 
@@ -101,10 +109,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("devicebyid/{devicerepoid}/{deviceid}")]
-        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(String deviceid, string devicerepoid)
+        [HttpGet("/api/device/{devicerepoid}/deviceid/{deviceid}")]
+        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(string devicerepoid, String deviceid)
         {
-            var device = await _deviceManager.GetDeviceByDeviceIdAsync(devicerepoid,deviceid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
             return DetailResponse<Device>.Create(device);
         }
 
@@ -114,10 +123,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("deviceidinuse/{devicerepoid}/{deviceid}")]
-        public Task<DependentObjectCheckResult> GetDeviceIdInUse(string deviceid, string devicerepoid)
+        [HttpGet("/api/device/{devicerepoid}/inuse/{deviceid}")]
+        public async Task<DependentObjectCheckResult> GetDeviceIdInUse(string devicerepoid, string deviceid)
         {
-            return _deviceManager.CheckIfDeviceIdInUse(devicerepoid, deviceid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.CheckIfDeviceIdInUse(repo, deviceid, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -126,17 +136,18 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("device/{id}")]
-        public Task<InvokeResult> DeleteDeviceAsync(string id, string devicerepoid)
+        [HttpDelete("/api/device/{devicerepoid}/{id}")]
+        public async Task<InvokeResult> DeleteDeviceAsync(string devicerepoid, string id)
         {
-            return _deviceManager.DeleteDeviceAsync(devicerepoid, id, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.DeleteDeviceAsync(repo, id, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
         /// Device Management - Create
         /// </summary>
         /// <returns></returns>
-        [HttpGet("device/factory/{devicerepoid}")]
+        [HttpGet("/api/device/{devicerepoid}/factory")]
         public DetailResponse<Device> CreateDevice(string devicerepoid)
         {
             var response = DetailResponse<Device>.Create();
@@ -154,7 +165,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Create
         /// </summary>
         /// <returns></returns>
-        [HttpGet("device/notes/factory")]
+        [HttpGet("/api/device/note/factory")]
         public DetailResponse<DeviceNote> CreateDeviceNote()
         {
             var response = DetailResponse<DeviceNote>.Create();

@@ -22,22 +22,26 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class DeviceArchivesController : LagoVistaBaseController
     {
         IDeviceArchiveManager _deviceArchiveManager;
+        IDeviceRepositoryManager _repoManager;
 
-        public DeviceArchivesController(IDeviceArchiveManager deviceArchiveManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceArchivesController(IDeviceRepositoryManager repoManager, IDeviceArchiveManager deviceArchiveManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceArchiveManager = deviceArchiveManager;
+            _repoManager = repoManager;
         }
 
         /// <summary>
         /// Device Archives - Get For Device (Currently returns 100 most recent, will have filtering
         /// </summary>
+        /// <param name="devicerepoid"></param>
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
-        [HttpGet("devicearchives/{deviceid}")]
-        public async Task<ListResponse<DeviceArchive>> GetDevicesForOrg(String deviceid)
+        [HttpGet("/api/device/{devicerepoid}/archives/{deviceid}")]
+        public async Task<ListResponse<DeviceArchive>> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
             //TODO: Need to add paging.
-            var deviceArchives = await _deviceArchiveManager.GetForDateRangeAsync(deviceid);
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var deviceArchives = await _deviceArchiveManager.GetForDateRangeAsync(repo, deviceid);
             var response = ListResponse<DeviceArchive>.Create(deviceArchives);
 
             return response;
