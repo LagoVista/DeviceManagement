@@ -27,6 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             ValidationCheck(device, Actions.Create);
+            device.DeviceRepository.Text = deviceRepo.Name;
             await _deviceRepo.AddDeviceAsync(deviceRepo, device);
             return InvokeResult.Success;
         }
