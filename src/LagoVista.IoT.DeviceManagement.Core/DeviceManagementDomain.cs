@@ -6,8 +6,9 @@ using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Core
 {
+    [DomainDescriptor]
     public class DeviceManagementDomain
-    {
+    {        
         public const string DeviceManagement = "Device Managent";
 
         [DomainDescription(DeviceManagement)]
