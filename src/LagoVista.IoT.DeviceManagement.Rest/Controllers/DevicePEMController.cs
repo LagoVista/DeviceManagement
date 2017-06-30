@@ -52,13 +52,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="pemuri">Device Id</param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}/pem")]
-        public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, [FromBody] String pemuri)
+        public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, [FromBody] DevicePEMRequest pemuri)
         {
             Console.WriteLine("=====> Looking for URI => " + pemuri);
             Console.WriteLine("=====> IN REPO ID      => " + devicerepoid);
 
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _devicePEMManager.GetPEMAsync(repo, pemuri,  OrgEntityHeader, UserEntityHeader);
+            return await _devicePEMManager.GetPEMAsync(repo, pemuri.PEM_URI,  OrgEntityHeader, UserEntityHeader);
         }
 
     }
