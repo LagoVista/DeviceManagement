@@ -37,14 +37,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/archives/{deviceid}")]
-        public async Task<ListResponse<DeviceArchive>> GetDevicesForOrg(string devicerepoid, String deviceid)
+        public async Task<JsonResult> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
             //TODO: Need to add paging.
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceArchives = await _deviceArchiveManager.GetForDateRangeAsync(repo, deviceid);
-            var response = ListResponse<DeviceArchive>.Create(deviceArchives);
-
-            return response;
+            return new JsonResult(deviceArchives);            
         }
     }
 

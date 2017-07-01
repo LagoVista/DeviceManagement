@@ -27,5 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
         Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo,  string id, EntityHeader org, EntityHeader user);
+
+        IDeviceArchiveManager ArchiveManager { get; }
     }
 }

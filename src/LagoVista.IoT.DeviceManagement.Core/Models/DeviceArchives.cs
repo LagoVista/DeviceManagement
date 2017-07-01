@@ -25,7 +25,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         /* Will be made available to map to properties on device configurations */
         public double DeviceConfigurationVersionId { get; set; }
- 
 
         [JsonExtensionData]
         public Dictionary<String, object> Properties { get; set; }

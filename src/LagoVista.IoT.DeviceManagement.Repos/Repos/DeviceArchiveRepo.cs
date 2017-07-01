@@ -21,13 +21,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return InsertAsync(archiveEntry);
         }
 
-        public Task<IEnumerable<DeviceArchive>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount, string start, string end)
+        public Task<string> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount, string start, string end)
         {
             //TODO: Need to implement filtering
             //TODO: Need to add some bounds here so it won't run forever.
             //return base.GetByFilterAsync(FilterOptions.Create("DateStamp", FilterOptions.Operators.GreaterThan, start), FilterOptions.Create("DateStamp", FilterOptions.Operators.LessThan, end));
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-            return GetByParitionIdAsync(deviceId);
+            return GetRawJSONByParitionIdAsync(deviceId);
         }
     }
 }

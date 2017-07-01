@@ -10,6 +10,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         Task AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry);
 
-        Task<IEnumerable<DeviceArchive>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, string start = null, string end = null);
+        Task<string> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, string start = null, string end = null);
     }
 }

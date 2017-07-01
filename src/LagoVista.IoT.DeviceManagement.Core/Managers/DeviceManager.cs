@@ -16,11 +16,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DeviceManager : ManagerBase, IDeviceManager
     {
         IDeviceManagementRepo _deviceRepo;
+        IDeviceArchiveManager _deviceArchiveManager;
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
+        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
             base(logger, appConfig, depmanager, security)
         {
             _deviceRepo = deviceRepo;
+            _deviceArchiveManager = deviceArchiveManager;
         }
 
         public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader user, EntityHeader org)
@@ -71,7 +73,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             return device;
         }
-        
+
 
         public async Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
@@ -81,23 +83,25 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo,string status, int top, int take, EntityHeader org, EntityHeader user)
+        public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, int top, int take, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ status
             return _deviceRepo.GetDevicesInStatusAsync(deviceRepo, status, top, take);
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo,  string configurationId, int top, int take, EntityHeader org, EntityHeader user)
+        public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, int top, int take, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ configuration
             return _deviceRepo.GetDevicesWithConfigurationAsync(deviceRepo, configurationId, top, take);
         }
 
-        public async Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo,  string id, EntityHeader org, EntityHeader user)
+        public async Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             return await CheckForDepenenciesAsync(device);
         }
+
+        public IDeviceArchiveManager ArchiveManager { get { return _deviceArchiveManager; } }
     }
 }
