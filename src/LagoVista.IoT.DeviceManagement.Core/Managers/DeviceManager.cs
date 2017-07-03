@@ -44,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId, int top, int take, EntityHeader user)
         {
-            await AuthorizeOrgAccess(user, orgId, typeof(Device));
+            await AuthorizeOrgAccessAsync(user, orgId, typeof(Device));
             return await _deviceRepo.GetDevicesForOrgIdAsync(deviceRepo, orgId, top, take);
         }
 

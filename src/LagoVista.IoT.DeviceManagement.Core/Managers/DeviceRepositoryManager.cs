@@ -75,7 +75,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user)
         {
-            await AuthorizeOrgAccess(user, orgId, typeof(DeviceRepository));
+            await AuthorizeOrgAccessAsync(user, orgId, typeof(DeviceRepository));
             return await _deviceRepositoryRepo.GetDeviceRepositoriesForOrgAsync(orgId);
         }
         
