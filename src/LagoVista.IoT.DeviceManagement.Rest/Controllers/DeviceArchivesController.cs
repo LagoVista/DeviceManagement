@@ -4,12 +4,11 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
@@ -24,7 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         IDeviceArchiveManager _deviceArchiveManager;
         IDeviceRepositoryManager _repoManager;
 
-        public DeviceArchivesController(IDeviceRepositoryManager repoManager, IDeviceArchiveManager deviceArchiveManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceArchivesController(IDeviceRepositoryManager repoManager, IDeviceArchiveManager deviceArchiveManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceArchiveManager = deviceArchiveManager;
             _repoManager = repoManager;

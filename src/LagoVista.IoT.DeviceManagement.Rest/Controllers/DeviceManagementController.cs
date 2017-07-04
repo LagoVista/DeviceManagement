@@ -13,6 +13,7 @@ using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.UserAdmin.Models.Users;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -26,7 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         IDeviceManager _deviceManager;
         IDeviceRepositoryManager _repoManager;
 
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceManager = deviceManager;
             _repoManager = repoManager;

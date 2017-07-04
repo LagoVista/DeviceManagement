@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         IDevicePEMManager _devicePEMManager;
         IDeviceRepositoryManager _repoManager;
 
-        public DevicePEMController(IDeviceRepositoryManager repoManager, IDevicePEMManager devicePEMManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DevicePEMController(IDeviceRepositoryManager repoManager, IDevicePEMManager devicePEMManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _repoManager = repoManager;
             _devicePEMManager = devicePEMManager;

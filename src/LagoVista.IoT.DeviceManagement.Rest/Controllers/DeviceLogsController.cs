@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         IDeviceLogManager _deviceLogManager;
         IDeviceRepositoryManager _repoManager;
 
-        public DeviceLogsController(IDeviceRepositoryManager repoManager, IDeviceLogManager deviceLogManager, UserManager<LagoVista.UserAdmin.Models.Account.AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceLogsController(IDeviceRepositoryManager repoManager, IDeviceLogManager deviceLogManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceLogManager = deviceLogManager;
             _repoManager = repoManager;
