@@ -87,7 +87,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId);
+            var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId && 
+                                               qry.DeviceRepository.Id == deviceRepo.Id);
 
             return from item in items
                    select item.CreateSummary();
