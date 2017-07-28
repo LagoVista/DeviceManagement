@@ -14,6 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.63-alpha1541" />
+    <PackageReference Include="LagoVista.IoT.ProductStore" Version="1.2.72-alpha0816" />
     <PackageReference Include="LagoVista.IoT.Web.Common" Version="1.2.63-alpha1541" />
     <PackageReference Include="LagoVista.UserAdmin" Version="1.2.63-alpha1541" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.2" />

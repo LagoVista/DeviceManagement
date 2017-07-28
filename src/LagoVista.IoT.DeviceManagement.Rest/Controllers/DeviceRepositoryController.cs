@@ -13,6 +13,8 @@ using LagoVista.Core;
 using LagoVista.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.UserAdmin.Models.Users;
+using LagoVista.IoT.ProductStore;
+using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -24,10 +26,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
 
         IDeviceRepositoryManager _deviceRepositoryManager;
+        IProductStore _productStore;
 
-        public DeviceRepositoryController(IDeviceRepositoryManager deviceReposistoryManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceRepositoryController(IDeviceRepositoryManager deviceReposistoryManager, IProductStore productStore, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceRepositoryManager = deviceReposistoryManager;
+            _productStore = productStore;
         }
 
         /// <summary>
@@ -123,6 +127,28 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             SetOwnedProperties(response.Model);
 
             return response;
+        }
+
+        /// <summary>
+        /// Device Repository - Get Storage Options.
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("/api/store/storagecapacity")]
+        public async Task<ListResponse<ProductOffering>> GetDeviceStorageSizes()
+        {
+            var products = await _productStore.GetProductsAsync("storagecapacity");
+            return ListResponse<ProductOffering>.Create(products);
+        }
+
+        /// <summary>
+        /// Device Repository - Get Device Capacity Options.
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("/api/store/devicecapacity")]
+        public async Task<ListResponse<ProductOffering>> GetDeviceCapacityOptions()
+        {
+            var products = await _productStore.GetProductsAsync("devicecapacity");
+            return ListResponse<ProductOffering>.Create(products);
         }
     }
 }
