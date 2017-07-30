@@ -8,7 +8,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public interface IDeviceManager
     {
-        Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader user, EntityHeader org);
+        Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
 

@@ -25,7 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceArchiveManager = deviceArchiveManager;
         }
 
-        public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader user, EntityHeader org)
+        public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             ValidationCheck(device, Actions.Create);
@@ -34,7 +34,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader user, EntityHeader org)
+        public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             ValidationCheck(device, Actions.Update);
