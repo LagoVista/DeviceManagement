@@ -4,7 +4,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LagoVista.IoT.DeviceManagement.Core.Managers
+namespace LagoVista.IoT.DeviceManagement.Core
 {
     public interface IDeviceManager
     {

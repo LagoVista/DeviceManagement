@@ -1,10 +1,8 @@
 ﻿using LagoVista.IoT.DeviceManagement.Core.Repos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -21,10 +19,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         }
 
-        public Task<IEnumerable<Core.Models.DevicePEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, int take, string dateStampAfter)
+        public Task<ListResponse<DevicePEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
             SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey);
-            return GetByParitionIdAsync(deviceId);
+            return GetPagedResultsAsync(deviceId, request);
         }
     }
 }

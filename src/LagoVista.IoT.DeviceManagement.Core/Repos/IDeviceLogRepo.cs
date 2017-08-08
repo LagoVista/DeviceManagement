@@ -1,4 +1,5 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Models;
+﻿using LagoVista.Core.Models.UIMetaData;
+using LagoVista.IoT.DeviceManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     {
         Task AddLogEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry);
 
-        Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount, string start, string end);
+        Task<ListResponse<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest);
     }
 }

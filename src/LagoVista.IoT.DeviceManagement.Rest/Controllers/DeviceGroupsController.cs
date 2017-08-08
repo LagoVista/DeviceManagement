@@ -13,6 +13,7 @@ using LagoVista.Core;
 using LagoVista.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.UserAdmin.Models.Users;
+using LagoVista.IoT.DeviceManagement.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {

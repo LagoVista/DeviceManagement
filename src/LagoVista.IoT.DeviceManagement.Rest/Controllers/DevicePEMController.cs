@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
@@ -37,12 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DevicePEMIndex>> GetDevicePEMListAsync(string devicerepoid, String deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-
-            //TODO: Need to add paging.
-            var pemindexes = await _devicePEMManager.GetPEMIndexesforDeviceAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
-            var response = ListResponse<DevicePEMIndex>.Create(pemindexes);
-
-            return response;
+            return await _devicePEMManager.GetPEMIndexesforDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
 
@@ -55,9 +51,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpPost("/api/device/{devicerepoid}/pem")]
         public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, [FromBody] DevicePEMRequest pemuri)
         {
-            Console.WriteLine("=====> Looking for URI => " + pemuri);
-            Console.WriteLine("=====> IN REPO ID      => " + devicerepoid);
-
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMAsync(repo, pemuri.PEM_URI,  OrgEntityHeader, UserEntityHeader);
         }

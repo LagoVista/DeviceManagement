@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using LagoVista.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using System.Threading.Tasks;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Models;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -19,14 +20,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _logRepo = logRepo;
         }
 
-        public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry)
+        public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry, EntityHeader org, EntityHeader user)
         {
             return _logRepo.AddLogEntryAsync(deviceRepo, logEntry);
         }
 
-        public Task<IEnumerable<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, string start = null, string end = null)
+        public async Task<ListResponse<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
         {
-            return _logRepo.GetForDateRangeAsync(deviceRepo, deviceId, maxReturnCount, start, end);
+            await AuthorizeOrgAccessAsync(user, org, typeof(DeviceLog), LagoVista.Core.Validation.Actions.Read);
+            return await _logRepo.GetForDateRangeAsync(deviceRepo, deviceId, request);
         }
     }
 }

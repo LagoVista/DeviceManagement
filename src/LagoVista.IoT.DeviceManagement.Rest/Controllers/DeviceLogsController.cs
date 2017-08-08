@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.PlatformSupport;
+using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
@@ -40,11 +41,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceLog>> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            //TODO: Need to add paging.
-            var devices = await _deviceLogManager.GetForDateRangeAsync(repo, deviceid);
-            var response = ListResponse<DeviceLog>.Create(devices);
-
-            return response;
+            return await _deviceLogManager.GetForDateRangeAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
     }
 }

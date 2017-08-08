@@ -8,6 +8,7 @@ using LagoVista.Core.Managers;
 using LagoVista.Core.Interfaces;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -22,12 +23,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _devicePEMRepo = devicePEMRepo;
         }
 
-        public Task<IEnumerable<DevicePEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, int maxReturnCount = 100, String dateStampAfter = "")
+        public Task<ListResponse<DevicePEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
         {
             //TODO: Add Security, will need to confirm the user has access to view PEM lists AND has access to this device.
             //TODO: Sorry someone will need to clean this up.
 
-            return _devicePEMIndexRepo.GetPEMIndexForDeviceAsync(deviceRepo, deviceId, maxReturnCount, dateStampAfter);
+            return _devicePEMIndexRepo.GetPEMIndexForDeviceAsync(deviceRepo, deviceId, request);
         }
 
         public async Task<InvokeResult<string>> GetPEMAsync(DeviceRepository deviceRepo, string pemURI, EntityHeader org, EntityHeader user)

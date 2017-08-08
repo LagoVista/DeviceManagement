@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using LagoVista.IoT.DeviceManagement.Core.Models;
+﻿using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.Managers;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Interfaces;
 using System.Threading.Tasks;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Models;
+using LagoVista.Core.Validation;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -19,14 +19,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _archiveRepo = archiveRepo;
         }
 
-        public Task AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry)
+        public async Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user)
         {
-            return _archiveRepo.AddArchiveAsync(deviceRepo, logEntry);
+            await _archiveRepo.AddArchiveAsync(deviceRepo, logEntry);
+            return InvokeResult.Success;
         }       
 
-        public Task<string> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, int maxReturnCount = 100, string start = null, string end = null)
+        public async Task<ListResponse<DeviceArchive>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            return _archiveRepo.GetForDateRangeAsync(deviceRepo, deviceId, maxReturnCount, start, end);
+            await AuthorizeOrgAccessAsync(user, org, typeof(DeviceArchive), LagoVista.Core.Validation.Actions.Read);
+            return await _archiveRepo.GetForDateRangeAsync(deviceRepo, deviceId, listRequest);
         }
     }
 }
