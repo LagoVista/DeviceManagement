@@ -77,8 +77,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader DeviceConfiguration { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public EntityHeader DeviceType { get; set; }
-    
+        public EntityHeader DeviceType { get; set; }    
 
 
         public bool IsPublic { get; set; }
@@ -90,8 +89,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader Location { get; set; }
 
         public EntityHeader OwnerUser { get; set; }
-
-
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
@@ -107,9 +104,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string LastContact { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        /// <summary>
+        /// Properties are design time/values added with device configuration
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties,FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<CustomField> Properties { get; set; }
 
+
+        /// <summary>
+        /// Attributes are values that have been set by message or workflow
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes,FieldType: FieldTypes.ChildList, HelpResource:DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
+        public List<AttributeValue> Attributes { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]

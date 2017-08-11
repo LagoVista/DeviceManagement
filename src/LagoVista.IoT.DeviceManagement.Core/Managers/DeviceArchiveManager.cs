@@ -7,6 +7,7 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Models;
 using LagoVista.Core.Validation;
+using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -25,8 +26,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }       
 
-        public async Task<ListResponse<DeviceArchive>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
-        {
+        public async Task<ListResponse<List<string>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {            
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceArchive), LagoVista.Core.Validation.Actions.Read);
             return await _archiveRepo.GetForDateRangeAsync(deviceRepo, deviceId, listRequest);
         }

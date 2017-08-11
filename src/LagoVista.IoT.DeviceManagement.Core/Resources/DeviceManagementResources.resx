@@ -117,6 +117,39 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttributeValue_Description" xml:space="preserve">
+    <value>An Attribute Value is a value that comes from the device or is derived from a device workflow</value>
+  </data>
+  <data name="AttributeValue_Help" xml:space="preserve">
+    <value>An Attribute Value is a value that comes from the device or is derived from a device workflow</value>
+  </data>
+  <data name="AttributeValue_Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="AttributeValue_LastUpdated" xml:space="preserve">
+    <value>Last Updated</value>
+  </data>
+  <data name="AttributeValue_LastUpdatedBy" xml:space="preserve">
+    <value>Last Updated By</value>
+  </data>
+  <data name="AttributeValue_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="AttributeValue_State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="AttributeValue_Title" xml:space="preserve">
+    <value>Attriubte Value</value>
+  </data>
+  <data name="AttributeValue_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="AttributeValue_Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="AttributeValue_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="Common_Key" xml:space="preserve">
     <value>Key</value>
   </data>
@@ -152,6 +185,12 @@
   </data>
   <data name="DeviceNotes_TitleField" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="Device_Attributes" xml:space="preserve">
+    <value>Attributes</value>
+  </data>
+  <data name="Device_Attributes_Help" xml:space="preserve">
+    <value>Device Attributes are values that are either set by the device message or set by work flow</value>
   </data>
   <data name="Device_Capacity_1000000_Units" xml:space="preserve">
     <value>1,000,000 </value>
@@ -236,6 +275,9 @@
   </data>
   <data name="Device_Properties" xml:space="preserve">
     <value>Properties</value>
+  </data>
+  <data name="Device_Properties_Help" xml:space="preserve">
+    <value>Device Properties are values that are set from either a management console or from an external API</value>
   </data>
   <data name="Device_RepoTitle" xml:space="preserve">
     <value>Device Repository</value>
