@@ -11,6 +11,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
     {
         Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user);
 
-        Task<ListResponse<List<string>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user);
+        Task<ListResponse<List<object>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user);
     }
 }

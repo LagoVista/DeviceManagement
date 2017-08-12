@@ -38,7 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/archives/{deviceid}")]
-        public async Task<ListResponse<List<string>>> GetDevicesForOrg(string devicerepoid, String deviceid)
+        public async Task<ListResponse<List<object>>> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceArchiveManager.GetDeviceArchivesAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);

@@ -8,6 +8,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     public interface IDeviceArchiveRepo
     {
         Task AddArchiveAsync(DeviceRepository repo, DeviceArchive archiveEntry);
-        Task<ListResponse<List<string>>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request);
+        Task<ListResponse<List<object>>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request);
     }
 }
