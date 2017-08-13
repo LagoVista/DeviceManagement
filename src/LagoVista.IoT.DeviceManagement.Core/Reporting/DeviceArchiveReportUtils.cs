@@ -2,6 +2,8 @@
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Linq;
 using System.Collections.Generic;
+using System;
+using LagoVista.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Reporting
 {
@@ -61,7 +63,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Reporting
                 row.Remove(nameof(DeviceArchive.DeviceId));
                 row.Remove(nameof(DeviceArchive.DeviceConfigurationVersionId));
                 row.Remove(nameof(DeviceArchive.DeviceConfigurationId));
-                archive.Add(row[nameof(DeviceArchive.Timestamp)].ToString());
+                var timeStamp = row[nameof(DeviceArchive.Timestamp)].ToString();
+                var dateTime = DateTime.Parse(timeStamp, null, System.Globalization.DateTimeStyles.AssumeUniversal);
+                archive.Add(dateTime.ToJSONString());
                 row.Remove(nameof(DeviceArchive.Timestamp));
                 archive.Add(row[nameof(DeviceArchive.PEMMessageId)].ToString());
                 row.Remove(nameof(DeviceArchive.PEMMessageId));

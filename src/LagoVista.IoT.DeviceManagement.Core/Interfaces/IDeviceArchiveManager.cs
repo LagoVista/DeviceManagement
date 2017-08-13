@@ -7,9 +7,13 @@ using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Core
 {
-    public interface IDeviceArchiveManager
+    public interface IDeviceArchiveManagerRemote
     {
         Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user);
+    }
+
+    public interface IDeviceArchiveManager : IDeviceArchiveManagerRemote
+    {
 
         Task<ListResponse<List<object>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user);
     }
