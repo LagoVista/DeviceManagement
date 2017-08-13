@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
-    public interface IDeviceRepositoryManager
+    public interface IDeviceRepositoryManagerRemote
+    {
+        Task<DeviceRepository> GetDeviceRepositoryAsync(string instanceId, EntityHeader org, EntityHeader user);
+    }
+
+    public interface IDeviceRepositoryManager : IDeviceRepositoryManagerRemote
     {
         Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user);
         Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user);
         Task<DependentObjectCheckResult> CheckInUseAsync(string id, EntityHeader org, EntityHeader user);
         Task<InvokeResult> DeleteDeviceRepositoryAsync(String instanceId, EntityHeader org, EntityHeader user);
-        Task<DeviceRepository> GetDeviceRepositoryAsync(string instanceId, EntityHeader org, EntityHeader user);
         Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user);
         Task<bool> QueryKeyInUserAsync(string key, EntityHeader org);
     }
