@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="1.2.105-alpha0832" />
+    <PackageReference Include="LagoVista.Core" Version="1.2.105-alpha1550" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170727-01" />
     <PackageReference Include="Moq" Version="4.7.99" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0-beta" />
