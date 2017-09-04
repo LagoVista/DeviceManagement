@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, Resources.DeviceManagementResources.Names.Device_Help, Resources.DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity
+    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptor
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -131,6 +131,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceConfiguration = DeviceConfiguration.Text,
                 Status = Status.Text,
                 DeviceType = DeviceType.Text
+            };
+        }
+
+        public List<string> GetFormFields()
+        {
+            return new List<string>()
+            {
+                nameof(Device.DeviceId),
+                nameof(Device.SerialNumber),
+                nameof(Device.Status),
+                nameof(Device.DeviceType),
+                nameof(Device.DeviceConfiguration)
             };
         }
 

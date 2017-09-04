@@ -296,6 +296,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:DeviceGroup_Help
 
 		public static string DeviceGroup_Help { get { return GetResourceString("DeviceGroup_Help"); } }
+//Resources:DeviceManagementResources:DeviceGroup_Repository
+
+		public static string DeviceGroup_Repository { get { return GetResourceString("DeviceGroup_Repository"); } }
+//Resources:DeviceManagementResources:DeviceGroup_Repository_Help
+
+		public static string DeviceGroup_Repository_Help { get { return GetResourceString("DeviceGroup_Repository_Help"); } }
 //Resources:DeviceManagementResources:DeviceGroup_Title
 
 		public static string DeviceGroup_Title { get { return GetResourceString("DeviceGroup_Title"); } }
@@ -398,6 +404,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Title = "Device_Title";
 			public const string DeviceGroup_Description = "DeviceGroup_Description";
 			public const string DeviceGroup_Help = "DeviceGroup_Help";
+			public const string DeviceGroup_Repository = "DeviceGroup_Repository";
+			public const string DeviceGroup_Repository_Help = "DeviceGroup_Repository_Help";
 			public const string DeviceGroup_Title = "DeviceGroup_Title";
 			public const string DeviceNotes_Description = "DeviceNotes_Description";
 			public const string DeviceNotes_Help = "DeviceNotes_Help";

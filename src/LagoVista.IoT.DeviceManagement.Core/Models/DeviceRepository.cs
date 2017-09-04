@@ -12,7 +12,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, Resources.DeviceManagementResources.Names.Device_Repo_Help, Resources.DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity
+    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity, IFormDescriptor
     {
         public DeviceRepository()
         {
@@ -67,6 +67,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Key = Key,
                 Name = Name,
                 Description = Description
+            };
+        }
+
+        public List<string> GetFormFields()
+        {
+            return new List<string>()
+            {
+                nameof(Name),
+                nameof(Key),
+                nameof(Subscription),
+                nameof(DeviceCapacity),
+                nameof(StorageCapacity),
+                nameof(Description),
             };
         }
     }

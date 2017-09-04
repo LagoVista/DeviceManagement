@@ -168,6 +168,12 @@
   <data name="DeviceGroup_Help" xml:space="preserve">
     <value>A group of devices ** Needs Better Definition</value>
   </data>
+  <data name="DeviceGroup_Repository" xml:space="preserve">
+    <value>Device Repository</value>
+  </data>
+  <data name="DeviceGroup_Repository_Help" xml:space="preserve">
+    <value>The Deivce Repository where devices can be added to this device group.</value>
+  </data>
   <data name="DeviceGroup_Title" xml:space="preserve">
     <value>Device Group</value>
   </data>
