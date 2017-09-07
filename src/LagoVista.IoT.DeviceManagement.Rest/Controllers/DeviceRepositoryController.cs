@@ -61,12 +61,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Repositories - Get for Org
         /// </summary>
-        /// <param name="orgId">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("/api/org/{orgid}/devicerepos")]
-        public async Task<ListResponse<DeviceRepositorySummary>> GetDeviceReposForOrgAsync(String orgId)
+        [HttpGet("/api/devicerepos")]
+        public async Task<ListResponse<DeviceRepositorySummary>> GetDeviceReposForOrgAsync()
         {
-            var hostSummaries = await _deviceRepositoryManager.GetDeploymentHostsForOrgAsync(orgId, UserEntityHeader);
+            var hostSummaries = await _deviceRepositoryManager.GetDeploymentHostsForOrgAsync(OrgEntityHeader.Id, UserEntityHeader);
             return ListResponse<DeviceRepositorySummary>.Create(hostSummaries);
         }
 

@@ -61,16 +61,15 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Groups - Get for Org
+        /// Device Groups - Get for Current Org
         /// </summary>
         /// <param name="devicerepoid"></param>
-        /// <param name="orgId">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("/api/org/{orgid}/device/{devicerepoid}/groups")]
-        public async Task<ListResponse<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string devicerepoid, String orgId)
+        [HttpGet("/api/device/{devicerepoid}/groups")]
+        public async Task<ListResponse<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var deviceGroupSummaries = await _deviceGroupManager.GetDeviceGroupsForOrgAsync(repo, orgId, UserEntityHeader);
+            var deviceGroupSummaries = await _deviceGroupManager.GetDeviceGroupsForOrgAsync(repo, OrgEntityHeader.Id, UserEntityHeader);
             var response = ListResponse<DeviceGroupSummary>.Create(deviceGroupSummaries);
 
             return response;
