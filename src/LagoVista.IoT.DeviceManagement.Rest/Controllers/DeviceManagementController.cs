@@ -65,14 +65,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Get For Org
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="orgId">Organization Id</param>
         /// <returns></returns>
-        [HttpGet("/api/org/{orgid}/devices/{devicerepoid}")]
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(string devicerepoid, String orgId)
+        [HttpGet("/api/devices/{devicerepoid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForOrgIdAsync(repo, orgId, 0, 100, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForOrgIdAsync(repo, OrgEntityHeader.Id, 0, 100, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
@@ -80,7 +79,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Get For a Location
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="locationid">Organization Id</param>
+        /// <param name="locationid">Location Id</param>
         /// <returns></returns>
         [HttpGet("/api/location/{locationid}/devices/{devicerepoid}")]
         public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(string devicerepoid, String locationid)
