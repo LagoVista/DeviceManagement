@@ -21,6 +21,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />
+    <ProjectReference Include="..\LagoVista.IoT.AzureIoTHubSupport\LagoVista.IoT.AzureIoTHubSupport.csproj" />
   </ItemGroup>
 </Project>
