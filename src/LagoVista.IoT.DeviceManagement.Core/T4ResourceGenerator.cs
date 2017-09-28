@@ -191,6 +191,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Properties_Help
 
 		public static string Device_Properties_Help { get { return GetResourceString("Device_Properties_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_AccessKey
+
+		public static string Device_Repo_AccessKey { get { return GetResourceString("Device_Repo_AccessKey"); } }
+//Resources:DeviceManagementResources:Device_Repo_AccessKeyName
+
+		public static string Device_Repo_AccessKeyName { get { return GetResourceString("Device_Repo_AccessKeyName"); } }
 //Resources:DeviceManagementResources:Device_Repo_AuthKey1
 
 		public static string Device_Repo_AuthKey1 { get { return GetResourceString("Device_Repo_AuthKey1"); } }
@@ -203,6 +209,21 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Repo_Help
 
 		public static string Device_Repo_Help { get { return GetResourceString("Device_Repo_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType
+
+		public static string Device_Repo_RepoType { get { return GetResourceString("Device_Repo_RepoType"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_AzureIoTHub
+
+		public static string Device_Repo_RepoType_AzureIoTHub { get { return GetResourceString("Device_Repo_RepoType_AzureIoTHub"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_NuvIoT
+
+		public static string Device_Repo_RepoType_NuvIoT { get { return GetResourceString("Device_Repo_RepoType_NuvIoT"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_Select
+
+		public static string Device_Repo_RepoType_Select { get { return GetResourceString("Device_Repo_RepoType_Select"); } }
+//Resources:DeviceManagementResources:Device_Repo_ResourceName
+
+		public static string Device_Repo_ResourceName { get { return GetResourceString("Device_Repo_ResourceName"); } }
 //Resources:DeviceManagementResources:Device_Repo_StorageCapacity
 
 		public static string Device_Repo_StorageCapacity { get { return GetResourceString("Device_Repo_StorageCapacity"); } }
@@ -369,10 +390,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Organization_Select = "Device_Organization_Select";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";
+			public const string Device_Repo_AccessKey = "Device_Repo_AccessKey";
+			public const string Device_Repo_AccessKeyName = "Device_Repo_AccessKeyName";
 			public const string Device_Repo_AuthKey1 = "Device_Repo_AuthKey1";
 			public const string Device_Repo_AuthKey2 = "Device_Repo_AuthKey2";
 			public const string Device_Repo_Description = "Device_Repo_Description";
 			public const string Device_Repo_Help = "Device_Repo_Help";
+			public const string Device_Repo_RepoType = "Device_Repo_RepoType";
+			public const string Device_Repo_RepoType_AzureIoTHub = "Device_Repo_RepoType_AzureIoTHub";
+			public const string Device_Repo_RepoType_NuvIoT = "Device_Repo_RepoType_NuvIoT";
+			public const string Device_Repo_RepoType_Select = "Device_Repo_RepoType_Select";
+			public const string Device_Repo_ResourceName = "Device_Repo_ResourceName";
 			public const string Device_Repo_StorageCapacity = "Device_Repo_StorageCapacity";
 			public const string Device_Repo_StorageCapacity_Select = "Device_Repo_StorageCapacity_Select";
 			public const string Device_Repo_Subscription = "Device_Repo_Subscription";

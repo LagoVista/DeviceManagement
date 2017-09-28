@@ -229,9 +229,9 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
                         throw new Exception(response.ReasonPhrase);
                     }
                 }
-            }
-            */
+            }            
         }
+        */
 
     }
 }

@@ -288,6 +288,12 @@
   <data name="Device_RepoTitle" xml:space="preserve">
     <value>Device Repository</value>
   </data>
+  <data name="Device_Repo_AccessKey" xml:space="preserve">
+    <value>Access Key</value>
+  </data>
+  <data name="Device_Repo_AccessKeyName" xml:space="preserve">
+    <value>Access Key Name</value>
+  </data>
   <data name="Device_Repo_AuthKey1" xml:space="preserve">
     <value>Authorization Key 1</value>
   </data>
@@ -299,6 +305,21 @@
   </data>
   <data name="Device_Repo_Help" xml:space="preserve">
     <value>You use the Device Repository to allocate storage for your devices and device data.</value>
+  </data>
+  <data name="Device_Repo_RepoType" xml:space="preserve">
+    <value>Repository Type</value>
+  </data>
+  <data name="Device_Repo_RepoType_AzureIoTHub" xml:space="preserve">
+    <value>Azure IoT Hub</value>
+  </data>
+  <data name="Device_Repo_RepoType_NuvIoT" xml:space="preserve">
+    <value>NuvIoT</value>
+  </data>
+  <data name="Device_Repo_RepoType_Select" xml:space="preserve">
+    <value>-select repository type-</value>
+  </data>
+  <data name="Device_Repo_ResourceName" xml:space="preserve">
+    <value>Resource Name</value>
   </data>
   <data name="Device_Repo_StorageCapacity" xml:space="preserve">
     <value>Storage Capacity</value>
