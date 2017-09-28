@@ -52,7 +52,23 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
             }
             else
             {
-                throw new Exception(response.ReasonPhrase);
+                var failedResponsejSON = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(failedResponsejSON))
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+                else
+                {
+                    var error = JsonConvert.DeserializeObject<ErrorMessage>(failedResponsejSON);
+                    if (!String.IsNullOrEmpty(error.Message))
+                    {
+                        throw new Exceptions.AzureIoTHubException(error);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
             }
         }
 
@@ -79,8 +95,23 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
             }
             else
             {
-                var failedRespnoseJSON = await response.Content.ReadAsStringAsync();
-                throw new Exception(response.ReasonPhrase);
+                var failedResponsejSON = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(failedResponsejSON))
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+                else
+                {
+                    var error = JsonConvert.DeserializeObject<ErrorMessage>(failedResponsejSON);
+                    if (!String.IsNullOrEmpty(error.Message))
+                    {
+                        throw new Exceptions.AzureIoTHubException(error);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
             }
         }
 
@@ -110,6 +141,14 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
                 else
                 {
                     var error = JsonConvert.DeserializeObject<ErrorMessage>(failedResponsejSON);
+                    if(!String.IsNullOrEmpty(error.Message))
+                    {
+                        throw new Exceptions.AzureIoTHubException(error);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
                 }
             }
         }
@@ -131,10 +170,27 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
             }
             else
             {
-                throw new Exception(response.ReasonPhrase);
+                var failedResponsejSON = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(failedResponsejSON))
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+                else
+                {
+                    var error = JsonConvert.DeserializeObject<ErrorMessage>(failedResponsejSON);
+                    if (!String.IsNullOrEmpty(error.Message))
+                    {
+                        throw new Exceptions.AzureIoTHubException(error);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
             }
         }
 
+        /* Probably need to implement at some point 
         public async Task<AzureIoTHubDevice> SearchDevices(String deviceId)
         {
             // Eventual Query Language
@@ -156,8 +212,25 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Services
             }
             else
             {
-                throw new Exception(response.ReasonPhrase);
+                var failedResponsejSON = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(failedResponsejSON))
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+                else
+                {
+                    var error = JsonConvert.DeserializeObject<ErrorMessage>(failedResponsejSON);
+                    if (!String.IsNullOrEmpty(error.Message))
+                    {
+                        throw new Exceptions.AzureIoTHubException(error);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
             }
+            */
         }
 
     }

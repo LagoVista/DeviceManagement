@@ -121,18 +121,10 @@ namespace LagoVista.IoT.AzureIoTHubSupport.Utils
 
         static string Sign(string requestString, string key)
         {
-#if WINDOWS_UWP
-            var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha256);
-            var hash = algorithm.CreateHash(Convert.FromBase64String(key));
-            hash.Append(Encoding.UTF8.GetBytes(requestString));
-            var mac = hash.GetValueAndReset();
-            return Convert.ToBase64String(mac);
-#else
             using (var hmac = new HMACSHA256(Convert.FromBase64String(key)))
             {
                 return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(requestString)));
             }
-#endif
         }
     }
 
