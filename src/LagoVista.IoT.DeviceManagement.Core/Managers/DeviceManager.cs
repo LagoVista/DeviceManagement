@@ -17,11 +17,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         IDeviceManagementRepo _deviceRepo;
         IDeviceArchiveManager _deviceArchiveManager;
+        ISecureStorage _secureStorage;
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
-            base(logger, appConfig, depmanager, security)
+        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager, IAdminLogger logger, ISecureStorage secureStorage,
+            IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
         {
             _deviceRepo = deviceRepo;
+            _secureStorage = secureStorage;
             _deviceArchiveManager = deviceArchiveManager;
         }
 
@@ -30,12 +32,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             ValidationCheck(device, Actions.Create);
             device.DeviceRepository.Text = deviceRepo.Name;
+
             await _deviceRepo.AddDeviceAsync(deviceRepo, device);
             return InvokeResult.Success;
         }
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
+
+
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             ValidationCheck(device, Actions.Update);
             await _deviceRepo.UpdateDeviceAsync(deviceRepo, device);

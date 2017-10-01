@@ -23,7 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity, IFormDescriptor
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
-        public const string DeviceRepository_Type_AzureITHub = "AzureIoTHub";
+        public const string DeviceRepository_Type_AzureITHub = "azureiothub";
 
         public DeviceRepository()
         {
@@ -61,6 +61,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: Resources.DeviceManagementResources.Names.Device_Repo_AccessKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public String AccessKey { get; set; }
+
+        public String SecureAccessKeyId { get; set; }
 
 
         [FormField(LabelResource: Resources.DeviceManagementResources.Names.Device_Repo_AuthKey1, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
@@ -107,6 +109,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(StorageCapacity),
                 nameof(Description),
             };
+        }
+
+        [CustomValidator]
+        public void Validate(ValidationResult result, Actions action)
+        {
+            if(EntityHeader.IsNullOrEmpty(RepositoryType))
+            {
+                result.AddUserError("Respository Type is a Required Field.");
+                return;
+            }
+
+            if(RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                if (String.IsNullOrEmpty(ResourceName)) result.AddUserError("Resource name which is the name of our Azure IoT Hub is a required field.");
+                if (String.IsNullOrEmpty(AccessKeyName)) result.AddUserError("Access Key name is a Required field.");
+                if (action == Actions.Create && String.IsNullOrEmpty(AccessKey)) result.AddUserError("Access Key is a Required field.");
+                if(!String.IsNullOrEmpty(AccessKey))
+                {
+                    if(!AccessKey.IsBase64String()) result.AddUserError("Access Key does not appear to be a Base 64 String.");
+                }
+            }
         }
     }
 
