@@ -5,6 +5,7 @@ using System.Text;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LagoVista.Core.Validation;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -16,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         }
 
-        public Task AddDeviceAsync(DeviceRepository repo, Device device)
+        public Task<InvokeResult> AddDeviceAsync(DeviceRepository repo, Device device)
         {
             var deviceIdRegEx = new Regex(@"^[A-Za-z0-9\-:.+%_#*?!(),=@;$']{1,128}$");
 
@@ -24,7 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var uri = $"https://{repo.Key}.bytemaster.azure-devices.net/devices/{device.DeviceId}?api-version={apiVersion}";
 
-            return Task.FromResult<object>(default(object));
+            return Task.FromResult(InvokeResult.Success);
         }
 
         public Task<bool> CheckIfDeviceIdInUse(DeviceRepository repo, string id, string orgid)

@@ -185,6 +185,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Organization_Select
 
 		public static string Device_Organization_Select { get { return GetResourceString("Device_Organization_Select"); } }
+//Resources:DeviceManagementResources:Device_PrimaryKey
+
+		public static string Device_PrimaryKey { get { return GetResourceString("Device_PrimaryKey"); } }
 //Resources:DeviceManagementResources:Device_Properties
 
 		public static string Device_Properties { get { return GetResourceString("Device_Properties"); } }
@@ -245,6 +248,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_RepoTitle
 
 		public static string Device_RepoTitle { get { return GetResourceString("Device_RepoTitle"); } }
+//Resources:DeviceManagementResources:Device_SecondaryKey
+
+		public static string Device_SecondaryKey { get { return GetResourceString("Device_SecondaryKey"); } }
 //Resources:DeviceManagementResources:Device_SerialNumber
 
 		public static string Device_SerialNumber { get { return GetResourceString("Device_SerialNumber"); } }
@@ -388,6 +394,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Notes = "Device_Notes";
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";
+			public const string Device_PrimaryKey = "Device_PrimaryKey";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";
 			public const string Device_Repo_AccessKey = "Device_Repo_AccessKey";
@@ -408,6 +415,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Repo_UnitCapacity = "Device_Repo_UnitCapacity";
 			public const string Device_Repo_UnitCapacity_Select = "Device_Repo_UnitCapacity_Select";
 			public const string Device_RepoTitle = "Device_RepoTitle";
+			public const string Device_SecondaryKey = "Device_SecondaryKey";
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_Status = "Device_Status";
 			public const string Device_Status_Commissioned = "Device_Status_Commissioned";

@@ -45,6 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public Device()
         {
             Properties = new List<CustomField>();
+            Attributes = new List<AttributeValue>();
             Status = new EntityHeader<DeviceStates>() { Value = DeviceStates.New, Id = Device.New, Text = DeviceManagementResources.Device_Status_New };
             Notes = new List<DeviceNote>();
         }
@@ -103,13 +104,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string LastContact { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_PrimaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired:true)]
+        public string PrimaryAccessKey { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
+        public string SecondaryAccessKey { get; set; }
 
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties,FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<CustomField> Properties { get; set; }
-
 
         /// <summary>
         /// Attributes are values that have been set by message or workflow

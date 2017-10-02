@@ -16,13 +16,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
 
         IDeviceManagementSettings _deviceMgmtSettings;
+        ISecureStorage _secureStorage;
         IDeviceRepositoryRepo _deviceRepositoryRepo;
-        public DeviceRepositoryManager(IDeviceManagementSettings deviceMgmtSettings, IDeviceRepositoryRepo deviceRepositoryRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
+        public DeviceRepositoryManager(IDeviceManagementSettings deviceMgmtSettings, IDeviceRepositoryRepo deviceRepositoryRepo, IAdminLogger logger, ISecureStorage secureStorage, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
         {
             _deviceRepositoryRepo = deviceRepositoryRepo;
             _deviceMgmtSettings = deviceMgmtSettings;
+            _secureStorage = secureStorage;
         }
-        
+
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
             repo.DeviceArchiveStorageSettings = new ConnectionSettings()
@@ -46,6 +48,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             ValidationCheck(repo, Actions.Create);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Create, user, org);
+
+            if(!String.IsNullOrEmpty(repo.AccessKey))
+            {
+                var addSecretResult = await _secureStorage.AddSecretAsync(repo.AccessKey);
+                if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
+                repo.SecureAccessKeyId = addSecretResult.Result;
+                repo.AccessKey = null;
+            }
+
             await _deviceRepositoryRepo.AddDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }
@@ -78,7 +89,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeOrgAccessAsync(user, orgId, typeof(DeviceRepository));
             return await _deviceRepositoryRepo.GetDeviceRepositoriesForOrgAsync(orgId);
         }
-        
+
         public Task<bool> QueryKeyInUserAsync(string key, EntityHeader org)
         {
             return _deviceRepositoryRepo.QueryRepoKeyInUseAsync(key, org.Id);
@@ -88,6 +99,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             ValidationCheck(repo, Actions.Update);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Update, user, org);
+
+            if (!String.IsNullOrEmpty(repo.AccessKey))
+            {
+                var addSecretResult = await _secureStorage.AddSecretAsync(repo.AccessKey);
+                if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
+                repo.SecureAccessKeyId = addSecretResult.Result;
+                repo.AccessKey = null;
+            }
+
             await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }

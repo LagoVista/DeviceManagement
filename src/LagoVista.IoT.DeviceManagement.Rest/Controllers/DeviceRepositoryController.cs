@@ -40,9 +40,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceGroup"></param>
         /// <returns></returns>
         [HttpPost("/api/devicerepo")]
-        public Task<InvokeResult> AddDeviceGroupAsync([FromBody] DeviceRepository deviceGroup)
+        public Task<InvokeResult> AddDeviceRepositoryAsync([FromBody] DeviceRepository deviceGroup)
         {
-            return _deviceRepositoryManager.AddDeviceRepositoryAsync(deviceGroup, UserEntityHeader, OrgEntityHeader);
+            return _deviceRepositoryManager.AddDeviceRepositoryAsync(deviceGroup, OrgEntityHeader, UserEntityHeader );
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceGroup"></param>
         /// <returns></returns>
         [HttpPut("/api/devicerepo")]
-        public Task<InvokeResult> UpdateDeviceGroupAsync([FromBody] DeviceRepository deviceGroup)
+        public Task<InvokeResult> UpdateDeviceRepositoryAsync([FromBody] DeviceRepository deviceGroup)
         {
             SetUpdatedProperties(deviceGroup);
             return _deviceRepositoryManager.UpdateDeviceRepositoryAsync(deviceGroup, OrgEntityHeader, UserEntityHeader);
@@ -81,12 +81,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Deployment Host - Get
+        /// Deployment Repositories - Get
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("/api/devicerepo/{id}")]
-        public async Task<DetailResponse<DeviceRepository>> GetHostAsync(String id)
+        public async Task<DetailResponse<DeviceRepository>> GetDeviceRepositoryAsync(String id)
         {
             var deviceRepo = await _deviceRepositoryManager.GetDeviceRepositoryAsync(id, OrgEntityHeader, UserEntityHeader);
             return DetailResponse<DeviceRepository>.Create(deviceRepo);
@@ -118,7 +118,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("/api/devicerepo/factory")]
-        public DetailResponse<DeviceRepository> CreateDeviceGroup()
+        public DetailResponse<DeviceRepository> CreateDeviceRep()
         {
             var response = DetailResponse<DeviceRepository>.Create();
             response.Model.Id = Guid.NewGuid().ToId();
@@ -126,28 +126,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             SetOwnedProperties(response.Model);
 
             return response;
-        }
-
-        /// <summary>
-        /// Device Repository - Get Storage Options.
-        /// </summary>
-        /// <returns></returns>
-        [HttpDelete("/api/store/storagecapacity")]
-        public async Task<ListResponse<ProductOffering>> GetDeviceStorageSizes()
-        {
-            var products = await _productStore.GetProductsAsync("storagecapacity");
-            return ListResponse<ProductOffering>.Create(products);
-        }
-
-        /// <summary>
-        /// Device Repository - Get Device Capacity Options.
-        /// </summary>
-        /// <returns></returns>
-        [HttpDelete("/api/store/devicecapacity")]
-        public async Task<ListResponse<ProductOffering>> GetDeviceCapacityOptions()
-        {
-            var products = await _productStore.GetProductsAsync("devicecapacity");
-            return ListResponse<ProductOffering>.Create(products);
         }
     }
 }

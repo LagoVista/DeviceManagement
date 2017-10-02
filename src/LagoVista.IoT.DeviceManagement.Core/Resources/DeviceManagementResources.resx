@@ -279,6 +279,9 @@
   <data name="Device_Organization_Select" xml:space="preserve">
     <value>-associate with organization-</value>
   </data>
+  <data name="Device_PrimaryKey" xml:space="preserve">
+    <value>Primary Key</value>
+  </data>
   <data name="Device_Properties" xml:space="preserve">
     <value>Properties</value>
   </data>
@@ -338,6 +341,9 @@
   </data>
   <data name="Device_Repo_UnitCapacity_Select" xml:space="preserve">
     <value>-select unit capacity-</value>
+  </data>
+  <data name="Device_SecondaryKey" xml:space="preserve">
+    <value>Secondary Key</value>
   </data>
   <data name="Device_SerialNumber" xml:space="preserve">
     <value>Serial Number</value>
