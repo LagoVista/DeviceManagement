@@ -46,6 +46,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         {
             Properties = new List<CustomField>();
             Attributes = new List<AttributeValue>();
+            PropertyBag = new Dictionary<string, object>();
+            States = new Dictionary<string, string>();
             Status = new EntityHeader<DeviceStates>() { Value = DeviceStates.New, Id = Device.New, Text = DeviceManagementResources.Device_Status_New };
             Notes = new List<DeviceNote>();
         }
@@ -70,15 +72,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only, it must however be unique for a device configuration. */
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired:true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string DeviceId { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public EntityHeader DeviceType { get; set; }    
+        public EntityHeader DeviceType { get; set; }
 
 
         public bool IsPublic { get; set; }
@@ -98,13 +100,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_FirmwareVersion, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string FirmwareVersion { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable:false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string IsConnected { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string LastContact { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_PrimaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired:true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_PrimaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public string PrimaryAccessKey { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
@@ -113,8 +115,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties,FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<CustomField> Properties { get; set; }
+
+        public Dictionary<string, object> PropertyBag { get; set; }
+
+        public Dictionary<string, string> States {get; set;}
 
         /// <summary>
         /// Attributes are values that have been set by message or workflow
