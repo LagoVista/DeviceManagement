@@ -94,6 +94,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerUser { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource:DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public string ShowDiagnostics { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string SerialNumber { get; set; }
 

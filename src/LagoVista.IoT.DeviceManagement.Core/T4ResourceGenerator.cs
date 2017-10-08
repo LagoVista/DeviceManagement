@@ -254,6 +254,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_SerialNumber
 
 		public static string Device_SerialNumber { get { return GetResourceString("Device_SerialNumber"); } }
+//Resources:DeviceManagementResources:Device_ShowDiagnostics
+
+		public static string Device_ShowDiagnostics { get { return GetResourceString("Device_ShowDiagnostics"); } }
+//Resources:DeviceManagementResources:Device_ShowDiagnostics_Help
+
+		public static string Device_ShowDiagnostics_Help { get { return GetResourceString("Device_ShowDiagnostics_Help"); } }
 //Resources:DeviceManagementResources:Device_Status
 
 		public static string Device_Status { get { return GetResourceString("Device_Status"); } }
@@ -417,6 +423,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_RepoTitle = "Device_RepoTitle";
 			public const string Device_SecondaryKey = "Device_SecondaryKey";
 			public const string Device_SerialNumber = "Device_SerialNumber";
+			public const string Device_ShowDiagnostics = "Device_ShowDiagnostics";
+			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
 			public const string Device_Status = "Device_Status";
 			public const string Device_Status_Commissioned = "Device_Status_Commissioned";
 			public const string Device_Status_Commissioned_Help = "Device_Status_Commissioned_Help";

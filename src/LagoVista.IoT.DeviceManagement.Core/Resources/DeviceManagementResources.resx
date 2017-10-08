@@ -348,6 +348,12 @@
   <data name="Device_SerialNumber" xml:space="preserve">
     <value>Serial Number</value>
   </data>
+  <data name="Device_ShowDiagnostics" xml:space="preserve">
+    <value>Show Diagnostics</value>
+  </data>
+  <data name="Device_ShowDiagnostics_Help" xml:space="preserve">
+    <value>Turning on Device Diagnostics will write detialed information for that device as messages are processed.  This may impact server performance so you should only use this while troublehsooting</value>
+  </data>
   <data name="Device_Status" xml:space="preserve">
     <value>Status</value>
   </data>
