@@ -18,7 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// <returns></returns>
-        Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+        Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool getEndPoints = false);
 
         /// <summary>
         /// Get the Device by the given Device ID that was entered by the user, this is the one that the device will send.
@@ -28,7 +28,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// /// <returns></returns>
-        Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user);
+        Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool getEndPoints = false);
         IDeviceArchiveManager ArchiveManager { get; }
     }
 

@@ -258,6 +258,12 @@
   <data name="Device_Help" xml:space="preserve">
     <value>Devices represent their physical counterparts ** Needs Better Definition</value>
   </data>
+  <data name="Device_inputCommandEndPoints" xml:space="preserve">
+    <value>Input Command Endpoints</value>
+  </data>
+  <data name="Device_inputCommandEndPoints_Help" xml:space="preserve">
+    <value>The end points that allow functions to be called on the device</value>
+  </data>
   <data name="Device_IsConnected" xml:space="preserve">
     <value>Is Connected</value>
   </data>
@@ -353,6 +359,12 @@
   </data>
   <data name="Device_ShowDiagnostics_Help" xml:space="preserve">
     <value>Turning on Device Diagnostics will write detialed information for that device as messages are processed.  This may impact server performance so you should only use this while troublehsooting</value>
+  </data>
+  <data name="Device_States" xml:space="preserve">
+    <value>State Machines</value>
+  </data>
+  <data name="Device_States_Help" xml:space="preserve">
+    <value>A list of the current state machines associated with the device</value>
   </data>
   <data name="Device_Status" xml:space="preserve">
     <value>Status</value>

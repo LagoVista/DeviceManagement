@@ -164,6 +164,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Help
 
 		public static string Device_Help { get { return GetResourceString("Device_Help"); } }
+//Resources:DeviceManagementResources:Device_inputCommandEndPoints
+
+		public static string Device_inputCommandEndPoints { get { return GetResourceString("Device_inputCommandEndPoints"); } }
+//Resources:DeviceManagementResources:Device_inputCommandEndPoints_Help
+
+		public static string Device_inputCommandEndPoints_Help { get { return GetResourceString("Device_inputCommandEndPoints_Help"); } }
 //Resources:DeviceManagementResources:Device_IsConnected
 
 		public static string Device_IsConnected { get { return GetResourceString("Device_IsConnected"); } }
@@ -260,6 +266,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_ShowDiagnostics_Help
 
 		public static string Device_ShowDiagnostics_Help { get { return GetResourceString("Device_ShowDiagnostics_Help"); } }
+//Resources:DeviceManagementResources:Device_States
+
+		public static string Device_States { get { return GetResourceString("Device_States"); } }
+//Resources:DeviceManagementResources:Device_States_Help
+
+		public static string Device_States_Help { get { return GetResourceString("Device_States_Help"); } }
 //Resources:DeviceManagementResources:Device_Status
 
 		public static string Device_Status { get { return GetResourceString("Device_Status"); } }
@@ -393,6 +405,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_DeviceType_Select = "Device_DeviceType_Select";
 			public const string Device_FirmwareVersion = "Device_FirmwareVersion";
 			public const string Device_Help = "Device_Help";
+			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
+			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
 			public const string Device_IsConnected = "Device_IsConnected";
 			public const string Device_LastContact = "Device_LastContact";
 			public const string Device_Location = "Device_Location";
@@ -425,6 +439,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_ShowDiagnostics = "Device_ShowDiagnostics";
 			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
+			public const string Device_States = "Device_States";
+			public const string Device_States_Help = "Device_States_Help";
 			public const string Device_Status = "Device_Status";
 			public const string Device_Status_Commissioned = "Device_Status_Commissioned";
 			public const string Device_Status_Commissioned_Help = "Device_Status_Commissioned_Help";
