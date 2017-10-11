@@ -105,6 +105,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get By Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/metadata")]
+        public async Task<DetailResponse<Device>> GetDeviceByIdAndMetaDataAsync(string devicerepoid, String id)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
+            return DetailResponse<Device>.Create(device);
+        }
+
+        /// <summary>
         /// Device Management - Get By DeviceId
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
@@ -115,6 +129,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            return DetailResponse<Device>.Create(device);
+        }
+
+        /// <summary>
+        /// Device Management - Get By DeviceId
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="deviceid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/deviceid/{deviceid}/metadata")]
+        public async Task<DetailResponse<Device>> GetDeviceByDeviceIdAndMetaData(string devicerepoid, String deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, true);
             return DetailResponse<Device>.Create(device);
         }
 

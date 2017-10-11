@@ -429,4 +429,13 @@
   <data name="Device_Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="Device_DeviceURI" xml:space="preserve">
+    <value>Device URI</value>
+  </data>
+  <data name="Device_DeviceURI_Help" xml:space="preserve">
+    <value>This is the address that can be used to access this device.</value>
+  </data>
+  <data name="Device_Repo_Instance" xml:space="preserve">
+    <value>Associated Instance</value>
+  </data>
 </root>

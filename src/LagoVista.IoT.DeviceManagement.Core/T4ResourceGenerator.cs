@@ -158,6 +158,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_DeviceType_Select
 
 		public static string Device_DeviceType_Select { get { return GetResourceString("Device_DeviceType_Select"); } }
+//Resources:DeviceManagementResources:Device_DeviceURI
+
+		public static string Device_DeviceURI { get { return GetResourceString("Device_DeviceURI"); } }
+//Resources:DeviceManagementResources:Device_DeviceURI_Help
+
+		public static string Device_DeviceURI_Help { get { return GetResourceString("Device_DeviceURI_Help"); } }
 //Resources:DeviceManagementResources:Device_FirmwareVersion
 
 		public static string Device_FirmwareVersion { get { return GetResourceString("Device_FirmwareVersion"); } }
@@ -218,6 +224,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Repo_Help
 
 		public static string Device_Repo_Help { get { return GetResourceString("Device_Repo_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_Instance
+
+		public static string Device_Repo_Instance { get { return GetResourceString("Device_Repo_Instance"); } }
 //Resources:DeviceManagementResources:Device_Repo_RepoType
 
 		public static string Device_Repo_RepoType { get { return GetResourceString("Device_Repo_RepoType"); } }
@@ -403,6 +412,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_DeviceId = "Device_DeviceId";
 			public const string Device_DeviceType = "Device_DeviceType";
 			public const string Device_DeviceType_Select = "Device_DeviceType_Select";
+			public const string Device_DeviceURI = "Device_DeviceURI";
+			public const string Device_DeviceURI_Help = "Device_DeviceURI_Help";
 			public const string Device_FirmwareVersion = "Device_FirmwareVersion";
 			public const string Device_Help = "Device_Help";
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
@@ -423,6 +434,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Repo_AuthKey2 = "Device_Repo_AuthKey2";
 			public const string Device_Repo_Description = "Device_Repo_Description";
 			public const string Device_Repo_Help = "Device_Repo_Help";
+			public const string Device_Repo_Instance = "Device_Repo_Instance";
 			public const string Device_Repo_RepoType = "Device_Repo_RepoType";
 			public const string Device_Repo_RepoType_AzureIoTHub = "Device_Repo_RepoType_AzureIoTHub";
 			public const string Device_Repo_RepoType_NuvIoT = "Device_Repo_RepoType_NuvIoT";

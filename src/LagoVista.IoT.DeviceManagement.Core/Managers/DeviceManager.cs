@@ -18,17 +18,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceManagementRepo _deviceRepo;
         IDeviceArchiveManager _deviceArchiveManager;
         ISecureStorage _secureStorage;
-        IInputCommandService _inputCommandService;
+        IDeviceConfigHelper _deviceConfigHelper;
 
         String _deviceRepoKey;
 
         public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager,
-            IInputCommandService inputCommandService, IAdminLogger logger, ISecureStorage secureStorage,
+            IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
             IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
         {
             _deviceRepo = deviceRepo;
             _secureStorage = secureStorage;
-            _inputCommandService = inputCommandService;
+            _deviceConfigHelper = deviceConfigHelper;
             _deviceArchiveManager = deviceArchiveManager;
         }
 
@@ -120,7 +120,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _deviceRepo.GetDevicesForLocationIdAsync(deviceRepo, locationId, top, take);
         }
 
-        public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool getEndPoints = false)
+        public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -139,8 +139,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
 
-            var loadResult = await _inputCommandService.GetInputCommandEndPointsForDeviceConfig(device.DeviceConfiguration.Id, org, user);
-            device.InputCommandEndPoints = loadResult.Result;
+            if (populateMetaData)
+            {
+                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user); 
+            }
 
             return device;
         }
@@ -150,7 +152,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _deviceRepo.CheckIfDeviceIdInUse(deviceRepo, deviceId, orgid);
         }
 
-        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool getEndPoints = false)
+        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -165,8 +167,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             deviceRepo.AccessKey = null;
 
-            var loadResult = await _inputCommandService.GetInputCommandEndPointsForDeviceConfig(device.DeviceConfiguration.Id, org, user);
-            device.InputCommandEndPoints = loadResult.Result;
+            if (populateMetaData)
+            {
+                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+            }
 
             return device;
         }

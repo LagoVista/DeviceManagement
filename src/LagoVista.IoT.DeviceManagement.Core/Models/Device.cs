@@ -43,8 +43,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public const string Decommissioned = "decommissioned";
 
         public Device()
-        {
-            Properties = new List<CustomField>();
+        {         
             Attributes = new List<AttributeValue>();
             PropertyBag = new Dictionary<string, object>();
             States = new List<AttributeValue>();
@@ -94,6 +93,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerUser { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceURI, HelpResource:DeviceManagementResources.Names.Device_DeviceURI_Help, FieldType: FieldTypes.Text, IsUserEditable:false, ResourceType: typeof(DeviceManagementResources))]
+        public string DeviceURI { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource:DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public string ShowDiagnostics { get; set; }
 
@@ -115,26 +118,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public string SecondaryAccessKey { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_inputCommandEndPoints, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_inputCommandEndPoints_Help, ResourceType: typeof(DeviceManagementResources))]
-        public List<InputCommandEndPoint> InputCommandEndPoints { get; set; }
-
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
-        public List<CustomField> Properties { get; set; }
+        public List<CustomField> PropertiesMetaData { get; set; }
 
         public Dictionary<string, object> PropertyBag { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_States, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_States_Help, ResourceType: typeof(DeviceManagementResources))]
-        public List<AttributeValue> States {get; set;}
+        public List<AttributeValue> Properties { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_States, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_States_Help, ResourceType: typeof(DeviceManagementResources))]
+        public List<AttributeValue> States {get; set;}
         /// <summary>
         /// Attributes are values that have been set by message or workflow
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes,FieldType: FieldTypes.ChildList, HelpResource:DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<AttributeValue> Attributes { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_inputCommandEndPoints, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_inputCommandEndPoints_Help, ResourceType: typeof(DeviceManagementResources))]
+        public List<InputCommandEndPoint> InputCommandEndPoints { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]

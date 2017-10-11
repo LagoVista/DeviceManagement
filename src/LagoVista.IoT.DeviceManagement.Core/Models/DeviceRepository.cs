@@ -77,6 +77,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_UnitCapacity, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_UnitCapacity_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader DeviceCapacity { get; set; }
 
+        [FormField(LabelResource: Resources.DeviceManagementResources.Names.Device_Repo_AccessKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
+        public string Uri { get; set; }
+
+        [FormField(LabelResource: Resources.DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
+        public EntityHeader Instance { get; set; }
+
         public IEntityHeader ToEntityHeader()
         {
             return new EntityHeader()

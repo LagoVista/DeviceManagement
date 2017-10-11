@@ -23,13 +23,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Value, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string Value { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Type, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Type, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public EntityHeader<ParameterTypes> AttributeType { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Unit, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Unit, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public EntityHeader<UnitSet> UnitSet {get; set;}
 
-        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_State, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_State, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public EntityHeader<StateSet> StateSet { get; set; }
     
     }

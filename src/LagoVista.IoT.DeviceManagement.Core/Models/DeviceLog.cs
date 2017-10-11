@@ -25,6 +25,5 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Entry { get; set; }
 
         public string DeleteAfter { get; set; }
-
     }
 }
