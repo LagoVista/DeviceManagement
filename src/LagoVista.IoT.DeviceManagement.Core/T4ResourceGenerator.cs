@@ -188,6 +188,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Location_Select
 
 		public static string Device_Location_Select { get { return GetResourceString("Device_Location_Select"); } }
+//Resources:DeviceManagementResources:Device_MessageValues
+
+		public static string Device_MessageValues { get { return GetResourceString("Device_MessageValues"); } }
+//Resources:DeviceManagementResources:Device_MessageValues_Help
+
+		public static string Device_MessageValues_Help { get { return GetResourceString("Device_MessageValues_Help"); } }
 //Resources:DeviceManagementResources:Device_Notes
 
 		public static string Device_Notes { get { return GetResourceString("Device_Notes"); } }
@@ -422,6 +428,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_LastContact = "Device_LastContact";
 			public const string Device_Location = "Device_Location";
 			public const string Device_Location_Select = "Device_Location_Select";
+			public const string Device_MessageValues = "Device_MessageValues";
+			public const string Device_MessageValues_Help = "Device_MessageValues_Help";
 			public const string Device_Notes = "Device_Notes";
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";

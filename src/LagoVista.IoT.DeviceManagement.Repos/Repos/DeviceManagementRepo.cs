@@ -96,14 +96,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return (await base.QueryAsync(device => device.DeviceId == id)).FirstOrDefault();
+            return (await base.QueryAsync(device => device.DeviceId == id && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
         }
 
         public async Task<bool> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, string orgid)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return (await base.QueryAsync(device => device.OwnerOrganization.Id == id && device.DeviceId == id)).Any();
+            return (await base.QueryAsync(device => device.OwnerOrganization.Id == id && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceId == id)).Any();
         }
 
         public Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id)

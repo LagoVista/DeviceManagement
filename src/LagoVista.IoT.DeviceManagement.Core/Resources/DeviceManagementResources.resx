@@ -438,4 +438,10 @@
   <data name="Device_Repo_Instance" xml:space="preserve">
     <value>Associated Instance</value>
   </data>
+  <data name="Device_MessageValues" xml:space="preserve">
+    <value>Message Values</value>
+  </data>
+  <data name="Device_MessageValues_Help" xml:space="preserve">
+    <value>Message Values are the Most Recent Values received from messages that were sent to the device.</value>
+  </data>
 </root>

@@ -133,11 +133,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_States, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_States_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<AttributeValue> States {get; set;}
+
         /// <summary>
         /// Attributes are values that have been set by message or workflow
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes,FieldType: FieldTypes.ChildList, HelpResource:DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<AttributeValue> Attributes { get; set; }
+
+
+        /// <summary>
+        /// Values as pull from the most recent messages
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_MessageValues, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_MessageValues_Help, ResourceType: typeof(DeviceManagementResources))]
+        public List<AttributeValue> MessageValues { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_inputCommandEndPoints, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_inputCommandEndPoints_Help, ResourceType: typeof(DeviceManagementResources))]

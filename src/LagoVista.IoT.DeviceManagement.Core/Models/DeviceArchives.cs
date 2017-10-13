@@ -14,8 +14,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Properties = new Dictionary<string, object>();
         }
 
-        /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only */
+        /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it is read only */
         public string DeviceId { get; set; }
+
+        public string MessageId { get; set; }
 
         public string DeviceConfigurationId { get; set; }
 
