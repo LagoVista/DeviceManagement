@@ -1,5 +1,6 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Repos;
-using Microsoft.Extensions.DependencyInjection;
+﻿using LagoVista.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+
 
 namespace LagoVista.IoT.DeviceManagement.Repos
 {

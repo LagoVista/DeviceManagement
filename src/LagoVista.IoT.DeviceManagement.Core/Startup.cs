@@ -1,6 +1,6 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Managers;
+﻿using LagoVista.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Reporting;
-using Microsoft.Extensions.DependencyInjection;
 using System.Resources;
 
 [assembly: NeutralResourcesLanguage("en")]

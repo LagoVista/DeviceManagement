@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.2</TargetFramework>
+    <NetStandardImplicitPackageVersion>2.0.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.Core" Version="1.2.163-alpha0901" />
     <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="1.2.163-alpha0901" />
     <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.163-alpha0901" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="T4ResourceGenerator.cs">
