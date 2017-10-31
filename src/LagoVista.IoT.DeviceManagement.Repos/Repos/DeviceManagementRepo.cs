@@ -9,6 +9,7 @@ using LagoVista.IoT.Logging.Loggers;
 using System;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -139,7 +140,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, int top, int take)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -149,7 +150,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                    select item.CreateSummary();
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId, int top, int take)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -160,7 +161,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                    select item.CreateSummary();
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, int top, int take)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -170,7 +171,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                    select item.CreateSummary();
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, int top, int take)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -180,7 +181,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                    select item.CreateSummary();
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository deviceRepo, string deviceTypeId, int top, int take)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository deviceRepo, string deviceTypeId, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -19,10 +20,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceArchiveManager _deviceArchiveManager;
         ISecureStorage _secureStorage;
         IDeviceConfigHelper _deviceConfigHelper;
+        IDeviceManagementConnector _deviceConnectorService;
 
         String _deviceRepoKey;
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager,
+        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager, IDeviceManagementConnector deviceConnectorService,
             IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
             IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
         {
@@ -30,6 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
             _deviceArchiveManager = deviceArchiveManager;
+            _deviceConnectorService = deviceConnectorService;
         }
 
         /* 
@@ -44,10 +47,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (String.IsNullOrEmpty(_deviceRepoKey))
             {
                 var keyResult = await _secureStorage.GetSecretAsync(deviceRepo.SecureAccessKeyId, user, org);
-                if (!keyResult.Successful)
-                {
-                    return keyResult.ToInvokeResult();
-                }
+                if (!keyResult.Successful) return keyResult.ToInvokeResult();
 
                 _deviceRepoKey = keyResult.Result;
             }
@@ -61,10 +61,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             ValidationCheck(device, Actions.Create);
+            device.DeviceRepository = new EntityHeader();
+            device.DeviceRepository.Id = deviceRepo.Id;
             device.DeviceRepository.Text = deviceRepo.Name;
 
             var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
-            if(existingDevice != null)
+            if (existingDevice != null)
             {
                 return InvokeResult.FromErrors(Resources.ErrorCodes.DeviceExists.ToErrorMessage($"DeviceId={device.DeviceId}"));
             }
@@ -72,100 +74,92 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
-                if (!setRepoResult.Successful)
-                {
-                    return setRepoResult;
-                }
+                if (!setRepoResult.Successful) return setRepoResult;
             }
 
-            var result = await _deviceRepo.AddDeviceAsync(deviceRepo, device);
+            InvokeResult result;
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                result = await _deviceConnectorService.AddDeviceAsync(deviceRepo.Instance.Id, device, org, user);
+            }
+            else
+            {
+                result = await _deviceRepo.AddDeviceAsync(deviceRepo, device);
+            }
+
             deviceRepo.AccessKey = null;
             return result;
         }
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
-
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             ValidationCheck(device, Actions.Update);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
-                if (!setRepoResult.Successful)
-                {
-                    return setRepoResult;
-                }
+                if (!setRepoResult.Successful) return setRepoResult;
             }
 
-            await _deviceRepo.UpdateDeviceAsync(deviceRepo, device);
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                await _deviceConnectorService.UpdateDeviceAsync(deviceRepo.Instance.Id, device, org, user);
+            }
+            else
+            {
+                await _deviceRepo.UpdateDeviceAsync(deviceRepo, device);
+            }
             deviceRepo.AccessKey = null;
 
             return InvokeResult.Success;
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId, int top, int take, EntityHeader user)
+        public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            await AuthorizeOrgAccessAsync(user, orgId, typeof(Device));
+            await AuthorizeOrgAccessAsync(user, org, typeof(Device));
 
-            var result = await _deviceRepo.GetDevicesForOrgIdAsync(deviceRepo, orgId, top, take);
-            deviceRepo.AccessKey = null;
-            return result;
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                return await _deviceConnectorService.GetDevicesForOrgIdAsync(deviceRepo.Instance.Id, listRequest, org, user);
+            }
+            else
+            {
+                return await _deviceRepo.GetDevicesForOrgIdAsync(deviceRepo, org.Id, listRequest);
+            }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, int top, int take, EntityHeader org, EntityHeader user)
+        public Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extender manager class for location access.
 
-            return _deviceRepo.GetDevicesForLocationIdAsync(deviceRepo, locationId, top, take);
+            return _deviceRepo.GetDevicesForLocationIdAsync(deviceRepo, locationId, listRequest);
         }
+
 
         public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
-                if (!setRepoResult.Successful)
-                {
-                    return null;
-                }
+                if (!setRepoResult.Successful) return null;
             }
 
-            var device = await _deviceRepo.GetDeviceByDeviceIdAsync(deviceRepo, id);
-            if (device == null)
+            Device device;
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
             {
-                return null;
+                device = await _deviceConnectorService.GetDeviceByDeviceIdAsync(deviceRepo.Instance.Id, id, org, user);
             }
+            else
+            {
+                device = await _deviceRepo.GetDeviceByDeviceIdAsync(deviceRepo, id);
+            }
+
+            if (device == null) return null;
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
-
-            if (populateMetaData)
-            {
-                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user); 
-            }
-
-            return device;
-        }
-
-        public Task<bool> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string deviceId, string orgid)
-        {
-            return _deviceRepo.CheckIfDeviceIdInUse(deviceRepo, deviceId, orgid);
-        }
-
-        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
-        {
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
-            {
-                var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
-                if (!setRepoResult.Successful)
-                {
-                    return null;
-                }
-            }
-
-            var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
-            await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
-            deviceRepo.AccessKey = null;
 
             if (populateMetaData)
             {
@@ -175,37 +169,84 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return device;
         }
 
+        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
+        {
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
+                if (!setRepoResult.Successful) return null;
+            }
+
+            Device device;
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                device = await _deviceConnectorService.GetDeviceByIdAsync(deviceRepo.Instance.Id, id, org, user);
+            }
+            else
+            {
+                device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
+            }
+
+            await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
+            deviceRepo.AccessKey = null;
+
+            if (populateMetaData)
+            {
+                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+            }
+            return device;
+        }
+
         public async Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
-                if (!setRepoResult.Successful)
-                {
-                    setRepoResult.ToInvokeResult();
-                }
+                if (!setRepoResult.Successful) return setRepoResult.ToInvokeResult();
             }
 
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             await AuthorizeAsync(device, AuthorizeActions.Delete, user, org);
 
-            await _deviceRepo.DeleteDeviceAsync(deviceRepo, id);
-            deviceRepo.AccessKey = null;
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                await _deviceConnectorService.DeleteDeviceAsync(deviceRepo.Instance.Id, id, org, user);
+                return InvokeResult.Success;
+            }
+            else
+            {
+                await _deviceRepo.DeleteDeviceAsync(deviceRepo, id);
+                deviceRepo.AccessKey = null;
 
-            return InvokeResult.Success;
+                return InvokeResult.Success;
+            }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, int top, int take, EntityHeader org, EntityHeader user)
+        public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ status
-            return _deviceRepo.GetDevicesInStatusAsync(deviceRepo, status, top, take);
-
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                return _deviceConnectorService.GetDevicesInStatusAsync(deviceRepo.Instance.Id, status, listRequest, org, user);
+            }
+            else
+            {
+                return _deviceRepo.GetDevicesInStatusAsync(deviceRepo, status, listRequest);
+            }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, int top, int take, EntityHeader org, EntityHeader user)
+        public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ configuration
-            return _deviceRepo.GetDevicesWithConfigurationAsync(deviceRepo, configurationId, top, take);
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            {
+                 return _deviceConnectorService.GetDevicesWithConfigurationAsync(deviceRepo.Instance.Id, configurationId, listRequest, org, user);
+            }
+            else
+            {
+                return _deviceRepo.GetDevicesWithConfigurationAsync(deviceRepo, configurationId, listRequest);
+            }
         }
 
         public async Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)

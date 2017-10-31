@@ -14,15 +14,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         [EnumLabel(DeviceRepository.DeviceRepository_Type_NuvIoT, DeviceManagementResources.Names.Device_Repo_RepoType_NuvIoT, typeof(DeviceManagementResources))]
         NuvIoT,
-        [EnumLabel(DeviceRepository.DeviceRepository_Type_AzureITHub, DeviceManagementResources.Names.Device_Repo_RepoType_AzureIoTHub, typeof(DeviceManagementResources))]
-        AzureIoTHub
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_Distributed, DeviceManagementResources.Names.Device_Repo_RepoType_AzureIoTHub, typeof(DeviceManagementResources))]
+        AzureIoTHub,
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_AzureITHub, DeviceManagementResources.Names.Device_Repo_RepoType_Distributed, typeof(DeviceManagementResources))]
+        Distributed
     }
-
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, Resources.DeviceManagementResources.Names.Device_Repo_Help, Resources.DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity, IFormDescriptor
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
+        public const string DeviceRepository_Type_Distributed = "distributed";
         public const string DeviceRepository_Type_AzureITHub = "azureiothub";
 
         public DeviceRepository()
@@ -100,7 +102,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 IsPublic = IsPublic,
                 Key = Key,
                 Name = Name,
-                Description = Description
+                Description = Description,
+                RepositoryType = RepositoryType.Text
             };
         }
 
@@ -141,6 +144,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     public class DeviceRepositorySummary : SummaryData
     {
-
+        public string RepositoryType { get; set; }
     }
 }

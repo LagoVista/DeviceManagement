@@ -71,7 +71,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForOrgIdAsync(repo, OrgEntityHeader.Id, 0, 100, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForOrgIdAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
@@ -86,7 +86,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             //TODO: Need to add paging.
-            var devices = await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, 0, 100, OrgEntityHeader, UserEntityHeader);
+            var devices = await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
             return ListResponse<DeviceSummary>.Create(devices);
         }
 
