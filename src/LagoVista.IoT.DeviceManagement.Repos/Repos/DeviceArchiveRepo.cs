@@ -27,6 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<List<Object>>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
+            
             //TODO: Need to implement filtering
             //TODO: Need to add some bounds here so it won't run forever.
             //return base.GetByFilterAsync(FilterOptions.Create("DateStamp", FilterOptions.Operators.GreaterThan, start), FilterOptions.Create("DateStamp", FilterOptions.Operators.LessThan, end));
