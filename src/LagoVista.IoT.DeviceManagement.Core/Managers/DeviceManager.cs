@@ -79,7 +79,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             InvokeResult result;
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 result = await _deviceConnectorService.AddDeviceAsync(deviceRepo.Instance.Id, device, org, user);
             }
@@ -103,7 +103,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 if (!setRepoResult.Successful) return setRepoResult;
             }
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 await _deviceConnectorService.UpdateDeviceAsync(deviceRepo.Instance.Id, device, org, user);
             }
@@ -120,7 +120,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 return await _deviceConnectorService.GetDevicesForOrgIdAsync(deviceRepo.Instance.Id, listRequest, org, user);
             }
@@ -148,7 +148,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             Device device;
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 device = await _deviceConnectorService.GetDeviceByDeviceIdAsync(deviceRepo.Instance.Id, id, org, user);
             }
@@ -179,7 +179,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             Device device;
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 device = await _deviceConnectorService.GetDeviceByIdAsync(deviceRepo.Instance.Id, id, org, user);
             }
@@ -209,7 +209,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             await AuthorizeAsync(device, AuthorizeActions.Delete, user, org);
 
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 await _deviceConnectorService.DeleteDeviceAsync(deviceRepo.Instance.Id, id, org, user);
                 return InvokeResult.Success;
@@ -226,7 +226,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ status
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 return _deviceConnectorService.GetDevicesInStatusAsync(deviceRepo.Instance.Id, status, listRequest, org, user);
             }
@@ -239,7 +239,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ configuration
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                  return _deviceConnectorService.GetDevicesWithConfigurationAsync(deviceRepo.Instance.Id, configurationId, listRequest, org, user);
             }

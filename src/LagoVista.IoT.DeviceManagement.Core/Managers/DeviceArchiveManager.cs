@@ -25,7 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user)
         {
-            if(deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if(deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 await _archiveConnector.AddArchiveAsync(deviceRepo.Instance.Id, logEntry, org, user);
             }
@@ -39,7 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<ListResponse<List<object>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceArchive), LagoVista.Core.Validation.Actions.Read);
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Distributed)
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
             {
                 return await _archiveConnector.GetForDateRangeAsync(deviceRepo.Instance.Id, deviceId, listRequest, org, user);
             }

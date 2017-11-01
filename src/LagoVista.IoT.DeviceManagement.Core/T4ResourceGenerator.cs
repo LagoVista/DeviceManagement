@@ -239,9 +239,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Device_Repo_RepoType_AzureIoTHub
 
 		public static string Device_Repo_RepoType_AzureIoTHub { get { return GetResourceString("Device_Repo_RepoType_AzureIoTHub"); } }
-//Resources:DeviceManagementResources:Device_Repo_RepoType_Distributed
+//Resources:DeviceManagementResources:Device_Repo_RepoType_Dedicated
 
-		public static string Device_Repo_RepoType_Distributed { get { return GetResourceString("Device_Repo_RepoType_Distributed"); } }
+		public static string Device_Repo_RepoType_Dedicated { get { return GetResourceString("Device_Repo_RepoType_Dedicated"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_Help
+
+		public static string Device_Repo_RepoType_Help { get { return GetResourceString("Device_Repo_RepoType_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_Local
+
+		public static string Device_Repo_RepoType_Local { get { return GetResourceString("Device_Repo_RepoType_Local"); } }
 //Resources:DeviceManagementResources:Device_Repo_RepoType_NuvIoT
 
 		public static string Device_Repo_RepoType_NuvIoT { get { return GetResourceString("Device_Repo_RepoType_NuvIoT"); } }
@@ -448,7 +454,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Device_Repo_Instance = "Device_Repo_Instance";
 			public const string Device_Repo_RepoType = "Device_Repo_RepoType";
 			public const string Device_Repo_RepoType_AzureIoTHub = "Device_Repo_RepoType_AzureIoTHub";
-			public const string Device_Repo_RepoType_Distributed = "Device_Repo_RepoType_Distributed";
+			public const string Device_Repo_RepoType_Dedicated = "Device_Repo_RepoType_Dedicated";
+			public const string Device_Repo_RepoType_Help = "Device_Repo_RepoType_Help";
+			public const string Device_Repo_RepoType_Local = "Device_Repo_RepoType_Local";
 			public const string Device_Repo_RepoType_NuvIoT = "Device_Repo_RepoType_NuvIoT";
 			public const string Device_Repo_RepoType_Select = "Device_Repo_RepoType_Select";
 			public const string Device_Repo_ResourceName = "Device_Repo_ResourceName";

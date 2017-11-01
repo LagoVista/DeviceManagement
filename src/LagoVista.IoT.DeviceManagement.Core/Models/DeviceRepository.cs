@@ -14,17 +14,23 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         [EnumLabel(DeviceRepository.DeviceRepository_Type_NuvIoT, DeviceManagementResources.Names.Device_Repo_RepoType_NuvIoT, typeof(DeviceManagementResources))]
         NuvIoT,
-        [EnumLabel(DeviceRepository.DeviceRepository_Type_Distributed, DeviceManagementResources.Names.Device_Repo_RepoType_AzureIoTHub, typeof(DeviceManagementResources))]
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_NuvIoT_Dedicated, DeviceManagementResources.Names.Device_Repo_RepoType_NuvIoT, typeof(DeviceManagementResources))]
+        NuvIoTDedicated,
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_AzureITHub, DeviceManagementResources.Names.Device_Repo_RepoType_AzureIoTHub, typeof(DeviceManagementResources))]
         AzureIoTHub,
-        [EnumLabel(DeviceRepository.DeviceRepository_Type_AzureITHub, DeviceManagementResources.Names.Device_Repo_RepoType_Distributed, typeof(DeviceManagementResources))]
-        Distributed
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_Local, DeviceManagementResources.Names.Device_Repo_RepoType_Local, typeof(DeviceManagementResources))]
+        Local,
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_Dedicated, DeviceManagementResources.Names.Device_Repo_RepoType_Dedicated, typeof(DeviceManagementResources))]
+        Dedicated
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, Resources.DeviceManagementResources.Names.Device_Repo_Help, Resources.DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity, IFormDescriptor
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
-        public const string DeviceRepository_Type_Distributed = "distributed";
+        public const string DeviceRepository_Type_NuvIoT_Dedicated = "nuviotdedicated";
+        public const string DeviceRepository_Type_Local = "local";
+        public const string DeviceRepository_Type_Dedicated = "dedicated";
         public const string DeviceRepository_Type_AzureITHub = "azureiothub";
 
         public DeviceRepository()
@@ -41,7 +47,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerUser { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_RepoType, EnumType: (typeof(RepositoryTypes)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_RepoType_Select, IsRequired: true, IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_RepoType, HelpResource:DeviceManagementResources.Names.Device_Repo_RepoType_Help, EnumType: (typeof(RepositoryTypes)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_RepoType_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<RepositoryTypes> RepositoryType { get; set; }
 
         public ConnectionSettings DeviceStorageSettings { get; set; }

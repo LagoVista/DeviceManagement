@@ -444,7 +444,13 @@
   <data name="Device_MessageValues_Help" xml:space="preserve">
     <value>Message Values are the Most Recent Values received from messages that were sent to the device.</value>
   </data>
-  <data name="Device_Repo_RepoType_Distributed" xml:space="preserve">
-    <value>Distributed</value>
+  <data name="Device_Repo_RepoType_Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Device_Repo_RepoType_Dedicated" xml:space="preserve">
+    <value>Dedicated</value>
+  </data>
+  <data name="Device_Repo_RepoType_Help" xml:space="preserve">
+    <value>You can specify different storage mechanisms for your your devices and device data.  NuvIoT is our shared storage pool where your devices and device data are securely stored in the cloud.  Local will store your data locally along with your instance.  Azure IoT Hub will store your devices in both Azure IoT Hub and our NuvIoT storage pool.  Finally if you needed dedicated storage for your devices and data please contact us.</value>
   </data>
 </root>

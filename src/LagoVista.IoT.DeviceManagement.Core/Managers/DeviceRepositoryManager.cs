@@ -27,24 +27,56 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
-            repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+            if(EntityHeader.IsNullOrEmpty(repo.RepositoryType))
             {
-                AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
-                AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
-            };
+                return InvokeResult.FromErrors(new ErrorMessage("Respository Type is a Required Field."));
+            }
 
-            repo.PEMStorageSettings = new ConnectionSettings()
+            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT || 
+                repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
-                AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
-                AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
-            };
+                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                {
+                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                };
 
-            repo.DeviceStorageSettings = new ConnectionSettings()
+                repo.PEMStorageSettings = new ConnectionSettings()
+                {
+                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                };
+
+                repo.DeviceStorageSettings = new ConnectionSettings()
+                {
+                    Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
+                    ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
+                };
+            }
+            else
             {
-                Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
-                AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
-                ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
-            };
+                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mysql",
+                    ResourceName = "nuviot",
+                    Port = "3306"
+                };
+
+                repo.PEMStorageSettings = new ConnectionSettings()
+                {
+                    Uri="mongodb",
+                    Port= "27017",
+                    ResourceName = "nuviot"
+                };
+
+                repo.DeviceStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mysql",
+                    ResourceName = "nuviot",
+                    Port = "3306"
+                };
+            }
 
             ValidationCheck(repo, Actions.Create);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Create, user, org);
