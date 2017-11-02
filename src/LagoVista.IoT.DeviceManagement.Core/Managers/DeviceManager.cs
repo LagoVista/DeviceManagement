@@ -17,21 +17,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DeviceManager : ManagerBase, IDeviceManager
     {
         IDeviceManagementRepo _deviceRepo;
-        IDeviceArchiveManager _deviceArchiveManager;
         ISecureStorage _secureStorage;
         IDeviceConfigHelper _deviceConfigHelper;
         IDeviceManagementConnector _deviceConnectorService;
 
         String _deviceRepoKey;
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceArchiveManager deviceArchiveManager, IDeviceManagementConnector deviceConnectorService,
+        public DeviceManager(IDeviceManagementRepo deviceRepo, IDeviceManagementConnector deviceConnectorService,
             IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
             IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
         {
             _deviceRepo = deviceRepo;
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
-            _deviceArchiveManager = deviceArchiveManager;
             _deviceConnectorService = deviceConnectorService;
         }
 
@@ -116,7 +114,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public async Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
 
@@ -130,7 +128,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extender manager class for location access.
 
@@ -223,7 +221,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ status
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
@@ -236,7 +234,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
-        public Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ configuration
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
@@ -254,8 +252,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             return await CheckForDepenenciesAsync(device);
-        }
-
-        public IDeviceArchiveManager ArchiveManager { get { return _deviceArchiveManager; } }
+        }       
     }
 }

@@ -72,9 +72,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 repo.DeviceStorageSettings = new ConnectionSettings()
                 {
-                    Uri = "mysql",
+                    Uri = "mongodb",
                     ResourceName = "nuviot",
-                    Port = "3306"
+                    Port = "27017"
                 };
             }
 

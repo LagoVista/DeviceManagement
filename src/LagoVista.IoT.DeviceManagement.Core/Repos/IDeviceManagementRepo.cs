@@ -16,9 +16,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 
         Task DeleteDeviceByIdAsync(DeviceRepository repo, string deviceId);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository repo, string orgId, ListRequest listRequest);
+        Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository repo, string orgId, ListRequest listRequest);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository repo, string locationId, ListRequest listRequest);
+        Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository repo, string locationId, ListRequest listRequest);
 
         Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository repo, string id);
 
@@ -26,11 +26,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 
         Task<Device> GetDeviceByIdAsync(DeviceRepository repo, string id);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository repo, string status, ListRequest listRequest);
+        Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository repo, string status, ListRequest listRequest);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository repo, string configurationId, ListRequest listRequest);
+        Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository repo, string configurationId, ListRequest listRequest);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository repo, string deviceTypeId, ListRequest listRequest);
+        Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository repo, string deviceTypeId, ListRequest listRequest);
     }
 
 }

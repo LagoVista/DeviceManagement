@@ -19,9 +19,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 
         Task DeleteDeviceByIdAsync(string instanceId, string deviceId, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(string instanceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(string instanceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(string instanceId, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(string instanceId, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<Device> GetDeviceByDeviceIdAsync(string instanceId, string id, EntityHeader org, EntityHeader user);
 
@@ -29,11 +29,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 
         Task<Device> GetDeviceByIdAsync(string instanceId, string id, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(string instanceId, string status, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(string instanceId, string status, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(string instanceId, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(string instanceId, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithDeviceTypeAsync(string instanceId, string deviceTypeId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(string instanceId, string deviceTypeId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
     }
 }

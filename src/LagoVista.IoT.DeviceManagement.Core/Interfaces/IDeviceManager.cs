@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core
 {
-    public interface IDeviceManagerRemote
+    public interface IDeviceManager
     {
         Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
-        
+
         /// <summary>
         /// Get the Device by the unique identifier that was generated for the device (not device id)
         /// </summary>
@@ -30,11 +30,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="user">User</param>
         /// /// <returns></returns>
         Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool populateMetaData = false);
-        IDeviceArchiveManager ArchiveManager { get; }
-    }
-
-    public interface IDeviceManager : IDeviceManagerRemote
-    {
         Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
         
         /// <summary>
@@ -47,13 +42,13 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <returns></returns>
         Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<IEnumerable<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
     }
