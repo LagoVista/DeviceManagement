@@ -93,27 +93,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public async Task<DependentObjectCheckResult> CheckInUseAsync(string id, EntityHeader org, EntityHeader user)
+        public async Task<DependentObjectCheckResult> CheckInUseAsync(string deviceRepoId, EntityHeader org, EntityHeader user)
         {
-            var host = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(id);
-            await AuthorizeAsync(host, AuthorizeResult.AuthorizeActions.Read, user, org);
-            return await CheckForDepenenciesAsync(host);
+            var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(deviceRepoId);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+            return await CheckForDepenenciesAsync(deviceRepo);
         }
 
-        public async Task<InvokeResult> DeleteDeviceRepositoryAsync(String instanceId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> DeleteDeviceRepositoryAsync(String deviceRepoId, EntityHeader org, EntityHeader user)
         {
-            var host = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(instanceId);
-            await AuthorizeAsync(host, AuthorizeResult.AuthorizeActions.Read, user, org);
-            await ConfirmNoDepenenciesAsync(host);
-            await _deviceRepositoryRepo.DeleteAsync(instanceId);
+            var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(deviceRepoId);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+            await ConfirmNoDepenenciesAsync(deviceRepo);
+            await _deviceRepositoryRepo.DeleteAsync(deviceRepoId);
             return InvokeResult.Success;
         }
 
-        public async Task<DeviceRepository> GetDeviceRepositoryAsync(string instanceId, EntityHeader org, EntityHeader user)
+        public async Task<DeviceRepository> GetDeviceRepositoryAsync(string deviceRepoId, EntityHeader org, EntityHeader user)
         {
-            var host = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(instanceId);
-            await AuthorizeAsync(host, AuthorizeResult.AuthorizeActions.Read, user, org);
-            return host;
+            var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(deviceRepoId);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+            return deviceRepo;
         }
 
         public async Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user)

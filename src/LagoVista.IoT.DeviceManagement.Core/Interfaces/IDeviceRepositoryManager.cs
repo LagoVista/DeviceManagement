@@ -14,10 +14,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
     public interface IDeviceRepositoryManager : IDeviceRepositoryManagerRemote
     {
-        Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user);
-        Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository host, EntityHeader org, EntityHeader user);
-        Task<DependentObjectCheckResult> CheckInUseAsync(string id, EntityHeader org, EntityHeader user);
-        Task<InvokeResult> DeleteDeviceRepositoryAsync(String instanceId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository deviceRepo, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository deviceRepo, EntityHeader org, EntityHeader user);
+        Task<DependentObjectCheckResult> CheckInUseAsync(string deviceRepoId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> DeleteDeviceRepositoryAsync(String deviceRepoId, EntityHeader org, EntityHeader user);
         Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user);
         Task<bool> QueryKeyInUserAsync(string key, EntityHeader org);
     }
