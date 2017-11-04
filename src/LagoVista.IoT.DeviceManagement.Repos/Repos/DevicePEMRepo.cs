@@ -25,24 +25,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             _baseURI = $"https://{deviceRepo.PEMStorageSettings.AccountId}.blob.core.windows.net";
 
-            Console.WriteLine("====> Base URI: " + _baseURI);
-
             var uri = new Uri(_baseURI);
             _cloudClient = new CloudBlobClient(uri, new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey));
 
             var container = _cloudClient.GetContainerReference(ContainerReferenceId);
             var corePath = $"{_baseURI}/{ContainerReferenceId}/".ToLower();
-            Console.WriteLine("====> Core Path: " + corePath);
-
-            
 
             /* 
              * The method is passed in the full  URI of the BLOB we need to strip
              * out the end point and the container to get the name of the blob
              */
             var blobName = pemURI.ToLower().Replace(corePath, "");
-            Console.WriteLine("====> Blob Name: " + blobName);
-
             var blob = container.GetBlockBlobReference(blobName);
 
             return await blob.DownloadTextAsync();
