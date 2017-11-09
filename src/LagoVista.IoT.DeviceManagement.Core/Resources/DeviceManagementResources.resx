@@ -453,4 +453,10 @@
   <data name="Device_Repo_RepoType_Help" xml:space="preserve">
     <value>You can specify different storage mechanisms for your your devices and device data.  NuvIoT is our shared storage pool where your devices and device data are securely stored in the cloud.  Local will store your data locally along with your instance.  Azure IoT Hub will store your devices in both Azure IoT Hub and our NuvIoT storage pool.  Finally if you needed dedicated storage for your devices and data please contact us.</value>
   </data>
+  <data name="Device_DebugMode" xml:space="preserve">
+    <value>Debug Mode</value>
+  </data>
+  <data name="Device_DebugMode_Help" xml:space="preserve">
+    <value>If Debug Mode is enabled as the device is processed by the pipeline modules, you will see considerably more events be displayed in telemetry output window of the device or the instance that is processing the device messages.</value>
+  </data>
 </root>

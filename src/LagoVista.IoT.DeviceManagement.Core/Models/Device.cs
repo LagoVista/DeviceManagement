@@ -118,6 +118,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public string SecondaryAccessKey { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources),  IsRequired: true)]
+        public bool DebugMode { get; set; }
+
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
