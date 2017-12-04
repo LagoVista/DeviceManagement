@@ -14,31 +14,39 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public class DevicePEMManager : ManagerBase, IDevicePEMManager
     {
-        IDevicePEMIndexesRepo _devicePEMIndexRepo;
         IDevicePEMRepo _devicePEMRepo;
 
-        public DevicePEMManager(IDevicePEMRepo devicePEMRepo, IDevicePEMIndexesRepo devicePEMIndexRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
+        public DevicePEMManager(IDevicePEMRepo devicePEMRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security) : base(logger, appConfig, dependencyManager, security)
         {
-            _devicePEMIndexRepo = devicePEMIndexRepo;
             _devicePEMRepo = devicePEMRepo;
         }
 
-        public Task<ListResponse<DevicePEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
         {
-            //TODO: Add Security, will need to confirm the user has access to view PEM lists AND has access to this device.
-            //TODO: Sorry someone will need to clean this up.
-
-            return _devicePEMIndexRepo.GetPEMIndexForDeviceAsync(deviceRepo, deviceId, request);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org, "GetPEMIndexesForDevice");
+            return await _devicePEMRepo.GetPEMIndexForDeviceAsync(deviceRepo, deviceId, request);
         }
 
-        public async Task<InvokeResult<string>> GetPEMAsync(DeviceRepository deviceRepo, string pemURI, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<string>> GetPEMAsync(DeviceRepository deviceRepo, string deviceId, string messageId, EntityHeader org, EntityHeader user)
         {
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org, "GetPEMDetail");
             //TODO: Add Security, will be authorized but we don't know if the user can get THIS pem record.
 
-            return new InvokeResult<string>()
+            var pemJSON = await _devicePEMRepo.GetPEMAsync(deviceRepo, deviceId, messageId);
+            if(pemJSON != null)
             {
-                Result = await _devicePEMRepo.GetPEMAsync(deviceRepo, pemURI)
-            };
+                return InvokeResult<string>.Create(pemJSON);
+            }
+            else
+            {
+                return InvokeResult<string>.FromErrors(Resources.ErrorCodes.PEMDoesNotExist.ToErrorMessage($"RepoId={deviceRepo.Id},DeviceId={deviceId},MessageId={messageId}"));
+            }
+        }
+
+        public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request, EntityHeader org, EntityHeader user)
+        {
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org, "GetPEMIndexesForErrorReason");
+            return await _devicePEMRepo.GetPEMIndexForErrorReasonAsync(deviceRepo, errorReason, request);
         }
     }
 }

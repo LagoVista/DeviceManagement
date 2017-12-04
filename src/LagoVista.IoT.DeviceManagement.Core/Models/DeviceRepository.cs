@@ -88,6 +88,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: Resources.DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader Instance { get; set; }
 
+        public string GetPEMStorageName()
+        {
+            if(Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}pems";
+            else
+                return $"{Key}{Id}pems";
+        }
+
         public IEntityHeader ToEntityHeader()
         {
             return new EntityHeader()

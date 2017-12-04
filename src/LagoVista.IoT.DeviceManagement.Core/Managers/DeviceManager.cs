@@ -59,9 +59,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             ValidationCheck(device, Actions.Create);
-            device.DeviceRepository = new EntityHeader();
-            device.DeviceRepository.Id = deviceRepo.Id;
-            device.DeviceRepository.Text = deviceRepo.Name;
+            device.DeviceRepository = new EntityHeader
+            {
+                Id = deviceRepo.Id,
+                Text = deviceRepo.Name
+            };
 
             var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
             if (existingDevice != null)
