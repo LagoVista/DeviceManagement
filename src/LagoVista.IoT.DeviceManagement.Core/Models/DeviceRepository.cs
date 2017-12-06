@@ -96,6 +96,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 return $"{Key}{Id}pems";
         }
 
+        public string GetDeviceArchiveStorageName()
+        {
+            if (Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}devicearchives";
+            else
+                return $"{Key}{Id}devicearchives";
+        }
+
         public IEntityHeader ToEntityHeader()
         {
             return new EntityHeader()
