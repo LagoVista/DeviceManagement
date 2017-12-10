@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, Resources.DeviceManagementResources.Names.Device_Help, Resources.DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptor
+    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptor, INamedEntity
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -68,6 +68,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [JsonProperty("id")]
         [FormField(LabelResource: DeviceLibraryResources.Names.Common_UniqueId, IsUserEditable: false, ResourceType: typeof(DeviceLibraryResources), IsRequired: true)]
         public string Id { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Name, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string Name { get; set; }
 
 
         /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only, it must however be unique for a device configuration. */

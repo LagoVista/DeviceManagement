@@ -95,6 +95,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 //Resources:DeviceManagementResources:Common_Key_Validation
 
 		public static string Common_Key_Validation { get { return GetResourceString("Common_Key_Validation"); } }
+//Resources:DeviceManagementResources:Common_Name
+
+		public static string Common_Name { get { return GetResourceString("Common_Name"); } }
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
@@ -412,6 +415,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			public const string Common_Key = "Common_Key";
 			public const string Common_Key_Help = "Common_Key_Help";
 			public const string Common_Key_Validation = "Common_Key_Validation";
+			public const string Common_Name = "Common_Name";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
 			public const string Device_Attributes = "Device_Attributes";
 			public const string Device_Attributes_Help = "Device_Attributes_Help";

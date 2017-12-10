@@ -459,4 +459,7 @@
   <data name="Device_DebugMode_Help" xml:space="preserve">
     <value>If Debug Mode is enabled as the device is processed by the pipeline modules, you will see considerably more events be displayed in telemetry output window of the device or the instance that is processing the device messages.</value>
   </data>
+  <data name="Common_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>
