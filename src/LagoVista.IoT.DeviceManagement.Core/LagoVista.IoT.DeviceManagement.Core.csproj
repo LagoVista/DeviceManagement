@@ -7,27 +7,15 @@
     <PackageReference Include="LagoVista.Core" Version="1.2.202-alpha0849" />
     <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="1.2.202-alpha0849" />
     <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.202-alpha0849" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="T4ResourceGenerator.cs">
-      <DependentUpon>T4ResourceGenerator.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="T4ResourceGenerator.tt">
-      <LastGenOutput>T4ResourceGenerator.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Resources\DeviceManagementResources.resx">
-      <Generator>
-      </Generator>
-    </EmbeddedResource>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LagoVista.IoT.DeviceManagement.Models\LagoVista.IoT.DeviceManagement.Models.csproj" />
   </ItemGroup>
 </Project>
