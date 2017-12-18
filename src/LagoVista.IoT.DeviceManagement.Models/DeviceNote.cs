@@ -4,10 +4,12 @@ using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.Core.Attributes;
 using Newtonsoft.Json;
 using LagoVista.IoT.DeviceAdmin.Resources;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
+using LagoVista.IoT.DeviceAdmin.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceNotes_Title, Resources.DeviceManagementResources.Names.DeviceNotes_Help, Resources.DeviceManagementResources.Names.DeviceNotes_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceNotes_Title, DeviceManagementResources.Names.DeviceNotes_Help, DeviceManagementResources.Names.DeviceNotes_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class DeviceNote : IAuditableEntity
     {
         [JsonProperty("id")]

@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <VersionPrefix>1.2</VersionPrefix>
     <TargetFramework>netstandard1.2</TargetFramework>
     <NetStandardImplicitPackageVersion>2.0.1</NetStandardImplicitPackageVersion>
+    <AssemblyVersion>1.2.211.1114</AssemblyVersion>
+    <FileVersion>1.2.211.1114</FileVersion>
+    <Authors>Software Logsitics, LLC</Authors>
+    <Company>Software Logsitics, LLC</Company>
+    <Product>Lago Vista Devices, IoT and Home Automation Frameworks</Product>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.Core" Version="1.2.211-alpha0847" />
@@ -10,17 +16,17 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\DeviceManagementResources.resx">
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="T4ResourceGenerator.cs">
       <DependentUpon>T4ResourceGenerator.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\DeviceManagementResources.resx">
-      <Generator>
-      </Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="T4ResourceGenerator.tt">

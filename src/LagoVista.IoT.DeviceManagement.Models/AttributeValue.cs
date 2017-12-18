@@ -2,10 +2,11 @@
 using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.AttributeValue_Title, Resources.DeviceManagementResources.Names.AttributeValue_Help, Resources.DeviceManagementResources.Names.AttributeValue_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.AttributeValue_Title, DeviceManagementResources.Names.AttributeValue_Help, DeviceManagementResources.Names.AttributeValue_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class AttributeValue
     {
         [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_LastUpdated, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]

@@ -5,10 +5,11 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Title, Resources.DeviceManagementResources.Names.DeviceGroup_Help, Resources.DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Title, DeviceManagementResources.Names.DeviceGroup_Help, DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class DeviceGroup : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IFormDescriptor
     {
         public string DatabaseName { get; set; }
@@ -18,10 +19,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerOrganization { get; set; }
         public EntityHeader OwnerUser { get; set; }
 
-        [FormField(LabelResource: Resources.DeviceManagementResources.Names.DeviceGroup_Repository, HelpResource: Resources.DeviceManagementResources.Names.DeviceGroup_Repository_Help, FieldType: FieldTypes.EntityHeaderPicker, RegExValidationMessageResource: Resources.DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_Repository, HelpResource: DeviceManagementResources.Names.DeviceGroup_Repository_Help, FieldType: FieldTypes.EntityHeaderPicker, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceRepository { get; set; }
 
-        [FormField(LabelResource: Resources.DeviceManagementResources.Names.Common_Key, HelpResource: Resources.DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: Resources.DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Key, HelpResource: DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Key { get; set; }
 
         public DeviceGroupSummary CreateSummary()

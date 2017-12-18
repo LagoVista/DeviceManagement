@@ -2,7 +2,7 @@
 using System.Reflection;  
 
 //Resources:DeviceManagementResources:AttributeValue_Description
-namespace LagoVista.IoT.DeviceManagement.Core.Resources
+namespace LagoVista.IoT.DeviceManagement.Models.Resources
 {
 	public class DeviceManagementResources
 	{
@@ -18,7 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Resources
 			{
                 if (object.ReferenceEquals(_resourceManager, null)) 
 				{
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LagoVista.IoT.DeviceManagement.Core.Resources.DeviceManagementResources", typeof(DeviceManagementResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LagoVista.IoT.DeviceManagement.Models.Resources.DeviceManagementResources", typeof(DeviceManagementResources).GetTypeInfo().Assembly);
                     _resourceManager = temp;
                 }
                 return _resourceManager;

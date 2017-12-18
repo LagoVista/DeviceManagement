@@ -9,6 +9,8 @@ using LagoVista.Core.Attributes;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
 using Newtonsoft.Json;
 using LagoVista.IoT.DeviceAdmin.Resources;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
+using LagoVista.IoT.DeviceAdmin.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -31,7 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, Resources.DeviceManagementResources.Names.Device_Help, Resources.DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
     public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptor, INamedEntity
     {
         public const string New = "new";
