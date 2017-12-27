@@ -30,7 +30,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         Error,
         [EnumLabel(Device.Decommissioned, DeviceManagementResources.Names.Device_Status_Decommissioned, typeof(DeviceManagementResources))]
         Decommissioned
-        
+
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
@@ -45,7 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public const string Decommissioned = "decommissioned";
 
         public Device()
-        {         
+        {
             Attributes = new List<AttributeValue>();
             PropertyBag = new Dictionary<string, object>();
             States = new List<AttributeValue>();
@@ -98,11 +98,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerUser { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceURI, HelpResource:DeviceManagementResources.Names.Device_DeviceURI_Help, FieldType: FieldTypes.Text, IsUserEditable:false, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceURI, HelpResource: DeviceManagementResources.Names.Device_DeviceURI_Help, FieldType: FieldTypes.Text, IsUserEditable: false, ResourceType: typeof(DeviceManagementResources))]
         public string DeviceURI { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource:DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public string ShowDiagnostics { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
@@ -124,7 +124,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string SecondaryAccessKey { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources),  IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public bool DebugMode { get; set; }
 
         /// <summary>
@@ -141,12 +141,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_States, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_States_Help, ResourceType: typeof(DeviceManagementResources))]
-        public List<AttributeValue> States {get; set;}
+        public List<AttributeValue> States { get; set; }
 
         /// <summary>
         /// Attributes are values that have been set by message or workflow
         /// </summary>
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes,FieldType: FieldTypes.ChildList, HelpResource:DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<AttributeValue> Attributes { get; set; }
 
 
@@ -169,6 +169,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return new DeviceSummary()
             {
                 Id = this.Id,
+                DeviceName = string.IsNullOrEmpty(this.Name) ? this.DeviceId : this.Name,
                 DeviceId = this.DeviceId,
                 SerialNumber = SerialNumber,
                 DeviceConfiguration = DeviceConfiguration.Text,
@@ -181,6 +182,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         {
             return new List<string>()
             {
+                nameof(Device.Name),
                 nameof(Device.DeviceId),
                 nameof(Device.SerialNumber),
                 nameof(Device.Status),
@@ -200,11 +202,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
     }
 
-    public class DeviceSummary 
+    public class DeviceSummary
     {
         public string Id { get; set; }
         public string DeviceConfiguration { get; set; }
-
+        public string DeviceName { get; set; }
         public String DeviceType { get; set; }
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }

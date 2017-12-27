@@ -159,6 +159,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (device == null) return null;
 
+            if (String.IsNullOrEmpty(device.Name)) device.Name = device.DeviceId;
+
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
 
             if (populateMetaData)
@@ -187,6 +189,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             }
+
+            if (device == null) return null;
+
+            if (String.IsNullOrEmpty(device.Name)) device.Name = device.DeviceId;
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             deviceRepo.AccessKey = null;
