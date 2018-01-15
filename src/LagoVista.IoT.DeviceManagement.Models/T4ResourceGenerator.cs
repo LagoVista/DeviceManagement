@@ -140,6 +140,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Capacity_Custom
 
 		public static string Device_Capacity_Custom { get { return GetResourceString("Device_Capacity_Custom"); } }
+//Resources:DeviceManagementResources:Device_CustomStatus
+
+		public static string Device_CustomStatus { get { return GetResourceString("Device_CustomStatus"); } }
+//Resources:DeviceManagementResources:Device_CustomStatus_Help
+
+		public static string Device_CustomStatus_Help { get { return GetResourceString("Device_CustomStatus_Help"); } }
 //Resources:DeviceManagementResources:Device_DateProvisioned
 
 		public static string Device_DateProvisioned { get { return GetResourceString("Device_DateProvisioned"); } }
@@ -176,6 +182,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_FirmwareVersion
 
 		public static string Device_FirmwareVersion { get { return GetResourceString("Device_FirmwareVersion"); } }
+//Resources:DeviceManagementResources:Device_GeoLocation
+
+		public static string Device_GeoLocation { get { return GetResourceString("Device_GeoLocation"); } }
+//Resources:DeviceManagementResources:Device_GeoLocation_Help
+
+		public static string Device_GeoLocation_Help { get { return GetResourceString("Device_GeoLocation_Help"); } }
+//Resources:DeviceManagementResources:Device_Heading
+
+		public static string Device_Heading { get { return GetResourceString("Device_Heading"); } }
+//Resources:DeviceManagementResources:Device_Heading_Help
+
+		public static string Device_Heading_Help { get { return GetResourceString("Device_Heading_Help"); } }
 //Resources:DeviceManagementResources:Device_Help
 
 		public static string Device_Help { get { return GetResourceString("Device_Help"); } }
@@ -299,6 +317,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_ShowDiagnostics_Help
 
 		public static string Device_ShowDiagnostics_Help { get { return GetResourceString("Device_ShowDiagnostics_Help"); } }
+//Resources:DeviceManagementResources:Device_Speed
+
+		public static string Device_Speed { get { return GetResourceString("Device_Speed"); } }
+//Resources:DeviceManagementResources:Device_Speed_Help
+
+		public static string Device_Speed_Help { get { return GetResourceString("Device_Speed_Help"); } }
 //Resources:DeviceManagementResources:Device_States
 
 		public static string Device_States { get { return GetResourceString("Device_States"); } }
@@ -430,6 +454,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Capacity_50000_Units = "Device_Capacity_50000_Units";
 			public const string Device_Capacity_500000_Units = "Device_Capacity_500000_Units";
 			public const string Device_Capacity_Custom = "Device_Capacity_Custom";
+			public const string Device_CustomStatus = "Device_CustomStatus";
+			public const string Device_CustomStatus_Help = "Device_CustomStatus_Help";
 			public const string Device_DateProvisioned = "Device_DateProvisioned";
 			public const string Device_DebugMode = "Device_DebugMode";
 			public const string Device_DebugMode_Help = "Device_DebugMode_Help";
@@ -442,6 +468,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DeviceURI = "Device_DeviceURI";
 			public const string Device_DeviceURI_Help = "Device_DeviceURI_Help";
 			public const string Device_FirmwareVersion = "Device_FirmwareVersion";
+			public const string Device_GeoLocation = "Device_GeoLocation";
+			public const string Device_GeoLocation_Help = "Device_GeoLocation_Help";
+			public const string Device_Heading = "Device_Heading";
+			public const string Device_Heading_Help = "Device_Heading_Help";
 			public const string Device_Help = "Device_Help";
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
 			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
@@ -483,6 +513,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_ShowDiagnostics = "Device_ShowDiagnostics";
 			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
+			public const string Device_Speed = "Device_Speed";
+			public const string Device_Speed_Help = "Device_Speed_Help";
 			public const string Device_States = "Device_States";
 			public const string Device_States_Help = "Device_States_Help";
 			public const string Device_Status = "Device_Status";

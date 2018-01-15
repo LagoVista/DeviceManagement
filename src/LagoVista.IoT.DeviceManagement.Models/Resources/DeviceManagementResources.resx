@@ -462,4 +462,28 @@
   <data name="Common_Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Device_CustomStatus" xml:space="preserve">
+    <value>Custom Status</value>
+  </data>
+  <data name="Device_CustomStatus_Help" xml:space="preserve">
+    <value>Custom Status is a device specific status based on status definition in the device configuration.</value>
+  </data>
+  <data name="Device_GeoLocation" xml:space="preserve">
+    <value>Geo Location</value>
+  </data>
+  <data name="Device_GeoLocation_Help" xml:space="preserve">
+    <value>The Latitude, Longitude and Altitude of the device</value>
+  </data>
+  <data name="Device_Heading" xml:space="preserve">
+    <value>Heading</value>
+  </data>
+  <data name="Device_Heading_Help" xml:space="preserve">
+    <value>Current Heading of the device in degrees with zero being North</value>
+  </data>
+  <data name="Device_Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Device_Speed_Help" xml:space="preserve">
+    <value>Current Speed of the Device, unless otherwise status the default untis will be Meters per Second.</value>
+  </data>
 </root>

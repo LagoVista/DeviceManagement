@@ -123,6 +123,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public string SecondaryAccessKey { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource:DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public GeoLocation GeoLocation { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Heading, HelpResource: DeviceManagementResources.Names.Device_Heading_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public double Heading { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Speed, HelpResource: DeviceManagementResources.Names.Device_Speed_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public double Speeed { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader CustomStatus { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public bool DebugMode { get; set; }
