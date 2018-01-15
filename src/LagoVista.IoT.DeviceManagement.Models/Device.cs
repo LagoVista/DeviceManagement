@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using LagoVista.IoT.DeviceAdmin.Resources;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.IoT.DeviceAdmin.Models.Resources;
+using LagoVista.Core.Models.Geo;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
