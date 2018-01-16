@@ -187,7 +187,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 SerialNumber = SerialNumber,
                 DeviceConfiguration = DeviceConfiguration.Text,
                 Status = Status.Text,
-                DeviceType = DeviceType.Text
+                DeviceType = DeviceType.Text,
+                CustomStatus = CustomStatus,
+                GeoLocation = GeoLocation,
             };
         }
 
@@ -224,5 +226,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+
+        public GeoLocation GeoLocation { get; set; }
+
+        public EntityHeader CustomStatus { get; set; }
     }
 }
