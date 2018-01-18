@@ -29,6 +29,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository repo, string status, ListRequest listRequest);
 
         Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository repo, string configurationId, ListRequest listRequest);
+        Task<ListResponse<Device>> GetFullDevicesWithConfigurationAsync(DeviceRepository repo, string configurationId, ListRequest listRequest);
 
         Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository repo, string deviceTypeId, ListRequest listRequest);
     }

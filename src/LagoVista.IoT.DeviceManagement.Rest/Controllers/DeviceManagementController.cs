@@ -70,7 +70,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForOrg(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            //TODO: Need to add paging.
             return await _deviceManager.GetDevicesForOrgIdAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
@@ -84,8 +83,34 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(string devicerepoid, String locationid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            //TODO: Need to add paging.
             return await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+
+        /// <summary>
+        /// Device Management - Get Full Devices by Config Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="configid">Configuration Id</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/deviceconfig/{configid}/full")]
+        public async Task<ListResponse<Device>> GetFullDevicesForConfigAsync(string devicerepoid, String configid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetFullDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get Full Devices by Config Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="configid">Configuration Id</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/deviceconfig/{configid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForConfigAsync(string devicerepoid, String configid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>

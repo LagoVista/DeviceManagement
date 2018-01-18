@@ -260,6 +260,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
             return await CheckForDepenenciesAsync(device);
-        }       
+        }
+
+        public Task<ListResponse<Device>> GetFullDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                return _deviceConnectorService.GetFullDevicesWithConfigurationAsync(deviceRepo.Instance.Id, configurationId, listRequest, org, user);
+            }
+            else
+            {
+                return _deviceRepo.GetFullDevicesWithConfigurationAsync(deviceRepo, configurationId, listRequest);
+            }
+        }
     }
 }
