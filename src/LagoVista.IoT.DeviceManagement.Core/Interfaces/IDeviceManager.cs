@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.Models;
+using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -37,11 +38,34 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// </summary>
         /// <param name="deviceRepo">Repository connection data</param>
         /// <param name="id">Unique id for the device</param>
-        /// <param name="status">Unique id for the device</param>
+        /// <param name="status">Status of the device</param>
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// <returns></returns>
         Task<InvokeResult> UpdateDeviceStatusAsync(DeviceRepository deviceRepo, string id, string status, EntityHeader org, EntityHeader user);
+
+        /// <summary>
+        /// Get the Device by the unique identifier that was generated for the device (not device id)
+        /// </summary>
+        /// <param name="deviceRepo">Repository connection data</param>
+        /// <param name="id">Unique id for the device</param>
+        /// <param name="customstatus">Custom defined status for the device</param>
+        /// <param name="org">User Org</param>
+        /// <param name="user">User</param>
+        /// <returns></returns>
+        Task<InvokeResult> UpdateDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, string customstatus, EntityHeader org, EntityHeader user);
+
+        /// <summary>
+        /// Get the Device by the unique identifier that was generated for the device (not device id)
+        /// </summary>
+        /// <param name="deviceRepo">Repository connection data</param>
+        /// <param name="id">Unique id for the device</param>
+        /// <param name="geoLocation">Geo Location of device</param>
+        /// <param name="org">User Org</param>
+        /// <param name="user">User</param>
+        /// <returns></returns>
+        Task<InvokeResult> UpdateGeoLocationAsync(DeviceRepository deviceRepo, string id, GeoLocation geoLocation, EntityHeader org, EntityHeader user);
+
 
         /// <summary>
         /// Get the Device by the given Device ID that was entered by the user, this is the one that the device will send.
@@ -52,6 +76,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="user">User</param>
         /// /// <returns></returns>
         Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool populateMetaData = false);
+
         Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
         
         /// <summary>
@@ -69,6 +94,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user);
+
+        Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string deviceConfigId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 

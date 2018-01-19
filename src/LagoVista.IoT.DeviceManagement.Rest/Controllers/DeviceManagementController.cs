@@ -15,6 +15,7 @@ using LagoVista.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.Core.Models.Geo;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -114,6 +115,34 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get Devices In Status
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="status">Primary Device Status</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/status/{configid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(string devicerepoid, String status)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDevicesInStatusAsync(repo, status, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+
+        /// <summary>
+        /// Device Management - Get Devices In Custom Status
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="customstatus">Custom Status for Device</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/customstatus/{configid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusConfigAsync(string devicerepoid, String customstatus)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDevicesInCustomStatusAsync(repo, customstatus, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+
+        /// <summary>
         /// Device Management - Get By Id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
@@ -128,7 +157,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get By Id
+        /// Device Management - Update Status (primary status of device)
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id">Unique id of device</param>
@@ -139,6 +168,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.UpdateDeviceStatusAsync(repo, id,status, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Update Status (custom status of device)
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id">Unique id of device</param>
+        /// <param name="status">Status of device, (not case sensitive) see StatusTypes for device object.</param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/customstatus/{status}")]
+        public async Task<InvokeResult> UpdateDeviceCustomStatusAsync(string devicerepoid, String id, string status)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateDeviceCustomStatusAsync(repo, id, status, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -242,17 +285,31 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Add New
+        /// Device Management - Add Note to Device
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <param name="id">Unique id of device</param>
         /// <param name="deviceNote"></param>
         /// <returns></returns>
-        [HttpPost("/api/device/{devicerepoid}/{deviceid}")]
-        public async Task<InvokeResult> AddDeviceAsync(string devicerepoid, string id, [FromBody] DeviceNote deviceNote)
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}/note")]
+        public async Task<InvokeResult> AddNoteAsync(string devicerepoid, string id, [FromBody] DeviceNote deviceNote)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.AddNoteAsync(repo, id, deviceNote, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Add Note to Device
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="id">Unique id of device</param>
+        /// <param name="geolocation"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}/geolocation")]
+        public async Task<InvokeResult> UpdateGeoLocationAsync(string devicerepoid, string id, [FromBody] GeoLocation geolocation)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateGeoLocationAsync(repo, id, geolocation, OrgEntityHeader, UserEntityHeader);
         }
     }
 }

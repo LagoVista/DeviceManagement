@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
         /// <param name="device"></param>
         /// <returns></returns>
         Task<InvokeResult> PopulateDeviceConfigToDeviceAsync(Device device, EntityHeader instance, EntityHeader org, EntityHeader usr);
+
+        Task<EntityHeader<StateSet>> GetCustomDeviceStatesAsync(string deviceConfigId, EntityHeader org, EntityHeader user);
     }
 }

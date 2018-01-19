@@ -12,6 +12,8 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core;
+using LagoVista.Core.Models.Geo;
+using System.Linq;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -255,6 +257,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
+
+        public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            //TODO: Need to extend manager for security on this getting device w/ status
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                return await _deviceConnectorService.GetDevicesInCustomStatusAsync(deviceRepo.Instance.Id, customStatus, listRequest, org, user);
+            }
+            else
+            {
+                return await _deviceRepo.GetDevicesInCustomStatusAsync(deviceRepo, customStatus, listRequest);
+            }
+        }
+
         public Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extend manager for security on this getting device w/ configuration
@@ -300,8 +316,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 var oldState = device.Status.Text;
 
                 await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
-                ValidationCheck(device, Actions.Update);
-
+                
                 if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
                 {
                     var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
@@ -347,7 +362,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
             }
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
-            ValidationCheck(device, Actions.Update);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -378,6 +392,92 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
+        public async Task<InvokeResult> UpdateDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, string customstatus, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (device == null)
+            {
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+            await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
+                if (!setRepoResult.Successful) return setRepoResult;
+            }
+
+            var deviceStates = await _deviceConfigHelper.GetCustomDeviceStatesAsync(device.DeviceConfiguration.Id, org, user);
+            if (deviceStates == null)
+            {
+                return InvokeResult.FromError("Could not load device states for device configuration.");
+            }
+
+            var newDeviceState = deviceStates.Value.States.Where(st => st.Key.ToLower() == customstatus.ToLower()).FirstOrDefault();
+            if(newDeviceState == null)
+            {
+                return InvokeResult.FromError("Invalid status.");
+            }
+
+            device.CustomStatus = EntityHeader.Create(newDeviceState.Key, newDeviceState.Name);
+            device.LastUpdatedBy = user;
+            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                await _deviceConnectorService.UpdateDeviceAsync(deviceRepo.Instance.Id, device, org, user);
+            }
+            else
+            {
+                await _deviceRepo.UpdateDeviceAsync(deviceRepo, device);
+            }
+            deviceRepo.AccessKey = null;
+
+            return InvokeResult.Success;
+
+
+        }
+
+        public async Task<InvokeResult> UpdateGeoLocationAsync(DeviceRepository deviceRepo, string id, GeoLocation geoLocation, EntityHeader org, EntityHeader user)
+        {
+            if(geoLocation == null)
+            {
+                return InvokeResult.FromError("Geolocation must not be null.");
+            }
+            
+
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (device == null)
+            {
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
+                if (!setRepoResult.Successful) return setRepoResult;
+            }
+
+            device.GeoLocation = geoLocation;
+            device.LastUpdatedBy = user;
+            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                await _deviceConnectorService.UpdateDeviceAsync(deviceRepo.Instance.Id, device, org, user);
+            }
+            else
+            {
+                await _deviceRepo.UpdateDeviceAsync(deviceRepo, device);
+            }
+            deviceRepo.AccessKey = null;
+
+            return InvokeResult.Success;
+
+
+        }
     }
 }
 

@@ -186,10 +186,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceId = this.DeviceId,
                 SerialNumber = SerialNumber,
                 DeviceConfiguration = DeviceConfiguration.Text,
-                DeviceConfigurationKey = DeviceConfiguration.Id,
+                DeviceConfigurationId = DeviceConfiguration.Id,
                 Status = Status.Text,
                 DeviceType = DeviceType.Text,
-                DeviceTypeKey = DeviceType.Id,
+                DeviceTypeId = DeviceType.Id,
                 CustomStatus = CustomStatus,
                 GeoLocation = GeoLocation,
             };
@@ -223,10 +223,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         public string Id { get; set; }
         public string DeviceConfiguration { get; set; }
-        public string DeviceConfigurationKey { get; set; }
+        public string DeviceConfigurationId { get; set; }
         public string DeviceName { get; set; }
         public string DeviceType { get; set; }
-        public string DeviceTypeKey { get; set; }
+        public string DeviceTypeId { get; set; }
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
