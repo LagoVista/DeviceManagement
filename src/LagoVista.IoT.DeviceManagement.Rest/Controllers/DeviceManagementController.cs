@@ -131,6 +131,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Get By Id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id">Unique id of device</param>
+        /// <param name="status">Status of device, (not case sensitive) see StatusTypes for device object.</param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/status/{status}")]
+        public async Task<InvokeResult> UpdateDeviceStatusAsync(string devicerepoid, String id, string status)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateDeviceStatusAsync(repo, id,status, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get By Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/{id}/metadata")]
@@ -225,6 +239,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             SetAuditProperties(response.Model);
 
             return response;
+        }
+
+        /// <summary>
+        /// Device Management - Add New
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="id">Unique id of device</param>
+        /// <param name="deviceNote"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}")]
+        public async Task<InvokeResult> AddDeviceAsync(string devicerepoid, string id, [FromBody] DeviceNote deviceNote)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddNoteAsync(repo, id, deviceNote, OrgEntityHeader, UserEntityHeader);
         }
     }
 }
