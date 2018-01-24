@@ -102,7 +102,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get Full Devices by Config Id
+        /// Device Management - Get Devices by Config Id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="configid">Configuration Id</param>
@@ -115,7 +115,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get Full Devices by Type Id
+        /// Device Management - Get Devices by Type Id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="devicetypeid">Device Type Id</param>
@@ -128,12 +128,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get Full Devices by Config Id
+        /// Device Management - Search for devices by device id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="search">Configuration Id</param>
         /// <returns></returns>
-        [HttpGet("/api/devices/{devicerepoid}/devicetype/{devicetypeid}")]
+        [HttpGet("/api/devices/{devicerepoid}/search/{search}")]
         public async Task<ListResponse<DeviceSummary>> SearchDeviceAsync(string devicerepoid, String search)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);

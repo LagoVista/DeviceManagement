@@ -190,7 +190,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var items = await base.QueryAsync(qry => qry.DeviceConfiguration.Id == configurationId, request);
+            var items = await base.QueryAsync(qry => qry.DeviceConfiguration.Id == configurationId && qry.DeviceRepository.Id == deviceRepo.Id, request);
 
             var summaries = from item in items.Model
                             select item.CreateSummary();
@@ -204,7 +204,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var items = await base.QueryAsync(qry => qry.DeviceType.Id == deviceTypeId, request);
+            var items = await base.QueryAsync(qry => qry.DeviceType.Id == deviceTypeId && qry.DeviceRepository.Id == deviceRepo.Id, request);
 
             var summaries = from item in items.Model
                             select item.CreateSummary();
@@ -218,14 +218,28 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return await base.QueryAsync(qry => qry.DeviceConfiguration.Id == configurationId, listRequest);
+            return await base.QueryAsync(qry => qry.DeviceConfiguration.Id == configurationId && qry.DeviceRepository.Id == deviceRepo.Id, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var items = await base.QueryAsync(qry => qry.CustomStatus != null && qry.CustomStatus.Id == customStatus, listRequest);
+            var items = await base.QueryAsync(qry => qry.DeviceRepository.Id == deviceRepo.Id && qry.CustomStatus != null && qry.CustomStatus.Id == customStatus, listRequest);
+
+            var summaries = from item in items.Model
+                            select item.CreateSummary();
+
+            var lr = ListResponse<DeviceSummary>.Create(summaries);
+            lr.NextPartitionKey = items.NextPartitionKey;
+            return lr;
+        }
+
+        public async Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(DeviceRepository deviceRepo, string search, ListRequest listRequest)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+
+            var items = await base.QueryAsync(qry => qry.DeviceRepository.Id == deviceRepo.Id && qry.DeviceId.Contains(search), listRequest);
 
             var summaries = from item in items.Model
                             select item.CreateSummary();
