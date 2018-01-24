@@ -284,6 +284,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
+        public Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository deviceRepo, string deviceTypeId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                return _deviceConnectorService.GetDevicesWithDeviceTypeAsync(deviceRepo.Instance.Id, deviceTypeId, listRequest, org, user);
+            }
+            else
+            {
+                return _deviceRepo.GetDevicesWithDeviceTypeAsync(deviceRepo, deviceTypeId, listRequest);
+            }
+        }
+
         public async Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             var device = await _deviceRepo.GetDeviceByIdAsync(deviceRepo, id);
@@ -477,6 +489,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
 
 
+        }
+
+        public Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(DeviceRepository deviceRepo, string searchString, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                return _deviceConnectorService.GetDevicesWithConfigurationAsync(deviceRepo.Instance.Id, searchString, listRequest, org, user);
+            }
+            else
+            {
+                return _deviceRepo.SearchByDeviceIdAsync(deviceRepo, searchString, listRequest);
+            }
         }
     }
 }

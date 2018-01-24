@@ -39,5 +39,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 
         Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(string instanceId, string deviceTypeId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
+        Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(string instanceId, string search, ListRequest listRequest, EntityHeader org, EntityHeader user);        
     }
 }
