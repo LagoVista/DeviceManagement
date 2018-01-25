@@ -49,7 +49,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
                 var query = new TableQuery<PEMIndex>()
                     .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, deviceId))
-                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.MessageType), nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
+                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.DeviceId), nameof(PEMIndex.MessageId), nameof(PEMIndex.MessageType),
+                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
                 {
@@ -57,7 +58,16 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     NextRowKey = request.NextRowKey,
                 });
 
-                return ListResponse<IPEMIndex>.Create(results.ToList());
+
+                var response = ListResponse<IPEMIndex>.Create(results.ToList());
+                if (results.ContinuationToken != null)
+                {
+                    response.NextPartitionKey = results.ContinuationToken.NextPartitionKey;
+                    response.NextRowKey = results.ContinuationToken.NextRowKey;
+                    response.HasMoreRecords = !String.IsNullOrEmpty(results.ContinuationToken.NextRowKey);
+                }
+
+                return response;
             }
             catch (Exception)
             {
@@ -74,7 +84,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
                 var query = new TableQuery<PEMIndex>()
                     .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, errorReason))
-                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.MessageType), nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
+                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.DeviceId), nameof(PEMIndex.MessageId), nameof(PEMIndex.MessageType),
+                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
                 {
@@ -82,7 +93,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     NextRowKey = request.NextRowKey,
                 });
 
-                return ListResponse<IPEMIndex>.Create(results.ToList());
+                var response = ListResponse<IPEMIndex>.Create(results.ToList());
+                if (results.ContinuationToken != null)
+                {
+                    response.NextPartitionKey = results.ContinuationToken.NextPartitionKey;
+                    response.NextRowKey = results.ContinuationToken.NextRowKey;
+                    response.HasMoreRecords = !String.IsNullOrEmpty(results.ContinuationToken.NextRowKey);
+                }
+
+                return response;
             }
             catch (Exception)
             {
