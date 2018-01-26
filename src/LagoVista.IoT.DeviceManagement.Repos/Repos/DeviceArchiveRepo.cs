@@ -40,7 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             //TODO: Need to add some bounds here so it won't run forever.
             //return base.GetByFilterAsync(FilterOptions.Create("DateStamp", FilterOptions.Operators.GreaterThan, start), FilterOptions.Create("DateStamp", FilterOptions.Operators.LessThan, end));
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-            var json = await GetRawJSONByParitionIdAsync(deviceId);
+            var json = await GetRawJSONByParitionIdAsync(deviceId,request.PageSize, request.PageIndex * request.PageSize);
             var rows = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
 
             return _deviceArchiveReportUtils.CreateNormalizedDeviceArchiveResult(rows);

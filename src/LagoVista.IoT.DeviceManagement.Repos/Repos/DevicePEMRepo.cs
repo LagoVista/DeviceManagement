@@ -35,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task<string> GetPEMAsync(DeviceRepository deviceRepo, string partitionKey, string rowKey)
         {
             var pems = GetCloudTable(deviceRepo);
-        
+
             var result = await pems.ExecuteAsync(TableOperation.Retrieve<PEMIndex>(partitionKey, rowKey));
 
             return (result.Result != null) ? (result.Result as PEMIndex).JSON : (string)null;
@@ -49,8 +49,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
                 var query = new TableQuery<PEMIndex>()
                     .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, deviceId))
-                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.DeviceId), nameof(PEMIndex.MessageId), nameof(PEMIndex.MessageType),
-                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
+                    .Select(new List<string>
+                    {
+                        nameof(PEMIndex.RowKey),
+                        nameof(PEMIndex.Status),
+                        nameof(PEMIndex.CreatedTimeStamp),
+                        nameof(PEMIndex.DeviceId),
+                        nameof(PEMIndex.MessageId),
+                        nameof(PEMIndex.MessageType),
+                        nameof(PEMIndex.TotalProcessingMS),
+                        nameof(PEMIndex.ErrorReason) })
+                        .Take(request.PageSize);
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
                 {
@@ -85,7 +94,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 var query = new TableQuery<PEMIndex>()
                     .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, errorReason))
                     .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.DeviceId), nameof(PEMIndex.MessageId), nameof(PEMIndex.MessageType),
-                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) });
+                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) })
+                        .Take(request.PageSize);
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
                 {
