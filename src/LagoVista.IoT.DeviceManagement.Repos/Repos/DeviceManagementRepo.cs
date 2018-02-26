@@ -149,15 +149,21 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var items = await base.QueryAsync(qry => qry.Location.Id == locationId);
+            var items = await base.QueryAsync(qry => qry.Location.Id == locationId, request);
 
-            var summaries = from item in items
+            var summaries = from item in items.Model
                             select item.CreateSummary();
 
-            return ListResponse<DeviceSummary>.Create(summaries);
+            var lr = ListResponse<DeviceSummary>.Create(summaries);
+            lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
+            return lr;
         }
 
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, string orgId, ListRequest request)
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryAsync(DeviceRepository deviceRepo, string orgId, ListRequest request)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -169,6 +175,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
 
@@ -183,6 +193,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
 
@@ -197,6 +211,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
 
@@ -211,6 +229,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
 
@@ -232,6 +254,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
 
@@ -246,6 +272,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
             return lr;
         }
     }

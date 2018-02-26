@@ -123,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public async Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
 
@@ -133,7 +133,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
             else
             {
-                return await _deviceRepo.GetDevicesForOrgIdAsync(deviceRepo, org.Id, listRequest);
+                return await _deviceRepo.GetDevicesForRepositoryAsync(deviceRepo, org.Id, listRequest);
             }
         }
 

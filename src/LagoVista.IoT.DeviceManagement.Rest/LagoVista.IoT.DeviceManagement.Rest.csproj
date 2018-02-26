@@ -14,10 +14,10 @@
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.269-alpha0710" />
-    <PackageReference Include="LagoVista.IoT.ProductStore" Version="1.2.269-alpha0710" />
-    <PackageReference Include="LagoVista.IoT.Web.Common" Version="1.2.269-alpha0710" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="1.2.269-alpha0710" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="1.2.285-alpha1447" />
+    <PackageReference Include="LagoVista.IoT.ProductStore" Version="1.2.285-alpha1447" />
+    <PackageReference Include="LagoVista.IoT.Web.Common" Version="1.2.285-alpha1447" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="1.2.285-alpha1447" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta3" />
