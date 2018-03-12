@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using LagoVista.Core.Models;
@@ -124,7 +125,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SecondaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public string SecondaryAccessKey { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource:DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource: DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public GeoLocation GeoLocation { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Heading, HelpResource: DeviceManagementResources.Names.Device_Heading_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
@@ -146,6 +147,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Properties, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Properties_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<CustomField> PropertiesMetaData { get; set; }
 
+        /// <summary>
+        /// Properties are design time/values added with device configuration
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_AttributeMetaData, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        public List<DeviceAdmin.Models.Attribute> AttributeMetaData { get; set; }
+
+        /// <summary>
+        /// Properties are design time/values added with device configuration
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_StateMachineMetaData, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        public List<StateMachine> StateMachineMetaData { get; set; }
+
         public Dictionary<string, object> PropertyBag { get; set; }
 
 
@@ -161,7 +174,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Attributes, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_Attributes_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<AttributeValue> Attributes { get; set; }
-
 
         /// <summary>
         /// Values as pull from the most recent messages
@@ -216,6 +228,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Text = DeviceId,
                 Value = this
             };
+        }
+
+        [CustomValidator]
+        public void Validate(ValidationResult result, Actions action)
+        {
+            if(PropertiesMetaData != null)
+            {
+                foreach(var propertyMetaData in PropertiesMetaData)
+                {
+                    var property = Properties.Where(prop => prop.Key == propertyMetaData.Key).FirstOrDefault();
+                    propertyMetaData.Validate(property?.Value, result, action);
+                }
+            }
         }
     }
 

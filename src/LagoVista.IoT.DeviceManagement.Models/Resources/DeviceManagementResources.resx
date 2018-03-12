@@ -486,4 +486,10 @@
   <data name="Device_Speed_Help" xml:space="preserve">
     <value>Current Speed of the Device, unless otherwise status the default untis will be Meters per Second.</value>
   </data>
+  <data name="Device_AttributeMetaData" xml:space="preserve">
+    <value>Attribute Meta Data</value>
+  </data>
+  <data name="Device_StateMachineMetaData" xml:space="preserve">
+    <value>State Machine Meta Data</value>
+  </data>
 </root>

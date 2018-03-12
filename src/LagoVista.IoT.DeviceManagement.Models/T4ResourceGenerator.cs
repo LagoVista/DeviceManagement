@@ -101,6 +101,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
+//Resources:DeviceManagementResources:Device_AttributeMetaData
+
+		public static string Device_AttributeMetaData { get { return GetResourceString("Device_AttributeMetaData"); } }
 //Resources:DeviceManagementResources:Device_Attributes
 
 		public static string Device_Attributes { get { return GetResourceString("Device_Attributes"); } }
@@ -323,6 +326,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Speed_Help
 
 		public static string Device_Speed_Help { get { return GetResourceString("Device_Speed_Help"); } }
+//Resources:DeviceManagementResources:Device_StateMachineMetaData
+
+		public static string Device_StateMachineMetaData { get { return GetResourceString("Device_StateMachineMetaData"); } }
 //Resources:DeviceManagementResources:Device_States
 
 		public static string Device_States { get { return GetResourceString("Device_States"); } }
@@ -441,6 +447,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Common_Key_Validation = "Common_Key_Validation";
 			public const string Common_Name = "Common_Name";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
+			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";
 			public const string Device_Attributes_Help = "Device_Attributes_Help";
 			public const string Device_Capacity_100_Units = "Device_Capacity_100_Units";
@@ -515,6 +522,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
 			public const string Device_Speed = "Device_Speed";
 			public const string Device_Speed_Help = "Device_Speed_Help";
+			public const string Device_StateMachineMetaData = "Device_StateMachineMetaData";
 			public const string Device_States = "Device_States";
 			public const string Device_States_Help = "Device_States_Help";
 			public const string Device_Status = "Device_Status";

@@ -1,19 +1,18 @@
-﻿using System.Threading.Tasks;
-using LagoVista.Core.Validation;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.Core.Managers;
-using LagoVista.IoT.DeviceManagement.Core.Repos;
+﻿using LagoVista.Core;
 using LagoVista.Core.Interfaces;
-using static LagoVista.Core.Models.AuthorizeResult;
+using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
-using System.Collections.Generic;
-using System;
-using LagoVista.IoT.Logging.Loggers;
-using LagoVista.IoT.DeviceManagement.Core.Interfaces;
-using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core;
 using LagoVista.Core.Models.Geo;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
+using static LagoVista.Core.Models.AuthorizeResult;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -98,6 +97,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
+
+            /* We need to populate the meta data so we can use it to validate the custom properties */
+            await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+
             ValidationCheck(device, Actions.Update);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
@@ -105,6 +108,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 var setRepoResult = await SetDeviceRepoAccessKeyAsync(deviceRepo, org, user);
                 if (!setRepoResult.Successful) return setRepoResult;
             }
+
+
+            device.DeviceURI = null;
+            device.PropertiesMetaData = null;
+            device.InputCommandEndPoints = null;
 
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
