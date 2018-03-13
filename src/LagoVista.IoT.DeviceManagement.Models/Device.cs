@@ -50,6 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         {
             Attributes = new List<AttributeValue>();
             PropertyBag = new Dictionary<string, object>();
+            Properties = new List<AttributeValue>();
             States = new List<AttributeValue>();
             Status = new EntityHeader<DeviceStates>() { Value = DeviceStates.New, Id = Device.New, Text = DeviceManagementResources.Device_Status_New };
             Notes = new List<DeviceNote>();
