@@ -9,11 +9,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.Core" Version="1.2.288-alpha0733" />
-    <PackageReference Include="Moq" Version="4.8.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0-preview-20180109-01" />
+    <PackageReference Include="Moq" Version="4.8.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.0-beta2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.0-beta2" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />
