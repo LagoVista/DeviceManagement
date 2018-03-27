@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LagoVista.IoT.DeviceManagement.Core.Models
+namespace LagoVista.IoT.DeviceManagement.Core
 {
-    public class DeviceStreamResult
+    public class DataStreamResult
     {
-        public DeviceStreamResult()
+        public DataStreamResult()
         {
             Fields = new Dictionary<string, object>();
         }

@@ -492,4 +492,73 @@
   <data name="Device_StateMachineMetaData" xml:space="preserve">
     <value>State Machine Meta Data</value>
   </data>
+  <data name="DataStreamField_DataType" xml:space="preserve">
+    <value>Data Type</value>
+  </data>
+  <data name="DataStreamField_DataType_Help" xml:space="preserve">
+    <value>Provide the type of data that will be inserted into the column.</value>
+  </data>
+  <data name="DataStreamField_Description" xml:space="preserve">
+    <value>A data stream value defines a field that will be used as a data point within a data stream.</value>
+  </data>
+  <data name="DataStreamField_FieldName" xml:space="preserve">
+    <value>Field Name</value>
+  </data>
+  <data name="DataStreamField_FieldName_Help" xml:space="preserve">
+    <value>The field name will be how the field will be identified in the output format (usually the JSON field name)</value>
+  </data>
+  <data name="DataStreamField_Help" xml:space="preserve">
+    <value>A data stream value defines a field that will be used as a data point within a data stream.</value>
+  </data>
+  <data name="DataStreamField_IsRequired" xml:space="preserve">
+    <value>Is Required</value>
+  </data>
+  <data name="DataStreamField_IsRequired_Help" xml:space="preserve">
+    <value>If you specify the field as being required and it is not present the record will not be inserted into the data stream.</value>
+  </data>
+  <data name="DataStreamField_MaxValue" xml:space="preserve">
+    <value>Maximum Value</value>
+  </data>
+  <data name="DataStreamField_MaxValue_Help" xml:space="preserve">
+    <value>Provide an optional maximum value used for validation.</value>
+  </data>
+  <data name="DataStreamField_MinValue" xml:space="preserve">
+    <value>Minimum Value</value>
+  </data>
+  <data name="DataStreamField_MinValue_Help" xml:space="preserve">
+    <value>Provide an optional minimum value used for validation.</value>
+  </data>
+  <data name="DataStreamField_NumberDecimalPoints" xml:space="preserve">
+    <value>Decimal Points</value>
+  </data>
+  <data name="DataStreamField_NumberDecimalPoints_Help" xml:space="preserve">
+    <value>Provide a number of decimal places that the field should be formatted with</value>
+  </data>
+  <data name="DataStreamField_RegEx" xml:space="preserve">
+    <value>Reg Ex Validation</value>
+  </data>
+  <data name="DataStreamField_RegEx_Help" xml:space="preserve">
+    <value>Provide a regular expression used for validating the content of the field.</value>
+  </data>
+  <data name="DataStreamField_Title" xml:space="preserve">
+    <value>Data Stream Field</value>
+  </data>
+  <data name="DataStream_Description" xml:space="preserve">
+    <value>A Data Stream is a predefined set of fields that can be used to produce time series data that can be then used by other analysis tools or machine learning algorithms.</value>
+  </data>
+  <data name="DataStream_Help" xml:space="preserve">
+    <value>A Data Stream is a predefined set of fields that can be used to produce time series data that can be then used by other analysis tools or machine learning algorithms.</value>
+  </data>
+  <data name="DataStream_Title" xml:space="preserve">
+    <value>Data Stream</value>
+  </data>
+  <data name="Common_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Common_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="DataStream_Fields" xml:space="preserve">
+    <value>Fields</value>
+  </data>
 </root>

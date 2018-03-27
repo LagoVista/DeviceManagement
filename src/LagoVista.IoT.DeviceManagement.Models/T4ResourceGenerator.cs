@@ -86,6 +86,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:AttributeValue_Value
 
 		public static string AttributeValue_Value { get { return GetResourceString("AttributeValue_Value"); } }
+//Resources:DeviceManagementResources:Common_Description
+
+		public static string Common_Description { get { return GetResourceString("Common_Description"); } }
 //Resources:DeviceManagementResources:Common_Key
 
 		public static string Common_Key { get { return GetResourceString("Common_Key"); } }
@@ -98,6 +101,72 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Common_Name
 
 		public static string Common_Name { get { return GetResourceString("Common_Name"); } }
+//Resources:DeviceManagementResources:Common_Notes
+
+		public static string Common_Notes { get { return GetResourceString("Common_Notes"); } }
+//Resources:DeviceManagementResources:DataStream_Description
+
+		public static string DataStream_Description { get { return GetResourceString("DataStream_Description"); } }
+//Resources:DeviceManagementResources:DataStream_Fields
+
+		public static string DataStream_Fields { get { return GetResourceString("DataStream_Fields"); } }
+//Resources:DeviceManagementResources:DataStream_Help
+
+		public static string DataStream_Help { get { return GetResourceString("DataStream_Help"); } }
+//Resources:DeviceManagementResources:DataStream_Title
+
+		public static string DataStream_Title { get { return GetResourceString("DataStream_Title"); } }
+//Resources:DeviceManagementResources:DataStreamField_DataType
+
+		public static string DataStreamField_DataType { get { return GetResourceString("DataStreamField_DataType"); } }
+//Resources:DeviceManagementResources:DataStreamField_DataType_Help
+
+		public static string DataStreamField_DataType_Help { get { return GetResourceString("DataStreamField_DataType_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_Description
+
+		public static string DataStreamField_Description { get { return GetResourceString("DataStreamField_Description"); } }
+//Resources:DeviceManagementResources:DataStreamField_FieldName
+
+		public static string DataStreamField_FieldName { get { return GetResourceString("DataStreamField_FieldName"); } }
+//Resources:DeviceManagementResources:DataStreamField_FieldName_Help
+
+		public static string DataStreamField_FieldName_Help { get { return GetResourceString("DataStreamField_FieldName_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_Help
+
+		public static string DataStreamField_Help { get { return GetResourceString("DataStreamField_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_IsRequired
+
+		public static string DataStreamField_IsRequired { get { return GetResourceString("DataStreamField_IsRequired"); } }
+//Resources:DeviceManagementResources:DataStreamField_IsRequired_Help
+
+		public static string DataStreamField_IsRequired_Help { get { return GetResourceString("DataStreamField_IsRequired_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_MaxValue
+
+		public static string DataStreamField_MaxValue { get { return GetResourceString("DataStreamField_MaxValue"); } }
+//Resources:DeviceManagementResources:DataStreamField_MaxValue_Help
+
+		public static string DataStreamField_MaxValue_Help { get { return GetResourceString("DataStreamField_MaxValue_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_MinValue
+
+		public static string DataStreamField_MinValue { get { return GetResourceString("DataStreamField_MinValue"); } }
+//Resources:DeviceManagementResources:DataStreamField_MinValue_Help
+
+		public static string DataStreamField_MinValue_Help { get { return GetResourceString("DataStreamField_MinValue_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_NumberDecimalPoints
+
+		public static string DataStreamField_NumberDecimalPoints { get { return GetResourceString("DataStreamField_NumberDecimalPoints"); } }
+//Resources:DeviceManagementResources:DataStreamField_NumberDecimalPoints_Help
+
+		public static string DataStreamField_NumberDecimalPoints_Help { get { return GetResourceString("DataStreamField_NumberDecimalPoints_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_RegEx
+
+		public static string DataStreamField_RegEx { get { return GetResourceString("DataStreamField_RegEx"); } }
+//Resources:DeviceManagementResources:DataStreamField_RegEx_Help
+
+		public static string DataStreamField_RegEx_Help { get { return GetResourceString("DataStreamField_RegEx_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_Title
+
+		public static string DataStreamField_Title { get { return GetResourceString("DataStreamField_Title"); } }
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
@@ -442,10 +511,33 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string AttributeValue_Type = "AttributeValue_Type";
 			public const string AttributeValue_Unit = "AttributeValue_Unit";
 			public const string AttributeValue_Value = "AttributeValue_Value";
+			public const string Common_Description = "Common_Description";
 			public const string Common_Key = "Common_Key";
 			public const string Common_Key_Help = "Common_Key_Help";
 			public const string Common_Key_Validation = "Common_Key_Validation";
 			public const string Common_Name = "Common_Name";
+			public const string Common_Notes = "Common_Notes";
+			public const string DataStream_Description = "DataStream_Description";
+			public const string DataStream_Fields = "DataStream_Fields";
+			public const string DataStream_Help = "DataStream_Help";
+			public const string DataStream_Title = "DataStream_Title";
+			public const string DataStreamField_DataType = "DataStreamField_DataType";
+			public const string DataStreamField_DataType_Help = "DataStreamField_DataType_Help";
+			public const string DataStreamField_Description = "DataStreamField_Description";
+			public const string DataStreamField_FieldName = "DataStreamField_FieldName";
+			public const string DataStreamField_FieldName_Help = "DataStreamField_FieldName_Help";
+			public const string DataStreamField_Help = "DataStreamField_Help";
+			public const string DataStreamField_IsRequired = "DataStreamField_IsRequired";
+			public const string DataStreamField_IsRequired_Help = "DataStreamField_IsRequired_Help";
+			public const string DataStreamField_MaxValue = "DataStreamField_MaxValue";
+			public const string DataStreamField_MaxValue_Help = "DataStreamField_MaxValue_Help";
+			public const string DataStreamField_MinValue = "DataStreamField_MinValue";
+			public const string DataStreamField_MinValue_Help = "DataStreamField_MinValue_Help";
+			public const string DataStreamField_NumberDecimalPoints = "DataStreamField_NumberDecimalPoints";
+			public const string DataStreamField_NumberDecimalPoints_Help = "DataStreamField_NumberDecimalPoints_Help";
+			public const string DataStreamField_RegEx = "DataStreamField_RegEx";
+			public const string DataStreamField_RegEx_Help = "DataStreamField_RegEx_Help";
+			public const string DataStreamField_Title = "DataStreamField_Title";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
 			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";

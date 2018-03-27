@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LagoVista.IoT.DeviceManagement.Core.Models
+namespace LagoVista.IoT.DeviceManagement.Core
 {
-    public class DeviceStreamRecord : TableStorageEntity
+    public class DataStreamRecord : TableStorageEntity
     {
-        public DeviceStreamRecord()
+        public DataStreamRecord()
         {
             Data = new Dictionary<string, object>();
         }

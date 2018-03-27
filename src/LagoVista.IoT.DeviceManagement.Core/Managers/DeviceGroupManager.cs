@@ -29,8 +29,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Create, user, org);
-            await _deviceGroupRepo.AddDeviceGroupAsync(deviceRepo, deviceGroup);
             ValidationCheck(deviceGroup, Actions.Create);
+            await _deviceGroupRepo.AddDeviceGroupAsync(deviceRepo, deviceGroup);
             return InvokeResult.Success;
         }
 
