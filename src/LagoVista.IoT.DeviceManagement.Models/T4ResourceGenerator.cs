@@ -104,6 +104,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Common_Notes
 
 		public static string Common_Notes { get { return GetResourceString("Common_Notes"); } }
+//Resources:DeviceManagementResources:DataStream_ConnectionString
+
+		public static string DataStream_ConnectionString { get { return GetResourceString("DataStream_ConnectionString"); } }
+//Resources:DeviceManagementResources:DataStream_ConnectionString_Help
+
+		public static string DataStream_ConnectionString_Help { get { return GetResourceString("DataStream_ConnectionString_Help"); } }
 //Resources:DeviceManagementResources:DataStream_Description
 
 		public static string DataStream_Description { get { return GetResourceString("DataStream_Description"); } }
@@ -113,6 +119,42 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DataStream_Help
 
 		public static string DataStream_Help { get { return GetResourceString("DataStream_Help"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType
+
+		public static string DataStream_StreamType { get { return GetResourceString("DataStream_StreamType"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AWS_ElasticSearch
+
+		public static string DataStream_StreamType_AWS_ElasticSearch { get { return GetResourceString("DataStream_StreamType_AWS_ElasticSearch"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AWS_S3
+
+		public static string DataStream_StreamType_AWS_S3 { get { return GetResourceString("DataStream_StreamType_AWS_S3"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AzureBlob
+
+		public static string DataStream_StreamType_AzureBlob { get { return GetResourceString("DataStream_StreamType_AzureBlob"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AzureBlob_Managed
+
+		public static string DataStream_StreamType_AzureBlob_Managed { get { return GetResourceString("DataStream_StreamType_AzureBlob_Managed"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AzureEventHub
+
+		public static string DataStream_StreamType_AzureEventHub { get { return GetResourceString("DataStream_StreamType_AzureEventHub"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_AzureEventHub_Managegd
+
+		public static string DataStream_StreamType_AzureEventHub_Managegd { get { return GetResourceString("DataStream_StreamType_AzureEventHub_Managegd"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_DataLake
+
+		public static string DataStream_StreamType_DataLake { get { return GetResourceString("DataStream_StreamType_DataLake"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_Select
+
+		public static string DataStream_StreamType_Select { get { return GetResourceString("DataStream_StreamType_Select"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_SQLServer
+
+		public static string DataStream_StreamType_SQLServer { get { return GetResourceString("DataStream_StreamType_SQLServer"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_TableStorage
+
+		public static string DataStream_StreamType_TableStorage { get { return GetResourceString("DataStream_StreamType_TableStorage"); } }
+//Resources:DeviceManagementResources:DataStream_StreamType_TableStorage_Managed
+
+		public static string DataStream_StreamType_TableStorage_Managed { get { return GetResourceString("DataStream_StreamType_TableStorage_Managed"); } }
 //Resources:DeviceManagementResources:DataStream_Title
 
 		public static string DataStream_Title { get { return GetResourceString("DataStream_Title"); } }
@@ -122,6 +164,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DataStreamField_DataType_Help
 
 		public static string DataStreamField_DataType_Help { get { return GetResourceString("DataStreamField_DataType_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_DataType_Select
+
+		public static string DataStreamField_DataType_Select { get { return GetResourceString("DataStreamField_DataType_Select"); } }
 //Resources:DeviceManagementResources:DataStreamField_Description
 
 		public static string DataStreamField_Description { get { return GetResourceString("DataStreamField_Description"); } }
@@ -164,9 +209,21 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DataStreamField_RegEx_Help
 
 		public static string DataStreamField_RegEx_Help { get { return GetResourceString("DataStreamField_RegEx_Help"); } }
+//Resources:DeviceManagementResources:DataStreamField_StateSet
+
+		public static string DataStreamField_StateSet { get { return GetResourceString("DataStreamField_StateSet"); } }
+//Resources:DeviceManagementResources:DataStreamField_StateSet_Watermark
+
+		public static string DataStreamField_StateSet_Watermark { get { return GetResourceString("DataStreamField_StateSet_Watermark"); } }
 //Resources:DeviceManagementResources:DataStreamField_Title
 
 		public static string DataStreamField_Title { get { return GetResourceString("DataStreamField_Title"); } }
+//Resources:DeviceManagementResources:DataStreamField_UnitSet
+
+		public static string DataStreamField_UnitSet { get { return GetResourceString("DataStreamField_UnitSet"); } }
+//Resources:DeviceManagementResources:DataStreamField_UnitSet_Watermark
+
+		public static string DataStreamField_UnitSet_Watermark { get { return GetResourceString("DataStreamField_UnitSet_Watermark"); } }
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
@@ -517,12 +574,27 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Common_Key_Validation = "Common_Key_Validation";
 			public const string Common_Name = "Common_Name";
 			public const string Common_Notes = "Common_Notes";
+			public const string DataStream_ConnectionString = "DataStream_ConnectionString";
+			public const string DataStream_ConnectionString_Help = "DataStream_ConnectionString_Help";
 			public const string DataStream_Description = "DataStream_Description";
 			public const string DataStream_Fields = "DataStream_Fields";
 			public const string DataStream_Help = "DataStream_Help";
+			public const string DataStream_StreamType = "DataStream_StreamType";
+			public const string DataStream_StreamType_AWS_ElasticSearch = "DataStream_StreamType_AWS_ElasticSearch";
+			public const string DataStream_StreamType_AWS_S3 = "DataStream_StreamType_AWS_S3";
+			public const string DataStream_StreamType_AzureBlob = "DataStream_StreamType_AzureBlob";
+			public const string DataStream_StreamType_AzureBlob_Managed = "DataStream_StreamType_AzureBlob_Managed";
+			public const string DataStream_StreamType_AzureEventHub = "DataStream_StreamType_AzureEventHub";
+			public const string DataStream_StreamType_AzureEventHub_Managegd = "DataStream_StreamType_AzureEventHub_Managegd";
+			public const string DataStream_StreamType_DataLake = "DataStream_StreamType_DataLake";
+			public const string DataStream_StreamType_Select = "DataStream_StreamType_Select";
+			public const string DataStream_StreamType_SQLServer = "DataStream_StreamType_SQLServer";
+			public const string DataStream_StreamType_TableStorage = "DataStream_StreamType_TableStorage";
+			public const string DataStream_StreamType_TableStorage_Managed = "DataStream_StreamType_TableStorage_Managed";
 			public const string DataStream_Title = "DataStream_Title";
 			public const string DataStreamField_DataType = "DataStreamField_DataType";
 			public const string DataStreamField_DataType_Help = "DataStreamField_DataType_Help";
+			public const string DataStreamField_DataType_Select = "DataStreamField_DataType_Select";
 			public const string DataStreamField_Description = "DataStreamField_Description";
 			public const string DataStreamField_FieldName = "DataStreamField_FieldName";
 			public const string DataStreamField_FieldName_Help = "DataStreamField_FieldName_Help";
@@ -537,7 +609,11 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DataStreamField_NumberDecimalPoints_Help = "DataStreamField_NumberDecimalPoints_Help";
 			public const string DataStreamField_RegEx = "DataStreamField_RegEx";
 			public const string DataStreamField_RegEx_Help = "DataStreamField_RegEx_Help";
+			public const string DataStreamField_StateSet = "DataStreamField_StateSet";
+			public const string DataStreamField_StateSet_Watermark = "DataStreamField_StateSet_Watermark";
 			public const string DataStreamField_Title = "DataStreamField_Title";
+			public const string DataStreamField_UnitSet = "DataStreamField_UnitSet";
+			public const string DataStreamField_UnitSet_Watermark = "DataStreamField_UnitSet_Watermark";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
 			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";

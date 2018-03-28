@@ -27,12 +27,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
-            if(EntityHeader.IsNullOrEmpty(repo.RepositoryType))
+            if (EntityHeader.IsNullOrEmpty(repo.RepositoryType))
             {
                 return InvokeResult.FromErrors(new ErrorMessage("Respository Type is a Required Field."));
             }
 
-            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT || 
+            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
                 repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 repo.DeviceArchiveStorageSettings = new ConnectionSettings()
@@ -65,8 +65,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 repo.PEMStorageSettings = new ConnectionSettings()
                 {
-                    Uri="mongodb",
-                    Port= "27017",
+                    Uri = "mongodb",
+                    Port = "27017",
                     ResourceName = "nuviot"
                 };
 
@@ -81,7 +81,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ValidationCheck(repo, Actions.Create);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Create, user, org);
 
-            if(!String.IsNullOrEmpty(repo.AccessKey))
+            if (!String.IsNullOrEmpty(repo.AccessKey))
             {
                 var addSecretResult = await _secureStorage.AddSecretAsync(repo.AccessKey);
                 if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
@@ -136,6 +136,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 var addSecretResult = await _secureStorage.AddSecretAsync(repo.AccessKey);
                 if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
+
+                if (!string.IsNullOrEmpty(repo.SecureAccessKeyId))
+                {
+                    await _secureStorage.RemoveSecretAsync(repo.SecureAccessKeyId);
+                }
+
                 repo.SecureAccessKeyId = addSecretResult.Result;
                 repo.AccessKey = null;
             }

@@ -14,18 +14,29 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DataStreamManager : ManagerBase, IDataStreamManager
     {
         IDataStreamRepo _dataStreamRepo;
+        ISecureStorage _secureStorage;
 
-        public DataStreamManager(IDataStreamRepo dataStreamRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
+        public DataStreamManager(IDataStreamRepo dataStreamRepo, IAdminLogger logger, ISecureStorage secureStorage,IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
             base(logger, appConfig, depmanager, security)
         {
             _dataStreamRepo = dataStreamRepo;
+            _secureStorage = secureStorage;
         }
 
         public async Task<InvokeResult> AddDataStreamAsync(DataStream stream, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(stream, AuthorizeResult.AuthorizeActions.Create, user, org);
-            await _dataStreamRepo.AddDataStreamAsync(stream);
             ValidationCheck(stream, Actions.Create);
+
+            if (!String.IsNullOrEmpty(stream.ConnectionString))
+            {
+                var addSecretResult = await _secureStorage.AddSecretAsync(stream.ConnectionString);
+                if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
+                stream.SecureConnectionStringId = addSecretResult.Result;
+                stream.ConnectionString = null;
+            }
+
+            await _dataStreamRepo.AddDataStreamAsync(stream);
             return InvokeResult.Success;
         }
 
@@ -65,10 +76,25 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _dataStreamRepo.QueryKeyInUseAsync(key, org.Id);
         }
 
-        public async Task<InvokeResult> UdpateDataStreamAsync(DataStream stream, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> UpdateDataStreamAsync(DataStream stream, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(stream, AuthorizeResult.AuthorizeActions.Update, user, org);
             ValidationCheck(stream, Actions.Update);
+
+            if (!String.IsNullOrEmpty(stream.ConnectionString))
+            {
+                var addSecretResult = await _secureStorage.AddSecretAsync(stream.ConnectionString);
+                if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
+
+                if (!string.IsNullOrEmpty(stream.SecureConnectionStringId))
+                {
+                    await _secureStorage.RemoveSecretAsync(stream.SecureConnectionStringId);
+                }
+
+                stream.SecureConnectionStringId = addSecretResult.Result;
+                stream.ConnectionString = null;
+            }
+
             await _dataStreamRepo.UpdateDataStreamAsync(stream);
             return InvokeResult.Success;
         }

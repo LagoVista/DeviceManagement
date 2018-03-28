@@ -561,4 +561,61 @@
   <data name="DataStream_Fields" xml:space="preserve">
     <value>Fields</value>
   </data>
+  <data name="DataStream_ConnectionString" xml:space="preserve">
+    <value>Connection String</value>
+  </data>
+  <data name="DataStream_ConnectionString_Help" xml:space="preserve">
+    <value>If your data stream storage is not managed by NuvIoT, you will need to provide a connection string to your storage resource.  This storage string will not be stored in plain text.</value>
+  </data>
+  <data name="DataStream_StreamType" xml:space="preserve">
+    <value>Stream Type</value>
+  </data>
+  <data name="DataStream_StreamType_AWS_ElasticSearch" xml:space="preserve">
+    <value>AWS Elastic Search</value>
+  </data>
+  <data name="DataStream_StreamType_AWS_S3" xml:space="preserve">
+    <value>AWS S3</value>
+  </data>
+  <data name="DataStream_StreamType_AzureBlob" xml:space="preserve">
+    <value>Azure Blob Storage</value>
+  </data>
+  <data name="DataStream_StreamType_AzureBlob_Managed" xml:space="preserve">
+    <value>Managed Azure Blob Storage</value>
+  </data>
+  <data name="DataStream_StreamType_AzureEventHub" xml:space="preserve">
+    <value>Azure Event Hub</value>
+  </data>
+  <data name="DataStream_StreamType_AzureEventHub_Managegd" xml:space="preserve">
+    <value>Managed Azure Event Hub</value>
+  </data>
+  <data name="DataStream_StreamType_DataLake" xml:space="preserve">
+    <value>Azure Data Lake</value>
+  </data>
+  <data name="DataStream_StreamType_Select" xml:space="preserve">
+    <value>-select stream type-</value>
+  </data>
+  <data name="DataStream_StreamType_SQLServer" xml:space="preserve">
+    <value>SQL Server</value>
+  </data>
+  <data name="DataStream_StreamType_TableStorage" xml:space="preserve">
+    <value>Azure Table Storage</value>
+  </data>
+  <data name="DataStream_StreamType_TableStorage_Managed" xml:space="preserve">
+    <value>Azure Table Storage Managed</value>
+  </data>
+  <data name="DataStreamField_StateSet" xml:space="preserve">
+    <value>State Set</value>
+  </data>
+  <data name="DataStreamField_StateSet_Watermark" xml:space="preserve">
+    <value>-select state set-</value>
+  </data>
+  <data name="DataStreamField_UnitSet" xml:space="preserve">
+    <value>Unit Set</value>
+  </data>
+  <data name="DataStreamField_UnitSet_Watermark" xml:space="preserve">
+    <value>-select unit set-</value>
+  </data>
+  <data name="DataStreamField_DataType_Select" xml:space="preserve">
+    <value>-select data type-</value>
+  </data>
 </root>

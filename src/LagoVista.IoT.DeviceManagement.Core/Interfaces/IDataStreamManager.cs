@@ -10,7 +10,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
     public interface IDataStreamManager
     {
         Task<InvokeResult> AddDataStreamAsync(DataStream stream,  EntityHeader org, EntityHeader user);
-        Task<InvokeResult> UdpateDataStreamAsync(DataStream stream, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> UpdateDataStreamAsync(DataStream stream, EntityHeader org, EntityHeader user);
 
         Task<IEnumerable<DataStreamSummary>> GetDataStreamsForOrgAsync(string orgId, EntityHeader user);
 

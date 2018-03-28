@@ -11,7 +11,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     {
         private bool _shouldConsolidateCollections;
 
-        public DataStreamRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
+        public DataStreamRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : 
+            base(repoSettings.DeviceRepoStorage.Uri, repoSettings.DeviceRepoStorage.AccessKey, repoSettings.DeviceRepoStorage.ResourceName, logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
         }

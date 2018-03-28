@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using LagoVista.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -59,7 +60,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public Task<InvokeResult> UpdateDataStreamAsync([FromBody] DataStream datastream)
         {
             SetUpdatedProperties(datastream);
-            return _dataStreamManager.UdpateDataStreamAsync(datastream, OrgEntityHeader, UserEntityHeader);
+            return _dataStreamManager.UpdateDataStreamAsync(datastream, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -106,5 +107,30 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return _dataStreamManager.DeleteDatStreamAsync(id, OrgEntityHeader, UserEntityHeader);
         }
 
+        /// <summary>
+        /// Data Stream - Create New
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/datastream/factory")]
+        public DetailResponse<DataStream> CreateDataStream()
+        {
+
+            var response = DetailResponse<DataStream>.Create();
+            response.Model.Id = Guid.NewGuid().ToId();
+            SetAuditProperties(response.Model);
+            SetOwnedProperties(response.Model);
+
+            return response;
+        }
+
+        /// <summary>
+        /// Data Stream - Create New Field
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/datastreamfield/factory")]
+        public DetailResponse<DataStreamField> CreateDataStreamField()
+        {
+            return DetailResponse<DataStreamField>.Create();
+        }        
     }
 }
