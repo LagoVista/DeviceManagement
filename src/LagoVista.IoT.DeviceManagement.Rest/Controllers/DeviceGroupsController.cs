@@ -43,7 +43,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> AddDeviceGroupAsync(string devicerepoid, [FromBody] DeviceGroup deviceGroup)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceGroupManager.AddDeviceGroupAsync(repo, deviceGroup, UserEntityHeader, OrgEntityHeader);
+            return await _deviceGroupManager.AddDeviceGroupAsync(repo, deviceGroup, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>

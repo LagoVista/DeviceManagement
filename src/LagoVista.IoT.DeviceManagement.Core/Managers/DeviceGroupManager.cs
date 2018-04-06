@@ -9,6 +9,8 @@ using LagoVista.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.Logging.Loggers;
+using System.Linq;
+using LagoVista.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -17,6 +19,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceGroupRepo _deviceGroupRepo;
         IDeviceManagementRepo _deviceManagementRepo;
         IDeviceGroupEntryRepo _deviceGroupEntryRepo;
+        IAdminLogger _adminLogger;
 
         public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IDeviceGroupEntryRepo deviceGroupEntryRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : 
             base(logger, appConfig, depmanager, security)
@@ -24,6 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceGroupRepo = deviceGroupRepo;
             _deviceGroupEntryRepo = deviceGroupEntryRepo;
             _deviceManagementRepo = deviceManagementRepo;
+            _adminLogger = logger;
         }
 
         public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
@@ -90,6 +94,21 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, deviceGroupId);
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Update, user, org);
             await _deviceGroupEntryRepo.RemoveDeviceFromGroupAsync(deviceRepo, deviceGroupId, deviceId);
+
+            var device = await _deviceManagementRepo.GetDeviceByIdAsync(deviceRepo, deviceId);
+            var deviceInGroup = device.DeviceGroups.Where(devc=>devc.Id == deviceId).FirstOrDefault();
+            if (deviceInGroup == null)
+            {
+                _adminLogger.AddCustomEvent(LogLevel.Error, "DeviceGroupManager", "Device does not exist in group", org.Id.ToKVP("orgId"), deviceId.ToKVP("deviceId"), deviceGroupId.ToKVP("deviceGroupId"));
+            }
+            else
+            {
+                device.DeviceGroups.Remove(deviceInGroup);
+            }
+
+            device.DeviceGroups.Add(group.ToEntityHeader());
+            await _deviceManagementRepo.UpdateDeviceAsync(deviceRepo, device);
+
             return InvokeResult.Success;
         }
 

@@ -54,6 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             States = new List<AttributeValue>();
             Status = new EntityHeader<DeviceStates>() { Value = DeviceStates.New, Id = Device.New, Text = DeviceManagementResources.Device_Status_New };
             Notes = new List<DeviceNote>();
+            DeviceGroups = new List<EntityHeader>();
         }
 
         public string DatabaseName { get; set; }
@@ -186,6 +187,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_inputCommandEndPoints, FieldType: FieldTypes.ChildList, HelpResource: DeviceManagementResources.Names.Device_inputCommandEndPoints_Help, ResourceType: typeof(DeviceManagementResources))]
         public List<InputCommandEndPoint> InputCommandEndPoints { get; set; }
 
+        public List<EntityHeader> DeviceGroups { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
