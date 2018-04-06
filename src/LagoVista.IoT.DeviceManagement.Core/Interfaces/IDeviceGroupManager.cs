@@ -17,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult> AddDeviceToGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org,  EntityHeader user);
+        Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org,  EntityHeader user);
 
         Task<InvokeResult> RemoveDeviceFromGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, string deviceId, EntityHeader org, EntityHeader user);
 

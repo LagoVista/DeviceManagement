@@ -163,10 +163,10 @@
     <value>User Entered Note on a Device</value>
   </data>
   <data name="DeviceGroup_Description" xml:space="preserve">
-    <value>A group of devices ** Needs Better Definition</value>
+    <value>A group of devices is a user created list of devices that can be queried together and be used for different purposes.</value>
   </data>
   <data name="DeviceGroup_Help" xml:space="preserve">
-    <value>A group of devices ** Needs Better Definition</value>
+    <value>A group of devices is a user created list of devices that can be queried together and be used for different purposes.</value>
   </data>
   <data name="DeviceGroup_Repository" xml:space="preserve">
     <value>Device Repository</value>
@@ -497,5 +497,11 @@
   </data>
   <data name="Common_Notes" xml:space="preserve">
     <value>Notes</value>
+  </data>
+  <data name="DeviceGroup_Devices" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="DeviceGroup_Devices_Help" xml:space="preserve">
+    <value>The list of devices that make up this group.</value>
   </data>
 </root>

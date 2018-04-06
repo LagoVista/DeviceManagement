@@ -39,7 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="deviceGroup"></param>
         /// <returns></returns>
-        [HttpPost("/api/device/{devicerepoid}/group")]
+        [HttpPost("/api/repo/{devicerepoid}/group")]
         public async Task<InvokeResult> AddDeviceGroupAsync(string devicerepoid, [FromBody] DeviceGroup deviceGroup)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -52,7 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="deviceGroup"></param>
         /// <returns></returns>
-        [HttpPut("/api/device/{devicerepoid}/group")]
+        [HttpPut("/api/repo/{devicerepoid}/group")]
         public async Task<InvokeResult> UpdateDeviceGroupAsync(string devicerepoid, [FromBody] DeviceGroup deviceGroup)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -65,7 +65,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups")]
+        [HttpGet("/api/repo/{devicerepoid}/groups")]
         public async Task<ListResponse<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -82,8 +82,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="groupid"></param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/{groupid}/{deviceid}/add")]
-        public  async Task<InvokeResult> AddDeviceToGroupAsync(string devicerepoid, String groupid, string deviceid)
+        [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/add/{deviceid}")]
+        public  async Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(string devicerepoid, String groupid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.AddDeviceToGroupAsync(repo, groupid, deviceid, OrgEntityHeader, UserEntityHeader);
@@ -96,7 +96,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="groupid"></param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/{groupid}/{deviceid}/remove")]
+        [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/remove/{deviceid}")]
         public async Task<InvokeResult> RemoveDeviceToGroupAsync(string devicerepoid, String groupid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -109,8 +109,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="groupid"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/{groupid}/devices")]
-        public  async Task<ListResponse<EntityHeader>> GetDevicesForGroupAsync(string devicerepoid, String groupid)
+        [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/devices")]
+        public  async Task<ListResponse<EntityHeader>> GetDevicesForGroupAsync(string devicerepoid, string groupid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var devices = await _deviceGroupManager.GetDevicesInGroupAsync(repo, groupid, OrgEntityHeader, UserEntityHeader);
@@ -125,8 +125,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/{id}")]
-        public async Task<DetailResponse<DeviceGroup>> GetDeviceGroupAsync(string devicerepoid, String id)
+        [HttpGet("/api/repo/{devicerepoid}/group/{id}")]
+        public async Task<DetailResponse<DeviceGroup>> GetDeviceGroupAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceGroup = await _deviceGroupManager.GetDeviceGroupAsync(repo, id, OrgEntityHeader, UserEntityHeader);
@@ -140,7 +140,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/keyinuse/{key}")]
+        [HttpGet("/api/repo/{devicerepoid}/groups/keyinuse/{key}")]
         public async Task<bool> QueryKeyInUse(string devicerepoid, String key)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -153,7 +153,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("/api/device/{devicerepoid}/groups/{id}")]
+        [HttpDelete("/api/repo/{devicerepoid}/group/{id}")]
         public async Task<InvokeResult> DeleteDeviceGroupsAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
@@ -164,7 +164,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         ///  Device Groups - Create New
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/groups/factory")]
+        [HttpGet("/api/repo/{devicerepoid}/group/factory")]
         public DetailResponse<DeviceGroup> CreateDeviceGroup()
         {
             var response = DetailResponse<DeviceGroup>.Create();
