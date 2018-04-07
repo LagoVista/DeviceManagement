@@ -19,7 +19,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId);
 
         Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, string orgId);
-
-        Task<IEnumerable<DeviceSummaryData>> GetSummaryDataByGroup(DeviceRepository deviceRepo, string groupId);
+       
     }
 }

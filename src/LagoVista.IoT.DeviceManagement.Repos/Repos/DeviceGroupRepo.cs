@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -65,22 +64,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             return UpsertDocumentAsync(deviceGroup);
-        }
-
-        public Task<IEnumerable<DeviceSummaryData>> GetSummaryDataByGroup(DeviceRepository deviceRepo, string groupId)
-        {
-            var query = @"SELECT c.id, c.Name, c.DeviceId, c.DeviceConfiguration, c.Status, c.DeviceType, c.Attributes, c.Properties,c.GeoLocation, c.Heading, c.Speed, c.LastContact
-                         FROM c
-                         join dg in c.DeviceGroups
-                         where c.EntityType = 'Device'
-                          and dg.Id = @deviceGroupId";
-
-            var queryParams = new SqlParameterCollection();
-            queryParams.Add(new SqlParameter("@deviceGroupId", groupId));
-
-            QueryAsync(query, queryParams);
-
-            throw new NotImplementedException();
         }
     }
 }
