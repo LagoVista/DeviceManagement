@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using LagoVista.Core.PlatformSupport;
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.IoT.DeviceManagement.Models;
+using Microsoft.Azure.Documents;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -14,7 +16,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     {
         public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
         {
-            
+
         }
 
         protected override String GetCollectionName()
@@ -63,6 +65,22 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             return UpsertDocumentAsync(deviceGroup);
+        }
+
+        public Task<IEnumerable<DeviceSummaryData>> GetSummaryDataByGroup(DeviceRepository deviceRepo, string groupId)
+        {
+            var query = @"SELECT c.id, c.Name, c.DeviceId, c.DeviceConfiguration, c.Status, c.DeviceType, c.Attributes, c.Properties,c.GeoLocation, c.Heading, c.Speed, c.LastContact
+                         FROM c
+                         join dg in c.DeviceGroups
+                         where c.EntityType = 'Device'
+                          and dg.Id = @deviceGroupId";
+
+            var queryParams = new SqlParameterCollection();
+            queryParams.Add(new SqlParameter("@deviceGroupId", groupId));
+
+            QueryAsync(query, queryParams);
+
+            throw new NotImplementedException();
         }
     }
 }

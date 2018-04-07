@@ -69,7 +69,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var entry = DeviceGroupEntry.FromDevice(device, user);
             group.Devices.Add(entry);
 
-            device.DeviceGroups.Add(group.ToEntityHeader());
+            device.DeviceGroups.Add(new EntityHeader() { Id = group.Id, Text = group.Name });
 
             await _deviceManagementRepo.UpdateDeviceAsync(deviceRepo, device);
             await _deviceGroupRepo.UpdateDeviceGroupAsync(deviceRepo, group);

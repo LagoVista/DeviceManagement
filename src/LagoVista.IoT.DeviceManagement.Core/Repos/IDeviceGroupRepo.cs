@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,5 +19,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId);
 
         Task<bool> QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, string orgId);
+
+        Task<IEnumerable<DeviceSummaryData>> GetSummaryDataByGroup(DeviceRepository deviceRepo, string groupId);
     }
 }
