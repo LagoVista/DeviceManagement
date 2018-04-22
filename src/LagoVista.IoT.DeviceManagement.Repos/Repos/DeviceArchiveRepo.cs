@@ -22,15 +22,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive archiveEntry)
         {
+            _deviceRepo = deviceRepo;
+
+            SetTableName(_deviceRepo.GetDeviceArchiveStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(archiveEntry);
         }
-
-        //TODO: worries me a little bit, but since this is created with ASP.NET core transient DI strategy we should be OK, likely need to fully transition this to table storage but need to think through it KDW 12/6/2017
-        protected override string GetTableName()
-        {
-            return _deviceRepo.GetDeviceArchiveStorageName();
-        }
+        
 
         public async Task<ListResponse<List<Object>>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
@@ -39,6 +37,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             //TODO: Need to implement filtering
             //TODO: Need to add some bounds here so it won't run forever.
             //return base.GetByFilterAsync(FilterOptions.Create("DateStamp", FilterOptions.Operators.GreaterThan, start), FilterOptions.Create("DateStamp", FilterOptions.Operators.LessThan, end));
+            SetTableName(_deviceRepo.GetDeviceArchiveStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             var json = await GetRawJSONByParitionIdAsync(deviceId,request.PageSize, request.PageIndex * request.PageSize);
             var rows = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);

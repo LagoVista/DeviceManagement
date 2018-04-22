@@ -105,6 +105,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 return $"{Key}{Id}devicearchives";
         }
 
+        public string GetDeviceMediaStorageName()
+        {
+            if (Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}devicemedia";
+            else
+                return $"{Key}{Id}devicemedia".ToLower();
+        }
+
         public IEntityHeader ToEntityHeader()
         {
             return new EntityHeader()

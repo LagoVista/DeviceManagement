@@ -13,6 +13,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<IDeviceGroupRepo, Repos.DeviceGroupRepo>();
             services.AddTransient<IDeviceLogRepo, Repos.DeviceLogRepo>();
             services.AddTransient<IDevicePEMRepo, Repos.DevicePEMRepo>();
+            services.AddTransient<IDeviceMediaItemRepo, Repos.DeviceMediaItemRepo>();
+            services.AddTransient<IDeviceMediaRepo, Repos.DeviceMediaRepo>();
             services.AddTransient<IDeviceRepositoryRepo, Repos.DeviceRepositoryRepo>();
         }
     }
