@@ -1,15 +1,13 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Repos;
-using System.Linq;
-using System.Collections.Generic;
+﻿using LagoVista.CloudStorage.DocumentDB;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using System.Threading.Tasks;
-using LagoVista.CloudStorage.DocumentDB;
-using LagoVista.Core.PlatformSupport;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.IoT.Logging.Loggers;
 using System;
-using LagoVista.Core.Validation;
-using LagoVista.IoT.DeviceManagement.Core.Resources;
-using LagoVista.Core.Models.UIMetaData;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -271,6 +269,23 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                             select item.CreateSummary();
 
             var lr = ListResponse<DeviceSummary>.Create(summaries);
+            lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
+            return lr;
+        }
+
+        public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository repo, string groupId, ListRequest listRequest)
+        {
+            var items = await base.QueryAsync(qry =>
+                qry.DeviceRepository.Id == repo.Id &&
+                qry.DeviceGroups.Where(grp =>grp.Id == groupId).Any()
+            , listRequest);
+
+            var summaries = items.Model.Select(dev => DeviceSummaryData.FromDevice(dev));
+            var lr = ListResponse<DeviceSummaryData>.Create(summaries);
             lr.NextPartitionKey = items.NextPartitionKey;
             lr.NextRowKey = items.NextRowKey;
             lr.PageSize = items.PageSize;

@@ -17,8 +17,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 
         Task UpdateDeviceAsync(string instanceId, Device device, EntityHeader org, EntityHeader user);
 
-        Task DeleteDeviceByIdAsync(string instanceId, string deviceId, EntityHeader org, EntityHeader user);
-
         Task<ListResponse<DeviceSummary>> GetDevicesForOrgIdAsync(string instanceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(string instanceId, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
@@ -39,6 +37,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 
         Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(string instanceId, string deviceTypeId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(string instanceId, string search, ListRequest listRequest, EntityHeader org, EntityHeader user);        
+        Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(string instanceId, string search, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        
+        Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(string instanceId, string groupId, ListRequest listRequest, EntityHeader org, EntityHeader user);
     }
 }

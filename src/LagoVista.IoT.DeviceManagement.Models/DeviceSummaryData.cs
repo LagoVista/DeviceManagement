@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LagoVista.IoT.DeviceManagement.Models
+namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
     public class DeviceSummaryData
     {
@@ -32,5 +32,24 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         public EntityHeader Status { get; set; }
 
+
+        public static DeviceSummaryData FromDevice(Device device)
+        {
+            return new DeviceSummaryData()
+            {
+                Attributes = device.Attributes,
+                DeviceConfiguration = device.DeviceConfiguration,
+                DeviceId = device.DeviceId,
+                DeviceType = device.DeviceType,
+                GeoLocation = device.GeoLocation,
+                Headig = device.Heading,
+                Id = device.Id,
+                LastContact = device.LastContact,
+                Properties = device.Properties,
+                Speed = device.Speeed,
+                States = device.States,
+                Status = device.Status
+            };
+        }
     }
 }
