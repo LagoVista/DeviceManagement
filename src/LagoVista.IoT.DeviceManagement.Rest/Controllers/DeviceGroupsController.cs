@@ -179,7 +179,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         ///  Device Groups - Get Summary Level Data from Devices
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/api/repo/{devicerepoid}/group/{id}/devices/summarydata")]
+        [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/devices/summarydata")]
         public async Task<ListResponse<DeviceSummaryData>> GetGroupDevicesSummaryData(string devicerepoid, string groupid)
         {
             var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
