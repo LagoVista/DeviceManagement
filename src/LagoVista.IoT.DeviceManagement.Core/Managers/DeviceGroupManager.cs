@@ -11,6 +11,8 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.Logging.Loggers;
 using System.Linq;
 using LagoVista.Core;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -19,13 +21,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceGroupRepo _deviceGroupRepo;
         IDeviceManagementRepo _deviceManagementRepo;
         IAdminLogger _adminLogger;
+        IDeviceManagementConnector _deviceConnectorService;
 
-        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
+        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IDeviceManagementConnector deviceConnectorService, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
             base(logger, appConfig, depmanager, security)
         {
             _deviceGroupRepo = deviceGroupRepo;
             _deviceManagementRepo = deviceManagementRepo;
             _adminLogger = logger;
+            _deviceConnectorService = deviceConnectorService;
         }
 
         public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)
@@ -144,5 +148,21 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Read, user, org);
             return await CheckForDepenenciesAsync(group);
         }
+
+        public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository deviceRepo, string groupId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, groupId);
+            await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Read, user, org);
+
+            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                return await _deviceConnectorService.GetDeviceGroupSummaryDataAsync(deviceRepo.Instance.Id, groupId, listRequest, org, user);
+            }
+            else
+            {
+                return await _deviceManagementRepo.GetDeviceGroupSummaryDataAsync(deviceRepo, groupId, listRequest);
+            }
+        }
+
     }
 }

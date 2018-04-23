@@ -510,18 +510,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return _deviceRepo.SearchByDeviceIdAsync(deviceRepo, searchString, listRequest);
             }
         }
-
-        public Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository deviceRepo, string groupId, ListRequest listRequest, EntityHeader org, EntityHeader user)
-        {
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
-            {
-                return _deviceConnectorService.GetDeviceGroupSummaryDataAsync(deviceRepo.Instance.Id, groupId, listRequest, org, user);
-            }
-            else
-            {
-                return _deviceRepo.GetDeviceGroupSummaryDataAsync(deviceRepo, groupId, listRequest);
-            }
-        }
     }
 }
 

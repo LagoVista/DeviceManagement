@@ -45,7 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         [TestInitialize]
         public void Init()
         {
-            _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object);
+            _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, _deviceConnectorService.Object, _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object);
 
             _device = new Device()
             {
