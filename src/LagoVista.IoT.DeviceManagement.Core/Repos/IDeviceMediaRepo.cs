@@ -1,14 +1,20 @@
-﻿using LagoVista.Core.Models.UIMetaData;
+﻿using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.DeviceManagement.Models;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
-    public interface IDeviceMediaRepo
+    /* These are used to work with actual media items that contain the content/bytes */
+    public interface IDeviceMediaRepoRemote
     {
-        Task<DeviceMedia> GetMediaItemAsync(DeviceRepository repo, string deviceId, string itemId);
-        Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(DeviceRepository repo, string deviceId, ListRequest request);
-        Task DeleteMediaItemAsync(DeviceRepository repo, string deviceId, string itemId);
+        Task<InvokeResult> AddMediaAsync(DeviceRepository repo, Stream stream, string fileName, string contentType);
+    }
+
+    public interface IDeviceMediaRepo : IDeviceMediaRepoRemote
+    {
+        Task<InvokeResult<byte[]>> GetMediaAsync(DeviceRepository repo, string fileName);
+
+        Task<InvokeResult> DeleteMediaAsync(DeviceRepository repo, string fileName);
     }
 }

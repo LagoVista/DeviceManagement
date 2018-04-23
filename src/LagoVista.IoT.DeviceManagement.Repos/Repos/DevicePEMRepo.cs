@@ -1,7 +1,6 @@
 ﻿using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
-using Microsoft.WindowsAzure.Storage.Blob;
 using System.Linq;
 using System.Threading.Tasks;
 using LagoVista.Core.Models.UIMetaData;

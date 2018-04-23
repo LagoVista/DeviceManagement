@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -6,6 +7,7 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Controllers;
 using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -59,6 +61,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             using (var ms = new MemoryStream(item.ImageBytes))
             {
                 return new FileStreamResult(ms, item.ContentType);
+            }
+        }
+
+        [HttpGet("/api{repoid}/devices/{id}/media")]
+        public async Task<InvokeResult> UploadMediaAsync(string repoid, string id, [FromBody] IFormFile file)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryAsync(repoid, OrgEntityHeader, UserEntityHeader);
+
+            using (var strm = file.OpenReadStream())
+            {
+                return await _deviceMediaManager.AddMediaItemAsync(repo, id, strm, file.ContentType, OrgEntityHeader, UserEntityHeader);
             }
         }
     }
