@@ -5,9 +5,14 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.IoT.Logging.Loggers;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using LagoVista.Core;
+using Microsoft.Azure.Documents.Linq;
+using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -16,10 +21,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private const string AZURE_DEVICE_CLIENT_STR = "HostName={0}.azure-devices.net;SharedAccessKeyName={1};SharedAccessKey={2}";
 
         private bool _shouldConsolidateCollections;
+        IAdminLogger _logger;
 
         public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
+            _logger = logger;
         }
 
         public DeviceManagementRepo(IAdminLogger logger) : base(logger)
@@ -277,21 +284,57 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return lr;
         }
 
-        public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository repo, string groupId, ListRequest listRequest)
-        {
-            var items = await base.QueryAsync(qry =>
-                qry.DeviceRepository.Id == repo.Id &&
-                qry.DeviceGroups.Where(grp =>grp.Id == groupId).Any()
-            , listRequest);
+        public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository deviceRepo, string groupId, ListRequest listRequest)
+        {            
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+            
+            var options = new FeedOptions()
+            {
+                MaxItemCount = (listRequest.PageSize == 0) ? 50 : listRequest.PageSize
+            };
 
-            var summaries = items.Model.Select(dev => DeviceSummaryData.FromDevice(dev));
-            var lr = ListResponse<DeviceSummaryData>.Create(summaries);
-            lr.NextPartitionKey = items.NextPartitionKey;
-            lr.NextRowKey = items.NextRowKey;
-            lr.PageSize = items.PageSize;
-            lr.HasMoreRecords = items.HasMoreRecords;
-            lr.PageIndex = items.PageIndex;
-            return lr;
+            if (!String.IsNullOrEmpty(listRequest.NextRowKey))
+            {
+                options.RequestContinuation = listRequest.NextRowKey;
+            }
+
+
+            var query = @"SELECT c.id, c.Status, c.Speed, c.Heading, c.Name, c.DeviceType, c.DeviceConfiguration, c.DeviceRepository,
+   c.DeviceId, c.Attributes, c.States, c.Properties, c.GeoLocation FROM c 
+  join d in c.DeviceGroups 
+  where c.EntityType = 'Device' 
+   and c.DeviceRepository.Id = @repodid
+   and d.Id = @groupid";
+
+            var sqlParams = new SqlParameterCollection();
+            sqlParams.Add(new SqlParameter("@repodid", deviceRepo.Id));
+            sqlParams.Add(new SqlParameter("@groupid", groupId));
+
+            try
+            {
+                var spec = new SqlQuerySpec(query, sqlParams);
+                var link = await GetCollectionDocumentsLinkAsync();
+
+                var docQuery = Client.CreateDocumentQuery<DeviceSummaryData>(link, spec, options).AsDocumentQuery();
+                var result = await docQuery.ExecuteNextAsync<DeviceSummaryData>();
+
+                var listResponse = ListResponse<DeviceSummaryData>.Create(result);
+                listResponse.NextRowKey = result.ResponseContinuation;
+                listResponse.PageSize = result.Count;
+                listResponse.HasMoreRecords = result.Count == listRequest.PageSize;
+                listResponse.PageIndex = listRequest.PageIndex;
+
+                return listResponse;
+            }
+            catch(Exception ex)
+            {
+                _logger.AddException("DeviceManagementRepo_GetDeviceGroupSummaryDataAsync", ex, typeof(DeviceSummaryData).Name.ToKVP("entityType"), groupId.ToKVP("groupId"), deviceRepo.Id.ToKVP("deviceRepoId"));
+
+                var listResponse = ListResponse<DeviceSummaryData>.Create(new List<DeviceSummaryData>());
+                listResponse.Errors.Add(new ErrorMessage(ex.Message));
+                return listResponse;
+
+            }
         }
     }
 }

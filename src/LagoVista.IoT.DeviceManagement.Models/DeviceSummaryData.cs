@@ -21,6 +21,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader DeviceConfiguration { get; set; }
 
+        public EntityHeader DeviceRepository { get; set; }
+
         public List<AttributeValue> Properties { get; set; }
         public List<AttributeValue> States { get; set; }
         public List<AttributeValue> Attributes { get; set; }
