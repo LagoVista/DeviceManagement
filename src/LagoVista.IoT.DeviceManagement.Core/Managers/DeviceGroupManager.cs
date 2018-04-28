@@ -101,10 +101,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         await _deviceManagementRepo.UpdateDeviceAsync(deviceRepo, deviceFromRepo);
                     }
                 }
-                catch (Exception ex) { /* Not the end of the world */}
+                catch (Exception) { /* Not the end of the world */}
 
-                return InvokeResult.Success;
             }
+
+            return InvokeResult.Success;
         }
 
         public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId, EntityHeader user)
