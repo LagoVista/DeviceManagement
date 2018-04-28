@@ -83,13 +83,28 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId, EntityHeader org, EntityHeader user)
         {
-            //TOOD: When we delete the device group we need to remove the group from all the devices, this seems like this be a single command, not iterate over the entire list
             var deviceGroup = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, deviceGroupId);
 
-            //TODO: This one also needs to cleanup the table storage for the devices.
             await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Delete, user, org);
 
-            return InvokeResult.Success;
+            await _deviceGroupRepo.DeleteDeviceGroupAsync(deviceRepo, deviceGroupId);
+
+            //TOOD: This should be much more efficient
+            foreach (var device in deviceGroup.Devices)
+            {
+                try
+                {
+                    var deviceFromRepo = await _deviceManagementRepo.GetDeviceByIdAsync(deviceRepo, device.DeviceUniqueId);
+                    if (deviceFromRepo != null)
+                    {
+                        deviceFromRepo.DeviceGroups = deviceFromRepo.DeviceGroups.Where(grp => grp.Id != deviceGroupId).ToList();
+                        await _deviceManagementRepo.UpdateDeviceAsync(deviceRepo, deviceFromRepo);
+                    }
+                }
+                catch (Exception ex) { /* Not the end of the world */}
+
+                return InvokeResult.Success;
+            }
         }
 
         public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId, EntityHeader user)

@@ -36,7 +36,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                  Description = Description,
                  IsPublic = IsPublic, 
                  Key = Key,
-                 Name = Name
+                 Name = Name,
+                 RepoId = DeviceRepository.Id,
+                 RepoName = DeviceRepository.Text
             };
         }
 
@@ -67,6 +69,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     public class DeviceGroupSummary : SummaryData
     {
-
+        public string RepoId { get; set; }
+        public string RepoName { get; set; }
     }
 }
