@@ -14,7 +14,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Id { get; set; }
 
         public string DeviceId { get; set; }
-        public string DeviceName { get; set; }
+        public string Name { get; set; }
         public string LastContact { get; set; }
 
         public EntityHeader DeviceType { get; set; }
@@ -49,7 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 LastContact = device.LastContact,
                 Properties = device.Properties,
                 Speed = device.Speeed,
-                DeviceName = device.Name,
+                Name = device.Name,
                 States = device.States,
                 Status = device.Status
             };
