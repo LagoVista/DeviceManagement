@@ -140,7 +140,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader CustomStatus { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DebugMode { get; set; }
 
         /// <summary>
