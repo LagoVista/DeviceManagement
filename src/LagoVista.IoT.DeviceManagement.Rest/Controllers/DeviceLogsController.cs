@@ -40,7 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("device/{devicerepoid}/logs/{deviceid}")]
         public async Task<ListResponse<DeviceLog>> GetDevicesForOrg(string devicerepoid, String deviceid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceLogManager.GetForDateRangeAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
     }

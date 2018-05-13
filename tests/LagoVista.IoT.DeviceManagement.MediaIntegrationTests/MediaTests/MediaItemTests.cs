@@ -1,6 +1,10 @@
 ﻿using LagoVista.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Repos.Repos;
+using LagoVista.IoT.Logging.Loggers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +29,20 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
                     AccountId = System.Environment.GetEnvironmentVariable("AZUREACCOUNTID"),
                     AccessKey = System.Environment.GetEnvironmentVariable("AZUREACCESSKEY"),
                 },
-                Key = "testrepo",
-                Id = "890C3F4F480C4FF283F7C9B16CB5F368"
+                Key = "defaultrepo",
+                Id = "784128c7cc214a4ca80957c2334a00c1"
             };
 
             return deviceRepo;
+        }
+
+        [TestMethod]
+        public async Task GetMediaItems()
+        {
+            var mock = new Mock<IDeviceArchiveReportUtils>();
+            var itemRepo = new DeviceMediaItemRepo(new AdminLogger(new Utils.LogWriter()));
+            var items = await itemRepo.GetMediaItemsForDeviceAsync(GetTestDeviceRepo(), "A79528c7cc214a4ca80957c2334a0033", new LagoVista.Core.Models.UIMetaData.ListRequest() { });
+            Assert.IsTrue(items.Successful);
         }
     }
 }

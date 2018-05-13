@@ -42,7 +42,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpPost("/api/repo/{devicerepoid}/group")]
         public async Task<InvokeResult> AddDeviceGroupAsync(string devicerepoid, [FromBody] DeviceGroup deviceGroup)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.AddDeviceGroupAsync(repo, deviceGroup, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -55,7 +55,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpPut("/api/repo/{devicerepoid}/group")]
         public async Task<InvokeResult> UpdateDeviceGroupAsync(string devicerepoid, [FromBody] DeviceGroup deviceGroup)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             SetUpdatedProperties(deviceGroup);
             return await _deviceGroupManager.UpdateDeviceGroupAsync(repo, deviceGroup, OrgEntityHeader, UserEntityHeader);
         }
@@ -68,7 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/groups")]
         public async Task<ListResponse<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(string devicerepoid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceGroupSummaries = await _deviceGroupManager.GetDeviceGroupsForOrgAsync(repo, OrgEntityHeader.Id, UserEntityHeader);
             var response = ListResponse<DeviceGroupSummary>.Create(deviceGroupSummaries);
 
@@ -85,7 +85,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/add/{deviceid}")]
         public  async Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(string devicerepoid, String groupid, string deviceid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.AddDeviceToGroupAsync(repo, groupid, deviceid, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -99,7 +99,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/remove/{deviceid}")]
         public async Task<InvokeResult> RemoveDeviceToGroupAsync(string devicerepoid, String groupid, string deviceid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.RemoveDeviceFromGroupAsync(repo, groupid, deviceid, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -112,7 +112,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/devices")]
         public  async Task<ListResponse<EntityHeader>> GetDevicesForGroupAsync(string devicerepoid, string groupid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var devices = await _deviceGroupManager.GetDevicesInGroupAsync(repo, groupid, OrgEntityHeader, UserEntityHeader);
 
             return ListResponse<EntityHeader>.Create(devices);
@@ -128,7 +128,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/group/{id}")]
         public async Task<DetailResponse<DeviceGroup>> GetDeviceGroupAsync(string devicerepoid, string id)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceGroup = await _deviceGroupManager.GetDeviceGroupAsync(repo, id, OrgEntityHeader, UserEntityHeader);
 
             return  DetailResponse<DeviceGroup>.Create(deviceGroup);
@@ -143,7 +143,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/groups/keyinuse/{key}")]
         public async Task<bool> QueryKeyInUse(string devicerepoid, String key)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.QueryKeyInUseAsync(repo, key, OrgEntityHeader);
         }
 
@@ -156,7 +156,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpDelete("/api/repo/{devicerepoid}/group/{id}")]
         public async Task<InvokeResult> DeleteDeviceGroupsAsync(string devicerepoid, string id)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.DeleteDeviceGroupAsync(repo, id, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -182,7 +182,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/repo/{devicerepoid}/group/{groupid}/devices/summarydata")]
         public async Task<ListResponse<DeviceSummaryData>> GetGroupDevicesSummaryData(string devicerepoid, string groupid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceGroupManager.GetDeviceGroupSummaryDataAsync(repo, groupid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
     }

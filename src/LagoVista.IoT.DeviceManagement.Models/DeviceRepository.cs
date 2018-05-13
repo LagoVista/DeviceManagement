@@ -49,8 +49,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader<RepositoryTypes> RepositoryType { get; set; }
 
         public ConnectionSettings DeviceStorageSettings { get; set; }
+        public String DeviceStorageSecureSettingsId { get; set; }
+
+
         public ConnectionSettings DeviceArchiveStorageSettings { get; set; }
+        public String DeviceArchiveStorageSettingsSecureId { get; set; }
+
+
         public ConnectionSettings PEMStorageSettings { get; set; }
+        public String PEMStorageSettingsSecureId { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Common_Key, HelpResource: DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Key { get; set; }
@@ -86,7 +94,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AccessKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string Uri { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader Instance { get; set; }
 
         public string GetPEMStorageName()
@@ -151,18 +159,36 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [CustomValidator]
         public void Validate(ValidationResult result, Actions action)
         {
+            //TODO: Needs localizations on error messages
             if(EntityHeader.IsNullOrEmpty(RepositoryType))
             {
                 result.AddUserError("Respository Type is a Required Field.");
                 return;
             }
 
+            if(action == Actions.Create)
+            {
+                if (DeviceArchiveStorageSettings == null) result.AddUserError("Device Archive Storage Settings are Required on Insert.");
+                if (PEMStorageSettings == null) result.AddUserError("PEM Storage Settings Are Required on Insert.");
+                if (DeviceStorageSettings == null) result.AddUserError("Device Storage Settings are Required on Insert.");
+            }
+            else if(action == Actions.Update)
+            {
+                if (DeviceArchiveStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Archive Storage Settings Or SecureId are Required when updating.");
+                if (PEMStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("PEM Storage Settings or Secure Id Are Required when updating.");
+                if (DeviceStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Storage Settings Or Secure Id are Required when updating.");
+            }
+
             if(RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 if (String.IsNullOrEmpty(ResourceName)) result.AddUserError("Resource name which is the name of our Azure IoT Hub is a required field.");
                 if (String.IsNullOrEmpty(AccessKeyName)) result.AddUserError("Access Key name is a Required field.");
-                if (action == Actions.Create && String.IsNullOrEmpty(AccessKey)) result.AddUserError("Access Key is a Required field.");
-                if(!String.IsNullOrEmpty(AccessKey))
+
+                if (action == Actions.Create && String.IsNullOrEmpty(AccessKey)) result.AddUserError("Access Key is a Required field when adding a repository of type Azure IoT Hub");
+                if (action == Actions.Update && String.IsNullOrEmpty(AccessKey) && String.IsNullOrEmpty(SecureAccessKeyId)) result.AddUserError("Access Key or ScureAccessKeyId is a Required when updating a repo of Azure IoT Hub.");
+
+
+                if (!String.IsNullOrEmpty(AccessKey))
                 {
                     if(!AccessKey.IsBase64String()) result.AddUserError("Access Key does not appear to be a Base 64 String.");
                 }

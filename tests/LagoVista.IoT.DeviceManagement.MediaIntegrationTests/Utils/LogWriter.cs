@@ -13,6 +13,9 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.Utils
         public Task WriteError(LogRecord record)
         {
             Console.WriteLine(record.Message);
+            Console.WriteLine($"\t\t{record.Details}");
+
+
             return Task.FromResult(default(object));
         }
 

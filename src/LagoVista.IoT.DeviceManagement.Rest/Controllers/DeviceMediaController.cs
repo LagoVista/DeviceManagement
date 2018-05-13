@@ -38,10 +38,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="repoid">Repository Id</param>
         /// <param name="id">Unique Device Id</param>
         /// <returns></returns>
-        [HttpGet("/api{repoid}/devices{id}/media")]
+        [HttpGet("/api/{repoid}/devices/{id}/media")]
         public async Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(string repoid, string id)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(repoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceMediaManager.GetMediaItemsForDeviceAsync(repo, id, OrgEntityHeader, UserEntityHeader, GetListRequestFromHeader());
         }
 
@@ -52,10 +52,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="id">Unique Device Id</param>
         /// <param name="mediaitemid">Id of Media Item</param>
         /// <returns></returns>
-        [HttpGet("/api{repoid}/devices/{id}/media/{mediaid}")]
+        [HttpGet("/api/{repoid}/devices/{id}/media/{mediaid}")]
         public async Task<IActionResult> GetMediaItemAsync(string repoid, string id, string mediaitemid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(repoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, OrgEntityHeader, UserEntityHeader);
             var item = await _deviceMediaManager.GetMediaItemAsync(repo, id, mediaitemid, OrgEntityHeader, UserEntityHeader);
 
             using (var ms = new MemoryStream(item.ImageBytes))
@@ -64,10 +64,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             }
         }
 
-        [HttpGet("/api{repoid}/devices/{id}/media")]
+        [HttpPost("/api/{repoid}/devices/{id}/media")]
         public async Task<InvokeResult> UploadMediaAsync(string repoid, string id, [FromBody] IFormFile file)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(repoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, OrgEntityHeader, UserEntityHeader);
 
             using (var strm = file.OpenReadStream())
             {

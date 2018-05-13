@@ -6,6 +6,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromErrors(new ErrorMessage("Respository Type is a Required Field."));
             }
 
+            //TODO: When we create a stand-along repo for a user, we will allocate it here.
             if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
                 repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -54,8 +56,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
                 };
             }
-            else
+            else if(repo.RepositoryType.Value == RepositoryTypes.Local)
             {
+
+                //TODO: when we update this for remote server access, we need to figure out what if anything needs to be secured.
                 repo.DeviceArchiveStorageSettings = new ConnectionSettings()
                 {
                     Uri = "mysql",
@@ -77,9 +81,26 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     Port = "27017"
                 };
             }
+            /* If repository type == dedicated, values must be provided when inserting the record, this is confirmed on the validation in the next step */       
 
             ValidationCheck(repo, Actions.Create);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Create, user, org);
+
+            var addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.DeviceArchiveStorageSettings));
+            if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+            repo.DeviceArchiveStorageSettingsSecureId = addKeyResult.Result;
+            repo.DeviceArchiveStorageSettings = null;
+
+            addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.DeviceStorageSettings));
+            if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+            repo.DeviceStorageSecureSettingsId = addKeyResult.Result;
+            repo.DeviceStorageSettings = null;
+
+
+            addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.PEMStorageSettings));
+            if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+            repo.PEMStorageSettingsSecureId = addKeyResult.Result;
+            repo.PEMStorageSettings = null;
 
             if (!String.IsNullOrEmpty(repo.AccessKey))
             {
@@ -116,6 +137,33 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return deviceRepo;
         }
 
+        public async Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user)
+        {
+            var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+
+            var getSettingsResult = await _secureStorage.GetSecretAsync(deviceRepo.PEMStorageSettingsSecureId, user, org);
+            if (!getSettingsResult.Successful) throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.PEMStorageSettingsSecureId} ");
+            deviceRepo.PEMStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+            getSettingsResult = await _secureStorage.GetSecretAsync(deviceRepo.DeviceArchiveStorageSettingsSecureId, user, org);
+            if (!getSettingsResult.Successful) throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceArchiveStorageSettingsSecureId} ");
+            deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+            getSettingsResult = await _secureStorage.GetSecretAsync(deviceRepo.DeviceStorageSecureSettingsId, user, org);
+            if (!getSettingsResult.Successful) throw new Exception($"Could not restore secret for Device Storage Connection Settings {deviceRepo.DeviceStorageSecureSettingsId} ");
+            deviceRepo.DeviceStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+            if (!string.IsNullOrEmpty(deviceRepo.SecureAccessKeyId))
+            {
+                getSettingsResult = await _secureStorage.GetSecretAsync(deviceRepo.SecureAccessKeyId, user, org);
+                if (!getSettingsResult.Successful) throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.SecureAccessKeyId} ");
+                deviceRepo.AccessKey = getSettingsResult.Result;
+            }
+
+            return deviceRepo;
+        }
+
         public async Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, orgId, typeof(DeviceRepository));
@@ -137,13 +185,42 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 var addSecretResult = await _secureStorage.AddSecretAsync(repo.AccessKey);
                 if (!addSecretResult.Successful) return addSecretResult.ToInvokeResult();
 
-                if (!string.IsNullOrEmpty(repo.SecureAccessKeyId))
-                {
-                    await _secureStorage.RemoveSecretAsync(repo.SecureAccessKeyId);
-                }
-
+                if (!string.IsNullOrEmpty(repo.SecureAccessKeyId)) await _secureStorage.RemoveSecretAsync(repo.SecureAccessKeyId);                
                 repo.SecureAccessKeyId = addSecretResult.Result;
                 repo.AccessKey = null;
+            }
+
+            if (repo.DeviceArchiveStorageSettings != null)
+            {                
+                var addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.DeviceArchiveStorageSettings));                
+                if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+
+                if (!String.IsNullOrEmpty(repo.DeviceArchiveStorageSettingsSecureId)) await _secureStorage.RemoveSecretAsync(repo.DeviceArchiveStorageSettingsSecureId);
+
+                repo.DeviceArchiveStorageSettingsSecureId = addKeyResult.Result;
+                repo.DeviceArchiveStorageSettings = null;
+            }
+
+            if (repo.DeviceStorageSettings != null)
+            {
+                var addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.DeviceStorageSettings));
+                if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+
+                if (!String.IsNullOrEmpty(repo.DeviceStorageSecureSettingsId)) await _secureStorage.RemoveSecretAsync(repo.DeviceStorageSecureSettingsId);
+
+                repo.DeviceStorageSecureSettingsId = addKeyResult.Result;
+                repo.DeviceStorageSettings = null;
+            }
+
+            if (repo.PEMStorageSettings != null)
+            {                
+                var addKeyResult = await _secureStorage.AddSecretAsync(JsonConvert.SerializeObject(repo.PEMStorageSettings));
+                if (!addKeyResult.Successful) return addKeyResult.ToInvokeResult();
+
+                if (!String.IsNullOrEmpty(repo.PEMStorageSettingsSecureId)) await _secureStorage.RemoveSecretAsync(repo.PEMStorageSettingsSecureId);
+
+                repo.PEMStorageSettingsSecureId = addKeyResult.Result;
+                repo.PEMStorageSettings = null;
             }
 
             await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);

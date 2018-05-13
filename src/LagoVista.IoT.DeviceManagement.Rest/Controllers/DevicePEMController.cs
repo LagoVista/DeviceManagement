@@ -37,7 +37,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/device/{devicerepoid}/pems/{deviceid}")]
         public async Task<ListResponse<IPEMIndex>> GetDevicePEMListAsync(string devicerepoid, string deviceid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMIndexesforDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
@@ -50,7 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/device/{devicerepoid}/pems/errors/{errorreason}")]
         public async Task<ListResponse<IPEMIndex>> GetErrorsForRepoAsync(string devicerepoid, string errorreason)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMIndexesforErrorReasonAsync(repo, errorreason, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
@@ -65,7 +65,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/device/{devicerepoid}/{deviceid}/{messageid}/pem")]
         public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, string deviceid, string messageid)
         {
-            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMAsync(repo, deviceid, messageid.Replace("_", "."), OrgEntityHeader, UserEntityHeader);
         }        
     }

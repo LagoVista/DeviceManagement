@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(repo.DeviceArchiveStorageSettings.AccountId, repo.DeviceArchiveStorageSettings.AccessKey);
             SetTableName(repo.GetDeviceMediaStorageName());
-
+            
             var items = await GetPagedResultsAsync(deviceId, request);
            
             var response = new ListResponse<DeviceMedia>();

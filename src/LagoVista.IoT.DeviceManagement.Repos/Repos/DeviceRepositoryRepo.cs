@@ -23,6 +23,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task AddDeviceRepositoryAsync(DeviceRepository deviceRepo)
         {
+            if (deviceRepo.DeviceArchiveStorageSettings != null) throw new Exception("Should never store archive settings in plain text.");
+            if (deviceRepo.PEMStorageSettings != null) throw new Exception("Should never store pem storage settings in plain text.");
+            if (deviceRepo.DeviceStorageSettings != null) throw new Exception("Should never store device storage settings in plain text.");
+
             return base.CreateDocumentAsync(deviceRepo);
         }
 
