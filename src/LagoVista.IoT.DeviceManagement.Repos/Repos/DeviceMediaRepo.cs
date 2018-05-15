@@ -173,12 +173,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 {
                     if (retryCount == numberRetries)
                     {
-                        _logger.AddException("DeviceMediaRepo_GetMediAsync", ex);
-                        return InvokeResult<byte[]>.FromException("DeviceMediaRepo_GetMediAsync", ex);
+                        _logger.AddException("DeviceMediaRepo_GetMediaAsync", ex);
+                        return InvokeResult<byte[]>.FromException("DeviceMediaRepo_GetMediaAsync", ex);
                     }
                     else
                     {
-                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_GetMediAsync", "", ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
+                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_GetMediAsync", "", fileName.ToKVP("fileName"), repo.Id.ToKVP("repoId"),
+                            ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
                     }
                     await Task.Delay(retryCount * 250);
                 }

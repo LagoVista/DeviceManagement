@@ -13,6 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
         public string TimeStamp { get; set; }
         public string ContentType { get; set; }
         public string FileName { get; set; }
+        public string Title { get; set; }
 
         public DeviceMedia ToDeviceMedia()
         {
@@ -21,6 +22,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
                 DeviceId = DeviceId,
                 ContentType = ContentType,
                 FileName = FileName,
+                Title = Title,
                 TimeStamp = TimeStamp,
                 ItemId = RowKey
             };
@@ -31,11 +33,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             return new DeviceMediaTableStorageEntity()
             {
                 DeviceId = item.DeviceId,
-                RowKey = DateTime.UtcNow.ToInverseTicksRowKey(),
+                RowKey = DateTime.UtcNow.ToInverseTicksRowKey().Replace(".","-"),
                 PartitionKey = item.DeviceId,
                 ContentType = item.ContentType,
                 TimeStamp = item.TimeStamp,
-                FileName = item.FileName
+                FileName = item.FileName,
+                Title = item.Title,
             };
         }
     }

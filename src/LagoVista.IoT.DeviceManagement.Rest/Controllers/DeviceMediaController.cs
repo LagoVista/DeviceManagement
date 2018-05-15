@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -50,18 +51,15 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="repoid">Repository Id</param>
         /// <param name="id">Unique Device Id</param>
-        /// <param name="mediaitemid">Id of Media Item</param>
+        /// <param name="mediaid">Id of Media Item</param>
         /// <returns></returns>
         [HttpGet("/api/{repoid}/devices/{id}/media/{mediaid}")]
-        public async Task<IActionResult> GetMediaItemAsync(string repoid, string id, string mediaitemid)
+        public async Task<IActionResult> GetMediaItemAsync(string repoid, string id, string mediaid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, OrgEntityHeader, UserEntityHeader);
-            var item = await _deviceMediaManager.GetMediaItemAsync(repo, id, mediaitemid, OrgEntityHeader, UserEntityHeader);
-
-            using (var ms = new MemoryStream(item.ImageBytes))
-            {
-                return new FileStreamResult(ms, item.ContentType);
-            }
+            var item = await _deviceMediaManager.GetMediaItemAsync(repo, id, mediaid, OrgEntityHeader, UserEntityHeader);
+            var ms = new MemoryStream(item.ImageBytes);
+            return new FileStreamResult(ms, item.ContentType);
         }
 
         [HttpPost("/api/{repoid}/devices/{id}/media")]
