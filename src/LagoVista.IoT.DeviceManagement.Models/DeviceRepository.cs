@@ -13,12 +13,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
     public enum RepositoryTypes
     {
+        /// <summary>
+        /// shared - cloud
+        /// </summary>
         [EnumLabel(DeviceRepository.DeviceRepository_Type_NuvIoT, DeviceManagementResources.Names.Device_Repo_RepoType_NuvIoT, typeof(DeviceManagementResources))]
         NuvIoT,
+        /// <summary>
+        /// iot hub
+        /// </summary>
         [EnumLabel(DeviceRepository.DeviceRepository_Type_AzureITHub, DeviceManagementResources.Names.Device_Repo_RepoType_AzureIoTHub, typeof(DeviceManagementResources))]
         AzureIoTHub,
+        /// <summary>
+        /// on premise
+        /// </summary>
         [EnumLabel(DeviceRepository.DeviceRepository_Type_Local, DeviceManagementResources.Names.Device_Repo_RepoType_Local, typeof(DeviceManagementResources))]
         Local,
+        /// <summary>
+        /// dedicated - cloud
+        /// </summary>
         [EnumLabel(DeviceRepository.DeviceRepository_Type_Dedicated, DeviceManagementResources.Names.Device_Repo_RepoType_Dedicated, typeof(DeviceManagementResources))]
         Dedicated
     }

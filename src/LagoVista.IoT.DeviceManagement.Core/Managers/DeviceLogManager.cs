@@ -1,34 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
-using LagoVista.IoT.DeviceManagement.Core.Repos;
-using LagoVista.Core.Interfaces;
-using System.Threading.Tasks;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.Logging.Loggers;
-using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public class DeviceLogManager : ManagerBase,  IDeviceLogManager
     {
-        IDeviceLogRepo _logRepo;
+        private readonly IDeviceLogRepo _defaultRepo;
 
-        public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
+        private readonly IAsyncProxyFactory _remoteProxyFactory;
+        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
+        private readonly IAsyncRequestHandler _requestHandler;
+
+        public IDeviceLogRepo GetRepo(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                 _remoteProxyFactory.Create<IDeviceLogRepo>(_asyncCoupler, _requestHandler) :
+                 _defaultRepo;
+        }
+
+        public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
+            IAsyncProxyFactory remoteProxyFactory,
+            IAsyncCoupler<IAsyncResponse> asyncCoupler,
+            IAsyncRequestHandler responseHandler) :
             base(logger, appConfig, depmanager, security)
         {
-            _logRepo = logRepo;
+            _defaultRepo = logRepo;
+            _remoteProxyFactory = remoteProxyFactory;
+            _asyncCoupler = asyncCoupler;
+            _requestHandler = responseHandler;
         }
 
         public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry, EntityHeader org, EntityHeader user)
         {
-            return _logRepo.AddLogEntryAsync(deviceRepo, logEntry);
+            var repo = GetRepo(deviceRepo);
+            return repo.AddLogEntryAsync(deviceRepo, logEntry);
         }
 
         public async Task<ListResponse<DeviceLog>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceLog), LagoVista.Core.Validation.Actions.Read);
-            return await _logRepo.GetForDateRangeAsync(deviceRepo, deviceId, request);
+            var repo = GetRepo(deviceRepo);
+            return await repo.GetForDateRangeAsync(deviceRepo, deviceId, request);
         }
     }
 }

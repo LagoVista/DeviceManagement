@@ -1,52 +1,56 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Models;
+﻿using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
-using LagoVista.Core.Interfaces;
-using System.Threading.Tasks;
+using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
-using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Models;
-using LagoVista.Core.Validation;
 using System.Collections.Generic;
-using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public class DeviceArchiveManager : ManagerBase, IDeviceArchiveManager
     {
-        IDeviceArchiveRepo _archiveRepo;
-        IDeviceArchiveConnector _archiveConnector;
+        private readonly IDeviceArchiveRepo _defaultArchiveRepo;
 
-        public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo, IDeviceArchiveConnector archiveConnector, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) : base(logger, appConfig, depmanager, security)
+        private readonly IAsyncProxyFactory _remoteProxyFactory;
+        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
+        private readonly IAsyncRequestHandler _requestHandler;
+
+        public IDeviceArchiveRepo GetDeviceArchivepRepo(DeviceRepository deviceRepo)
         {
-            _archiveRepo = archiveRepo;
-            _archiveConnector = archiveConnector;
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                 _remoteProxyFactory.Create<IDeviceArchiveRepo>(_asyncCoupler, _requestHandler) :
+                 _defaultArchiveRepo;
+        }
+
+        public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo, 
+            IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
+            IAsyncProxyFactory remoteProxyFactory,
+            IAsyncCoupler<IAsyncResponse> asyncCoupler,
+            IAsyncRequestHandler responseHandler) : base(logger, appConfig, depmanager, security)
+        {
+            _defaultArchiveRepo = archiveRepo;
+
+            _remoteProxyFactory = remoteProxyFactory;
+            _asyncCoupler = asyncCoupler;
+            _requestHandler = responseHandler;
         }
 
         public async Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user)
         {
-            if(deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
-            {
-                await _archiveConnector.AddArchiveAsync(deviceRepo.Instance.Id, logEntry, org, user);
-            }
-            else
-            {
-                await _archiveRepo.AddArchiveAsync(deviceRepo, logEntry);
-            }
+            await GetDeviceArchivepRepo(deviceRepo).AddArchiveAsync(deviceRepo, logEntry);
             return InvokeResult.Success;
-        }       
+        }
 
         public async Task<ListResponse<List<object>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceArchive), LagoVista.Core.Validation.Actions.Read);
-            if (deviceRepo.RepositoryType.Value == RepositoryTypes.Local)
-            {
-                return await _archiveConnector.GetForDateRangeAsync(deviceRepo.Instance.Id, deviceId, listRequest, org, user);
-            }
-            else
-            {
-                return await _archiveRepo.GetForDateRangeAsync(deviceRepo, deviceId, listRequest);
-            }
+            return await GetDeviceArchivepRepo(deviceRepo).GetForDateRangeAsync(deviceRepo, deviceId, listRequest);
         }
     }
 }
