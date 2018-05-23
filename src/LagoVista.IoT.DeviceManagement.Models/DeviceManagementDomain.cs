@@ -1,8 +1,6 @@
 ﻿using LagoVista.Core.Attributes;
 using LagoVista.Core.Models.UIMetaData;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Core
 {

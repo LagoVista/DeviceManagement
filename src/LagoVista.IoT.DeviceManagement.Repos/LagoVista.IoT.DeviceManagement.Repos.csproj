@@ -4,9 +4,9 @@
     <NetStandardImplicitPackageVersion>2.0.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="" />
-    <PackageReference Include="LagoVista.Core" Version="" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="2.1.372-beta1621" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.372-beta1621" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.372-beta1621" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.6.0" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="1.9.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />

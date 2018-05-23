@@ -1,7 +1,6 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Repos

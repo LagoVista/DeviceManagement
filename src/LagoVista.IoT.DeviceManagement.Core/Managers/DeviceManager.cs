@@ -24,31 +24,31 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         //private readonly string _deviceRepoKey;
 
-        private readonly IAsyncProxyFactory _remoteProxyFactory;
+        private readonly IAsyncProxyFactory _asyncProxyFactory;
         private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestHandler;
+        private readonly IAsyncRequestHandler _requestSender;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _remoteProxyFactory.Create<IDeviceManagementRepo>(_asyncCoupler, _requestHandler) :
+                 _asyncProxyFactory.Create<IDeviceManagementRepo>(_asyncCoupler, _requestSender) :
                  _defaultRepo;
         }
 
         public DeviceManager(IDeviceManagementRepo deviceRepo, 
             IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
             IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory remoteProxyFactory,
+            IAsyncProxyFactory asyncProxyFactory,
             IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler responseHandler) :
+            IAsyncRequestHandler requestSender) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo;
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
-            _remoteProxyFactory = remoteProxyFactory;
+            _asyncProxyFactory = asyncProxyFactory;
             _asyncCoupler = asyncCoupler;
-            _requestHandler = responseHandler;
+            _requestSender = requestSender;
         }
 
         /* 

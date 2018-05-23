@@ -1,7 +1,4 @@
-﻿using LagoVista.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {

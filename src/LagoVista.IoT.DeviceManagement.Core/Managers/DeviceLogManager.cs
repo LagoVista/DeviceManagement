@@ -14,27 +14,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IDeviceLogRepo _defaultRepo;
 
-        private readonly IAsyncProxyFactory _remoteProxyFactory;
+        private readonly IAsyncProxyFactory _asyncProxyFactory;
         private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestHandler;
+        private readonly IAsyncRequestHandler _requestSender;
 
         public IDeviceLogRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _remoteProxyFactory.Create<IDeviceLogRepo>(_asyncCoupler, _requestHandler) :
+                 _asyncProxyFactory.Create<IDeviceLogRepo>(_asyncCoupler, _requestSender) :
                  _defaultRepo;
         }
 
         public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory remoteProxyFactory,
+            IAsyncProxyFactory asyncProxyFactory,
             IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler responseHandler) :
+            IAsyncRequestHandler requestSender) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = logRepo;
-            _remoteProxyFactory = remoteProxyFactory;
+            _asyncProxyFactory = asyncProxyFactory;
             _asyncCoupler = asyncCoupler;
-            _requestHandler = responseHandler;
+            _requestSender = requestSender;
         }
 
         public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry, EntityHeader org, EntityHeader user)

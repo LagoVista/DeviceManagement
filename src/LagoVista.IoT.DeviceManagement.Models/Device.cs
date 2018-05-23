@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using LagoVista.Core.Models;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.Core.Attributes;
-using LagoVista.IoT.DeviceManagement.Core.Resources;
 using Newtonsoft.Json;
-using LagoVista.IoT.DeviceAdmin.Resources;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.IoT.DeviceAdmin.Models.Resources;
 using LagoVista.Core.Models.Geo;

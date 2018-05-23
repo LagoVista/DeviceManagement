@@ -1,6 +1,4 @@
-﻿using LagoVista.Core.Models;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.DeviceManagement.Models;
+﻿using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

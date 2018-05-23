@@ -1,5 +1,4 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;

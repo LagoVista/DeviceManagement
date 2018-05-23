@@ -2,8 +2,6 @@
 using LagoVista.IoT.DeviceManagement.Models;
 using System;
 using LagoVista.Core;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Repos
 {

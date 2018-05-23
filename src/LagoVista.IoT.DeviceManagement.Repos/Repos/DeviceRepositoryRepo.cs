@@ -1,7 +1,6 @@
 ﻿using LagoVista.IoT.DeviceManagement.Core.Repos;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;

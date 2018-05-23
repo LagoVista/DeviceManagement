@@ -5,10 +5,6 @@ using LagoVista.IoT.DeviceManagement.Repos.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests

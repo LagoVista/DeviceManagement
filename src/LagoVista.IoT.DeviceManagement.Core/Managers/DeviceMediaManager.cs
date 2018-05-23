@@ -9,30 +9,51 @@ using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using System;
 using LagoVista.Core;
-
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
+using LagoVista.Core.Networking.AsyncMessaging;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public class DeviceMediaManager : ManagerBase, IDeviceMediaManager
     {
-        IDeviceMediaRepo _mediaRepo;
-        IDeviceMediaItemRepo _mediaItemRepo;
-        IAdminLogger _adminLogger;
-        IDeviceManager _deviceManager;
+        private readonly IDeviceMediaRepo _defaultMediaRepo;
+        private readonly IDeviceMediaItemRepo _defaultMediaItemRepo;
+        private readonly IDeviceManager _deviceManager;
+        private readonly IAdminLogger _adminLogger;
 
-        //TODO: Need to add remote connector for this.
+        private readonly IAsyncProxyFactory _asyncProxyFactory;
+        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
+        private readonly IAsyncRequestHandler _requestSender;
 
-        public DeviceMediaManager(IDeviceMediaRepo mediaRepo, IDeviceMediaItemRepo mediaItemRepo, IDeviceManager deviceManager, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security) :
+        public IDeviceMediaRepo GetMediaRepo(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                 _asyncProxyFactory.Create<IDeviceMediaRepo>(_asyncCoupler, _requestSender) :
+                 _defaultMediaRepo;
+        }
+
+        public IDeviceMediaItemRepo GetMediaItemRepo(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                 _asyncProxyFactory.Create<IDeviceMediaItemRepo>(_asyncCoupler, _requestSender) :
+                 _defaultMediaItemRepo;
+        }
+
+        public DeviceMediaManager(IDeviceMediaRepo mediaRepo, IDeviceMediaItemRepo mediaItemRepo, IDeviceManager deviceManager,
+            IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
+            IAsyncProxyFactory asyncProxyFactory,
+            IAsyncCoupler<IAsyncResponse> asyncCoupler,
+            IAsyncRequestHandler requestSender) :
             base(logger, appConfig, depmanager, security)
         {
             _adminLogger = logger;
-            _mediaRepo = mediaRepo;
-            _mediaItemRepo = mediaItemRepo;
+            _defaultMediaRepo = mediaRepo;
+            _defaultMediaItemRepo = mediaItemRepo;
             _deviceManager = deviceManager;
+            _asyncProxyFactory = asyncProxyFactory;
+            _asyncCoupler = asyncCoupler;
+            _requestSender = requestSender;
         }
 
         public async Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(DeviceRepository repo, string deviceId, EntityHeader org, EntityHeader user, ListRequest request)
@@ -42,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeAsync(user.Id, org.Id, "getMediaItems", deviceId);
 
-            return await _mediaItemRepo.GetMediaItemsForDeviceAsync(repo, deviceId, request);
+            return await GetMediaItemRepo(repo).GetMediaItemsForDeviceAsync(repo, deviceId, request);
         }
 
         public async Task<MediaItemResponse> GetMediaItemAsync(DeviceRepository repo, string deviceId, string itemId, EntityHeader org, EntityHeader user)
@@ -50,8 +71,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             /* Ensure user has access to device */
             await _deviceManager.GetDeviceByIdAsync(repo, deviceId, org, user);
 
-            var item = await _mediaItemRepo.GetMediaItemAsync(repo, deviceId, itemId);
-            var imageRequestResponse = await _mediaRepo.GetMediaAsync(repo, item.FileName );
+            var item = await GetMediaItemRepo(repo).GetMediaItemAsync(repo, deviceId, itemId);
+            var imageRequestResponse = await GetMediaRepo(repo).GetMediaAsync(repo, item.FileName);
 
             await AuthorizeAsync(user, org, "getMediaItem", $"{{deviceId:'{deviceId}',mediaItemId:'{itemId}'}}");
 
@@ -74,7 +95,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             //TODO: This code is cut-and-paste reuse in the file DeviceMediaStorage in the IoT Project, as well as the models for Device Media, probably should refactor, but it's simple enough
             var fileName = $"{itemId}.media";
 
-            if(contentType.ToLower().Contains("gif"))
+            if (contentType.ToLower().Contains("gif"))
             {
                 fileName = $"{itemId}.gif";
             }
@@ -91,7 +112,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 fileName = $"{itemId}.jpeg";
             }
 
-            await _mediaItemRepo.StoreMediaItemAsync(repo, new DeviceMedia()
+            await GetMediaItemRepo(repo).StoreMediaItemAsync(repo, new DeviceMedia()
             {
                 ContentType = contentType,
                 DeviceId = deviceId,
@@ -99,7 +120,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 TimeStamp = DateTime.UtcNow.ToJSONString()
             });
 
-            await _mediaRepo.AddMediaAsync(repo, stream, fileName, contentType);
+            await GetMediaRepo(repo).AddMediaAsync(repo, stream, fileName, contentType);
 
             return InvokeResult.Success;
         }
@@ -111,10 +132,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeAsync(user.Id, org.Id, "deleteMediaItem", itemId);
 
-            var item = await _mediaItemRepo.GetMediaItemAsync(repo, deviceId, itemId);
+            var item = await GetMediaItemRepo(repo).GetMediaItemAsync(repo, deviceId, itemId);
 
-            await _mediaRepo.DeleteMediaAsync(repo, item.FileName);
-            await _mediaItemRepo.DeleteMediaItemAsync(repo, deviceId, itemId);
+            await GetMediaRepo(repo).DeleteMediaAsync(repo, item.FileName);
+            await GetMediaItemRepo(repo).DeleteMediaItemAsync(repo, deviceId, itemId);
 
             return InvokeResult.Success;
         }

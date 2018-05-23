@@ -6,8 +6,6 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
-using LagoVista.IoT.DeviceManagement.Models;
-using Microsoft.Azure.Documents;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {

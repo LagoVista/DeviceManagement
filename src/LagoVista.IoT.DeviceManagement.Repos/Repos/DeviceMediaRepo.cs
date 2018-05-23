@@ -1,15 +1,15 @@
-﻿using LagoVista.Core.Validation;
+﻿using LagoVista.Core;
+using LagoVista.Core.Interfaces;
+using LagoVista.Core.PlatformSupport;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
-using System;
-using LagoVista.Core;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System.Threading.Tasks;
-using LagoVista.Core.Interfaces;
-using Microsoft.WindowsAzure.Storage;
 using LagoVista.IoT.Logging.Loggers;
-using LagoVista.Core.PlatformSupport;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {

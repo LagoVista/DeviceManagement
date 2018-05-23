@@ -1,7 +1,6 @@
 ﻿using LagoVista.Core.Attributes;
 using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceAdmin.Models;
-using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models

@@ -2,11 +2,9 @@
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.Core.Validation;
-using LagoVista.IoT.DeviceManagement.Core.Resources;
 using System;
 using LagoVista.Core;
 using System.Collections.Generic;
-using System.Text;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models

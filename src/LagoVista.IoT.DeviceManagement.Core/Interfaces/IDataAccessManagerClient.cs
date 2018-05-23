@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
+﻿namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
 {
     interface IDataAccessManagerClient
     {

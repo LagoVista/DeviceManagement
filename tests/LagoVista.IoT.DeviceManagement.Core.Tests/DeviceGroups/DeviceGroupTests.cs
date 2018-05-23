@@ -10,9 +10,8 @@ using Moq;
 using LagoVista.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using LagoVista.Core.Networking.AsyncMessaging;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
 {
@@ -24,7 +23,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         Mock<IDeviceManagementRepo> _deviceManagementRepo = new Mock<IDeviceManagementRepo>();
         Mock<IDeviceRepositoryManager> _repoMgr = new Mock<IDeviceRepositoryManager>();
         Mock<IDeviceManagementRepo> _devMgmt = new Mock<IDeviceManagementRepo>();
-        Mock<IDeviceManagementConnector> _deviceConnectorService = new Mock<IDeviceManagementConnector>();
         Mock<IDeviceConfigHelper> _deviceConfigHelper = new Mock<IDeviceConfigHelper>();
         Mock<IAdminLogger> _logger = new Mock<IAdminLogger>();
         Mock<ISecureStorage> _secureStorage = new Mock<ISecureStorage>();
@@ -32,6 +30,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
         Mock<DeviceRepository> _repo = new Mock<DeviceRepository>();
+        Mock<IAsyncCoupler<IAsyncResponse>> _asyncCoupler = new Mock<IAsyncCoupler<IAsyncResponse>>();
+        Mock<IAsyncProxyFactory> _asyncProxyFactory = new Mock<IAsyncProxyFactory>();
+        Mock<IAsyncRequestHandler> _asyncRequestSender = new Mock<IAsyncRequestHandler>();
 
         const string DEVICEID = "7DB8128506A14D4FBC76A61D2AC2D769";
         const string GROUPID = "ACB8128506A14D4FBC76A61D2AC2D739";
@@ -45,7 +46,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         [TestInitialize]
         public void Init()
         {
-            _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, _deviceConnectorService.Object, _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object);
+            _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, 
+                _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object,
+                _asyncProxyFactory.Object, _asyncCoupler.Object, _asyncRequestSender.Object);
 
             _device = new Device()
             {

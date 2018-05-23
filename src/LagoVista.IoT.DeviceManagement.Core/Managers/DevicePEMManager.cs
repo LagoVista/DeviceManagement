@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using LagoVista.Core.Interfaces;
+using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.Core.Managers;
-using LagoVista.Core.Interfaces;
-using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
-using LagoVista.Core.Models.UIMetaData;
+using LagoVista.IoT.Logging.Loggers;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {

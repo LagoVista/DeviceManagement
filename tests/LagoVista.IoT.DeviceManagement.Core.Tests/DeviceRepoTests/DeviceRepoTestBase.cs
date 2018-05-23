@@ -1,12 +1,7 @@
 ﻿using LagoVista.IoT.DeviceManagement.Core.Models;
 using System;
 using LagoVista.Core;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LagoVista.Core.Models;
-using LagoVista.Core.Validation;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
 {

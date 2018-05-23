@@ -1,5 +1,4 @@
-﻿using LagoVista.Core.Interfaces;
-using LagoVista.IoT.DeviceManagement.Core.Managers;
+﻿using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
