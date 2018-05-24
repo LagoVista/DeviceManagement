@@ -20,7 +20,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceMediaRepo _defaultMediaRepo;
         private readonly IDeviceMediaItemRepo _defaultMediaItemRepo;
         private readonly IDeviceManager _deviceManager;
-        private readonly IAdminLogger _adminLogger;
 
         private readonly IAsyncProxyFactory _asyncProxyFactory;
         private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
@@ -47,7 +46,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IAsyncRequestHandler requestSender) :
             base(logger, appConfig, depmanager, security)
         {
-            _adminLogger = logger;
             _defaultMediaRepo = mediaRepo;
             _defaultMediaItemRepo = mediaItemRepo;
             _deviceManager = deviceManager;

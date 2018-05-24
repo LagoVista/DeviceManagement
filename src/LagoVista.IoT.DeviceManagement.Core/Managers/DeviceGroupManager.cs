@@ -20,7 +20,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IDeviceGroupRepo _defaultDeviceGroupRepo;
         private readonly IDeviceManagementRepo _defaultDeviceManagementRepo;
-        private readonly IAdminLogger _adminLogger;
 
         private readonly IAsyncProxyFactory _asyncProxyFactory;
         private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
@@ -49,7 +48,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             _defaultDeviceGroupRepo = deviceGroupRepo;
             _defaultDeviceManagementRepo = deviceManagementRepo;
-            _adminLogger = logger;
 
             _asyncProxyFactory = asyncProxyFactory;
             _asyncCoupler = asyncCoupler;
@@ -162,7 +160,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var deviceInGroup = device.DeviceGroups.Where(devc => devc.Id == deviceGroupId).FirstOrDefault();
             if (deviceInGroup == null)
             {
-                _adminLogger.AddCustomEvent(LogLevel.Error, "DeviceGroupManager_RemoveDeviceFromGroup", "Device Group does not exist in list of groups for device.", org.Id.ToKVP("orgId"), deviceUniqueId.ToKVP("deviceId"), deviceGroupId.ToKVP("deviceGroupId"));
+                Logger.AddCustomEvent(LogLevel.Error, "DeviceGroupManager_RemoveDeviceFromGroup", "Device Group does not exist in list of groups for device.", org.Id.ToKVP("orgId"), deviceUniqueId.ToKVP("deviceId"), deviceGroupId.ToKVP("deviceGroupId"));
             }
             else
             {
