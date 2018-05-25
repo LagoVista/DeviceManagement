@@ -46,6 +46,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         [TestInitialize]
         public void Init()
         {
+            _repo.Object.RepositoryType = EntityHeader<RepositoryTypes>.Create(RepositoryTypes.NuvIoT);
+
             _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, 
                 _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object,
                 _asyncProxyFactory.Object, _asyncCoupler.Object, _asyncRequestSender.Object);
