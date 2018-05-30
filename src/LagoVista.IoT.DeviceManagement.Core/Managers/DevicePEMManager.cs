@@ -7,6 +7,7 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
@@ -22,7 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDevicePEMRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDevicePEMRepo>(_asyncCoupler, _requestSender) :
+                 _asyncProxyFactory.Create<IDevicePEMRepo>(_asyncCoupler, _requestSender, Logger, TimeSpan.FromSeconds(120)) :
                  _defaultDevicePEMRepo;
         }
 

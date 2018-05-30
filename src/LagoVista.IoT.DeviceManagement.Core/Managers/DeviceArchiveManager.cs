@@ -7,6 +7,7 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DeviceArchiveManager : ManagerBase, IDeviceArchiveManager
     {
         private readonly IDeviceArchiveRepo _defaultArchiveRepo;
-
         private readonly IAsyncProxyFactory _asyncProxyFactory;
         private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
         private readonly IAsyncRequestHandler _requestSender;
@@ -23,7 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDeviceArchiveRepo GetDeviceArchivepRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDeviceArchiveRepo>(_asyncCoupler, _requestSender) :
+                 _asyncProxyFactory.Create<IDeviceArchiveRepo>(_asyncCoupler, _requestSender, Logger, TimeSpan.FromSeconds(120)) :
                  _defaultArchiveRepo;
         }
 

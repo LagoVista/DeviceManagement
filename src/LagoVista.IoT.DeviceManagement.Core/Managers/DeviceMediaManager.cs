@@ -28,14 +28,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDeviceMediaRepo GetMediaRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDeviceMediaRepo>(_asyncCoupler, _requestSender) :
+                 _asyncProxyFactory.Create<IDeviceMediaRepo>(_asyncCoupler, _requestSender, Logger, TimeSpan.FromSeconds(120)) :
                  _defaultMediaRepo;
         }
 
         public IDeviceMediaItemRepo GetMediaItemRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDeviceMediaItemRepo>(_asyncCoupler, _requestSender) :
+                 _asyncProxyFactory.Create<IDeviceMediaItemRepo>(_asyncCoupler, _requestSender, Logger, TimeSpan.FromSeconds(120)) :
                  _defaultMediaItemRepo;
         }
 
