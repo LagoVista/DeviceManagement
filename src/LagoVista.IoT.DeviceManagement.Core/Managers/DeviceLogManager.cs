@@ -22,7 +22,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDeviceLogRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDeviceLogRepo>(_asyncCoupler, _requestSender, Logger, TimeSpan.FromSeconds(120)) :
+                 _asyncProxyFactory.Create<IDeviceLogRepo>(
+                     _asyncCoupler, 
+                     _requestSender, 
+                     Logger, 
+                     deviceRepo.Instance.Id, 
+                     TimeSpan.FromSeconds(120)) :
                  _defaultRepo;
         }
 
