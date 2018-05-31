@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                      _asyncCoupler, 
                      _requestSender, 
                      Logger,
-                     deviceRepo.Instance.Id,
+                     $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
                      TimeSpan.FromSeconds(120)) :
                  _defaultDeviceGroupRepo;
         }
@@ -43,8 +43,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                  _asyncProxyFactory.Create<IDeviceManagementRepo>(
                      _asyncCoupler, 
                      _requestSender, 
-                     Logger, 
-                     deviceRepo.Instance.Id, 
+                     Logger,
+                     $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
                      TimeSpan.FromSeconds(120)) :
                  _defaultDeviceManagementRepo;
         }

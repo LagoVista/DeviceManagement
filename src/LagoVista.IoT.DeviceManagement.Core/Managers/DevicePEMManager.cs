@@ -24,10 +24,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                  _asyncProxyFactory.Create<IDevicePEMRepo>(
-                     _asyncCoupler, 
-                     _requestSender, 
+                     _asyncCoupler,
+                     _requestSender,
                      Logger,
-                     deviceRepo.Instance.Id, 
+                     $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
                      TimeSpan.FromSeconds(120)) :
                  _defaultDevicePEMRepo;
         }
@@ -56,7 +56,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             //TODO: Add Security, will be authorized but we don't know if the user can get THIS pem record.
 
             var pemJSON = await GetRepo(deviceRepo).GetPEMAsync(deviceRepo, deviceId, messageId);
-            if(pemJSON != null)
+            if (pemJSON != null)
             {
                 return InvokeResult<string>.Create(pemJSON);
             }

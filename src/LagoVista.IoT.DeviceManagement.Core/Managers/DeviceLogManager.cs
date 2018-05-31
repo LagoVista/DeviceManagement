@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
-    public class DeviceLogManager : ManagerBase,  IDeviceLogManager
+    public class DeviceLogManager : ManagerBase, IDeviceLogManager
     {
         private readonly IDeviceLogRepo _defaultRepo;
 
@@ -22,13 +22,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDeviceLogRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDeviceLogRepo>(
-                     _asyncCoupler, 
-                     _requestSender, 
-                     Logger, 
-                     deviceRepo.Instance.Id, 
-                     TimeSpan.FromSeconds(120)) :
-                 _defaultRepo;
+                _asyncProxyFactory.Create<IDeviceLogRepo>(
+                    _asyncCoupler,
+                    _requestSender,
+                    Logger,
+                    $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
+                    TimeSpan.FromSeconds(120)) :
+                _defaultRepo;
         }
 
         public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
