@@ -1,17 +1,17 @@
-﻿using LagoVista.Core.Interfaces;
+﻿using LagoVista.Core;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Networking.AsyncMessaging;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using System;
-using LagoVista.Core;
 using System.IO;
 using System.Threading.Tasks;
-using LagoVista.Core.Networking.AsyncMessaging;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                      _asyncCoupler, 
                      _requestSender, 
                      Logger,
-                     $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
+                     $"{{\"organizationId\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
                      TimeSpan.FromSeconds(120)) :
                  _defaultMediaRepo;
         }
@@ -44,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                      _asyncCoupler, 
                      _requestSender, 
                      Logger,
-                     $"{{\"organizationKey\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceKey\": \"{deviceRepo.Instance.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
+                     $"{{\"organizationId\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
                      TimeSpan.FromSeconds(120)) :
                  _defaultMediaItemRepo;
         }
