@@ -28,7 +28,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         _asyncCoupler,
                         _requestSender,
                         Logger,
-                         $"{{\"organizationId\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
+                     deviceRepo.OwnerOrganization.Id,
+                     deviceRepo.Instance.Id,
                         TimeSpan.FromSeconds(120)) :
                     _defaultArchiveRepo;
         }

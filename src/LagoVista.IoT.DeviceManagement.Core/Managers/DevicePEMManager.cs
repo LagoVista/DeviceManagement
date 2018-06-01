@@ -23,13 +23,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public IDevicePEMRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                 _asyncProxyFactory.Create<IDevicePEMRepo>(
-                     _asyncCoupler,
-                     _requestSender,
-                     Logger,
-                     $"{{\"organizationId\": \"{deviceRepo.OwnerOrganization.Id}\", \"instanceId\": \"{deviceRepo.Instance.Id}\"}}",
-                     TimeSpan.FromSeconds(120)) :
-                 _defaultDevicePEMRepo;
+                _asyncProxyFactory.Create<IDevicePEMRepo>(
+                    _asyncCoupler,
+                    _requestSender,
+                    Logger,
+                    deviceRepo.OwnerOrganization.Id,
+                    deviceRepo.Instance.Id,
+                    TimeSpan.FromSeconds(120)) :
+                _defaultDevicePEMRepo;
         }
 
         public DevicePEMManager(IDevicePEMRepo devicePEMRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security,
