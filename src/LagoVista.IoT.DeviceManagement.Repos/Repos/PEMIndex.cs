@@ -58,7 +58,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var log = JsonConvert.DeserializeObject(Log) as JArray;
                     if (log != null)
                     {
-                        envelope.Add("log", Log);
+                        pem.Add("log", Log);
                     }
                 }
 
@@ -67,7 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var device = JsonConvert.DeserializeObject(Device) as JObject;
                     if (device != null)
                     {
-                        envelope.Add("device", device);
+                        pem.Add("device", device);
                     }
                 }
 
@@ -76,7 +76,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var instructions = JsonConvert.DeserializeObject(Instructions) as JArray;
                     if (instructions != null)
                     {
-                        envelope.Add("instructions", instructions);
+                        pem.Add("instructions", instructions);
                     }
                 }
 
@@ -85,7 +85,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var responseMessage = JsonConvert.DeserializeObject(ResponseMessage) as JObject;
                     if (responseMessage != null)
                     {
-                        envelope.Add("responseMessage", responseMessage);
+                        pem.Add("responseMessage", responseMessage);
                     }
                 }
 
@@ -94,7 +94,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var outgoingMessages = JsonConvert.DeserializeObject(OutgoingMessages) as JArray;
                     if (outgoingMessages != null)
                     {
-                        envelope.Add("outgoingMessages", outgoingMessages);
+                        pem.Add("outgoingMessages", outgoingMessages);
                     }
                 }
            
