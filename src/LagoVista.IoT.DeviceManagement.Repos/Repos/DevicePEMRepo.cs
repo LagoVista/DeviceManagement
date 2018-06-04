@@ -8,6 +8,7 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Collections.Generic;
+using LagoVista.Core;
 using System;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
@@ -37,7 +38,25 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var result = await pems.ExecuteAsync(TableOperation.Retrieve<PEMIndex>(partitionKey, rowKey));
 
-            return (result.Result != null) ? (result.Result as PEMIndex).JSON : (string)null;
+            if (result.Result is PEMIndex pemIndex)
+            {
+                var pemResult = pemIndex.ToPEM();
+                if (pemResult.Successful)
+                {
+                    return pemResult.Result;
+                }
+                else
+                {
+                    _adminLogger.AddError("DevicePEMRepo_GetPEMAsync", pemResult.Errors.First().Message);
+                    return null;
+                }
+            }
+            else
+            {
+                _adminLogger.AddError("DevicePEMRepo_GetPEMAsync", "Null response from TableStorage", rowKey.ToKVP("rowKey"), partitionKey.ToKVP("partitionKey"),
+                                        deviceRepo.OwnerOrganization.Text.ToKVP("org"), deviceRepo.Key.ToKVP("repo"));
+                return null;
+            }
         }
 
         public async Task<ListResponse<IPEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)

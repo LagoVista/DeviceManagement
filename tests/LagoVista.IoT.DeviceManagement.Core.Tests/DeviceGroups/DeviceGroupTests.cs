@@ -30,7 +30,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
         Mock<DeviceRepository> _repo = new Mock<DeviceRepository>();
+        Mock<IAsyncCoupler<IAsyncResponse>> _asyncCoupler = new Mock<IAsyncCoupler<IAsyncResponse>>();
         Mock<IAsyncProxyFactory> _asyncProxyFactory = new Mock<IAsyncProxyFactory>();
+        Mock<IAsyncRequestHandler> _asyncRequestSender = new Mock<IAsyncRequestHandler>();
 
         const string DEVICEID = "7DB8128506A14D4FBC76A61D2AC2D769";
         const string GROUPID = "ACB8128506A14D4FBC76A61D2AC2D739";
@@ -48,7 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
 
             _groupManager = new DeviceGroupManager(_deviceGroupRepo.Object, _deviceManagementRepo.Object, 
                 _logger.Object, _appConfig.Object, _dependencyManager.Object, _security.Object,
-                _asyncProxyFactory.Object);
+                _asyncProxyFactory.Object, _asyncCoupler.Object, _asyncRequestSender.Object);
 
             _device = new Device()
             {
