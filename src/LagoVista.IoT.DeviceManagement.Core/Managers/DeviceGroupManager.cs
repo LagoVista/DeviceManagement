@@ -22,16 +22,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceManagementRepo _defaultDeviceManagementRepo;
 
         private readonly IAsyncProxyFactory _asyncProxyFactory;
-        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestSender;
 
         public IDeviceGroupRepo GetDeviceGroupRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                 _asyncProxyFactory.Create<IDeviceGroupRepo>(
-                    _asyncCoupler, 
-                    _requestSender, 
-                    Logger,
                     deviceRepo.OwnerOrganization.Id,
                     deviceRepo.Instance.Id,
                     TimeSpan.FromSeconds(120)) :
@@ -42,28 +37,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                 _asyncProxyFactory.Create<IDeviceManagementRepo>(
-                    _asyncCoupler, 
-                    _requestSender, 
-                    Logger,
                     deviceRepo.OwnerOrganization.Id,
                     deviceRepo.Instance.Id,
                     TimeSpan.FromSeconds(120)) :
                 _defaultDeviceManagementRepo;
         }
 
-
-        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory,
-            IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler requestSender) :
+        public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IAdminLogger logger, IAppConfig appConfig,
+            IDependencyManager depmanager, ISecurity security, IAsyncProxyFactory asyncProxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultDeviceGroupRepo = deviceGroupRepo;
             _defaultDeviceManagementRepo = deviceManagementRepo;
-
             _asyncProxyFactory = asyncProxyFactory;
-            _asyncCoupler = asyncCoupler;
-            _requestSender = requestSender;
         }
 
         public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)

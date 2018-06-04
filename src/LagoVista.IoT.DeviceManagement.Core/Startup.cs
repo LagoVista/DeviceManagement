@@ -13,7 +13,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
         {
             //todo: ML - is this the place we should add the AyncCoupler and ProxyFactory?
 
-
             services.AddTransient<IDeviceGroupManager, DeviceGroupManager>();
             services.AddTransient<IDeviceManager, DeviceManager>();
             services.AddTransient<IDevicePEMManager, DevicePEMManager>();
@@ -21,7 +20,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
             services.AddTransient<IDeviceRepositoryManager, DeviceRepositoryManager>();
             services.AddTransient<IDeviceArchiveReportUtils, DeviceArchiveReportUtils>();
             services.AddTransient<IDeviceMediaManager, DeviceMediaManager>();
-
             services.AddTransient<IDeviceArchiveManager, DeviceArchiveManager>();
             services.AddTransient<IDeviceArchiveManagerRemote, DeviceArchiveManager>();
             services.AddTransient<IDeviceRepositoryManagerRemote, DeviceRepositoryManager>();

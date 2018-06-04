@@ -19,42 +19,48 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
     public sealed class DeviceManager : ManagerBase, IDeviceManager
     {
+        //private readonly string _deviceRepoKey;
         private readonly IDeviceManagementRepo _defaultRepo;
         private readonly ISecureStorage _secureStorage;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
-        //private readonly string _deviceRepoKey;
-
         private readonly IAsyncProxyFactory _asyncProxyFactory;
-        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestSender;
+        private readonly IConsoleWriter _console;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
-            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceManagementRepo>(
-                    _asyncCoupler, 
-                    _requestSender, 
-                    Logger,
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
-                _defaultRepo;
+            try
+            {
+                _console.WriteLine($"DeviceManager.GetRepo() >>");
+                _console.WriteLine($"DeviceManager.GetRepo(), local ? {deviceRepo.RepositoryType.Value == RepositoryTypes.Local}");
+                return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                    _asyncProxyFactory.Create<IDeviceManagementRepo>(
+                        deviceRepo.OwnerOrganization.Id,
+                        deviceRepo.Instance.Id,
+                        TimeSpan.FromSeconds(120)) :
+                    _defaultRepo;
+            }
+            catch(Exception ex)
+            {
+                _console.WriteError($"DeviceManager.GetRepo() crashed. {ex.GetType().Name}.{ex.Message}");
+                throw;
+            }
         }
 
         public DeviceManager(IDeviceManagementRepo deviceRepo, 
             IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
             IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory,
-            IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler requestSender) :
+            IConsoleWriter console,
+            IAsyncProxyFactory asyncProxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
+            _console = console;
+            _console.WriteLine("DeviceManager::ctor >>");
             _defaultRepo = deviceRepo;
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
             _asyncProxyFactory = asyncProxyFactory;
-            _asyncCoupler = asyncCoupler;
-            _requestSender = requestSender;
+            _console.WriteLine($"DeviceManager::ctor proxy factor: {_asyncProxyFactory != null}");
+            _console.WriteLine("DeviceManager::ctor <<");
         }
 
         /* 
@@ -123,9 +129,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
+            _console.WriteLine($"DeviceManager.GetDevicesForDeviceRepoAsync() >>");
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
+            _console.WriteLine($"1");
             var repo = GetRepo(deviceRepo);
-            return await repo.GetDevicesForRepositoryAsync(deviceRepo, org.Id, listRequest);
+            _console.WriteLine($"2");
+            var result = await repo.GetDevicesForRepositoryAsync(deviceRepo, org.Id, listRequest);
+            _console.WriteLine($"DeviceManager.GetDevicesForDeviceRepoAsync() <<");
+            return result;
         }
 
         public Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user)

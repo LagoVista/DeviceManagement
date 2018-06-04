@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using LagoVista.Core.Validation;
 using Newtonsoft.Json;
+using LagoVista.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
 {
@@ -24,6 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
         IAdminLogger _adminLogger;
+        Mock<IConsoleWriter> _console = new Mock<IConsoleWriter>();
 
         EntityHeader _user = EntityHeader.Create("3367B1522AF441F39238A85A80B94D33", "User");
         EntityHeader _org = EntityHeader.Create("5567B1522AF441F39238A85A80B94D33", "User");
@@ -51,7 +53,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         {
             _adminLogger = new AdminLogger(new Utils.LogWriter());
 
-            return new DeviceRepositoryManager(_deviceMgmtSettings.Object, _deviceRepositoryRepo.Object, _adminLogger, _secureStorage.Object, _appConfig.Object, _dependencyManager.Object, _security.Object);
+            return new DeviceRepositoryManager(_deviceMgmtSettings.Object, _deviceRepositoryRepo.Object, _adminLogger, _secureStorage.Object, _appConfig.Object, _dependencyManager.Object, _security.Object, _console.Object);
         }
 
         

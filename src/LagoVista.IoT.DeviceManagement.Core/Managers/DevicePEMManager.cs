@@ -17,16 +17,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDevicePEMRepo _defaultDevicePEMRepo;
 
         private readonly IAsyncProxyFactory _asyncProxyFactory;
-        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestSender;
 
         public IDevicePEMRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                 _asyncProxyFactory.Create<IDevicePEMRepo>(
-                    _asyncCoupler,
-                    _requestSender,
-                    Logger,
                     deviceRepo.OwnerOrganization.Id,
                     deviceRepo.Instance.Id,
                     TimeSpan.FromSeconds(120)) :
@@ -34,15 +29,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         }
 
         public DevicePEMManager(IDevicePEMRepo devicePEMRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory,
-            IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler requestSender) : base(logger, appConfig, dependencyManager, security)
+            IAsyncProxyFactory asyncProxyFactory) : base(logger, appConfig, dependencyManager, security)
         {
             _defaultDevicePEMRepo = devicePEMRepo;
-
             _asyncProxyFactory = asyncProxyFactory;
-            _asyncCoupler = asyncCoupler;
-            _requestSender = requestSender;
         }
 
         public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)

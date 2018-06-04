@@ -17,17 +17,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IDeviceArchiveRepo _defaultArchiveRepo;
         private readonly IAsyncProxyFactory _asyncProxyFactory;
-        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestSender;
 
         public IDeviceArchiveRepo GetDeviceArchivepRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value ==
                 RepositoryTypes.Local ?
                     _asyncProxyFactory.Create<IDeviceArchiveRepo>(
-                        _asyncCoupler,
-                        _requestSender,
-                        Logger,
                      deviceRepo.OwnerOrganization.Id,
                      deviceRepo.Instance.Id,
                         TimeSpan.FromSeconds(120)) :
@@ -36,15 +31,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo,
             IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory,
-            IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler requestSender) : base(logger, appConfig, depmanager, security)
+            IAsyncProxyFactory asyncProxyFactory) : base(logger, appConfig, depmanager, security)
         {
             _defaultArchiveRepo = archiveRepo;
-
             _asyncProxyFactory = asyncProxyFactory;
-            _asyncCoupler = asyncCoupler;
-            _requestSender = requestSender;
         }
 
         public async Task<InvokeResult> AddArchiveAsync(DeviceRepository deviceRepo, DeviceArchive logEntry, EntityHeader org, EntityHeader user)

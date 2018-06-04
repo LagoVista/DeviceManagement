@@ -20,18 +20,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceMediaRepo _defaultMediaRepo;
         private readonly IDeviceMediaItemRepo _defaultMediaItemRepo;
         private readonly IDeviceManager _deviceManager;
-
         private readonly IAsyncProxyFactory _asyncProxyFactory;
-        private readonly IAsyncCoupler<IAsyncResponse> _asyncCoupler;
-        private readonly IAsyncRequestHandler _requestSender;
 
         public IDeviceMediaRepo GetMediaRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                 _asyncProxyFactory.Create<IDeviceMediaRepo>(
-                    _asyncCoupler, 
-                    _requestSender, 
-                    Logger,
                     deviceRepo.OwnerOrganization.Id,
                     deviceRepo.Instance.Id,
                     TimeSpan.FromSeconds(120)) :
@@ -42,9 +36,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
                 _asyncProxyFactory.Create<IDeviceMediaItemRepo>(
-                    _asyncCoupler, 
-                    _requestSender, 
-                    Logger,
                     deviceRepo.OwnerOrganization.Id,
                     deviceRepo.Instance.Id,
                     TimeSpan.FromSeconds(120)) :
@@ -53,17 +44,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public DeviceMediaManager(IDeviceMediaRepo mediaRepo, IDeviceMediaItemRepo mediaItemRepo, IDeviceManager deviceManager,
             IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory,
-            IAsyncCoupler<IAsyncResponse> asyncCoupler,
-            IAsyncRequestHandler requestSender) :
+            IAsyncProxyFactory asyncProxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultMediaRepo = mediaRepo;
             _defaultMediaItemRepo = mediaItemRepo;
             _deviceManager = deviceManager;
             _asyncProxyFactory = asyncProxyFactory;
-            _asyncCoupler = asyncCoupler;
-            _requestSender = requestSender;
         }
 
         public async Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(DeviceRepository repo, string deviceId, EntityHeader org, EntityHeader user, ListRequest request)
