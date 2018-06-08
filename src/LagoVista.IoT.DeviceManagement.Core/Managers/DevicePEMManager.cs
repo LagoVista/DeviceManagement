@@ -2,12 +2,11 @@
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
-using System;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
@@ -16,23 +15,25 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IDevicePEMRepo _defaultDevicePEMRepo;
 
-        private readonly IAsyncProxyFactory _asyncProxyFactory;
+        private readonly IProxyFactory _proxyFactory;
 
         public IDevicePEMRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDevicePEMRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
+                _proxyFactory.Create<IDevicePEMRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
                 _defaultDevicePEMRepo;
         }
 
         public DevicePEMManager(IDevicePEMRepo devicePEMRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager dependencyManager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory) : base(logger, appConfig, dependencyManager, security)
+            IProxyFactory proxyFactory) : base(logger, appConfig, dependencyManager, security)
         {
             _defaultDevicePEMRepo = devicePEMRepo;
-            _asyncProxyFactory = asyncProxyFactory;
+            _proxyFactory = proxyFactory;
         }
 
         public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)

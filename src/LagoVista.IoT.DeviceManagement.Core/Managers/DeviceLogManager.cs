@@ -2,11 +2,10 @@
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.Core.Rpc.Client;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
-using System;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
@@ -14,24 +13,26 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     public class DeviceLogManager : ManagerBase, IDeviceLogManager
     {
         private readonly IDeviceLogRepo _defaultRepo;
-        private readonly IAsyncProxyFactory _asyncProxyFactory;
+        private readonly IProxyFactory _proxyFactory;
 
         public IDeviceLogRepo GetRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceLogRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
+                _proxyFactory.Create<IDeviceLogRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
                 _defaultRepo;
         }
 
-        public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, 
-            ISecurity security, IAsyncProxyFactory asyncProxyFactory) :
+        public DeviceLogManager(IDeviceLogRepo logRepo, IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager,
+            ISecurity security, IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = logRepo;
-            _asyncProxyFactory = asyncProxyFactory;
+            _proxyFactory = proxyFactory;
         }
 
         public Task AddEntryAsync(DeviceRepository deviceRepo, DeviceLog logEntry, EntityHeader org, EntityHeader user)

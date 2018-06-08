@@ -3,8 +3,8 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Networking.AsyncMessaging;
 using LagoVista.Core.PlatformSupport;
+using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -21,35 +21,40 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceGroupRepo _defaultDeviceGroupRepo;
         private readonly IDeviceManagementRepo _defaultDeviceManagementRepo;
 
-        private readonly IAsyncProxyFactory _asyncProxyFactory;
+        private readonly IProxyFactory _proxyFactory;
 
         public IDeviceGroupRepo GetDeviceGroupRepo(DeviceRepository deviceRepo)
         {
-            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceGroupRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
-                _defaultDeviceGroupRepo;
+            return deviceRepo.RepositoryType.Value ==
+                RepositoryTypes.Local ?
+                    _proxyFactory.Create<IDeviceGroupRepo>(
+                        new ProxySettings
+                        {
+                            OrganizationId = deviceRepo.OwnerOrganization.Id,
+                            InstanceId = deviceRepo.Instance.Id
+                        }) :
+                    _defaultDeviceGroupRepo;
         }
 
         public IDeviceManagementRepo GetDeviceManagementRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceManagementRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
+                _proxyFactory.Create<IDeviceManagementRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
                 _defaultDeviceManagementRepo;
         }
 
         public DeviceGroupManager(IDeviceGroupRepo deviceGroupRepo, IDeviceManagementRepo deviceManagementRepo, IAdminLogger logger, IAppConfig appConfig,
-            IDependencyManager depmanager, ISecurity security, IAsyncProxyFactory asyncProxyFactory) :
+            IDependencyManager depmanager, ISecurity security, IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultDeviceGroupRepo = deviceGroupRepo;
             _defaultDeviceManagementRepo = deviceManagementRepo;
-            _asyncProxyFactory = asyncProxyFactory;
+            _proxyFactory = proxyFactory;
         }
 
         public async Task<InvokeResult> AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup, EntityHeader org, EntityHeader user)

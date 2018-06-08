@@ -3,7 +3,7 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -20,37 +20,41 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceMediaRepo _defaultMediaRepo;
         private readonly IDeviceMediaItemRepo _defaultMediaItemRepo;
         private readonly IDeviceManager _deviceManager;
-        private readonly IAsyncProxyFactory _asyncProxyFactory;
+        private readonly IProxyFactory _proxyFactory;
 
         public IDeviceMediaRepo GetMediaRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceMediaRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
+                _proxyFactory.Create<IDeviceMediaRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
                 _defaultMediaRepo;
         }
 
         public IDeviceMediaItemRepo GetMediaItemRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                _asyncProxyFactory.Create<IDeviceMediaItemRepo>(
-                    deviceRepo.OwnerOrganization.Id,
-                    deviceRepo.Instance.Id,
-                    TimeSpan.FromSeconds(120)) :
+                _proxyFactory.Create<IDeviceMediaItemRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
                 _defaultMediaItemRepo;
         }
 
         public DeviceMediaManager(IDeviceMediaRepo mediaRepo, IDeviceMediaItemRepo mediaItemRepo, IDeviceManager deviceManager,
             IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IAsyncProxyFactory asyncProxyFactory) :
+            IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultMediaRepo = mediaRepo;
             _defaultMediaItemRepo = mediaItemRepo;
             _deviceManager = deviceManager;
-            _asyncProxyFactory = asyncProxyFactory;
+            _proxyFactory = proxyFactory;
         }
 
         public async Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(DeviceRepository repo, string deviceId, EntityHeader org, EntityHeader user, ListRequest request)
