@@ -1,6 +1,6 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Interfaces;
-using LagoVista.Core.Networking.AsyncMessaging;
+using LagoVista.Core.Rpc.Client;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -23,14 +23,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IAppConfig> _appConfig = new Mock<IAppConfig>();
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
-        Mock<IAsyncProxyFactory> _asyncProxyFactory = new Mock<IAsyncProxyFactory>();
+        Mock<IProxyFactory> _proxyFactory = new Mock<IProxyFactory>();
 
         [TestInitialize]
         public void Init()
         {
             _deviceManager = new DeviceManager(_devMgmt.Object, _deviceConfigHelper.Object, _logger.Object,
                 _secureStorage.Object, _appConfig.Object, _dependencyManager.Object, _security.Object, _console.Object,
-                _asyncProxyFactory.Object);
+                _proxyFactory.Object);
         }
     }
 }
