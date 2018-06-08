@@ -1,20 +1,20 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Managers;
+﻿using LagoVista.Core;
+using LagoVista.Core.Models;
+using LagoVista.Core.Models.Geo;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.DeviceManagement.Core.Managers;
+using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System;
-using LagoVista.Core;
 using Microsoft.AspNetCore.Mvc;
-using LagoVista.Core.Validation;
+using System;
 using System.Threading.Tasks;
-using LagoVista.Core.Models.UIMetaData;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.Core.Models;
-using LagoVista.IoT.Logging.Loggers;
-using LagoVista.UserAdmin.Models.Users;
-using LagoVista.IoT.DeviceManagement.Core;
-using LagoVista.Core.Models.Geo;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
