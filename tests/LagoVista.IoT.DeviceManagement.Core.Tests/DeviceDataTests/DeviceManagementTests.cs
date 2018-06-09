@@ -14,7 +14,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
     public class DeviceManagementTests
     {
         DeviceManager _deviceManager;
-        Mock<IConsoleWriter> _console = new Mock<IConsoleWriter>();
         Mock<IDeviceRepositoryManager> _repoMgr = new Mock<IDeviceRepositoryManager>();
         Mock<IDeviceManagementRepo> _devMgmt = new Mock<IDeviceManagementRepo>();
         Mock<IDeviceConfigHelper> _deviceConfigHelper = new Mock<IDeviceConfigHelper>();
@@ -28,8 +27,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestInitialize]
         public void Init()
         {
-            _deviceManager = new DeviceManager(_devMgmt.Object, _deviceConfigHelper.Object, _logger.Object,
-                _secureStorage.Object, _appConfig.Object, _dependencyManager.Object, _security.Object, _console.Object,
+            _deviceManager = new DeviceManager(
+                _devMgmt.Object, 
+                _deviceConfigHelper.Object, 
+                _logger.Object,
+                _secureStorage.Object, 
+                _appConfig.Object, 
+                _dependencyManager.Object, 
+                _security.Object, 
                 _proxyFactory.Object);
         }
     }

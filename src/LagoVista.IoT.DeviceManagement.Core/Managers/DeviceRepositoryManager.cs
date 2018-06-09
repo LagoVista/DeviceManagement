@@ -19,8 +19,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         IDeviceManagementSettings _deviceMgmtSettings;
         ISecureStorage _secureStorage;
         IDeviceRepositoryRepo _deviceRepositoryRepo;
-        IConsoleWriter _console;
-
 
         public DeviceRepositoryManager(
             IDeviceManagementSettings deviceMgmtSettings, 
@@ -29,13 +27,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ISecureStorage secureStorage, 
             IAppConfig appConfig, 
             IDependencyManager dependencyManager, 
-            ISecurity security,
-            IConsoleWriter console) : base(logger, appConfig, dependencyManager, security)
+            ISecurity security) : base(logger, appConfig, dependencyManager, security)
         {
             _deviceRepositoryRepo = deviceRepositoryRepo;
             _deviceMgmtSettings = deviceMgmtSettings;
             _secureStorage = secureStorage;
-            _console = console;
         }
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
@@ -151,11 +147,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user)
         {
-            _console.WriteLine($"GetDeviceRepositoryWithSecretsAsync() >>");
             var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
             await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
-
-            _console.WriteLine($"RepositoryType: {deviceRepo.RepositoryType.Value}");
 
             //todo: ML - not sure if this is the correct long term approach (getting secrets for non-local/on-premises repos), but it's a good hack for today
             if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
@@ -179,7 +172,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     deviceRepo.AccessKey = getSettingsResult.Result;
                 }
             }
-            _console.WriteLine($"<< GetDeviceRepositoryWithSecretsAsync()");
             return deviceRepo;
         }
 

@@ -27,13 +27,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         IDeviceManager _deviceManager;
         IDeviceRepositoryManager _repoManager;
-        IConsoleWriter _console;
 
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<AppUser> userManager, IAdminLogger logger, IConsoleWriter console) : base(userManager, logger)
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceManager = deviceManager;
             _repoManager = repoManager;
-            _console = console;
         }
 
         /// <summary>
@@ -71,7 +69,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/devices/{devicerepoid}")]
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepo(string devicerepoid)
         {
-            _console.WriteLine("DeviceManagementController.GetDevicesForDeviceRepo()");
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.GetDevicesForDeviceRepoAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }

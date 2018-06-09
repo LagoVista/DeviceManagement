@@ -24,45 +24,34 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ISecureStorage _secureStorage;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         private readonly IProxyFactory _proxyFactory;
-        private readonly IConsoleWriter _console;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
-            try
-            {
-                _console.WriteLine($"DeviceManager.GetRepo() >>");
-                _console.WriteLine($"DeviceManager.GetRepo(), local ? {deviceRepo.RepositoryType.Value == RepositoryTypes.Local}");
-                return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
-                    _proxyFactory.Create<IDeviceManagementRepo>(
-                        new ProxySettings
-                        {
-                            OrganizationId = deviceRepo.OwnerOrganization.Id,
-                            InstanceId = deviceRepo.Instance.Id
-                        }) :
-                    _defaultRepo;
-            }
-            catch (Exception ex)
-            {
-                _console.WriteError($"DeviceManager.GetRepo() crashed. {ex.GetType().Name}.{ex.Message}");
-                throw;
-            }
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                _proxyFactory.Create<IDeviceManagementRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
+                _defaultRepo;
         }
 
-        public DeviceManager(IDeviceManagementRepo deviceRepo,
-            IDeviceConfigHelper deviceConfigHelper, IAdminLogger logger, ISecureStorage secureStorage,
-            IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
-            IConsoleWriter console,
+        public DeviceManager(
+            IDeviceManagementRepo deviceRepo,
+            IDeviceConfigHelper deviceConfigHelper, 
+            IAdminLogger logger, 
+            ISecureStorage secureStorage,
+            IAppConfig appConfig, 
+            IDependencyManager depmanager, 
+            ISecurity security,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
-            _console = console;
-            _console.WriteLine("DeviceManager::ctor >>");
             _defaultRepo = deviceRepo;
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
             _proxyFactory = proxyFactory;
-            _console.WriteLine($"DeviceManager::ctor proxy factor: {_proxyFactory != null}");
-            _console.WriteLine("DeviceManager::ctor <<");
         }
 
         /* 
@@ -131,13 +120,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            _console.WriteLine($"DeviceManager.GetDevicesForDeviceRepoAsync() >>");
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
-            _console.WriteLine($"1");
             var repo = GetRepo(deviceRepo);
-            _console.WriteLine($"2");
             var result = await repo.GetDevicesForRepositoryAsync(deviceRepo, org.Id, listRequest);
-            _console.WriteLine($"DeviceManager.GetDevicesForDeviceRepoAsync() <<");
             return result;
         }
 

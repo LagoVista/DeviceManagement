@@ -33,7 +33,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         Mock<DeviceRepository> _repo = new Mock<DeviceRepository>();
         Mock<IAsyncCoupler<IResponse>> _asyncCoupler = new Mock<IAsyncCoupler<IResponse>>();
         Mock<IProxyFactory> _proxyFactory = new Mock<IProxyFactory>();
-        Mock<IConsoleWriter> _console = new Mock<IConsoleWriter>();
 
 
         const string DEVICEID = "7DB8128506A14D4FBC76A61D2AC2D769";
