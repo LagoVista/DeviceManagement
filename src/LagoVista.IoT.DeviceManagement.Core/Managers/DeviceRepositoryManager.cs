@@ -150,7 +150,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
             await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
 
-            //todo: ML - not sure if this is the correct long term approach (getting secrets for non-local/on-premises repos), but it's a good hack for today
             if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
             {
                 var getSettingsResult = await _secureStorage.GetSecretAsync(deviceRepo.PEMStorageSettingsSecureId, user, org);
