@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     new ProxySettings
                     {
                         OrganizationId = deviceRepo.OwnerOrganization.Id,
-                        InstanceId = deviceRepo.Instance.Id
+                        InstanceId = deviceRepo.Instance?.Id
                     }) :
                 _defaultRepo;
         }
