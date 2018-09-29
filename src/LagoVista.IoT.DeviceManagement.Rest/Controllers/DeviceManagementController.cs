@@ -13,6 +13,7 @@ using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -25,8 +26,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     [ConfirmedUser]
     public class DeviceManagementController : LagoVistaBaseController
     {
-        IDeviceManager _deviceManager;
-        IDeviceRepositoryManager _repoManager;
+        private IDeviceManager _deviceManager;
+        private IDeviceRepositoryManager _repoManager;
 
         public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
@@ -85,7 +86,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
-
 
         /// <summary>
         /// Device Management - Get Full Devices by Config Id
@@ -192,7 +192,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> UpdateDeviceStatusAsync(string devicerepoid, string id, string status)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.UpdateDeviceStatusAsync(repo, id,status, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateDeviceStatusAsync(repo, id, status, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             response.Model.Id = Guid.NewGuid().ToId();
             /* Note we just create it here for now then the record gets inserted we go ahead assign the name */
             response.Model.DeviceRepository = new EntityHeader() { Id = devicerepoid, Text = "TBD" };
-            
+
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 
