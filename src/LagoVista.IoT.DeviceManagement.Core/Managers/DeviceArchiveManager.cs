@@ -19,14 +19,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public IDeviceArchiveRepo GetDeviceArchivepRepo(DeviceRepository deviceRepo)
         {
-            return deviceRepo.RepositoryType.Value ==
-                RepositoryTypes.Local ?
-                    _proxyFactory.Create<IDeviceArchiveRepo>(new ProxySettings
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local
+                ? _proxyFactory.Create<IDeviceArchiveRepo>(
+                    new ProxySettings
                     {
                         OrganizationId = deviceRepo.OwnerOrganization.Id,
                         InstanceId = deviceRepo.Instance.Id
-                    }) :
-                    _defaultArchiveRepo;
+                    })
+                : _defaultArchiveRepo;
         }
 
         public DeviceArchiveManager(IDeviceArchiveRepo archiveRepo,

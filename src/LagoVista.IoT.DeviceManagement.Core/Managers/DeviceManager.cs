@@ -39,11 +39,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public DeviceManager(
             IDeviceManagementRepo deviceRepo,
-            IDeviceConfigHelper deviceConfigHelper, 
-            IAdminLogger logger, 
+            IDeviceConfigHelper deviceConfigHelper,
+            IAdminLogger logger,
             ISecureStorage secureStorage,
-            IAppConfig appConfig, 
-            IDependencyManager depmanager, 
+            IAppConfig appConfig,
+            IDependencyManager depmanager,
             ISecurity security,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
@@ -93,7 +93,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             var repo = GetRepo(deviceRepo);
-            return await repo.AddDeviceAsync(deviceRepo, device);
+            var result = await repo.AddDeviceAsync(deviceRepo, device);
+
+            return result;
         }
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
@@ -138,10 +140,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var repo = GetRepo(deviceRepo);
             var device = await repo.GetDeviceByDeviceIdAsync(deviceRepo, id);
-
-            if (device == null) return null;
-
-            if (String.IsNullOrEmpty(device.Name)) device.Name = device.DeviceId;
+            if (device == null)
+            {
+                return null;
+            }
+            if (string.IsNullOrEmpty(device.Name))
+            {
+                device.Name = device.DeviceId;
+            }
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
 
@@ -158,9 +164,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
 
-            if (device == null) return null;
+            if (device == null)
+            {
+                return null;
+            }
 
-            if (String.IsNullOrEmpty(device.Name)) device.Name = device.DeviceId;
+            if (string.IsNullOrEmpty(device.Name))
+            {
+                device.Name = device.DeviceId;
+            }
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             deviceRepo.AccessKey = null;
@@ -186,7 +198,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            if (!Enum.TryParse<DeviceStates>(status, true, out DeviceStates newState))
+            if (!Enum.TryParse<DeviceStates>(status, true, out var newState))
             {
                 /* We aren't using newState as parsed by the enum, we are just validating it */
                 return ListResponse<DeviceSummary>.FromErrors(Resources.ErrorCodes.SetStatus_InvalidOption.ToErrorMessage());
@@ -238,7 +250,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceStatusAsync(DeviceRepository deviceRepo, string id, string status, EntityHeader org, EntityHeader user)
         {
-            if (Enum.TryParse<DeviceStates>(status, true, out DeviceStates newState))
+            if (Enum.TryParse<DeviceStates>(status, true, out var newState))
             {
                 var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
                 if (device == null)
@@ -286,10 +298,25 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
 
-            if (String.IsNullOrEmpty(note.CreationDate)) note.CreationDate = device.CreationDate;
-            if (String.IsNullOrEmpty(note.LastUpdatedDate)) note.LastUpdatedDate = device.LastUpdatedDate;
-            if (EntityHeader.IsNullOrEmpty(note.LastUpdatedBy)) note.LastUpdatedBy = user;
-            if (EntityHeader.IsNullOrEmpty(note.CreatedBy)) note.CreatedBy = user;
+            if (string.IsNullOrEmpty(note.CreationDate))
+            {
+                note.CreationDate = device.CreationDate;
+            }
+
+            if (string.IsNullOrEmpty(note.LastUpdatedDate))
+            {
+                note.LastUpdatedDate = device.LastUpdatedDate;
+            }
+
+            if (EntityHeader.IsNullOrEmpty(note.LastUpdatedBy))
+            {
+                note.LastUpdatedBy = user;
+            }
+
+            if (EntityHeader.IsNullOrEmpty(note.CreatedBy))
+            {
+                note.CreatedBy = user;
+            }
 
             device.Notes.Add(note);
 
