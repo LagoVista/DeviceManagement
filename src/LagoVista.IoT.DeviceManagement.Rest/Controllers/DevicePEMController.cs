@@ -60,13 +60,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <param name="deviceid"></param>
-        /// <param name="messageid"></param>
+        /// <param name="pemid"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/{deviceid}/{messageid}/pem")]
-        public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, string deviceid, string messageid)
+        [HttpGet("/api/device/{devicerepoid}/{deviceid}/{pemid}/pem")]
+        public async Task<InvokeResult<string>> GetDevicePEMAsync(String devicerepoid, string deviceid, string pemid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _devicePEMManager.GetPEMAsync(repo, deviceid, messageid.Replace("_", "."), OrgEntityHeader, UserEntityHeader);
+            return await _devicePEMManager.GetPEMAsync(repo, deviceid, pemid.Replace("_", "."), OrgEntityHeader, UserEntityHeader);
         }        
     }
 }
