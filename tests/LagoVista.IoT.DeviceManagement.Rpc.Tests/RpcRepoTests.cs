@@ -4,7 +4,6 @@ using LagoVista.Core.Rpc.Client.ServiceBus;
 using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Rpc.Middleware;
 using LagoVista.Core.Rpc.Settings;
-using LagoVista.Core.Utils;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
@@ -18,19 +17,20 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
     [TestClass]
     public class RpcRepoTests
     {
-        private readonly string _hostId = "test_host";
-        private readonly string  _orgId = "c8ad4589f26842e7a1aefbaefc979c9b";
-        private readonly string _instanceId = "9e88c7f6b5894dbfb3bc09d20736705e";
-        private readonly string _pipelineModuleId = "0559c89ca08f40ef997ad1e03ed93ef1";
-        private readonly ITransceiverConnectionSettings _transceiverSettings = new TransceiverConnectionSettings();
-        private readonly ILogger _logger;
-        private readonly ITransceiver _rpcTransceiver;
-        private readonly Support.AsyncCoupler<IMessage> _asyncCoupler;
-        private readonly IProxyFactory _proxyFactory;
-        private readonly ProxySettings _proxySettings;
-        private readonly DeviceRepository _deviceRepo = DataFactory.CreateDeviceRespository();
+        private static string _hostId = "test_host";
+        private static string _orgId = "c8ad4589f26842e7a1aefbaefc979c9b";
+        private static string _instanceId = "9e88c7f6b5894dbfb3bc09d20736705e";
+        private static string _pipelineModuleId = "0559c89ca08f40ef997ad1e03ed93ef1";
+        private static ITransceiverConnectionSettings _transceiverSettings = new TransceiverConnectionSettings();
+        private static ILogger _logger;
+        private static ITransceiver _rpcTransceiver;
+        private static Support.AsyncCoupler<IMessage> _asyncCoupler;
+        private static IProxyFactory _proxyFactory;
+        private static ProxySettings _proxySettings;
+        private static DeviceRepository _deviceRepo = DataFactory.CreateDeviceRespository();
 
-        public RpcRepoTests()
+        [ClassInitialize]
+        static public void ClassInitialize(TestContext testContext)
         {
             _logger = new AdminLogger(new ConsoleLogWriter(), _hostId);
 

@@ -29,6 +29,8 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
     public class AsyncCoupler : IAsyncCoupler
     {
+        private readonly Guid _id = Guid.NewGuid();
+
         protected ILogger Logger { get; }
         protected IUsageMetrics UsageMetrics { get; private set; }
         protected ConcurrentDictionary<string, AsyncRequest<object>> Sessions { get; } = new ConcurrentDictionary<string, AsyncRequest<object>>();
@@ -37,6 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             UsageMetrics = usageMetrics ?? throw new ArgumentNullException(nameof(usageMetrics));
+            Console.WriteLine($"{_id} AsyncCoupler.CTOR");
         }
 
         public IUsageMetrics GetAndResetReadMetrics(DateTime dateStamp, string hostVersion)
@@ -62,15 +65,16 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
         public Task<InvokeResult> CompleteAsync<TAsyncResult>(string correlationId, TAsyncResult item)
         {
+            Console.WriteLine($"{_id} AsyncCoupler.CompleteAsync: Sessions.Count: {Sessions.Count}");
             if (Sessions.TryRemove(correlationId, out var requestAwaiter))
             {
-                Console.WriteLine($"AsyncCoupler.CompleteAsync: correlationId: {correlationId}");
+                Console.WriteLine($"{_id} AsyncCoupler.CompleteAsync: removed correlationId: {correlationId}");
                 requestAwaiter.CompletionSource.SetResult(item);
                 return Task.FromResult(InvokeResult.Success);
             }
             else
             {
-                Console.WriteLine($"AsyncCoupler.CompleteAsync: correlationId not found: {correlationId}");
+                Console.WriteLine($"{_id} AsyncCoupler.CompleteAsync: correlationId not found: {correlationId}");
                 return Task.FromResult(InvokeResult.FromErrors(new ErrorMessage($"Correlation id not found: {correlationId}.") { Details = $"CorrelationId={correlationId}" }));
             }
         }
@@ -79,11 +83,11 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             if (!Sessions.TryAdd(correlationId, new AsyncRequest<object>(correlationId)))
             {
-                Console.WriteLine($"AsyncCoupler.RegisterAsyncRequest: Could not add correlation id: {correlationId}");
+                Console.WriteLine($"{_id} AsyncCoupler.RegisterAsyncRequest: Could not add correlation id: {correlationId}");
                 throw new Exception($"Could not add correlation id {correlationId}.");
             }
             UsageMetrics.ActiveCount++;
-            Console.WriteLine($"AsyncCoupler.RegisterAsyncRequest: success: {correlationId}");
+            Console.WriteLine($"{_id} AsyncCoupler.RegisterAsyncRequest: success: {correlationId}");
         }
 
         private AsyncRequest<object> Wait(string correlationId, TimeSpan timeout)
@@ -94,12 +98,15 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 var timedOut = !asyncRequest.CompletionSource.Task.Wait(timeout);
                 if (timedOut)
                 {
-                    Console.WriteLine($"AsyncCoupler.Wait: timed out waiting for: {correlationId}");
+                    Console.WriteLine($"{_id} AsyncCoupler.Wait: timed out waiting for: {correlationId}");
 
-                    // no need to check success 
-                    Sessions.TryRemove(correlationId, out var requestAwaiter);
+                    // no need to check success except for debugging
+                    if (Sessions.TryRemove(correlationId, out var requestAwaiter))
+                    {
+                        Console.WriteLine($"{_id} AsyncCoupler.Wait - timed out: removed correlationId: {correlationId}");
+                    }
                 }
-                Console.WriteLine($"AsyncCoupler.Wait: completed: {correlationId}");
+                Console.WriteLine($"{_id} AsyncCoupler.Wait: completed: {correlationId}");
                 UsageMetrics.MessagesProcessed++;
                 UsageMetrics.ActiveCount--;
                 UsageMetrics.ElapsedMS = (DateTime.Now - asyncRequest.Enqueued).TotalMilliseconds;
@@ -109,14 +116,14 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
         private Task<InvokeResult<TAsyncResult>> GetAsyncResult<TAsyncResult>(AsyncRequest<object> asyncRequest)
         {
-            Console.WriteLine($"AsyncCoupler.GetAsyncResult: IsCompleted: {asyncRequest.CompletionSource.Task.IsCompleted}");
+            Console.WriteLine($"{_id} AsyncCoupler.GetAsyncResult: IsCompleted: {asyncRequest.CompletionSource.Task.IsCompleted}");
             if (!asyncRequest.CompletionSource.Task.IsCompleted)
             {
                 UsageMetrics.ErrorCount++;
                 return Task.FromResult(InvokeResult<TAsyncResult>.FromError("Timeout waiting for response."));
             }
 
-            Console.WriteLine($"AsyncCoupler.GetAsyncResult: Result == null: {asyncRequest.CompletionSource.Task.Result == null}");
+            Console.WriteLine($"{_id} AsyncCoupler.GetAsyncResult: Result == null: {asyncRequest.CompletionSource.Task.Result == null}");
             if (asyncRequest.CompletionSource.Task.Result == null)
             {
                 UsageMetrics.ErrorCount++;
@@ -126,34 +133,34 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             var result = asyncRequest.CompletionSource.Task.Result;
             if (result is TAsyncResult typedResult)
             {
-                Console.WriteLine($"AsyncCoupler.GetAsyncResult: returning typed result.");
+                Console.WriteLine($"{_id} AsyncCoupler.GetAsyncResult: returning typed result.");
                 return Task.FromResult(InvokeResult<TAsyncResult>.Create(typedResult));
             }
             else
             {
                 UsageMetrics.ErrorCount++;
-                Console.WriteLine($"AsyncCoupler.GetAsyncResult: Type Mismatch - Expected: {typeof(TAsyncResult).Name} - Actual: {result.GetType().Name}.");
+                Console.WriteLine($"{_id} AsyncCoupler.GetAsyncResult: Type Mismatch - Expected: {typeof(TAsyncResult).Name} - Actual: {result.GetType().Name}.");
                 return Task.FromResult(InvokeResult<TAsyncResult>.FromError($"Type Mismatch - Expected: {typeof(TAsyncResult).Name} - Actual: {result.GetType().Name}."));
             }
         }
 
         public Task<InvokeResult<TAsyncResult>> WaitOnAsync<TAsyncResult>(string correlationId, TimeSpan timeout)
         {
-            Console.WriteLine($"AsyncCoupler.WaitOnAsync");
+            Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync");
             try
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
                 RegisterAsyncRequest(correlationId);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: Wait");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
                 return GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
@@ -165,21 +172,21 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             try
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
                 RegisterAsyncRequest(correlationId);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: action");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: action");
                 action();
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: Wait");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
                 return GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
@@ -191,21 +198,21 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             try
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
                 RegisterAsyncRequest(correlationId);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: function");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: function");
                 await function();
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: Wait");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
                 return await GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
