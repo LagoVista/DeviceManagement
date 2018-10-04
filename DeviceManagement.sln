@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.MediaIntegrationTests", "tests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests.csproj", "{1940D07B-25E2-46C3-8B64-1E5D9757581D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.IoT.DeviceManagement.Rpc.Tests", "tests\LagoVista.IoT.DeviceManagement.Rpc.Tests\LagoVista.IoT.DeviceManagement.Rpc.Tests.csproj", "{C2087475-1190-4641-AC34-A035D1DDDB7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{4F1E6D12-9976-4E66-BEBE-67C431E7B849} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
 		{EE54EB55-667C-47C9-9B9E-A9B29E646C45} = {29383AD3-C5DF-45D3-8D5A-A6F74EA7F438}
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
+		{C2087475-1190-4641-AC34-A035D1DDDB7F} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D668ED7B-81DC-4922-B64B-32E92439E71E}
