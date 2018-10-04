@@ -336,5 +336,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             }
         }
+
+        public Task<string> Echo(string value)
+        {
+            return Task.FromResult(value);
+        }
     }
 }
