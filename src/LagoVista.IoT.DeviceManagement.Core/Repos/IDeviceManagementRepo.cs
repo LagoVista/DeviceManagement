@@ -1,12 +1,15 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDeviceManagementRepo
     {
+        Task<string> Echo(string value);
+
         Task<InvokeResult> AddDeviceAsync(DeviceRepository repo, Device device);
 
         Task DeleteDeviceAsync(DeviceRepository repo, string id);
