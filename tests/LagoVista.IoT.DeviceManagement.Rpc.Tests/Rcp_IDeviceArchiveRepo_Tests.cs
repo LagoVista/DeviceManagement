@@ -4,7 +4,6 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,12 +19,12 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         }
 
         [TestMethod]
-        public async Task AddArchiveAsync( )
+        public async Task AddArchiveAsync()
         {
             var archiveEntry = new DeviceArchive
             {
                 DeviceConfigurationId = Guid.NewGuid().ToId(),
-                DeviceConfigurationVersionId  =1.0,
+                DeviceConfigurationVersionId = 1.0,
                 DeviceId = Guid.NewGuid().ToId(),
                 MessageId = Guid.NewGuid().ToId(),
                 MetaData = "meta data",
@@ -67,6 +66,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
                 StartDate = timeStamp.AddDays(-2).ToJSONString()
             };
             var response = await DataFactory.DeviceArchiveRepoProxy.GetForDateRangeAsync(DataFactory.DeviceRepo, archiveEntry.DeviceId, listRequest);
+            Assert.IsTrue(response.Successful);
             Assert.IsTrue(response.Model.Count() > 0);
         }
     }

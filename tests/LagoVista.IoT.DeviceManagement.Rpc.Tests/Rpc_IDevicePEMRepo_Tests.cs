@@ -17,21 +17,36 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         }
 
         [TestMethod]
-        public Task<string> GetPEMAsync(DeviceRepository deviceRepo, string deviceId, string messageId)
+        public async Task GetPEMAsync()
         {
-            throw new NotImplementedException();
+            // there's no way to write a pem from here, so the goal is to just make sure neither side crashes with the call
+            var pem = await DataFactory.DevicePEMRepo.GetPEMAsync(DataFactory.DeviceRepo, "deviceid", "messageid");
         }
 
         [TestMethod]
-        public Task<ListResponse<IPEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
+        public async Task GetPEMIndexForDeviceAsync()
         {
-            throw new NotImplementedException();
+            var listRequest = new ListRequest
+            {
+                PageIndex = 1,
+                PageSize = 25
+            };
+            var response = await DataFactory.DevicePEMRepo.GetPEMIndexForDeviceAsync(DataFactory.DeviceRepo, "deviceid", listRequest);
+            Assert.IsTrue(response.Successful);
+            //Assert.IsTrue(response.Model.Count() > 0);
         }
 
         [TestMethod]
-        public Task<ListResponse<IPEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request)
+        public async Task GetPEMIndexForErrorReasonAsync()
         {
-            throw new NotImplementedException();
+            var listRequest = new ListRequest
+            {
+                PageIndex = 1,
+                PageSize = 25
+            };
+            var response = await DataFactory.DevicePEMRepo.GetPEMIndexForDeviceAsync(DataFactory.DeviceRepo, "error reason", listRequest);
+            Assert.IsTrue(response.Successful);
+            //Assert.IsTrue(response.Model.Count() > 0);
         }
     }
 }
