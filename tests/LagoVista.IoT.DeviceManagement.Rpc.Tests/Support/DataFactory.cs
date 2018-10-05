@@ -8,7 +8,10 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 {
     public static class DataFactory
     {
-        public static Device CreateDevice()
+        public static readonly string LocationId = Guid.NewGuid().ToId();
+        public static readonly string OrganizationId = "c8ad4589f26842e7a1aefbaefc979c9b";
+
+        public static Device CreateDevice(string deviceId = "dev1234")
         {
             return new Device()
             {
@@ -17,13 +20,15 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
                 CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
-                OwnerOrganization = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
-                DeviceId = "dev1234",
+                OwnerOrganization = EntityHeader.Create(OrganizationId, "test organization"),
+                Location = EntityHeader.Create(LocationId, "test location"),
+                DeviceId = deviceId,
                 PrimaryAccessKey = "abc123",
                 SecondaryAccessKey = "def45",
                 Name = "tesedevice",
                 DeviceConfiguration = EntityHeader.Create("fff", "ddd"),
                 DeviceType = EntityHeader.Create("fff", "ddd"),
+                Status = EntityHeader<DeviceStates>.Create(DeviceStates.New)
             };
         }
 

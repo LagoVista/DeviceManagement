@@ -146,21 +146,21 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
         public Task<InvokeResult<TAsyncResult>> WaitOnAsync<TAsyncResult>(string correlationId, TimeSpan timeout)
         {
-            Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync");
+            Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: {correlationId}");
             try
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest: {correlationId}");
                 RegisterAsyncRequest(correlationId);
 
                 Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult: {correlationId}");
                 return GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: {correlationId}: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
@@ -172,21 +172,21 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             try
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest: {correlationId}");
                 RegisterAsyncRequest(correlationId);
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: action");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: action: {correlationId}");
                 action();
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait: {correlationId}");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult: {correlationId}");
                 return GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: {correlationId}: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
@@ -198,21 +198,21 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         {
             try
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: RegisterAsyncRequest: {correlationId}");
                 RegisterAsyncRequest(correlationId);
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: function");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: function: {correlationId}");
                 await function();
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: Wait: {correlationId}");
                 var asyncRequest = Wait(correlationId, timeout);
 
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: GetAsyncResult: {correlationId}");
                 return await GetAsyncResult<TAsyncResult>(asyncRequest);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: exception: {ex.GetType().Name}: {ex.Message}");
+                Console.WriteLine($"{_id} AsyncCoupler.WaitOnAsync: {correlationId}: exception: {ex.GetType().Name}: {ex.Message}");
                 Logger.AddException("AsyncCoupler_WaitOnAsync", ex);
                 UsageMetrics.ErrorCount++;
 
