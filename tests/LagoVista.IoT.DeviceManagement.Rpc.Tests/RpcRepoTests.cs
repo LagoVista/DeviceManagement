@@ -7,6 +7,7 @@ using LagoVista.Core.Rpc.Client.ServiceBus;
 using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Rpc.Middleware;
 using LagoVista.Core.Rpc.Settings;
+using LagoVista.Core.Utils;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
@@ -29,7 +30,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         private static readonly DeviceRepository _deviceRepo = DataFactory.CreateDeviceRespository();
         private static ILogger _logger;
         private static ITransceiver _rpcTransceiver;
-        private static Support.AsyncCoupler<IMessage> _asyncCoupler;
+        private static AsyncCoupler<IMessage> _asyncCoupler;
         private static IProxyFactory _proxyFactory;
         private static ProxySettings _proxySettings;
         private static IDeviceManagementRepo _deviceManagementRepoProxy;
@@ -40,7 +41,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         {
             _logger = new AdminLogger(new ConsoleLogWriter(), _hostId);
 
-            _asyncCoupler = new Support.AsyncCoupler<IMessage>(_logger, new UsageMetrics(_hostId, _instanceId, _pipelineModuleId));
+            _asyncCoupler = new AsyncCoupler<IMessage>(_logger, new UsageMetrics(_hostId, _instanceId, _pipelineModuleId));
 
             _transceiverSettings.RpcReceiver.AccountId = "localrequestbus-dev";
             _transceiverSettings.RpcReceiver.UserName = "ListenAccessKey";
