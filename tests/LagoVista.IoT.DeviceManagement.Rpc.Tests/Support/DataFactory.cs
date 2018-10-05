@@ -1,6 +1,15 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Models;
+using LagoVista.Core.PlatformSupport;
+using LagoVista.Core.Rpc.Client;
+using LagoVista.Core.Rpc.Client.ServiceBus;
+using LagoVista.Core.Rpc.Messages;
+using LagoVista.Core.Rpc.Middleware;
+using LagoVista.Core.Rpc.Settings;
+using LagoVista.Core.Utils;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
 using Newtonsoft.Json;
 using System;
 
@@ -8,8 +17,65 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 {
     public static class DataFactory
     {
+        #region fields
+        private static bool _initialized = false;
+
         public static readonly string LocationId = Guid.NewGuid().ToId();
         public static readonly string OrganizationId = "c8ad4589f26842e7a1aefbaefc979c9b";
+
+        public static readonly string HostId = "test_host";
+        public static readonly string InstanceId = "9e88c7f6b5894dbfb3bc09d20736705e";
+        public static readonly string PipelineModuleId = "0559c89ca08f40ef997ad1e03ed93ef1";
+        public static readonly ITransceiverConnectionSettings TransceiverSettings = new TransceiverConnectionSettings();
+        public static readonly DeviceRepository DeviceRepo = CreateDeviceRespository();
+        public static ILogger Logger;
+        public static ITransceiver RpcTransceiver;
+        public static AsyncCoupler<IMessage> AsyncCoupler;
+        public static IProxyFactory ProxyFactory;
+        public static ProxySettings ProxySettings;
+        public static IDeviceManagementRepo DeviceManagementRepoProxy;
+        public static IDeviceArchiveRepo DeviceArchiveRepoProxy;
+
+        #endregion
+
+        static public void Initialize()
+        {
+            if (_initialized)
+            {
+                return;
+            }
+            _initialized = true;
+
+            Logger = new AdminLogger(new ConsoleLogWriter(), HostId);
+
+            AsyncCoupler = new AsyncCoupler<IMessage>(Logger, new UsageMetrics(HostId, InstanceId, PipelineModuleId));
+
+            TransceiverSettings.RpcReceiver.AccountId = "localrequestbus-dev";
+            TransceiverSettings.RpcReceiver.UserName = "ListenAccessKey";
+            TransceiverSettings.RpcReceiver.AccessKey = Environment.GetEnvironmentVariable("RpcReceiverAccessKey", EnvironmentVariableTarget.Machine);
+            TransceiverSettings.RpcReceiver.ResourceName = "rpc_test";
+            TransceiverSettings.RpcReceiver.Uri = "application";
+
+            TransceiverSettings.RpcTransmitter.AccountId = "localrequestbus-dev";
+            TransceiverSettings.RpcTransmitter.UserName = "SendAccessKey";
+            TransceiverSettings.RpcTransmitter.AccessKey = Environment.GetEnvironmentVariable("RpcTransmitterAccessKey", EnvironmentVariableTarget.Machine);
+            TransceiverSettings.RpcTransmitter.ResourceName = "rpc_test";
+            TransceiverSettings.RpcTransmitter.TimeoutInSeconds = 30;
+
+            RpcTransceiver = new ServiceBusProxyClient(TransceiverSettings, AsyncCoupler, Logger);
+            RpcTransceiver.StartAsync().Wait();
+
+            ProxySettings = new ProxySettings
+            {
+                OrganizationId = OrganizationId,
+                InstanceId = InstanceId
+            };
+
+            ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
+
+            DeviceManagementRepoProxy = ProxyFactory.Create<IDeviceManagementRepo>(ProxySettings);
+            DeviceArchiveRepoProxy = ProxyFactory.Create<IDeviceArchiveRepo>(ProxySettings);
+        }
 
         public static Device CreateDevice(string deviceId = "dev1234")
         {
