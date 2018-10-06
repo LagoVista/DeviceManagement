@@ -1,8 +1,6 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
-using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rpc.Tests

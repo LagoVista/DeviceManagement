@@ -77,7 +77,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 InstanceId = InstanceId
             };
 
-            ProxyFactory = new Support.ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
+            ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
 
             DeviceManagementRepoProxy = ProxyFactory.Create<IDeviceManagementRepo>(ProxySettings);
             DeviceArchiveRepoProxy = ProxyFactory.Create<IDeviceArchiveRepo>(ProxySettings);
