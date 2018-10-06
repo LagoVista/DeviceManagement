@@ -46,6 +46,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 _defaultMediaItemRepo;
         }
 
+        public IDeviceMediaRepoRemote GetMediaRepoRemote(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                _proxyFactory.Create<IDeviceMediaRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
+                _defaultMediaRepo;
+        }
+
+        public IDeviceMediaItemRepoRemote GetMediaItemRepoRemote(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+                _proxyFactory.Create<IDeviceMediaItemRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    }) :
+                _defaultMediaItemRepo;
+        }
+
         public DeviceMediaManager(IDeviceMediaRepo mediaRepo, IDeviceMediaItemRepo mediaItemRepo, IDeviceManager deviceManager,
             IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
             IProxyFactory proxyFactory) :
@@ -113,7 +137,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 fileName = $"{itemId}.jpeg";
             }
 
-            await GetMediaItemRepo(repo).StoreMediaItemAsync(repo, new DeviceMedia()
+            await GetMediaItemRepoRemote(repo).StoreMediaItemAsync(repo, new DeviceMedia()
             {
                 ContentType = contentType,
                 DeviceId = deviceId,
@@ -124,7 +148,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var bytes = new byte[stream.Length];
             stream.Position = 0;
             stream.Read(bytes, 0, (int)stream.Length);
-            await GetMediaRepo(repo).AddMediaAsync(repo, bytes, fileName, contentType);
+            await GetMediaRepoRemote(repo).AddMediaAsync(repo, bytes, fileName, contentType);
 
             return InvokeResult.Success;
         }
