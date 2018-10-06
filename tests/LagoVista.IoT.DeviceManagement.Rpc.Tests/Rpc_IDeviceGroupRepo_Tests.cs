@@ -130,26 +130,71 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         }
 
         [TestMethod]
-        public async Task QueryKeyInUseAsync(DeviceRepository deviceRepo, string key, string orgId)
+        public async Task QueryKeyInUseAsync()
         {
-            //var deviceId = Guid.NewGuid().ToId();
-            //var device = DataFactory.CreateDevice(deviceId);
+            var groupId = Guid.NewGuid().ToId();
+            var createdBy = EntityHeader.Create("userid", "username");
+            var key= Guid.NewGuid().ToId();
+            var orgId = Guid.NewGuid().ToId();
+            var deviceGroup = new DeviceGroup
+            {
+                Id = groupId,
+                Name = "name" + groupId,
+                IsPublic = false,
+                Key = key,
+                CreatedBy = createdBy,
+                LastUpdatedBy = EntityHeader.Create("userid", "username"),
+                OwnerOrganization = EntityHeader.Create(orgId, "ownername"),
+                OwnerUser = EntityHeader.Create("userid", "username"),
+                DeviceRepository = EntityHeader.Create(DataFactory.DeviceRepo.Id, DataFactory.DeviceRepo.Name),
+                Devices = new List<DeviceGroupEntry>()
+                {
+                    DeviceGroupEntry.FromDevice( DataFactory.CreateDevice(groupId), createdBy)
+                }
+            };
+            await DataFactory.DeviceGroupRepo.AddDeviceGroupAsync(DataFactory.DeviceRepo, deviceGroup);
 
-            //var addDeviceResponse = await DataFactory.DeviceManagementRepoProxy.AddDeviceAsync(DataFactory.DeviceRepo, device);
-            //Assert.IsTrue(addDeviceResponse.Successful);
+            var response = await DataFactory.DeviceGroupRepo.QueryKeyInUseAsync(DataFactory.DeviceRepo, key, orgId);
+            Assert.IsTrue(response);
 
-            //var deviceInUse = await DataFactory.DeviceManagementRepoProxy.CheckIfDeviceIdInUse(DataFactory.DeviceRepo, deviceId, DataFactory.OrganizationId);
-            //Assert.IsTrue(deviceInUse);
-
-            //deviceId = Guid.NewGuid().ToId();
-            //deviceInUse = await DataFactory.DeviceManagementRepoProxy.CheckIfDeviceIdInUse(DataFactory.DeviceRepo, deviceId, DataFactory.OrganizationId);
-            //Assert.IsFalse(deviceInUse);
+            response = await DataFactory.DeviceGroupRepo.QueryKeyInUseAsync(DataFactory.DeviceRepo, "nokey", orgId);
+            Assert.IsFalse(response);
         }
 
         [TestMethod]
-        public Task UpdateDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
+        public async Task UpdateDeviceGroupAsync()
         {
-            throw new NotImplementedException();
+            var groupId = Guid.NewGuid().ToId();
+            var createdBy = EntityHeader.Create("userid", "username");
+            var orgId = Guid.NewGuid().ToId();
+            var deviceGroup = new DeviceGroup
+            {
+                Id = groupId,
+                Name = "name" + groupId,
+                IsPublic = false,
+                Key = "key" + groupId,
+                CreatedBy = createdBy,
+                LastUpdatedBy = EntityHeader.Create("userid", "username"),
+                OwnerOrganization = EntityHeader.Create(orgId, "ownername"),
+                OwnerUser = EntityHeader.Create("userid", "username"),
+                DeviceRepository = EntityHeader.Create(DataFactory.DeviceRepo.Id, DataFactory.DeviceRepo.Name),
+                Devices = new List<DeviceGroupEntry>()
+                {
+                    DeviceGroupEntry.FromDevice( DataFactory.CreateDevice(groupId), createdBy)
+                }
+            };
+            await DataFactory.DeviceGroupRepo.AddDeviceGroupAsync(DataFactory.DeviceRepo, deviceGroup);
+
+            var response = await DataFactory.DeviceGroupRepo.GetDeviceGroupAsync(DataFactory.DeviceRepo, groupId);
+            Assert.AreEqual(groupId, response.Id);
+
+            var newName = "new name";
+            deviceGroup.Name = newName;
+            await DataFactory.DeviceGroupRepo.UpdateDeviceGroupAsync(DataFactory.DeviceRepo, deviceGroup);
+
+            response = await DataFactory.DeviceGroupRepo.GetDeviceGroupAsync(DataFactory.DeviceRepo, groupId);
+            Assert.AreEqual(groupId, response.Id);
+            Assert.AreEqual(newName, response.Name);
         }
     }
 }
