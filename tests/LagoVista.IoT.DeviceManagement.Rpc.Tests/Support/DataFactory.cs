@@ -37,6 +37,10 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         public static IDeviceArchiveRepo DeviceArchiveRepoProxy;
         public static IDeviceLogRepo DeviceLogRepo;
         public static IDevicePEMRepo DevicePEMRepo;
+        public static IDeviceGroupRepo DeviceGroupRepo;
+        public static IDeviceMediaRepo DeviceMediaRepo;
+        public static IDeviceMediaItemRepo DeviceMediaItemRepo;
+
 
         #endregion
 
@@ -73,12 +77,16 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 InstanceId = InstanceId
             };
 
-            ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
+            ProxyFactory = new Support.ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
 
             DeviceManagementRepoProxy = ProxyFactory.Create<IDeviceManagementRepo>(ProxySettings);
             DeviceArchiveRepoProxy = ProxyFactory.Create<IDeviceArchiveRepo>(ProxySettings);
             DeviceLogRepo = ProxyFactory.Create<IDeviceLogRepo>(ProxySettings);
             DevicePEMRepo = ProxyFactory.Create<IDevicePEMRepo>(ProxySettings);
+
+            DeviceGroupRepo = ProxyFactory.Create<IDeviceGroupRepo>(ProxySettings);
+            DeviceMediaRepo = ProxyFactory.Create<IDeviceMediaRepo>(ProxySettings);
+            DeviceMediaItemRepo = ProxyFactory.Create<IDeviceMediaItemRepo>(ProxySettings);
         }
 
         public static Device CreateDevice(string deviceId = "dev1234")
