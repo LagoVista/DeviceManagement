@@ -1,25 +1,15 @@
 ﻿using LagoVista.Core;
-using LagoVista.Core.Rpc.Attributes;
-using LagoVista.Core.Rpc.Messages;
-using LagoVista.Core.Rpc.Server;
-using LagoVista.Core.Validation;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
 {
     [TestClass]
-    public class Rpc_IDeviceMediaRepo_Tests 
+    public class Rpc_IDeviceMediaRepo_Tests
     {
         [ClassInitialize]
         static public void ClassInitialize(TestContext testContext)

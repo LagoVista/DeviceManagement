@@ -1,10 +1,11 @@
-﻿using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.Validation;
+﻿using LagoVista.Core;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
@@ -19,24 +20,91 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         }
 
         [TestMethod]
-        public Task DeleteMediaItemAsync(DeviceRepository repo, string deviceId, string itemId)
+        public async Task DeleteMediaItemAsync()
         {
-            throw new NotImplementedException();
+            var deviceId = Guid.NewGuid().ToId();
+            var itemId = Guid.NewGuid().ToId();
+            var media = new DeviceMedia
+            {
+                ItemId = itemId,
+                ContentType = "text",
+                DeviceId = deviceId,
+                FileName = "filename.txt",
+                Length = 10,
+                TimeStamp = DateTime.Now.ToJSONString(),
+                Title = "my file"
+            };
+            var response = await DataFactory.DeviceMediaItemRepoRemote.StoreMediaItemAsync(DataFactory.DeviceRepo, media);
+            Assert.IsTrue(response.Successful);
+
+            await DataFactory.DeviceMediaItemRepo.DeleteMediaItemAsync(DataFactory.DeviceRepo, deviceId, itemId);
         }
 
-        public Task<DeviceMedia> GetMediaItemAsync(DeviceRepository repo, string deviceId, string itemId)
+        [TestMethod]
+        public async Task GetMediaItemAsync()
         {
-            throw new NotImplementedException();
+            var deviceId = Guid.NewGuid().ToId();
+            var itemId = Guid.NewGuid().ToId();
+            var media = new DeviceMedia
+            {
+                ItemId = itemId,
+                ContentType = "text",
+                DeviceId = deviceId,
+                FileName = "filename.txt",
+                Length = 10,
+                TimeStamp = DateTime.Now.ToJSONString(),
+                Title = "my file"
+            };
+            var response = await DataFactory.DeviceMediaItemRepoRemote.StoreMediaItemAsync(DataFactory.DeviceRepo, media);
+            Assert.IsTrue(response.Successful);
+
+            var getResponse = await DataFactory.DeviceMediaItemRepo.GetMediaItemAsync(DataFactory.DeviceRepo, deviceId, itemId);
+            Assert.AreEqual(itemId, media.ItemId);
         }
 
-        public Task<ListResponse<DeviceMedia>> GetMediaItemsForDeviceAsync(DeviceRepository repo, string deviceId, ListRequest request)
+        [TestMethod]
+        public async Task GetMediaItemsForDeviceAsync()
         {
-            throw new NotImplementedException();
+            var deviceId = Guid.NewGuid().ToId();
+            var media = new DeviceMedia
+            {
+                ItemId = Guid.NewGuid().ToId(),
+                ContentType = "text",
+                DeviceId = deviceId,
+                FileName = "filename.txt",
+                Length = 10,
+                TimeStamp = DateTime.Now.ToJSONString(),
+                Title = "my file"
+            };
+            var response = await DataFactory.DeviceMediaItemRepoRemote.StoreMediaItemAsync(DataFactory.DeviceRepo, media);
+            Assert.IsTrue(response.Successful);
+
+            var listRequest = new ListRequest
+            {
+                PageIndex = 1,
+                PageSize = 25
+            };
+            var listResponse = await DataFactory.DeviceMediaItemRepo.GetMediaItemsForDeviceAsync(DataFactory.DeviceRepo, deviceId, listRequest);
+            Assert.IsTrue(listResponse.Successful);
+            Assert.IsTrue(listResponse.Model.Count() > 0);
         }
 
-        public Task<InvokeResult> StoreMediaItemAsync(DeviceRepository repo, DeviceMedia media)
+        [TestMethod]
+        public async Task StoreMediaItemAsync()
         {
-            throw new NotImplementedException();
+            var deviceId = Guid.NewGuid().ToId();
+            var media = new DeviceMedia
+            {
+                ItemId = Guid.NewGuid().ToId(),
+                ContentType = "text",
+                DeviceId = deviceId,
+                FileName = "filename.txt",
+                Length = 10,
+                TimeStamp = DateTime.Now.ToJSONString(),
+                Title = "my file"
+            };
+            var response = await DataFactory.DeviceMediaItemRepoRemote.StoreMediaItemAsync(DataFactory.DeviceRepo, media);
+            Assert.IsTrue(response.Successful);
         }
     }
 }

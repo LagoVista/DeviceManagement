@@ -41,6 +41,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         public static IDeviceMediaRepo DeviceMediaRepo;
         public static IDeviceMediaItemRepo DeviceMediaItemRepo;
         public static IDeviceMediaRepoRemote DeviceMediaRepoRemote;
+        public static IDeviceMediaItemRepoRemote DeviceMediaItemRepoRemote; 
 
 
         #endregion
@@ -89,6 +90,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             DeviceMediaRepo = ProxyFactory.Create<IDeviceMediaRepo>(ProxySettings);
             DeviceMediaItemRepo = ProxyFactory.Create<IDeviceMediaItemRepo>(ProxySettings);
             DeviceMediaRepoRemote = ProxyFactory.Create<IDeviceMediaRepoRemote>(ProxySettings);
+            DeviceMediaItemRepoRemote = ProxyFactory.Create<IDeviceMediaItemRepoRemote>(ProxySettings);
         }
 
         public static Device CreateDevice(string deviceId = "dev1234")
