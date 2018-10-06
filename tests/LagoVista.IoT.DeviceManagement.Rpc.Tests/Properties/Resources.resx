@@ -181,4 +181,249 @@
     "ValidationErrors": []
   }</value>
   </data>
+  <data name="jsonbug" xml:space="preserve">
+    <value>{
+  "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Object, System.Private.CoreLib]], System.Private.CoreLib",
+  "__message_id": "1de9a905-317b-41a1-bc62-24638b4ba28a",
+  "__correlation_id": "39f8c0d7-c6d3-4db5-b900-ffafa4dde681",
+  "__message_path": "LagoVista.IoT.DeviceManagement.Core.Repos.IDeviceManagementRepo/GetDevicesForRepositoryAsync/",
+  "__instance_id": "9e88c7f6b5894dbfb3bc09d20736705e",
+  "__organization_id": "c8ad4589f26842e7a1aefbaefc979c9b",
+  "__reply_path": "rpc_test",
+  "__datetimestamp_key": "2018-10-06T19:18:49.5497002Z",
+  "__success": true,
+  "__return_value": {
+    "$type": "LagoVista.Core.Models.UIMetaData.ListResponse`1[[LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models]], LagoVista.Core",
+    "Title": "DeviceSummary",
+    "Columns": {
+      "$type": "System.Collections.Generic.List`1[[LagoVista.Core.Models.UIMetaData.ListColumn, LagoVista.Core]], System.Private.CoreLib",
+      "$values": []
+    },
+    "Model": {
+      "$type": "System.Linq.Enumerable+SelectArrayIterator`2[[LagoVista.IoT.Runtime.LocalStorage.Models.DeviceDTO, LagoVista.IoT.Runtime.LocalStorage],[LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models]], System.Linq",
+      "$values": [
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "DFD2092C6252452FADDA38157C1BC500",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "625E351737344C9BB9CBC5C4D3EE2967",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "E7A2BD1FBEE748C4A4D6402584A59D67",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice changed",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "52F4D038A4734D1AB15817EC3760589D",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "C4AF97656011416288982A5454C54705",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "975AD8A5B4B9451490B562EB7B029BB8",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "A277836E1C3543E0B98934CD36A9E0FE",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "CFD7FE56CB7741778931D373F7A4DE52",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "F5641B547356405894782004FE71AEA9",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "486544C6B8944A76BD40F50290D49D11",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "8A30808F91FC445AA9699F60AE68BFB5",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "B8D2B10C1D0344518594F3D19959B8A5",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "Ready"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "DE04496F5E3B4CCAA95D694153265D86",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New",
+          "CustomStatus": {
+            "$type": "LagoVista.Core.Models.EntityHeader, LagoVista.Core",
+            "Id": "freakout",
+            "Text": "freakout"
+          }
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "E935D168D4884163A7A8EA87C67E188C",
+          "DeviceConfiguration": "6538994A90B24D6AA469D62F5303073C",
+          "DeviceConfigurationId": "6538994A90B24D6AA469D62F5303073C",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "0BD6D48B6A6446D89201FF904544FDF4",
+          "DeviceConfiguration": "3A2001B848BE41D8B90832EEB36FED29",
+          "DeviceConfigurationId": "3A2001B848BE41D8B90832EEB36FED29",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "949C6705A01741A4B5B18BF9C0913378",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "8B90141C211444EC9A000F6FD4DCB347",
+          "DeviceTypeId": "8B90141C211444EC9A000F6FD4DCB347",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "F314ACBC512A4B10981D9FE6D56F2B31",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "1F6B7C5EB8A34AF5AE1F50CF8E76128A",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "A797C5E71D70408FBBD4B09B635AE5B8",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "F635B7E47C7F4FA0976B78CA213ED5F0",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice changed",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        },
+        {
+          "$type": "LagoVista.IoT.DeviceManagement.Core.Models.DeviceSummary, LagoVista.IoT.DeviceManagement.Models",
+          "Id": "40DFD08A23DD4746A9F9ED0DBD52D219",
+          "DeviceConfiguration": "ddd",
+          "DeviceConfigurationId": "fff",
+          "DeviceName": "tesedevice",
+          "DeviceType": "ddd",
+          "DeviceTypeId": "fff",
+          "DeviceId": "dev1234",
+          "Status": "New"
+        }
+      ]
+    },
+    "PageSize": 18,
+    "PageIndex": 1,
+    "PageCount": 0,
+    "HasMoreRecords": false,
+    "ResultId": "48F5C07D2F2B48CEA46C95EAD65C80A1",
+    "Successful": true,
+    "Warnings": {
+      "$type": "System.Collections.Generic.List`1[[LagoVista.Core.Validation.ErrorMessage, LagoVista.Core]], System.Private.CoreLib",
+      "$values": []
+    },
+    "Errors": {
+      "$type": "System.Collections.Generic.List`1[[LagoVista.Core.Validation.ErrorMessage, LagoVista.Core]], System.Private.CoreLib",
+      "$values": []
+    }
+  },
+  "__exception": null,
+  "__request_id": "ecb6884a-7994-411e-8a8e-4b42a4af3f8d"
+}</value>
+  </data>
 </root>
