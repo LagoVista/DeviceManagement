@@ -121,7 +121,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 TimeStamp = DateTime.UtcNow.ToJSONString()
             });
 
-            await GetMediaRepo(repo).AddMediaAsync(repo, stream, fileName, contentType);
+            var bytes = new byte[stream.Length];
+            stream.Position = 0;
+            stream.Read(bytes, 0, (int)stream.Length);
+            await GetMediaRepo(repo).AddMediaAsync(repo, bytes, fileName, contentType);
 
             return InvokeResult.Success;
         }

@@ -83,11 +83,12 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///  &quot;$type&quot;: &quot;System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.Object, System.Private.CoreLib]], System.Private.CoreLib&quot;,
-        ///  &quot;__message_id&quot;: &quot;1de9a905-317b-41a1-bc62-24638b4ba28a&quot;,
-        ///  &quot;__correlation_id&quot;: &quot;39f8c0d7-c6d3-4db5-b900-ffafa4dde681&quot;,
-        ///  &quot;__message_path&quot;: &quot;LagoVista.IoT.DeviceManagement.Core.Repos.IDeviceManagementRepo/GetDevicesForRepositoryAsync/&quot;,
+        ///  &quot;__message_id&quot;: &quot;9104721a-a0f6-4135-93a0-96d751a73ec5&quot;,
+        ///  &quot;__correlation_id&quot;: &quot;e0926fe5-06c1-4c2b-9ee8-c2fe681e9879&quot;,
+        ///  &quot;__message_path&quot;: &quot;LagoVista.IoT.DeviceManagement.Core.Repos.IDeviceMediaRepoRemote/AddMediaAsync/&quot;,
         ///  &quot;__instance_id&quot;: &quot;9e88c7f6b5894dbfb3bc09d20736705e&quot;,
-        ///  &quot;__organization_id&quot;: &quot;c8ad4589f26842e7a1aefbaefc979 [rest of string was truncated]&quot;;.
+        ///  &quot;__organization_id&quot;: &quot;c8ad4589f26842e7a1aefbaefc979c9b&quot;,
+        ///  &quot;__re [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string jsonbug {
             get {

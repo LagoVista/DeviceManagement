@@ -63,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         }
 
 
-        public async Task<InvokeResult> AddMediaAsync(DeviceRepository repo, Stream stream, string fileName, string contentType)
+        public async Task<InvokeResult> AddMediaAsync(DeviceRepository repo, byte[] data, string fileName, string contentType)
         {
             var result = await GetStorageContainerAsync(repo.DeviceArchiveStorageSettings, repo.GetDeviceMediaStorageName());
             if (!result.Successful)
@@ -80,6 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var numberRetries = 5;
             var retryCount = 0;
             var completed = false;
+            var stream = new MemoryStream(data);
             while (retryCount++ < numberRetries && !completed)
             {
                 try

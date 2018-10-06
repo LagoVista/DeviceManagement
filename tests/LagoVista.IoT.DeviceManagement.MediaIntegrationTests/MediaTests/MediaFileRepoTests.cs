@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
@@ -33,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
                 Id = "890C3F4F480C4FF283F7C9B16CB5F368"
             };
 
-            return deviceRepo; 
+            return deviceRepo;
         }
 
         private static void RemoveTestContainerAsync()
@@ -53,7 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             var opContext = new OperationContext();
             container.DeleteIfExists();
         }
-       
+
         [TestMethod]
         public async Task Media_Blob_DownloadTest()
         {
@@ -62,11 +61,8 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
 
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), ms, fileName, "application/jpeg");
-                AssertSuccessful(result);
-            }
+            var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), imageBytes, fileName, "application/jpeg");
+            AssertSuccessful(result);
 
             Console.WriteLine("Media Item Added.");
 
@@ -89,11 +85,8 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
 
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), ms, fileName, "application/jpeg");
-                AssertSuccessful(result);
-            }
+            var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), imageBytes, fileName, "application/jpeg");
+            AssertSuccessful(result);
 
             Console.WriteLine("Media Item Added.");
 
@@ -112,17 +105,14 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
 
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), ms, fileName, "application/jpeg");
-                AssertSuccessful(result);
-            }          
+            var result = await mediaRepo.AddMediaAsync(GetTestDeviceRepo(), imageBytes, fileName, "application/jpeg");
+            AssertSuccessful(result);
         }
 
         [ClassCleanup]
         public static void TestCleanup()
         {
-          RemoveTestContainerAsync();
+            RemoveTestContainerAsync();
         }
     }
 }
