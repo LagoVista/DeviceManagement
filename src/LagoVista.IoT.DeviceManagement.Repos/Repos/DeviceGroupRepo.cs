@@ -63,5 +63,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             return UpsertDocumentAsync(deviceGroup);
         }
+
+        public async Task<DeviceGroup> GetDeviceGroupByKeyAsync(DeviceRepository deviceRepo, string groupKey)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+            return (await base.QueryAsync(qry => qry.Key == groupKey)).FirstOrDefault();
+        }
     }
 }

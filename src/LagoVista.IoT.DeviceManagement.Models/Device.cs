@@ -103,7 +103,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice,FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
-        public EntityHeader ParentDevice { get; set; }
+        public EntityHeader<string> ParentDevice { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
@@ -243,6 +243,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                     var property = Properties.Where(prop => prop.Key == propertyMetaData.Key).FirstOrDefault();
                     propertyMetaData.Validate(property?.Value, result, action);
                 }
+            }
+
+            if(ParentDevice != null && string.IsNullOrEmpty(ParentDevice.Value))
+            {
+                result.AddUserError("If parent device is set the parent device value must contain the Device Id");
             }
         }
     }
