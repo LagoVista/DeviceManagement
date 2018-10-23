@@ -504,4 +504,7 @@
   <data name="DeviceGroup_Devices_Help" xml:space="preserve">
     <value>The list of devices that make up this group.</value>
   </data>
+  <data name="Device_ParentDevice" xml:space="preserve">
+    <value>Parent Device</value>
+  </data>
 </root>

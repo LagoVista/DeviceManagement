@@ -239,6 +239,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Organization_Select
 
 		public static string Device_Organization_Select { get { return GetResourceString("Device_Organization_Select"); } }
+//Resources:DeviceManagementResources:Device_ParentDevice
+
+		public static string Device_ParentDevice { get { return GetResourceString("Device_ParentDevice"); } }
 //Resources:DeviceManagementResources:Device_PrimaryKey
 
 		public static string Device_PrimaryKey { get { return GetResourceString("Device_PrimaryKey"); } }
@@ -505,6 +508,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Notes = "Device_Notes";
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";
+			public const string Device_ParentDevice = "Device_ParentDevice";
 			public const string Device_PrimaryKey = "Device_PrimaryKey";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";

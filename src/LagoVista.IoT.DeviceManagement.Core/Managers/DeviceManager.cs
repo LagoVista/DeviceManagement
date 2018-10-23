@@ -198,6 +198,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
+            await AuthorizeOrgAccessAsync(user, org, typeof(Device), Actions.Read, "DeviceInState");
+
+
             if (!Enum.TryParse<DeviceStates>(status, true, out var newState))
             {
                 /* We aren't using newState as parsed by the enum, we are just validating it */
@@ -211,6 +214,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             return await repo.GetDevicesInStatusAsync(deviceRepo, status, listRequest);
         }
+
+        public async Task<ListResponse<DeviceSummary>> GetChildDevicesAsync(DeviceRepository deviceRepo, String parentDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+
+            await AuthorizeOrgAccessAsync(user, org, typeof(Device), Actions.Read, "ChildDevices");
+            var repo = GetRepo(deviceRepo);
+            return await repo.GetDevicesInCustomStatusAsync(deviceRepo, parentDeviceId, listRequest);
+        }
+
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {

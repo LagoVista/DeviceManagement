@@ -140,6 +140,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get Device Children
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="parentid">Parent Device Idd</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{parentid}/children")]
+        public async Task<ListResponse<DeviceSummary>> GetDeviceChildren(string devicerepoid, string parentid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetChildDevicesAsync(repo, parentid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Get Devices In Status
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>

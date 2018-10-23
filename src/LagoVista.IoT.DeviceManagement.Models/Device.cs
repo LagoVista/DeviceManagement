@@ -102,6 +102,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceURI { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice,FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader ParentDevice { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public string ShowDiagnostics { get; set; }
 

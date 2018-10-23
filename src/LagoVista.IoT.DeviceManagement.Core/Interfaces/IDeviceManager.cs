@@ -105,5 +105,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<ListResponse<Device>> GetFullDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetChildDevicesAsync(DeviceRepository deviceRepo, string parentDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
     }
 }
