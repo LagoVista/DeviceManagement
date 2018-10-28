@@ -153,6 +153,34 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get Device Children
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="parentid">Parent Device Id</param>
+        /// <param name="childid">Child Device Id to Attach</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{parentid}/attachchild/{childid}")]
+        public async Task<InvokeResult> AttachChildDeviceAsync(string devicerepoid, string parentid, string childid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AttachChildDeviceAsync(repo, parentid, childid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get Device Children
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="parentid">Parent Device Id</param>
+        /// <param name="childid">Child Device Id to be removed</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{parentid}/removechild/{childid}")]
+        public async Task<InvokeResult> RemoveChildDeviceAsync(string devicerepoid, string parentid, string childid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.RemoveChildDeviceAsync(repo, parentid, childid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Get Devices In Status
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>

@@ -106,5 +106,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
         Task<ListResponse<DeviceSummary>> GetChildDevicesAsync(DeviceRepository deviceRepo, string parentDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult> AttachChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> RemoveChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
     }
 }

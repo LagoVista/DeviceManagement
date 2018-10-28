@@ -220,7 +220,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeOrgAccessAsync(user, org, typeof(Device), Actions.Read, "ChildDevices");
             var repo = GetRepo(deviceRepo);
-            return await repo.GetDevicesInCustomStatusAsync(deviceRepo, parentDeviceId, listRequest);
+            return await repo.GetChildDevicesAsync(deviceRepo, parentDeviceId, listRequest);
         }
 
 
@@ -400,6 +400,49 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             return repo.SearchByDeviceIdAsync(deviceRepo, searchString, listRequest);
         }
+
+        public async Task<InvokeResult> AttachChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            if(parentDeviceId == childDeviceId)
+            {
+                return InvokeResult.FromError("Parent is the same as the child device.");
+            }
+
+            var repo = GetRepo(deviceRepo);
+
+            var childDevice = await repo.GetDeviceByIdAsync(deviceRepo, childDeviceId);
+            await AuthorizeAsync(childDevice, AuthorizeActions.Update, user, org, "Attach this child to a parent");
+
+            var parentDevice = await repo.GetDeviceByIdAsync(deviceRepo, parentDeviceId);
+            await AuthorizeAsync(childDevice, AuthorizeActions.Update, user, org, "Attach a child to this parent");
+
+            childDevice.ParentDevice = new EntityHeader<string>()
+            {
+                Id  = parentDeviceId,
+                Text = parentDevice.Name,
+                Value = parentDevice.DeviceId,
+            };
+
+            await repo.UpdateDeviceAsync(deviceRepo, childDevice);
+
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> RemoveChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            var repo = GetRepo(deviceRepo);
+
+            var childDevice = await repo.GetDeviceByIdAsync(deviceRepo, childDeviceId);
+            var parentDevice = await repo.GetDeviceByIdAsync(deviceRepo, parentDeviceId);
+
+            await AuthorizeAsync(childDevice, AuthorizeActions.Update, user, org, "Remove parent from this child device");
+            await AuthorizeAsync(parentDevice, AuthorizeActions.Update, user, org, "Remove child from this device");
+
+            childDevice.ParentDevice = null;
+
+            await repo.UpdateDeviceAsync(deviceRepo, childDevice);
+
+            return InvokeResult.Success;
+        }
     }
 }
-
