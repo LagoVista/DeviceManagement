@@ -9,12 +9,13 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.UserAdmin.Interfaces.Managers;
 using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
@@ -27,12 +28,16 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class DeviceManagementController : LagoVistaBaseController
     {
         private IDeviceManager _deviceManager;
+        private IOrganizationManager _orgManager;
         private IDeviceRepositoryManager _repoManager;
+        private UserManager<AppUser> _userManager;
 
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
+            _orgManager = orgManager;
             _deviceManager = deviceManager;
             _repoManager = repoManager;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -353,7 +358,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
-        /// <param name="devicerepoid"></param>
+        /// <param name="devicerepoid">Device Repoistory Id</param>
         /// <param name="id">Unique id of device</param>
         /// <param name="deviceNote"></param>
         /// <returns></returns>
@@ -367,7 +372,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
-        /// <param name="devicerepoid"></param>
+        /// <param name="devicerepoid">Device Repoistory Id</param>
         /// <param name="id">Unique id of device</param>
         /// <param name="geolocation"></param>
         /// <returns></returns>
@@ -376,6 +381,94 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.UpdateGeoLocationAsync(repo, id, geolocation, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Add Note to Device
+        /// </summary>
+        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// <param name="newuser">A new user to be added as a device</param>
+        /// <returns>App User</returns>
+
+        [OrgAdmin]
+        [HttpPost("/api/device/{devicerepoid}/userdevice")]
+        public async Task<InvokeResult<AppUser>> AddDeviceUser(string devicerepoid, [FromBody] DeviceUserRegistrationRequest newuser)
+        {
+            String userId = Guid.NewGuid().ToId();
+
+            newuser.Device.OwnerUser = EntityHeader.Create(userId, newuser.Email);
+
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(newuser.Device.DeviceRepository.Id, OrgEntityHeader, UserEntityHeader);
+
+            var addDeviceResult = await _deviceManager.AddDeviceAsync(repo, newuser.Device, OrgEntityHeader, UserEntityHeader);
+            if (!addDeviceResult.Successful)
+            {
+                return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult);
+            }
+
+            var appUser = new AppUser()
+            {
+                Id = userId,
+                FirstName = newuser.FirstName,
+                LastName = newuser.LastName,
+                CurrentOrganization = OrgEntityHeader,
+                Email = $"{devicerepoid}-{newuser.Email}",
+                PhoneNumber = newuser.PhoneNumber,
+                UserName = $"{devicerepoid}-{newuser.Email}",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                IsAppBuilder = false,
+                IsOrgAdmin = false,
+                IsUserDevice = true,
+                PrimaryDevice = EntityHeader.Create(newuser.Device.Id, newuser.Device.DeviceId),
+                DeviceConfiguration = EntityHeader.Create(newuser.Device.DeviceConfiguration.Id, newuser.Device.DeviceConfiguration.Text),
+                DeviceRepo = EntityHeader.Create(newuser.Device.DeviceRepository.Id, newuser.Device.DeviceRepository.Text),
+                ProfileImageUrl = new ImageDetails()
+                {
+                    Width = 128,
+                    Height = 128,
+                    ImageUrl = "https://bytemaster.blob.core.windows.net/userprofileimages/watermark.png",
+                    Id = "b78ca749a1e64ce59df4aa100050dcc7"
+                }
+            };
+
+
+            SetAuditProperties(appUser);
+            SetOwnedProperties(appUser);
+
+            Console.WriteLine("Device Created  - " + newuser.Device.DeviceId);
+
+            try
+            {
+                var result = await _userManager.CreateAsync(appUser, newuser.Password);
+                if (result.Succeeded)
+                {
+                    var addToOrgResult = await _orgManager.AddUserToOrgAsync(OrgEntityHeader.Id, appUser.Id, OrgEntityHeader, UserEntityHeader);
+                    if (addToOrgResult.Successful)
+                    {
+                        return InvokeResult<AppUser>.Create(appUser);
+                    }
+                    else
+                    {
+                        await _userManager.DeleteAsync(appUser);
+                        return InvokeResult<AppUser>.FromInvokeResult(addToOrgResult);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Error creating user - removing device - " + newuser.Device.DeviceId);
+                    var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
+                    await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                    return InvokeResult<AppUser>.FromError(result.Errors.First().Description);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Exception - removing device - " + newuser.Device.DeviceId);
+                var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
+                await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                throw;
+            }
         }
     }
 }
