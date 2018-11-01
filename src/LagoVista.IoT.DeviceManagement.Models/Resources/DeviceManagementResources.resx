@@ -507,4 +507,7 @@
   <data name="Device_ParentDevice" xml:space="preserve">
     <value>Parent Device</value>
   </data>
+  <data name="Device_ImageURL" xml:space="preserve">
+    <value>Image URL</value>
+  </data>
 </root>

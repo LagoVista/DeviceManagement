@@ -206,6 +206,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Help
 
 		public static string Device_Help { get { return GetResourceString("Device_Help"); } }
+//Resources:DeviceManagementResources:Device_ImageURL
+
+		public static string Device_ImageURL { get { return GetResourceString("Device_ImageURL"); } }
 //Resources:DeviceManagementResources:Device_inputCommandEndPoints
 
 		public static string Device_inputCommandEndPoints { get { return GetResourceString("Device_inputCommandEndPoints"); } }
@@ -497,6 +500,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Heading = "Device_Heading";
 			public const string Device_Heading_Help = "Device_Heading_Help";
 			public const string Device_Help = "Device_Help";
+			public const string Device_ImageURL = "Device_ImageURL";
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
 			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
 			public const string Device_IsConnected = "Device_IsConnected";
