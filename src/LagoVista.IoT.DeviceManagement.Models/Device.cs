@@ -190,6 +190,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public List<InputCommandEndPoint> InputCommandEndPoints { get; set; }
 
         public List<EntityHeader> DeviceGroups { get; set; }
+        
+        public string DeviceLabel { get; set; }
+        public string DeviceIdLabel { get; set; }
+        public string DeviceNameLabel { get; set; }
+        public string DeviceTypeLabel { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
