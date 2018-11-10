@@ -3,14 +3,16 @@
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
 
-    public interface IPEMIndex
+    public class PEMIndex
     {
-        string DeviceId { get; set; }
-        String MessageId { get; set; }
-        String Status { get; set; }
-        String MessageType { get; set; }
-        String CreatedTimeStamp { get; set; }
-        double TotalProcessingMS { get; set; }
-        string JSON { get; set; }
+        public string RowKey { get; set; }
+        public string PartitionKey { get; set; }
+        public string DeviceId { get; set; }
+        public String MessageId { get; set; }
+        public String Status { get; set; }
+        public String MessageType { get; set; }
+        public String CreatedTimeStamp { get; set; }
+        public double TotalProcessingMS { get; set; }
+        public string JSON { get; set; }
     }
 }

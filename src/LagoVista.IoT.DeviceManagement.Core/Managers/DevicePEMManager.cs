@@ -36,7 +36,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _proxyFactory = proxyFactory;
         }
 
-        public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<PEMIndex>> GetPEMIndexesforDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org, "GetPEMIndexesForDevice");
             return await GetRepo(deviceRepo).GetPEMIndexForDeviceAsync(deviceRepo, deviceId, request);
@@ -58,7 +58,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
-        public async Task<ListResponse<IPEMIndex>> GetPEMIndexesforErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<PEMIndex>> GetPEMIndexesforErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org, "GetPEMIndexesForErrorReason");
             return await GetRepo(deviceRepo).GetPEMIndexForErrorReasonAsync(deviceRepo, errorReason, request);

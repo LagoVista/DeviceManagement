@@ -35,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceid">Device Id</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/pems/{deviceid}")]
-        public async Task<ListResponse<IPEMIndex>> GetDevicePEMListAsync(string devicerepoid, string deviceid)
+        public async Task<ListResponse<PEMIndex>> GetDevicePEMListAsync(string devicerepoid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMIndexesforDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
@@ -48,7 +48,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="errorreason">Error Reason</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/pems/errors/{errorreason}")]
-        public async Task<ListResponse<IPEMIndex>> GetErrorsForRepoAsync(string devicerepoid, string errorreason)
+        public async Task<ListResponse<PEMIndex>> GetErrorsForRepoAsync(string devicerepoid, string errorreason)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _devicePEMManager.GetPEMIndexesforErrorReasonAsync(repo, errorreason, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);

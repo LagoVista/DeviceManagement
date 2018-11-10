@@ -4,11 +4,10 @@ using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class PEMIndex : TableEntity, IPEMIndex
+    public class PEMIndexDTO : TableEntity
     {
         public string MessageId { get; set; }
         public string DeviceId { get; set; }
@@ -58,7 +57,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var log = JsonConvert.DeserializeObject(Log) as JArray;
                     if (log != null)
                     {
-                        if (pem.ContainsKey("log")) pem.Remove("log");
+                        if (pem.ContainsKey("log"))
+                        {
+                            pem.Remove("log");
+                        }
+
                         pem.Add("log", Log);
                     }
                 }
@@ -68,7 +71,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var device = JsonConvert.DeserializeObject(Device) as JObject;
                     if (device != null)
                     {
-                        if (pem.ContainsKey("device")) pem.Remove("device");
+                        if (pem.ContainsKey("device"))
+                        {
+                            pem.Remove("device");
+                        }
+
                         pem.Add("device", device);
                     }
                 }
@@ -78,7 +85,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var instructions = JsonConvert.DeserializeObject(Instructions) as JArray;
                     if (instructions != null)
                     {
-                        if (pem.ContainsKey("instructions")) pem.Remove("instructions");
+                        if (pem.ContainsKey("instructions"))
+                        {
+                            pem.Remove("instructions");
+                        }
+
                         pem.Add("instructions", instructions);
                     }
                 }
@@ -88,7 +99,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var responseMessage = JsonConvert.DeserializeObject(ResponseMessage) as JObject;
                     if (responseMessage != null)
                     {
-                        if (pem.ContainsKey("responseMessage")) pem.Remove("responseMessage");
+                        if (pem.ContainsKey("responseMessage"))
+                        {
+                            pem.Remove("responseMessage");
+                        }
+
                         pem.Add("responseMessage", responseMessage);
                     }
                 }
@@ -98,17 +113,35 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     var outgoingMessages = JsonConvert.DeserializeObject(OutgoingMessages) as JArray;
                     if (outgoingMessages != null)
                     {
-                        if (pem.ContainsKey("outgoingMessages")) pem.Remove("outgoingMessages");
+                        if (pem.ContainsKey("outgoingMessages"))
+                        {
+                            pem.Remove("outgoingMessages");
+                        }
+
                         pem.Add("outgoingMessages", outgoingMessages);
                     }
                 }
-           
+
                 return InvokeResult<string>.Create(pem.ToString());
             }
 
             return InvokeResult<string>.FromError("JSON In Table Storage Entity was null or empty");
+        }
 
-
+        public PEMIndex ToPEMIndex()
+        {
+            return new PEMIndex()
+            {
+                RowKey = RowKey,                               
+                PartitionKey = PartitionKey,
+                CreatedTimeStamp = CreatedTimeStamp,
+                DeviceId = DeviceId,
+                JSON = JSON,
+                MessageId = MessageId,
+                MessageType = MessageType,
+                Status = Status,
+                TotalProcessingMS = TotalProcessingMS
+            };
         }
     }
 }

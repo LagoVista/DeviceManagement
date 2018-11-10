@@ -36,9 +36,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             var pems = GetCloudTable(deviceRepo);
 
-            var result = await pems.ExecuteAsync(TableOperation.Retrieve<PEMIndex>(partitionKey, rowKey));
+            var result = await pems.ExecuteAsync(TableOperation.Retrieve<PEMIndexDTO>(partitionKey, rowKey));
 
-            if (result.Result is PEMIndex pemIndex)
+            if (result.Result is PEMIndexDTO pemIndex)
             {
                 var pemResult = pemIndex.ToPEM();
                 if (pemResult.Successful)
@@ -59,34 +59,34 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
         }
 
-        public async Task<ListResponse<IPEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
+        public async Task<ListResponse<PEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
             try
             {
                 var pems = GetCloudTable(deviceRepo);
 
-                var query = new TableQuery<PEMIndex>()
-                    .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, deviceId))
+                var query = new TableQuery<PEMIndexDTO>()
+                    .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndexDTO.PartitionKey), QueryComparisons.Equal, deviceId))
                     .Select(new List<string>
                     {
-                        nameof(PEMIndex.RowKey),
-                        nameof(PEMIndex.Status),
-                        nameof(PEMIndex.CreatedTimeStamp),
-                        nameof(PEMIndex.DeviceId),
-                        nameof(PEMIndex.MessageId),
-                        nameof(PEMIndex.MessageType),
-                        nameof(PEMIndex.TotalProcessingMS),
-                        nameof(PEMIndex.ErrorReason) })
+                        nameof(PEMIndexDTO.RowKey),
+                        nameof(PEMIndexDTO.Status),
+                        nameof(PEMIndexDTO.CreatedTimeStamp),
+                        nameof(PEMIndexDTO.DeviceId),
+                        nameof(PEMIndexDTO.MessageId),
+                        nameof(PEMIndexDTO.MessageType),
+                        nameof(PEMIndexDTO.TotalProcessingMS),
+                        nameof(PEMIndexDTO.ErrorReason) })
                         .Take(request.PageSize);
 
-                var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
+                var results = await pems.ExecuteQuerySegmentedAsync<PEMIndexDTO>(query, new TableContinuationToken()
                 {
                     NextPartitionKey = request.NextPartitionKey,
                     NextRowKey = request.NextRowKey,
                 });
 
 
-                var response = ListResponse<IPEMIndex>.Create(results.ToList());
+                var response = ListResponse<PEMIndex>.Create(results.Select(pem=>pem.ToPEMIndex()).ToList());
                 if (results.ContinuationToken != null)
                 {
                     response.NextPartitionKey = results.ContinuationToken.NextPartitionKey;
@@ -99,29 +99,29 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             catch (Exception)
             {
                 /* It's possible the table does not exists if it doesn't no data was ever written to list would be empty anyways...return empty list */
-                return ListResponse<IPEMIndex>.Create(new List<PEMIndex>());
+                return ListResponse<PEMIndex>.Create(new List<PEMIndex>());
             }
         }
 
-        public async Task<ListResponse<IPEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request)
+        public async Task<ListResponse<PEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request)
         {
             try
             {
                 var pems = GetCloudTable(deviceRepo);
 
-                var query = new TableQuery<PEMIndex>()
-                    .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndex.PartitionKey), QueryComparisons.Equal, errorReason))
-                    .Select(new List<string> { nameof(PEMIndex.RowKey), nameof(PEMIndex.Status), nameof(PEMIndex.CreatedTimeStamp), nameof(PEMIndex.DeviceId), nameof(PEMIndex.MessageId), nameof(PEMIndex.MessageType),
-                        nameof(PEMIndex.TotalProcessingMS), nameof(PEMIndex.ErrorReason) })
+                var query = new TableQuery<PEMIndexDTO>()
+                    .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndexDTO.PartitionKey), QueryComparisons.Equal, errorReason))
+                    .Select(new List<string> { nameof(PEMIndexDTO.RowKey), nameof(PEMIndexDTO.Status), nameof(PEMIndexDTO.CreatedTimeStamp), nameof(PEMIndexDTO.DeviceId), nameof(PEMIndexDTO.MessageId), nameof(PEMIndexDTO.MessageType),
+                        nameof(PEMIndexDTO.TotalProcessingMS), nameof(PEMIndexDTO.ErrorReason) })
                         .Take(request.PageSize);
 
-                var results = await pems.ExecuteQuerySegmentedAsync<PEMIndex>(query, new TableContinuationToken()
+                var results = await pems.ExecuteQuerySegmentedAsync<PEMIndexDTO>(query, new TableContinuationToken()
                 {
                     NextPartitionKey = request.NextPartitionKey,
                     NextRowKey = request.NextRowKey,
                 });
 
-                var response = ListResponse<IPEMIndex>.Create(results.ToList());
+                var response = ListResponse<PEMIndex>.Create(results.Select(pem=>pem.ToPEMIndex()).ToList());
                 if (results.ContinuationToken != null)
                 {
                     response.NextPartitionKey = results.ContinuationToken.NextPartitionKey;
@@ -134,7 +134,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             catch (Exception)
             {
                 /* It's possible the table does not exists if it doesn't no data was ever written to list would be empty anyways...return empty list */
-                return ListResponse<IPEMIndex>.Create(new List<PEMIndex>());
+                return ListResponse<PEMIndex>.Create(new List<PEMIndex>());
             }
         }
     }

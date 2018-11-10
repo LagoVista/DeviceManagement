@@ -8,7 +8,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     {
         Task<string> GetPEMAsync(DeviceRepository deviceRepo, string deviceId, string messageId);
 
-        Task<ListResponse<IPEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request);
-        Task<ListResponse<IPEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request);
+        Task<ListResponse<PEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request);
+        Task<ListResponse<PEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request);
     }
 }
