@@ -39,7 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         [TestInitialize()]
         public void Init()
         {
-            _secureStorage.Setup<Task<InvokeResult<string>>>(srs => srs.AddSecretAsync(It.IsAny<string>())).ReturnsAsync(InvokeResult<string>.Create("passingid"));
+            _secureStorage.Setup<Task<InvokeResult<string>>>(srs => srs.AddSecretAsync(_org, It.IsAny<string>())).ReturnsAsync(InvokeResult<string>.Create("passingid"));
 
             _deviceMgmtSettings.Setup<IConnectionSettings>(dms => dms.DefaultDeviceTableStorage).Returns(_defaultTableStorageSettings);
             _deviceMgmtSettings.Setup<IConnectionSettings>(dms => dms.DefaultDeviceStorage).Returns(_deviceStorageSettings);
@@ -87,7 +87,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             var repoManager = GetRepoManager();
             var repo = GetValidRepo();
             var result = await repoManager.AddDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultDeviceStorageJson), Times.Once);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultDeviceStorageJson), Times.Once);
             _deviceRepositoryRepo.Verify(drp => drp.AddDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceStorageSecureSettingsId == "passingid" && rep.DeviceStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceStorageSettings);
@@ -100,7 +100,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             var repoManager = GetRepoManager();
             var repo = GetValidRepo();
             var result = await repoManager.AddDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultTSJson), Times.Exactly(2));
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(2));
             _deviceRepositoryRepo.Verify(drp => drp.AddDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.PEMStorageSettingsSecureId == "passingid" && rep.PEMStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.PEMStorageSettings);
@@ -112,7 +112,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             var repoManager = GetRepoManager();
             var repo = GetValidRepo();
             var result = await repoManager.AddDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultTSJson), Times.Exactly(2));
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(2));
             _deviceRepositoryRepo.Verify(drp => drp.AddDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceArchiveStorageSettingsSecureId == "passingid" && rep.DeviceArchiveStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceArchiveStorageSettings);
@@ -130,7 +130,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceStorageSecureSettingsId = "settingid3";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(It.IsAny<String>()), Times.Never);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceStorageSecureSettingsId == "settingid3" && rep.DeviceStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceStorageSettings);
@@ -147,7 +147,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceStorageSecureSettingsId = "settingid3";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(It.IsAny<String>()), Times.Never);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.PEMStorageSettingsSecureId == "settingid2" && rep.PEMStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.PEMStorageSettings);
@@ -163,7 +163,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceStorageSecureSettingsId = "settingid3";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(It.IsAny<String>()), Times.Never);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceArchiveStorageSettingsSecureId == "settingid1" && rep.DeviceArchiveStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceArchiveStorageSettings);
@@ -182,7 +182,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceStorageSettings = _deviceStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultDeviceStorageJson), Times.Once);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultDeviceStorageJson), Times.Once);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceStorageSecureSettingsId == "passingid" && rep.DeviceStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceStorageSettings);
@@ -200,7 +200,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.PEMStorageSettings = _defaultTableStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultTSJson), Times.Once);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Once);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.PEMStorageSettingsSecureId == "passingid" && rep.PEMStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.PEMStorageSettings);
@@ -217,7 +217,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettings = _defaultTableStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_defaultTSJson), Times.Once);
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Once);
             _deviceRepositoryRepo.Verify(drp => drp.UpdateDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceArchiveStorageSettingsSecureId == "passingid" && rep.DeviceArchiveStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceArchiveStorageSettings);
