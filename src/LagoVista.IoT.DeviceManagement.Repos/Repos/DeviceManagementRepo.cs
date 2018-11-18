@@ -78,7 +78,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            await DeleteDocumentAsync(id);
+            await DeleteDocumentAsync(id, deviceRepo.Id);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -121,7 +121,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return GetDocumentAsync(id);
+            return GetDocumentAsync(id, deviceRepo.Id);
         }
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
