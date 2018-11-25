@@ -10,6 +10,7 @@ using LagoVista.Core.Utils;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 
@@ -58,20 +59,37 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
             AsyncCoupler = new AsyncCoupler<IMessage>(Logger, new UsageMetrics(HostId, InstanceId, PipelineModuleId));
 
-            TransceiverSettings.RpcReceiver.AccountId = "localrequestbus-dev";
-            TransceiverSettings.RpcReceiver.UserName = "ListenAccessKey";
-            TransceiverSettings.RpcReceiver.AccessKey = Environment.GetEnvironmentVariable("RpcReceiverAccessKey", EnvironmentVariableTarget.Machine);
-            TransceiverSettings.RpcReceiver.ResourceName = "rpc_test";
-            TransceiverSettings.RpcReceiver.Uri = "application";
+            TransceiverSettings.RpcClientReceiver.AccountId = Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
+            Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccountId, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
 
-            TransceiverSettings.RpcTransmitter.AccountId = "localrequestbus-dev";
-            TransceiverSettings.RpcTransmitter.UserName = "SendAccessKey";
-            TransceiverSettings.RpcTransmitter.AccessKey = Environment.GetEnvironmentVariable("RpcTransmitterAccessKey", EnvironmentVariableTarget.Machine);
-            TransceiverSettings.RpcTransmitter.ResourceName = "rpc_test";
-            TransceiverSettings.RpcTransmitter.TimeoutInSeconds = 30;
+            TransceiverSettings.RpcClientReceiver.UserName = "rpc_test_receive";
+            TransceiverSettings.RpcClientReceiver.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
+            Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
+            TransceiverSettings.RpcClientReceiver.ResourceName = "rpc_test";
+            TransceiverSettings.RpcClientReceiver.Uri = "application";
 
-            RpcTransceiver = new ServiceBusProxyClient(TransceiverSettings, AsyncCoupler, Logger);
-            RpcTransceiver.StartAsync().Wait();
+            TransceiverSettings.RpcClientTransmitter.AccountId = TransceiverSettings.RpcClientReceiver.AccountId;
+            TransceiverSettings.RpcClientTransmitter.UserName = "rpc_test_send";
+            TransceiverSettings.RpcClientTransmitter.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
+            Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
+            TransceiverSettings.RpcClientTransmitter.ResourceName = "rpc_test";
+            TransceiverSettings.RpcClientTransmitter.TimeoutInSeconds = 30;
+
+            TransceiverSettings.RpcServerTransmitter.AccountId = TransceiverSettings.RpcClientReceiver.AccountId;
+            TransceiverSettings.RpcServerTransmitter.UserName = "rpc_test_send";
+            TransceiverSettings.RpcServerTransmitter.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
+            Assert.IsNotNull(TransceiverSettings.RpcServerTransmitter.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
+            TransceiverSettings.RpcServerTransmitter.ResourceName = "rpc_test";
+            TransceiverSettings.RpcServerTransmitter.TimeoutInSeconds = 30;
+
+            TransceiverSettings.RpcServerReceiver.AccountId = Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcServerReceiver.UserName = "rpc_test_receive";
+            TransceiverSettings.RpcServerReceiver.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcServerReceiver.ResourceName = "rpc_test";
+            TransceiverSettings.RpcServerReceiver.Uri = "application";
+
+            RpcTransceiver = new ServiceBusProxyClient(AsyncCoupler, Logger);
+            RpcTransceiver.StartAsync(TransceiverSettings).Wait();
 
             ProxySettings = new ProxySettings
             {
