@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.MediaIntegrationTests", "tests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests.csproj", "{1940D07B-25E2-46C3-8B64-1E5D9757581D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LagoVista.IoT.DeviceManagement.Rpc.Tests", "tests\LagoVista.IoT.DeviceManagement.Rpc.Tests\LagoVista.IoT.DeviceManagement.Rpc.Tests.csproj", "{C2087475-1190-4641-AC34-A035D1DDDB7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.Rpc.Tests", "tests\LagoVista.IoT.DeviceManagement.Rpc.Tests\LagoVista.IoT.DeviceManagement.Rpc.Tests.csproj", "{C2087475-1190-4641-AC34-A035D1DDDB7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
