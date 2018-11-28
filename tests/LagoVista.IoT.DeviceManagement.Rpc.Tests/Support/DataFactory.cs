@@ -94,7 +94,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             ProxySettings = new ProxySettings
             {
                 OrganizationId = OrganizationId,
-                InstanceId = InstanceId
+                InstanceId = InstanceId               
             };
 
             ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
@@ -134,27 +134,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
         public static DeviceRepository CreateDeviceRespository()
         {
-            return JsonConvert.DeserializeObject<DeviceRepository>(Properties.Resources.DeviceRepository);
-            //var _user = EntityHeader.Create("3367B1522AF441F39238A85A80B94D33", "Test");
-            //var _org = EntityHeader.Create("C8AD4589F26842E7A1AEFBAEFC979C9B", "Test");
-
-            //var repo = new DeviceRepository()
-            //{
-            //    Id = "04419F4A084A46F0988B2B61D92F0379",
-            //    CreatedBy = _user,
-            //    CreationDate = DateTime.UtcNow.ToJSONString(),
-            //    LastUpdatedBy = _user,
-            //    LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
-            //    OwnerOrganization = _org,
-            //    Name = "MarkTest",
-            //    Key = "marktest",
-            //    Subscription = EntityHeader.Create("650cf116-0ab9-41d9-817c-1a773e5769b7", "idtext"),
-            //    DeviceCapacity = EntityHeader.Create("dev123", "capac"),
-            //    StorageCapacity = EntityHeader.Create("storage", "storage"),
-            //    RepositoryType = EntityHeader<RepositoryTypes>.Create(RepositoryTypes.NuvIoT)
-            //};
-
-            //return repo;
+            return JsonConvert.DeserializeObject<DeviceRepository>(Properties.Resources.DeviceRepository);            
         }
     }
 }

@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Diagnostics.ConsoleProxy" Version="2.1.558-beta1310" />
-    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.558-beta1310" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.558-beta1310" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.558-beta1310" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.558-beta1310" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.558-beta1310" />
+    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.559-beta1131" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.559-beta1131" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.559-beta1131" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.559-beta1131" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.559-beta1131" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.1.1" />
-    
+
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
