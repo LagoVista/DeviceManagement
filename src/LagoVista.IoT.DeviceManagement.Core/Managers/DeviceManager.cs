@@ -27,7 +27,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
-            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local ?
+            return (deviceRepo.RepositoryType.Value == RepositoryTypes.Local ||
+                deviceRepo.RepositoryType.Value == RepositoryTypes.ClusteredMongoDB) ?
                 _proxyFactory.Create<IDeviceManagementRepo>(
                     new ProxySettings
                     {
