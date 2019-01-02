@@ -30,7 +30,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         /// dedicated - cloud
         /// </summary>
         [EnumLabel(DeviceRepository.DeviceRepository_Type_Dedicated, DeviceManagementResources.Names.Device_Repo_RepoType_Dedicated, typeof(DeviceManagementResources))]
-        Dedicated
+        Dedicated,
+
+        /// <summary>
+        /// dedicated - cloud
+        /// </summary>
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_InClusterMongo, DeviceManagementResources.Names.Device_Repo_RepoType_InClusterMongoDB, typeof(DeviceManagementResources))]
+        ClusteredMongoDB
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help, DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
@@ -39,6 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
         public const string DeviceRepository_Type_Local = "local";
         public const string DeviceRepository_Type_Dedicated = "dedicated";
+        public const string DeviceRepository_Type_InClusterMongo = "inclusteredmongo";
         public const string DeviceRepository_Type_AzureITHub = "azureiothub";
 
         public DeviceRepository()

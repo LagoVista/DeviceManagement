@@ -510,4 +510,7 @@
   <data name="Device_ImageURL" xml:space="preserve">
     <value>Image URL</value>
   </data>
+  <data name="Device_Repo_RepoType_InClusterMongoDB" xml:space="preserve">
+    <value>In Cluster MongoDB</value>
+  </data>
 </root>
