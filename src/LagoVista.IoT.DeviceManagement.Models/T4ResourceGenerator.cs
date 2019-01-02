@@ -287,6 +287,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Repo_RepoType_Help
 
 		public static string Device_Repo_RepoType_Help { get { return GetResourceString("Device_Repo_RepoType_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_RepoType_InClusterMongoDB
+
+		public static string Device_Repo_RepoType_InClusterMongoDB { get { return GetResourceString("Device_Repo_RepoType_InClusterMongoDB"); } }
 //Resources:DeviceManagementResources:Device_Repo_RepoType_Local
 
 		public static string Device_Repo_RepoType_Local { get { return GetResourceString("Device_Repo_RepoType_Local"); } }
@@ -527,6 +530,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Repo_RepoType_AzureIoTHub = "Device_Repo_RepoType_AzureIoTHub";
 			public const string Device_Repo_RepoType_Dedicated = "Device_Repo_RepoType_Dedicated";
 			public const string Device_Repo_RepoType_Help = "Device_Repo_RepoType_Help";
+			public const string Device_Repo_RepoType_InClusterMongoDB = "Device_Repo_RepoType_InClusterMongoDB";
 			public const string Device_Repo_RepoType_Local = "Device_Repo_RepoType_Local";
 			public const string Device_Repo_RepoType_NuvIoT = "Device_Repo_RepoType_NuvIoT";
 			public const string Device_Repo_RepoType_Select = "Device_Repo_RepoType_Select";
