@@ -30,13 +30,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public Task DeleteDeviceGroupAsync(DeviceRepository deviceRepo, string deviceGroupId)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-            return DeleteDocumentAsync(deviceGroupId);
+            return DeleteDocumentAsync(deviceGroupId, deviceRepo.Id);
         }
 
         public Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string id)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-            return GetDocumentAsync(id);
+
+            return GetDocumentAsync(id, deviceRepo.Id);
         }
 
         public async Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId)
@@ -67,7 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task<DeviceGroup> GetDeviceGroupByKeyAsync(DeviceRepository deviceRepo, string groupKey)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-            return (await base.QueryAsync(qry => qry.Key == groupKey)).FirstOrDefault();
+            return (await base.QueryAsync(qry => qry.Key == groupKey && qry.DeviceRepository.Id == deviceRepo.Id && qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id)).FirstOrDefault();
         }
     }
 }
