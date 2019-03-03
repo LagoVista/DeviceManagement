@@ -31,7 +31,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Logs - Get For Device (Currently returns 100 most recent, will have filtering
+        /// Device Logs - Get For Device
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <param name="deviceid">Device Id</param>

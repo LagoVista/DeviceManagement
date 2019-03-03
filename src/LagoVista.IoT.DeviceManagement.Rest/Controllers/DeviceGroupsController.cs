@@ -13,6 +13,7 @@ using LagoVista.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.Web.Common.Attributes;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -20,6 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     /// Device Group Controller
     /// </summary>
     [Authorize]
+    [ConfirmedUser]
     public class DeviceGroupsController : LagoVistaBaseController
     {
 
