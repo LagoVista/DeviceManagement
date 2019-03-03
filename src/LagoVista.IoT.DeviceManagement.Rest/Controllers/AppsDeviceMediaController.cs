@@ -1,5 +1,4 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
-using LagoVista.IoT.Deployment.Admin.Repos;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -21,9 +20,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         IDeviceMediaManager _deviceMediaManager;
       
-        public AppsDeviceMediaController(IDeviceRepositoryManager repoManager, IDeviceMediaManager deviceMediaManager, IDeploymentInstanceRepo instanceRepo, 
+        public AppsDeviceMediaController(IDeviceRepositoryManager repoManager, IDeviceMediaManager deviceMediaManager,
             UserManager<AppUser> userManager, IAdminLogger logger) 
-            : base(repoManager, instanceRepo, userManager, logger)
+            : base(repoManager, userManager, logger)
         {
             _deviceMediaManager = deviceMediaManager;
         }

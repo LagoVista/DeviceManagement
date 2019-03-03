@@ -3,7 +3,6 @@ using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
-using LagoVista.IoT.Deployment.Admin.Repos;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -33,8 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private UserManager<AppUser> _userManager;
 
         public AppsDeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager,
-            IDeploymentInstanceRepo instanceRepo, IOrganizationManager orgManager, 
-            UserManager<AppUser> userManager, IAdminLogger logger) : base(repoManager, instanceRepo, userManager, logger)
+            IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(repoManager, userManager, logger)
         {
             _orgManager = orgManager;
             _deviceManager = deviceManager;

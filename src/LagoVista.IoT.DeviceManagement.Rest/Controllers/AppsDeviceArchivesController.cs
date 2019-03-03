@@ -1,5 +1,4 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
-using LagoVista.IoT.Deployment.Admin.Repos;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.Logging.Loggers;
@@ -23,9 +22,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         IDeviceArchiveManager _deviceArchiveManager;
 
-        public AppsDeviceArchivesController(IDeviceRepositoryManager repoManager, IDeploymentInstanceRepo instanceRepo,
+        public AppsDeviceArchivesController(IDeviceRepositoryManager repoManager, 
             IDeviceArchiveManager deviceArchiveManager, UserManager<AppUser> userManager, IAdminLogger logger) 
-            : base(repoManager, instanceRepo, userManager, logger)
+            : base(repoManager, userManager, logger)
         {
             _deviceArchiveManager = deviceArchiveManager;
         }

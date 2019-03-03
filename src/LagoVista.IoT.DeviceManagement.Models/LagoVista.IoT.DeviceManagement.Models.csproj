@@ -10,10 +10,10 @@
     <Product>Lago Vista Devices, IoT and Home Automation Frameworks</Product>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.555-beta0436" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.555-beta0436" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.555-beta0436" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.555-beta0436" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.656-beta1354" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.656-beta1354" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.656-beta1354" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.656-beta1354" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>

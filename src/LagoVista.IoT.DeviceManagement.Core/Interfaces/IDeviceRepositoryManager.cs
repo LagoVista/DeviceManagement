@@ -16,6 +16,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
     public interface IDeviceRepositoryManager : IDeviceRepositoryManagerRemote
     {
+        Task<DeviceRepository> GetDeviceRepositoryForInstanceAsync(string instanceId, EntityHeader org, EntityHeader user);
         Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository deviceRepo, EntityHeader org, EntityHeader user);
         Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository deviceRepo, EntityHeader org, EntityHeader user);
         Task<DependentObjectCheckResult> CheckInUseAsync(string deviceRepoId, EntityHeader org, EntityHeader user);

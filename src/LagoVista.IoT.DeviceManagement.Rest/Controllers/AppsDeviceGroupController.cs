@@ -2,7 +2,6 @@
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
-using LagoVista.IoT.Deployment.Admin.Repos;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -27,9 +26,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         IDeviceGroupManager _deviceGroupManager;
 
-        public AppsDeviceGroupController(IDeviceRepositoryManager repoManager, IDeploymentInstanceRepo instanceRepo,
+        public AppsDeviceGroupController(IDeviceRepositoryManager repoManager,
             IDeviceGroupManager deviceGroupManager, UserManager<AppUser> userManager, IAdminLogger logger)
-            : base(repoManager, instanceRepo, userManager, logger)
+            : base(repoManager, userManager, logger)
         {
             _deviceGroupManager = deviceGroupManager;
         }

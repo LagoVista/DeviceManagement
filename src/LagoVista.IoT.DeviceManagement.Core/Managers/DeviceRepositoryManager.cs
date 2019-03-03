@@ -292,5 +292,50 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }
+
+        public async Task<DeviceRepository> GetDeviceRepositoryForInstanceAsync(string instanceId, EntityHeader org, EntityHeader user)
+        {
+            var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryForInstanceAsync(instanceId);
+            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+
+            if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
+            {
+                var getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.PEMStorageSettingsSecureId, user);
+                if (!getSettingsResult.Successful)
+                {
+                    throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.PEMStorageSettingsSecureId} ");
+                }
+
+                deviceRepo.PEMStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceArchiveStorageSettingsSecureId, user);
+                if (!getSettingsResult.Successful)
+                {
+                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceArchiveStorageSettingsSecureId} ");
+                }
+
+                deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceStorageSecureSettingsId, user);
+                if (!getSettingsResult.Successful)
+                {
+                    throw new Exception($"Could not restore secret for Device Storage Connection Settings {deviceRepo.DeviceStorageSecureSettingsId} ");
+                }
+
+                deviceRepo.DeviceStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+                if (!string.IsNullOrEmpty(deviceRepo.SecureAccessKeyId))
+                {
+                    getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.SecureAccessKeyId, user);
+                    if (!getSettingsResult.Successful)
+                    {
+                        throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.SecureAccessKeyId} ");
+                    }
+
+                    deviceRepo.AccessKey = getSettingsResult.Result;
+                }
+            }
+            return deviceRepo;
+        }
     }
 }

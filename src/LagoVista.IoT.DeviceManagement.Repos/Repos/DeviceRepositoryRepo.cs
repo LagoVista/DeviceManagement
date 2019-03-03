@@ -48,6 +48,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return GetDocumentAsync(repoId);
         }
 
+        public async Task<DeviceRepository> GetDeviceRepositoryForInstanceAsync(string instanceId)
+        {
+            var items = await base.QueryAsync(qry => qry.Instance.Id == instanceId);
+            return items.FirstOrDefault();
+        }
+
         public async Task<bool> QueryRepoKeyInUseAsync(string key, string orgId)
         {
             var items = await base.QueryAsync(attr => (attr.OwnerOrganization.Id == orgId || attr.IsPublic == true) && attr.Key == key);
