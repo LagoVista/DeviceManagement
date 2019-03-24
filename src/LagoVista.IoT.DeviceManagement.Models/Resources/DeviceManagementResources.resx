@@ -513,4 +513,25 @@
   <data name="Device_Repo_RepoType_InClusterMongoDB" xml:space="preserve">
     <value>In Cluster MongoDB</value>
   </data>
+  <data name="Deve_Repo_DevceWatchDog_NotificationContact" xml:space="preserve">
+    <value>Device Watchdog Notification Contact</value>
+  </data>
+  <data name="Deve_Repo_DevceWatchDog_NotificationContact_Help" xml:space="preserve">
+    <value>Select a user that will be notified when a device is not repsonding</value>
+  </data>
+  <data name="Device_Watchdog_Disable_Override" xml:space="preserve">
+    <value>Disable Watchdog Override</value>
+  </data>
+  <data name="Device_Watchdog_Notification_User" xml:space="preserve">
+    <value>Watchdog Notification User</value>
+  </data>
+  <data name="Device_Watchdog_Notification_User_Help" xml:space="preserve">
+    <value>Normally the user that will be notified when a device is not responding is configured at the device repository.  You can override that user to receive notifications at the device level.</value>
+  </data>
+  <data name="Device_Watchdog_Seconds_Override" xml:space="preserve">
+    <value>The watchdog is normally configured at the device configuration.  At the device level you can disable for this device.</value>
+  </data>
+  <data name="Device_Watchdog_Seconds_Override_Help" xml:space="preserve">
+    <value>Enter a value in seconds that should be used to override the watch dog value for the device configuration.</value>
+  </data>
 </root>

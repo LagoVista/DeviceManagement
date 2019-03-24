@@ -68,6 +68,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public ConnectionSettings DeviceStorageSettings { get; set; }
         public String DeviceStorageSecureSettingsId { get; set; }
 
+        public ConnectionSettings DeviceWatchdogStorageSettings { get; set; }
+        public String DeviceWatchdogStorageSettingsId { get; set; }
+
 
         public ConnectionSettings DeviceArchiveStorageSettings { get; set; }
         public String DeviceArchiveStorageSettingsSecureId { get; set; }
@@ -95,6 +98,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public String SecureAccessKeyId { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Deve_Repo_DevceWatchDog_NotificationContact, HelpResource: DeviceManagementResources.Names.Deve_Repo_DevceWatchDog_NotificationContact_Help, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader WatchDogNotificationUser { get; set; }
+        
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AuthKey1, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public String AuthKey1 { get; set; }

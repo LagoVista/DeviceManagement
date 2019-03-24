@@ -62,12 +62,26 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
                     ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
                 };
+
+                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
+                {
+                    Uri = _deviceMgmtSettings.DefaultDeviceTableStorage.Uri,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey,
+                    ResourceName = $"Watchdlog{repo.Id}{repo.Key}"
+                };
             }
             else if (repo.RepositoryType.Value == RepositoryTypes.Local)
             {
 
                 //TODO: when we update this for remote server access, we need to figure out what if anything needs to be secured.
                 repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mysql",
+                    ResourceName = "nuviot",
+                    Port = "3306"
+                };
+
+                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
                 {
                     Uri = "mysql",
                     ResourceName = "nuviot",
@@ -110,6 +124,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             repo.DeviceStorageSecureSettingsId = addKeyResult.Result;
             repo.DeviceStorageSettings = null;
+
+            addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.DeviceWatchdogStorageSettings));
+            if (!addKeyResult.Successful)
+            {
+                return addKeyResult.ToInvokeResult();
+            }
+
+            repo.DeviceWatchdogStorageSettingsId = addKeyResult.Result;
+            repo.DeviceWatchdogStorageSettings = null;
 
 
             addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.PEMStorageSettings));
@@ -183,6 +206,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
 
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSettingsId, user);
+                if (!getSettingsResult.Successful)
+                {
+                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceWatchdogStorageSettingsId} ");
+                }
+
+                deviceRepo.DeviceWatchdogStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+
                 getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceStorageSecureSettingsId, user);
                 if (!getSettingsResult.Successful)
                 {
@@ -220,6 +252,92 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             ValidationCheck(repo, Actions.Update);
             await AuthorizeAsync(repo, AuthorizeResult.AuthorizeActions.Update, user, org);
+
+            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
+               repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                if (String.IsNullOrEmpty(repo.DeviceArchiveStorageSettingsSecureId))
+                {
+                    repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                    {
+                        AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                        AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.PEMStorageSettingsSecureId))
+                {
+                    repo.PEMStorageSettings = new ConnectionSettings()
+                    {
+                        AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                        AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.DeviceStorageSecureSettingsId))
+                {
+                    repo.DeviceStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
+                        AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
+                        ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                {
+                    repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = _deviceMgmtSettings.DefaultDeviceTableStorage.Uri,
+                        AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey,
+                        ResourceName = $"Watchdlog{repo.Id}{repo.Key}"
+                    };
+                }
+            }
+            else if (repo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+
+                //TODO: when we update this for remote server access, we need to figure out what if anything needs to be secured.
+                if (String.IsNullOrEmpty(repo.DeviceArchiveStorageSettingsSecureId))
+                {
+                    repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = "mysql",
+                        ResourceName = "nuviot",
+                        Port = "3306"
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                {
+                    repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = "mysql",
+                        ResourceName = "nuviot",
+                        Port = "3306"
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.PEMStorageSettingsSecureId))
+                {
+                    repo.PEMStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = "mongodb",
+                        Port = "27017",
+                        ResourceName = "nuviot"
+                    };
+                }
+
+                if (String.IsNullOrEmpty(repo.DeviceStorageSecureSettingsId))
+                {
+                    repo.DeviceStorageSettings = new ConnectionSettings()
+                    {
+                        Uri = "mongodb",
+                        ResourceName = "nuviot",
+                        Port = "27017"
+                    };
+                }
+            }
 
             if (!string.IsNullOrEmpty(repo.AccessKey))
             {
@@ -315,6 +433,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
 
                 deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
+
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSettingsId, user);
+                if (!getSettingsResult.Successful)
+                {
+                    throw new Exception($"Could not restore secret for Device watchdog Connection Settings {deviceRepo.DeviceWatchdogStorageSettingsId} ");
+                }
+
+                deviceRepo.DeviceWatchdogStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
 
                 getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceStorageSecureSettingsId, user);
                 if (!getSettingsResult.Successful)

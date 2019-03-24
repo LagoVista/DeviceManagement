@@ -142,6 +142,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader CustomStatus { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public bool DisableWatchdog { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public int WatchdogSecondsOverride { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader WatchDogNotificationUser { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DebugMode { get; set; }
 
