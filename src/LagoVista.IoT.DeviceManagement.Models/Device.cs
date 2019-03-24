@@ -138,20 +138,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Speed, HelpResource: DeviceManagementResources.Names.Device_Speed_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public double Speeed { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader CustomStatus { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public bool DisableWatchdog { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
-        public int WatchdogSecondsOverride { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public int? WatchdogSecondsOverride { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
-        public EntityHeader WatchDogNotificationUser { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader WatchdogNotificationUser { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DebugMode { get; set; }

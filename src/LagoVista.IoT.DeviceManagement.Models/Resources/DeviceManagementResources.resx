@@ -519,19 +519,28 @@
   <data name="Deve_Repo_DevceWatchDog_NotificationContact_Help" xml:space="preserve">
     <value>Select a user that will be notified when a device is not repsonding</value>
   </data>
+  <data name="Deve_Repo_DevceWatchDog_NotificationContact_Select" xml:space="preserve">
+    <value>-select user-</value>
+  </data>
   <data name="Device_Watchdog_Disable_Override" xml:space="preserve">
     <value>Disable Watchdog Override</value>
   </data>
   <data name="Device_Watchdog_Notification_User" xml:space="preserve">
-    <value>Watchdog Notification User</value>
+    <value>Watchdog Notification User Override</value>
   </data>
   <data name="Device_Watchdog_Notification_User_Help" xml:space="preserve">
     <value>Normally the user that will be notified when a device is not responding is configured at the device repository.  You can override that user to receive notifications at the device level.</value>
   </data>
   <data name="Device_Watchdog_Seconds_Override" xml:space="preserve">
-    <value>The watchdog is normally configured at the device configuration.  At the device level you can disable for this device.</value>
+    <value>Watchdog Timeout Override (seconds)</value>
   </data>
   <data name="Device_Watchdog_Seconds_Override_Help" xml:space="preserve">
-    <value>Enter a value in seconds that should be used to override the watch dog value for the device configuration.</value>
+    <value>Enter a value in seconds that should be used to override the watchdog value for this device.</value>
+  </data>
+  <data name="Device_Watchdog_Notification_User_Select" xml:space="preserve">
+    <value>-select user to be notified-</value>
+  </data>
+  <data name="Device_Watchdog_Disable_Override_Help" xml:space="preserve">
+    <value>The watchdog is normally configured at the device configuration.  At the device level you can disable for this device.</value>
   </data>
 </root>

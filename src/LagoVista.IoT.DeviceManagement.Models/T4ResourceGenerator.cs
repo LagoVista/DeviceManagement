@@ -113,6 +113,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Deve_Repo_DevceWatchDog_NotificationContact_Help
 
 		public static string Deve_Repo_DevceWatchDog_NotificationContact_Help { get { return GetResourceString("Deve_Repo_DevceWatchDog_NotificationContact_Help"); } }
+//Resources:DeviceManagementResources:Deve_Repo_DevceWatchDog_NotificationContact_Select
+
+		public static string Deve_Repo_DevceWatchDog_NotificationContact_Select { get { return GetResourceString("Deve_Repo_DevceWatchDog_NotificationContact_Select"); } }
 //Resources:DeviceManagementResources:Device_AttributeMetaData
 
 		public static string Device_AttributeMetaData { get { return GetResourceString("Device_AttributeMetaData"); } }
@@ -422,12 +425,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Watchdog_Disable_Override
 
 		public static string Device_Watchdog_Disable_Override { get { return GetResourceString("Device_Watchdog_Disable_Override"); } }
+//Resources:DeviceManagementResources:Device_Watchdog_Disable_Override_Help
+
+		public static string Device_Watchdog_Disable_Override_Help { get { return GetResourceString("Device_Watchdog_Disable_Override_Help"); } }
 //Resources:DeviceManagementResources:Device_Watchdog_Notification_User
 
 		public static string Device_Watchdog_Notification_User { get { return GetResourceString("Device_Watchdog_Notification_User"); } }
 //Resources:DeviceManagementResources:Device_Watchdog_Notification_User_Help
 
 		public static string Device_Watchdog_Notification_User_Help { get { return GetResourceString("Device_Watchdog_Notification_User_Help"); } }
+//Resources:DeviceManagementResources:Device_Watchdog_Notification_User_Select
+
+		public static string Device_Watchdog_Notification_User_Select { get { return GetResourceString("Device_Watchdog_Notification_User_Select"); } }
 //Resources:DeviceManagementResources:Device_Watchdog_Seconds_Override
 
 		public static string Device_Watchdog_Seconds_Override { get { return GetResourceString("Device_Watchdog_Seconds_Override"); } }
@@ -493,6 +502,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
 			public const string Deve_Repo_DevceWatchDog_NotificationContact = "Deve_Repo_DevceWatchDog_NotificationContact";
 			public const string Deve_Repo_DevceWatchDog_NotificationContact_Help = "Deve_Repo_DevceWatchDog_NotificationContact_Help";
+			public const string Deve_Repo_DevceWatchDog_NotificationContact_Select = "Deve_Repo_DevceWatchDog_NotificationContact_Select";
 			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";
 			public const string Device_Attributes_Help = "Device_Attributes_Help";
@@ -596,8 +606,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Storage_Custom = "Device_Storage_Custom";
 			public const string Device_Title = "Device_Title";
 			public const string Device_Watchdog_Disable_Override = "Device_Watchdog_Disable_Override";
+			public const string Device_Watchdog_Disable_Override_Help = "Device_Watchdog_Disable_Override_Help";
 			public const string Device_Watchdog_Notification_User = "Device_Watchdog_Notification_User";
 			public const string Device_Watchdog_Notification_User_Help = "Device_Watchdog_Notification_User_Help";
+			public const string Device_Watchdog_Notification_User_Select = "Device_Watchdog_Notification_User_Select";
 			public const string Device_Watchdog_Seconds_Override = "Device_Watchdog_Seconds_Override";
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
 			public const string DeviceGroup_Description = "DeviceGroup_Description";

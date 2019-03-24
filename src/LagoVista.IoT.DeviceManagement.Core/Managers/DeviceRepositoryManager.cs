@@ -407,6 +407,23 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 repo.PEMStorageSettings = null;
             }
 
+            if (repo.DeviceWatchdogStorageSettings != null)
+            {
+                var addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.DeviceWatchdogStorageSettings));
+                if (!addKeyResult.Successful)
+                {
+                    return addKeyResult.ToInvokeResult();
+                }
+
+                if (!string.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                {
+                    await _secureStorage.RemoveSecretAsync(org, repo.DeviceWatchdogStorageSettingsId);
+                }
+
+                repo.DeviceWatchdogStorageSettingsId = addKeyResult.Result;
+                repo.DeviceWatchdogStorageSettings = null;
+            }   
+
             await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);
             return InvokeResult.Success;
         }
