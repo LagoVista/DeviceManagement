@@ -137,6 +137,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 return $"{Key}{Id}devicelocations";
         }
 
+        public string GetDeviceWatchdogStorageName()
+        {
+            if (Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}watchdog";
+            else
+                return $"{Key}{Id}watchdog";
+        }
+
         public string GetDeviceArchiveStorageName()
         {
             if (Key.Length > 20)
