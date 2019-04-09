@@ -131,7 +131,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return addKeyResult.ToInvokeResult();
             }
 
-            repo.DeviceWatchdogStorageSettingsId = addKeyResult.Result;
+            repo.DeviceWatchdogStorageSecureId = addKeyResult.Result;
             repo.DeviceWatchdogStorageSettings = null;
 
 
@@ -206,10 +206,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
 
-                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSettingsId, user);
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceWatchdogStorageSettingsId} ");
+                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceWatchdogStorageSecureId} ");
                 }
 
                 deviceRepo.DeviceWatchdogStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
@@ -284,7 +284,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     };
                 }
 
-                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSecureId))
                 {
                     repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
                     {
@@ -308,7 +308,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     };
                 }
 
-                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSecureId))
                 {
                     repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
                     {
@@ -415,12 +415,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     return addKeyResult.ToInvokeResult();
                 }
 
-                if (!string.IsNullOrEmpty(repo.DeviceWatchdogStorageSettingsId))
+                if (!string.IsNullOrEmpty(repo.DeviceWatchdogStorageSecureId))
                 {
-                    await _secureStorage.RemoveSecretAsync(org, repo.DeviceWatchdogStorageSettingsId);
+                    await _secureStorage.RemoveSecretAsync(org, repo.DeviceWatchdogStorageSecureId);
                 }
 
-                repo.DeviceWatchdogStorageSettingsId = addKeyResult.Result;
+                repo.DeviceWatchdogStorageSecureId = addKeyResult.Result;
                 repo.DeviceWatchdogStorageSettings = null;
             }   
 
@@ -451,10 +451,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
 
-                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSettingsId, user);
+                getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for Device watchdog Connection Settings {deviceRepo.DeviceWatchdogStorageSettingsId} ");
+                    throw new Exception($"Could not restore secret for Device watchdog Connection Settings {deviceRepo.DeviceWatchdogStorageSecureId} ");
                 }
 
                 deviceRepo.DeviceWatchdogStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);

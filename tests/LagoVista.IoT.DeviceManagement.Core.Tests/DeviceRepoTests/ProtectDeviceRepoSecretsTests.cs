@@ -128,6 +128,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.DeviceWatchdogStorageSecureId = "securewdid123";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
@@ -145,6 +146,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.DeviceWatchdogStorageSecureId = "securewdid123";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
@@ -161,6 +163,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.DeviceWatchdogStorageSecureId = "securewdid123";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
