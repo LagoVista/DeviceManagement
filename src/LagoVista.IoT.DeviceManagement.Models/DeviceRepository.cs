@@ -69,7 +69,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public String DeviceStorageSecureSettingsId { get; set; }
 
         public ConnectionSettings DeviceWatchdogStorageSettings { get; set; }
-        public String DeviceWatchdogStorageSettingsId { get; set; }
+        public String DeviceWatchdogStorageSecureId { get; set; }
 
 
         public ConnectionSettings DeviceArchiveStorageSettings { get; set; }
