@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core;
+using LagoVista.Core.Exceptions;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
@@ -209,6 +210,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            if (device == null)
+            {
+                throw new RecordNotFoundException("Device (by Record Id)", id);
+            }
             return DetailResponse<Device>.Create(device);
         }
 
@@ -248,6 +253,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
+            if (device == null)
+            {
+                throw new RecordNotFoundException("Device (by Record Id)", id);
+            }
             return DetailResponse<Device>.Create(device);
         }
 
@@ -261,6 +270,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            if (device == null)
+            {
+                throw new RecordNotFoundException("Device (by DeviceId)", deviceid);
+            }
             return DetailResponse<Device>.Create(device);
         }
 
@@ -274,6 +287,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, true);
+            if(device == null)
+            {
+                throw new RecordNotFoundException("Device (by DeviceId)", deviceid);
+            }
             return DetailResponse<Device>.Create(device);
         }
 
