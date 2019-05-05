@@ -206,17 +206,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 return;
             }
 
-            if(action == Actions.Create)
+            if (RepositoryType?.Value == RepositoryTypes.NuvIoT)
             {
-                if (DeviceArchiveStorageSettings == null) result.AddUserError("Device Archive Storage Settings are Required on Insert.");
-                if (PEMStorageSettings == null) result.AddUserError("PEM Storage Settings Are Required on Insert.");
-                if (DeviceStorageSettings == null) result.AddUserError("Device Storage Settings are Required on Insert.");
-            }
-            else if(action == Actions.Update)
-            {
-                if (DeviceArchiveStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Archive Storage Settings Or SecureId are Required when updating.");
-                if (PEMStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("PEM Storage Settings or Secure Id Are Required when updating.");
-                if (DeviceStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Storage Settings Or Secure Id are Required when updating.");
+                if (action == Actions.Create)
+                {
+                    if (DeviceArchiveStorageSettings == null) result.AddUserError("Device Archive Storage Settings are Required on Insert.");
+                    if (PEMStorageSettings == null) result.AddUserError("PEM Storage Settings Are Required on Insert.");
+                    if (DeviceStorageSettings == null) result.AddUserError("Device Storage Settings are Required on Insert.");
+                }
+                else if (action == Actions.Update)
+                {
+                    if (DeviceArchiveStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Archive Storage Settings Or SecureId are Required when updating.");
+                    if (PEMStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("PEM Storage Settings or Secure Id Are Required when updating.");
+                    if (DeviceStorageSettings == null && String.IsNullOrEmpty(DeviceArchiveStorageSettingsSecureId)) result.AddUserError("Device Storage Settings Or Secure Id are Required when updating.");
+                }
             }
 
             if(RepositoryType.Value == RepositoryTypes.AzureIoTHub)
