@@ -14,7 +14,7 @@
     <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.732-beta1037" />
     <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.732-beta1037" />
     <PackageReference Include="LagoVista.UserAdmin" Version="2.1.732-beta1037" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\DeviceManagementResources.resx">
