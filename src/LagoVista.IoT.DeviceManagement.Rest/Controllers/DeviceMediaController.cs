@@ -31,7 +31,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Get a list of media items for adevice
+        /// Get a list of media items for a device
         /// </summary>
         /// <param name="repoid">Repository Id</param>
         /// <param name="id">Unique Device Id</param>
@@ -59,6 +59,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return new FileStreamResult(ms, item.ContentType);
         }
 
+        /// <summary>
+        /// Device - Media Upload
+        /// </summary>
+        /// <param name="repoid"></param>
+        /// <param name="id"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost("/api/{repoid}/devices/{id}/media")]
         public async Task<InvokeResult> UploadMediaAsync(string repoid, string id, [FromBody] IFormFile file)
         {
