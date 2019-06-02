@@ -1,6 +1,7 @@
 using LagoVista.Core;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Rpc.Tests.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -245,7 +246,11 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         {
             var device = DataFactory.CreateDevice();
             var deviceTypeId = Guid.NewGuid().ToId();
-            device.DeviceType = EntityHeader.Create(deviceTypeId, deviceTypeId);
+            device.DeviceType = EntityHeader<DeviceType>.Create(new DeviceType()
+            {
+                Id = deviceTypeId,
+                Name = "abc",
+            });
             var responseValue = await DataFactory.DeviceManagementRepoProxy.AddDeviceAsync(DataFactory.DeviceRepo, device);
             Assert.IsTrue(responseValue.Successful);
 

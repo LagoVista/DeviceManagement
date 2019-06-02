@@ -7,6 +7,7 @@ using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Rpc.Middleware;
 using LagoVista.Core.Rpc.Settings;
 using LagoVista.Core.Utils;
+using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
@@ -42,7 +43,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         public static IDeviceMediaRepo DeviceMediaRepo;
         public static IDeviceMediaItemRepo DeviceMediaItemRepo;
         public static IDeviceMediaRepoRemote DeviceMediaRepoRemote;
-        public static IDeviceMediaItemRepoRemote DeviceMediaItemRepoRemote; 
+        public static IDeviceMediaItemRepoRemote DeviceMediaItemRepoRemote;
 
 
         #endregion
@@ -59,32 +60,32 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
             AsyncCoupler = new AsyncCoupler<IMessage>(Logger, new UsageMetrics(HostId, InstanceId, PipelineModuleId));
 
-            TransceiverSettings.RpcClientReceiver.AccountId = Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcClientReceiver.AccountId = System.Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
             Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccountId, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
 
             TransceiverSettings.RpcClientReceiver.UserName = "rpc_test_receive";
-            TransceiverSettings.RpcClientReceiver.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcClientReceiver.AccessKey = System.Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
             Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
             TransceiverSettings.RpcClientReceiver.ResourceName = "rpc_test";
             TransceiverSettings.RpcClientReceiver.Uri = "application";
 
             TransceiverSettings.RpcClientTransmitter.AccountId = TransceiverSettings.RpcClientReceiver.AccountId;
             TransceiverSettings.RpcClientTransmitter.UserName = "rpc_test_send";
-            TransceiverSettings.RpcClientTransmitter.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcClientTransmitter.AccessKey = System.Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
             Assert.IsNotNull(TransceiverSettings.RpcClientReceiver.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
             TransceiverSettings.RpcClientTransmitter.ResourceName = "rpc_test";
             TransceiverSettings.RpcClientTransmitter.TimeoutInSeconds = 30;
 
             TransceiverSettings.RpcServerTransmitter.AccountId = TransceiverSettings.RpcClientReceiver.AccountId;
             TransceiverSettings.RpcServerTransmitter.UserName = "rpc_test_send";
-            TransceiverSettings.RpcServerTransmitter.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcServerTransmitter.AccessKey = System.Environment.GetEnvironmentVariable("RPC_TESTS_SEND_KEY", EnvironmentVariableTarget.User);
             Assert.IsNotNull(TransceiverSettings.RpcServerTransmitter.AccessKey, "Please add environment variable for [RPC_TESTS_RECEIVE_KEY] with read acess to service bus");
             TransceiverSettings.RpcServerTransmitter.ResourceName = "rpc_test";
             TransceiverSettings.RpcServerTransmitter.TimeoutInSeconds = 30;
 
-            TransceiverSettings.RpcServerReceiver.AccountId = Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcServerReceiver.AccountId = System.Environment.GetEnvironmentVariable("RPC_TESTS_SERVICE_BUS", EnvironmentVariableTarget.User);
             TransceiverSettings.RpcServerReceiver.UserName = "rpc_test_receive";
-            TransceiverSettings.RpcServerReceiver.AccessKey = Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
+            TransceiverSettings.RpcServerReceiver.AccessKey = System.Environment.GetEnvironmentVariable("RPC_TESTS_RECEIVE_KEY", EnvironmentVariableTarget.User);
             TransceiverSettings.RpcServerReceiver.ResourceName = "rpc_test";
             TransceiverSettings.RpcServerReceiver.Uri = "application";
 
@@ -94,7 +95,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             ProxySettings = new ProxySettings
             {
                 OrganizationId = OrganizationId,
-                InstanceId = InstanceId               
+                InstanceId = InstanceId
             };
 
             ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
@@ -127,14 +128,18 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 SecondaryAccessKey = "def45",
                 Name = "tesedevice",
                 DeviceConfiguration = EntityHeader.Create("fff", "ddd"),
-                DeviceType = EntityHeader.Create("fff", "ddd"),
+                DeviceType = EntityHeader<DeviceType>.Create(new DeviceType()
+                {
+                    Id = Guid.NewGuid().ToId(),
+                    Name = "abc",
+                }),
                 Status = EntityHeader<DeviceStates>.Create(DeviceStates.New)
             };
         }
 
         public static DeviceRepository CreateDeviceRespository()
         {
-            return JsonConvert.DeserializeObject<DeviceRepository>(Properties.Resources.DeviceRepository);            
+            return JsonConvert.DeserializeObject<DeviceRepository>(Properties.Resources.DeviceRepository);
         }
     }
 }

@@ -83,7 +83,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader DeviceConfiguration { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public EntityHeader DeviceType { get; set; }
+        public EntityHeader<DeviceType> DeviceType { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ImageURL, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]

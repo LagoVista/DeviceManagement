@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LagoVista.Core.Models;
+using LagoVista.IoT.DeviceAdmin.Models;
+using LagoVista.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
 {
@@ -35,7 +37,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 SecondaryAccessKey = "def45",
                 Name = "devicename",
                 DeviceConfiguration = EntityHeader.Create("fff", "ddd"),
-                DeviceType = EntityHeader.Create("fff", "ddd"),
+                DeviceType = EntityHeader<DeviceType>.Create(new DeviceType()
+                {
+                    Id = Guid.NewGuid().ToId(),
+                    Name = "abc",
+                    CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "somesuer"),
+                    CreationDate = DateTime.UtcNow.ToJSONString(),
+                    LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "somesuer"),
+                    LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
+                    Key = "devicetype"
+                })
             };
         }
 

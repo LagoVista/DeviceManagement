@@ -7,17 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.734-beta1138" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.734-beta1138" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.734-beta1138" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.734-beta1138" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.734-beta1138" />
+    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.747-beta1613" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.747-beta1613" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.747-beta1613" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.747-beta1613" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.747-beta1613" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.3.0" />
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Reflection.DispatchProxy" Version="4.5.1" />
   </ItemGroup>
 
   <ItemGroup>

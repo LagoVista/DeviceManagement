@@ -3,6 +3,7 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Rpc.Messages;
+using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -58,7 +59,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
                 Id = DEVICEID,
                 Name = "My Device",
                 DeviceId = "device001",
-                DeviceType = new EntityHeader() { Id = "28B8128506A14D4FBC76A61D2AC2D733", Text = "DeviceType" },
+                DeviceType = new EntityHeader<DeviceType>() { Id = "28B8128506A14D4FBC76A61D2AC2D733", Text = "DeviceType" },
                 DeviceConfiguration = new EntityHeader() { Id = "28B8128506A14D4FBC76A61D2AC2D733", Text = "DeviceConfig" },
             };
 
