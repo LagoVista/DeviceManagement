@@ -136,11 +136,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public double Heading { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Speed, HelpResource: DeviceManagementResources.Names.Device_Speed_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
-        public double Speeed { get; set; }
+        public double Speed { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader CustomStatus { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceAddress_Address, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public Address Address { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public bool DisableWatchdog { get; set; }
@@ -149,6 +151,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public int? WatchdogSecondsOverride { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_AssignedUserHelp, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader AssignedUser { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }

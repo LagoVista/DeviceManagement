@@ -17,7 +17,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public string DatabaseName { get; set; }
         public string EntityType { get; set; }
-        
+
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_AssignedUser, HelpResource: DeviceManagementResources.Names.DeviceGroup_AssignedUserHelp, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader AssignedUser { get; set; }
+
         public bool IsPublic { get; set; }
         public EntityHeader OwnerOrganization { get; set; }
         public EntityHeader OwnerUser { get; set; }

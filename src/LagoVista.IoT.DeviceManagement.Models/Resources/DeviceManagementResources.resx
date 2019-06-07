@@ -543,4 +543,19 @@
   <data name="Device_Watchdog_Disable_Override_Help" xml:space="preserve">
     <value>The watchdog is normally configured at the device configuration.  At the device level you can disable for this device.</value>
   </data>
+  <data name="DeviceAddress_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="DeviceGroup_AssignedUser" xml:space="preserve">
+    <value>Assigned User</value>
+  </data>
+  <data name="DeviceGroup_AssignedUserHelp" xml:space="preserve">
+    <value>You can assign a user that will be responsible for this device group.</value>
+  </data>
+  <data name="Device_AssignedUser" xml:space="preserve">
+    <value>Assigned User</value>
+  </data>
+  <data name="Device_AssignedUserHelp" xml:space="preserve">
+    <value>You can assign a user that will be responsible for this device.</value>
+  </data>
 </root>

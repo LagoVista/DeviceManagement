@@ -45,7 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Id = device.Id,
                 LastContact = device.LastContact,
                 Properties = device.Properties,
-                Speed = device.Speeed,
+                Speed = device.Speed,
                 Name = device.Name,
                 States = device.States,
                 Status = device.Status
