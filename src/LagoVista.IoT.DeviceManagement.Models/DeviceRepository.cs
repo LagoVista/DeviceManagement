@@ -99,9 +99,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public String SecureAccessKeyId { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Deve_Repo_DevceWatchDog_NotificationContact, HelpResource: DeviceManagementResources.Names.Deve_Repo_DevceWatchDog_NotificationContact_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Deve_Repo_DevceWatchDog_NotificationContact_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact, HelpResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }
-        
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_Repo_AssignedUser_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_AssignedUser_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader AssignedUser { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AuthKey1, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public String AuthKey1 { get; set; }

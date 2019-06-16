@@ -513,13 +513,13 @@
   <data name="Device_Repo_RepoType_InClusterMongoDB" xml:space="preserve">
     <value>In Cluster MongoDB</value>
   </data>
-  <data name="Deve_Repo_DevceWatchDog_NotificationContact" xml:space="preserve">
+  <data name="Device_Repo_DevceWatchDog_NotificationContact" xml:space="preserve">
     <value>Device Watchdog Notification Contact</value>
   </data>
-  <data name="Deve_Repo_DevceWatchDog_NotificationContact_Help" xml:space="preserve">
+  <data name="Device_Repo_DevceWatchDog_NotificationContact_Help" xml:space="preserve">
     <value>Select a user that will be notified when a device is not repsonding</value>
   </data>
-  <data name="Deve_Repo_DevceWatchDog_NotificationContact_Select" xml:space="preserve">
+  <data name="Device_Repo_DevceWatchDog_NotificationContact_Select" xml:space="preserve">
     <value>-select user-</value>
   </data>
   <data name="Device_Watchdog_Disable_Override" xml:space="preserve">
@@ -556,6 +556,18 @@
     <value>Assigned User</value>
   </data>
   <data name="Device_AssignedUserHelp" xml:space="preserve">
-    <value>You can assign a user that will be responsible for this device.</value>
+    <value>You can assign a user that will be responsible for this device.  Any service tickets created for this device will be assigned to this user.</value>
+  </data>
+  <data name="Device_AssignedUser_Select" xml:space="preserve">
+    <value>-select user-</value>
+  </data>
+  <data name="Device_Repo_AssignedUser" xml:space="preserve">
+    <value>Assigned User</value>
+  </data>
+  <data name="Device_Repo_AssignedUser_Help" xml:space="preserve">
+    <value>A user can be assigned to be repsonsible for all the devices within the device repository.  If a user is assigned at the device level that user will override this setting.  This user will be responsible for the device including any service tickets that may be created.</value>
+  </data>
+  <data name="Device_Repo_AssignedUser_Select" xml:space="preserve">
+    <value>-select user-</value>
   </data>
 </root>

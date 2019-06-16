@@ -107,18 +107,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
-//Resources:DeviceManagementResources:Deve_Repo_DevceWatchDog_NotificationContact
-
-		public static string Deve_Repo_DevceWatchDog_NotificationContact { get { return GetResourceString("Deve_Repo_DevceWatchDog_NotificationContact"); } }
-//Resources:DeviceManagementResources:Deve_Repo_DevceWatchDog_NotificationContact_Help
-
-		public static string Deve_Repo_DevceWatchDog_NotificationContact_Help { get { return GetResourceString("Deve_Repo_DevceWatchDog_NotificationContact_Help"); } }
-//Resources:DeviceManagementResources:Deve_Repo_DevceWatchDog_NotificationContact_Select
-
-		public static string Deve_Repo_DevceWatchDog_NotificationContact_Select { get { return GetResourceString("Deve_Repo_DevceWatchDog_NotificationContact_Select"); } }
 //Resources:DeviceManagementResources:Device_AssignedUser
 
 		public static string Device_AssignedUser { get { return GetResourceString("Device_AssignedUser"); } }
+//Resources:DeviceManagementResources:Device_AssignedUser_Select
+
+		public static string Device_AssignedUser_Select { get { return GetResourceString("Device_AssignedUser_Select"); } }
 //Resources:DeviceManagementResources:Device_AssignedUserHelp
 
 		public static string Device_AssignedUserHelp { get { return GetResourceString("Device_AssignedUserHelp"); } }
@@ -275,6 +269,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Repo_AccessKeyName
 
 		public static string Device_Repo_AccessKeyName { get { return GetResourceString("Device_Repo_AccessKeyName"); } }
+//Resources:DeviceManagementResources:Device_Repo_AssignedUser
+
+		public static string Device_Repo_AssignedUser { get { return GetResourceString("Device_Repo_AssignedUser"); } }
+//Resources:DeviceManagementResources:Device_Repo_AssignedUser_Help
+
+		public static string Device_Repo_AssignedUser_Help { get { return GetResourceString("Device_Repo_AssignedUser_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_AssignedUser_Select
+
+		public static string Device_Repo_AssignedUser_Select { get { return GetResourceString("Device_Repo_AssignedUser_Select"); } }
 //Resources:DeviceManagementResources:Device_Repo_AuthKey1
 
 		public static string Device_Repo_AuthKey1 { get { return GetResourceString("Device_Repo_AuthKey1"); } }
@@ -284,6 +287,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Repo_Description
 
 		public static string Device_Repo_Description { get { return GetResourceString("Device_Repo_Description"); } }
+//Resources:DeviceManagementResources:Device_Repo_DevceWatchDog_NotificationContact
+
+		public static string Device_Repo_DevceWatchDog_NotificationContact { get { return GetResourceString("Device_Repo_DevceWatchDog_NotificationContact"); } }
+//Resources:DeviceManagementResources:Device_Repo_DevceWatchDog_NotificationContact_Help
+
+		public static string Device_Repo_DevceWatchDog_NotificationContact_Help { get { return GetResourceString("Device_Repo_DevceWatchDog_NotificationContact_Help"); } }
+//Resources:DeviceManagementResources:Device_Repo_DevceWatchDog_NotificationContact_Select
+
+		public static string Device_Repo_DevceWatchDog_NotificationContact_Select { get { return GetResourceString("Device_Repo_DevceWatchDog_NotificationContact_Select"); } }
 //Resources:DeviceManagementResources:Device_Repo_Help
 
 		public static string Device_Repo_Help { get { return GetResourceString("Device_Repo_Help"); } }
@@ -515,10 +527,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Common_Name = "Common_Name";
 			public const string Common_Notes = "Common_Notes";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
-			public const string Deve_Repo_DevceWatchDog_NotificationContact = "Deve_Repo_DevceWatchDog_NotificationContact";
-			public const string Deve_Repo_DevceWatchDog_NotificationContact_Help = "Deve_Repo_DevceWatchDog_NotificationContact_Help";
-			public const string Deve_Repo_DevceWatchDog_NotificationContact_Select = "Deve_Repo_DevceWatchDog_NotificationContact_Select";
 			public const string Device_AssignedUser = "Device_AssignedUser";
+			public const string Device_AssignedUser_Select = "Device_AssignedUser_Select";
 			public const string Device_AssignedUserHelp = "Device_AssignedUserHelp";
 			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";
@@ -571,9 +581,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Properties_Help = "Device_Properties_Help";
 			public const string Device_Repo_AccessKey = "Device_Repo_AccessKey";
 			public const string Device_Repo_AccessKeyName = "Device_Repo_AccessKeyName";
+			public const string Device_Repo_AssignedUser = "Device_Repo_AssignedUser";
+			public const string Device_Repo_AssignedUser_Help = "Device_Repo_AssignedUser_Help";
+			public const string Device_Repo_AssignedUser_Select = "Device_Repo_AssignedUser_Select";
 			public const string Device_Repo_AuthKey1 = "Device_Repo_AuthKey1";
 			public const string Device_Repo_AuthKey2 = "Device_Repo_AuthKey2";
 			public const string Device_Repo_Description = "Device_Repo_Description";
+			public const string Device_Repo_DevceWatchDog_NotificationContact = "Device_Repo_DevceWatchDog_NotificationContact";
+			public const string Device_Repo_DevceWatchDog_NotificationContact_Help = "Device_Repo_DevceWatchDog_NotificationContact_Help";
+			public const string Device_Repo_DevceWatchDog_NotificationContact_Select = "Device_Repo_DevceWatchDog_NotificationContact_Select";
 			public const string Device_Repo_Help = "Device_Repo_Help";
 			public const string Device_Repo_Instance = "Device_Repo_Instance";
 			public const string Device_Repo_RepoType = "Device_Repo_RepoType";
