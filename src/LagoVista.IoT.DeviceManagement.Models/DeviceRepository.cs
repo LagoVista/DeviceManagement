@@ -103,6 +103,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader WatchdogNotificationUser { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_ServiceBoard, HelpResource: DeviceManagementResources.Names.DeviceRepo_ServiceBoard_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.DeviceRepo_ServiceBoard_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader ServiceBoard { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_Repo_AssignedUser_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_AssignedUser_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
 

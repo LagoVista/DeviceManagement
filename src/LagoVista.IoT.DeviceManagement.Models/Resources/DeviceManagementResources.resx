@@ -570,4 +570,13 @@
   <data name="Device_Repo_AssignedUser_Select" xml:space="preserve">
     <value>-select user-</value>
   </data>
+  <data name="DeviceRepo_ServiceBoard" xml:space="preserve">
+    <value>Service Board</value>
+  </data>
+  <data name="DeviceRepo_ServiceBoard_Help" xml:space="preserve">
+    <value>The assigned service board that any service tickets assiged to this device repository will be assigned to.</value>
+  </data>
+  <data name="DeviceRepo_ServiceBoard_Select" xml:space="preserve">
+    <value>-select service board-</value>
+  </data>
 </root>

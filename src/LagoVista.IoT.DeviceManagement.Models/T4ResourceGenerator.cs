@@ -506,6 +506,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceNotes_TitleField
 
 		public static string DeviceNotes_TitleField { get { return GetResourceString("DeviceNotes_TitleField"); } }
+//Resources:DeviceManagementResources:DeviceRepo_ServiceBoard
+
+		public static string DeviceRepo_ServiceBoard { get { return GetResourceString("DeviceRepo_ServiceBoard"); } }
+//Resources:DeviceManagementResources:DeviceRepo_ServiceBoard_Help
+
+		public static string DeviceRepo_ServiceBoard_Help { get { return GetResourceString("DeviceRepo_ServiceBoard_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepo_ServiceBoard_Select
+
+		public static string DeviceRepo_ServiceBoard_Select { get { return GetResourceString("DeviceRepo_ServiceBoard_Select"); } }
 
 		public static class Names
 		{
@@ -660,6 +669,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceNotes_Notes = "DeviceNotes_Notes";
 			public const string DeviceNotes_Title = "DeviceNotes_Title";
 			public const string DeviceNotes_TitleField = "DeviceNotes_TitleField";
+			public const string DeviceRepo_ServiceBoard = "DeviceRepo_ServiceBoard";
+			public const string DeviceRepo_ServiceBoard_Help = "DeviceRepo_ServiceBoard_Help";
+			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 		}
 	}
 }
