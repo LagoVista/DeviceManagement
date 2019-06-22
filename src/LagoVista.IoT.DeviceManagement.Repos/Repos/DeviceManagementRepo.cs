@@ -119,6 +119,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id)
         {
+            if (deviceRepo == null) throw new NullReferenceException(nameof(deviceRepo));
+            if (String.IsNullOrEmpty(id)) throw new NullReferenceException(nameof(id));
+            if (deviceRepo.DeviceStorageSettings == null) throw new NullReferenceException("StorageSettingsOnRepo");
+
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             return GetDocumentAsync(id, deviceRepo.Id);
