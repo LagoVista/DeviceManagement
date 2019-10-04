@@ -1,17 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <TargetFramework>net461</TargetFramework>
+    <DebugType>portable</DebugType>
+    <AssemblyName>LagoVista.IoT.DeviceManagement.Core.Tests</AssemblyName>
+    <PackageId>LagoVista.IoT.DeviceManagement.Core.Tests</PackageId>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.4;portable-net451+win8</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.870-beta0733" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.870-beta0733" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.870-beta0733" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.870-beta0733" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.870-beta0733" />
+    <PackageReference Include="LagoVista.Core.Retry" Version="2.1.870-beta0840" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.870-beta0840" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.870-beta0840" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="2.1.870-beta0840" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.870-beta0840" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.3.0" />
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
