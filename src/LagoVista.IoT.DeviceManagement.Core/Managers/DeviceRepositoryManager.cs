@@ -9,6 +9,7 @@ using LagoVista.IoT.Logging.Loggers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
@@ -193,7 +194,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 var getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.PEMStorageSettingsSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.PEMStorageSettingsSecureId} ");
+                    throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.PEMStorageSettingsSecureId}, {getSettingsResult.Errors.First().Message}");
                 }
 
                 deviceRepo.PEMStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
@@ -201,7 +202,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceArchiveStorageSettingsSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceArchiveStorageSettingsSecureId} ");
+                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceArchiveStorageSettingsSecureId}, {getSettingsResult.Errors.First().Message} ");
                 }
 
                 deviceRepo.DeviceArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
@@ -209,7 +210,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceWatchdogStorageSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceWatchdogStorageSecureId} ");
+                    throw new Exception($"Could not restore secret for Device Archive Connection Settings {deviceRepo.DeviceWatchdogStorageSecureId}, {getSettingsResult.Errors.First().Message} ");
                 }
 
                 deviceRepo.DeviceWatchdogStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
@@ -218,7 +219,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.DeviceStorageSecureSettingsId, user);
                 if (!getSettingsResult.Successful)
                 {
-                    throw new Exception($"Could not restore secret for Device Storage Connection Settings {deviceRepo.DeviceStorageSecureSettingsId} ");
+                    throw new Exception($"Could not restore secret for Device Storage Connection Settings {deviceRepo.DeviceStorageSecureSettingsId}, {getSettingsResult.Errors.First().Message} ");
                 }
 
                 deviceRepo.DeviceStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(getSettingsResult.Result);
@@ -228,7 +229,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.SecureAccessKeyId, user);
                     if (!getSettingsResult.Successful)
                     {
-                        throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.SecureAccessKeyId} ");
+                        throw new Exception($"Could not restore secret for PEM Storage Connection Settings {deviceRepo.SecureAccessKeyId}, {getSettingsResult.Errors.First().Message} ");
                     }
 
                     deviceRepo.AccessKey = getSettingsResult.Result;
