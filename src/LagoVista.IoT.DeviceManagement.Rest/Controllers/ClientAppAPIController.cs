@@ -4,16 +4,10 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Controllers;
 using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using LagoVista.AspNetCore.Identity.Managers;
-using LagoVista.Core.Exceptions;
-using LagoVista.Core.Models;
-using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
