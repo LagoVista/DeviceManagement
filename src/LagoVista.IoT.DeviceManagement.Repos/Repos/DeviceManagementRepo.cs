@@ -90,6 +90,36 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task DeleteDeviceByIdAsync(DeviceRepository deviceRepo, string deviceId)
         {
+            if (string.IsNullOrEmpty(deviceId))
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+
+            if (deviceRepo == null)
+            {
+                throw new ArgumentNullException(nameof(deviceRepo));
+            }
+
+            if (deviceRepo.DeviceStorageSettings == null)
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.Uri))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.Uri));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.AccessKey))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.AccessKey));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.ResourceName))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.ResourceName));
+            }
+
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             var device = await this.GetDeviceByDeviceIdAsync(deviceRepo, deviceId);
@@ -103,11 +133,41 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
         }
 
-        public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id)
+        public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId)
         {
+            if (string.IsNullOrEmpty(deviceId))
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+
+            if (deviceRepo == null)
+            {
+                throw new ArgumentNullException(nameof(deviceRepo));
+            }
+
+            if (deviceRepo.DeviceStorageSettings == null)
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.Uri))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.Uri));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.AccessKey))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.AccessKey));
+            }
+
+            if (string.IsNullOrEmpty(deviceRepo.DeviceStorageSettings.ResourceName))
+            {
+                throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.ResourceName));
+            }
+
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return (await base.QueryAsync(device => device.DeviceId == id && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
+            return (await base.QueryAsync(device => device.DeviceId == deviceId && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
         }
 
         public async Task<bool> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, string orgid)
