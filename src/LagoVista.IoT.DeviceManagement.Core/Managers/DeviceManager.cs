@@ -140,6 +140,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
             var repo = GetRepo(deviceRepo);
+            if(repo == null)
+            {
+                throw new NullReferenceException(nameof(repo));
+            }
+
             var device = await repo.GetDeviceByDeviceIdAsync(deviceRepo, id);
             if (device == null)
             {
