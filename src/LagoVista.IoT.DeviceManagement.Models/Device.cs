@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.IoT.DeviceAdmin.Models.Resources;
 using LagoVista.Core.Models.Geo;
+using LagoVista.IoT.DeviceManagement.Models;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -51,6 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Status = new EntityHeader<DeviceStates>() { Value = DeviceStates.New, Id = Device.New, Text = DeviceManagementResources.Device_Status_New };
             Notes = new List<DeviceNote>();
             DeviceGroups = new List<EntityHeader>();
+            DeviceTwinDetails = new List<DeviceTwinDetails>();
         }
 
         public string DatabaseName { get; set; }
@@ -211,6 +213,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
+        public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
+     
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
 
