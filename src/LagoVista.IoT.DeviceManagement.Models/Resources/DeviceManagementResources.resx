@@ -579,4 +579,61 @@
   <data name="DeviceRepo_ServiceBoard_Select" xml:space="preserve">
     <value>-select service board-</value>
   </data>
+  <data name="FirmwareReivsion_TimeStamp" xml:space="preserve">
+    <value>Time Stamp</value>
+  </data>
+  <data name="FirmwareRevision_Description" xml:space="preserve">
+    <value>Specific versions of firmware that can be downloaded.</value>
+  </data>
+  <data name="FirmwareRevision_Help" xml:space="preserve">
+    <value>Specific versions of firmware that can be downloaded.</value>
+  </data>
+  <data name="FirmwareRevision_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="FirmwareRevision_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="FirmwareRevision_Status_Alpha" xml:space="preserve">
+    <value>Alpha</value>
+  </data>
+  <data name="FirmwareRevision_Status_Beta" xml:space="preserve">
+    <value>Beta</value>
+  </data>
+  <data name="FirmwareRevision_Status_Obsolete" xml:space="preserve">
+    <value>Obsolete</value>
+  </data>
+  <data name="FirmwareRevision_Status_Production" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="FirmwareRevision_Status_Prototype" xml:space="preserve">
+    <value>Prototype</value>
+  </data>
+  <data name="FirmwareRevision_Status_Select" xml:space="preserve">
+    <value>-select status-</value>
+  </data>
+  <data name="FirmwareRevision_Title" xml:space="preserve">
+    <value>Firmware Revision</value>
+  </data>
+  <data name="FirmwareRevision_Version" xml:space="preserve">
+    <value>Version Code</value>
+  </data>
+  <data name="FirmwareRevision_VersionCodeRegEx" xml:space="preserve">
+    <value>Version codes must be three digits as in 1.2.3</value>
+  </data>
+  <data name="Firmware_Description" xml:space="preserve">
+    <value>Firmware are revisions of applications that are intended to be ran on remote devices.</value>
+  </data>
+  <data name="Firmware_DeviceType" xml:space="preserve">
+    <value>Device Type</value>
+  </data>
+  <data name="Firmware_FirmwareSKU" xml:space="preserve">
+    <value>Firmware SKU</value>
+  </data>
+  <data name="Firmware_Help" xml:space="preserve">
+    <value>Firmware are revisions of applications that are intended to be ran on remote devices.</value>
+  </data>
+  <data name="Firmware_Title" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
 </root>

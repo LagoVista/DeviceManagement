@@ -1,0 +1,60 @@
+﻿using LagoVista.Core.Attributes;
+using LagoVista.Core.Models;
+using LagoVista.Core;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
+using System;
+
+namespace LagoVista.IoT.DeviceManagement.Core.Models
+{
+    public enum FirmwareRevisionStatus
+    {
+        [EnumLabel(FirmwareRevision.Prototype, DeviceManagementResources.Names.FirmwareRevision_Status_Prototype, typeof(DeviceManagementResources))]
+        Prototype,
+
+        [EnumLabel(FirmwareRevision.Alpha, DeviceManagementResources.Names.FirmwareRevision_Status_Alpha, typeof(DeviceManagementResources))]
+        Alpha,
+
+        [EnumLabel(FirmwareRevision.Beta, DeviceManagementResources.Names.FirmwareRevision_Status_Beta, typeof(DeviceManagementResources))]
+        Beta,
+
+        [EnumLabel(FirmwareRevision.Production, DeviceManagementResources.Names.FirmwareRevision_Status_Production, typeof(DeviceManagementResources))]
+        Production,
+
+        [EnumLabel(FirmwareRevision.Obsolete, DeviceManagementResources.Names.FirmwareRevision_Status_Obsolete, typeof(DeviceManagementResources))]
+        Obsolete,
+    }
+
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.FirmwareRevision_Title, DeviceManagementResources.Names.FirmwareRevision_Help,
+        DeviceManagementResources.Names.FirmwareRevision_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    public class FirmwareRevision
+    {
+        public FirmwareRevision()
+        {
+            Status = EntityHeader<FirmwareRevisionStatus>.Create(FirmwareRevisionStatus.Prototype);
+            TimeStamp = DateTime.UtcNow.ToJSONString();
+            Id = Guid.NewGuid().ToId();
+        }
+
+        public const string Prototype = "prototype";
+        public const string Alpha = "alpha";
+        public const string Beta = "beta";
+        public const string Production = "production";
+        public const string Obsolete = "obsolete";
+
+        public String Id { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Version, FieldType: FieldTypes.Text, ValidationRegEx: @"^\d+\.\d+\.\d+$", RegExValidationMessageResource:  DeviceManagementResources.Names.FirmwareRevision_VersionCodeRegEx, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string VersionCode { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Version, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable:false)]
+        public string TimeStamp { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Notes, FieldType: FieldTypes.MultiLineText, ResourceType: typeof(DeviceManagementResources))]
+        public string Notes { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Status, EnumType: (typeof(FirmwareRevisionStatus)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
+        public EntityHeader<FirmwareRevisionStatus> Status { get; set; }
+
+    }
+}

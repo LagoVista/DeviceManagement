@@ -1,9 +1,6 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Interfaces;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Validation;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -13,31 +10,28 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class DeviceMediaRepo : IDeviceMediaRepo
+    public class FirmwareBinRepo
     {
-        ILogger _logger;
+        private readonly IAdminLogger _logger;
+        private readonly IConnectionSettings _connectionSettings;
 
-        public DeviceMediaRepo(IAdminLogger adminLogger)
+        public FirmwareBinRepo(IAdminLogger adminLogger, IConnectionSettings connectionSettings)
         {
-            _logger = adminLogger;
+            _logger = adminLogger ?? throw new ArgumentNullException(nameof(adminLogger));
+            _connectionSettings = connectionSettings ?? throw new ArgumentNullException(nameof(connectionSettings));
         }
 
-        public DeviceMediaRepo(IInstanceLogger instanceLogger)
+        private CloudBlobClient CreateBlobClient()
         {
-            _logger = instanceLogger;
-        }
-
-        private CloudBlobClient CreateBlobClient(IConnectionSettings settings)
-        {
-            var baseuri = $"https://{settings.AccountId}.blob.core.windows.net";
+            var baseuri = $"https://{_connectionSettings.AccountId}.blob.core.windows.net";
 
             var uri = new Uri(baseuri);
-            return new CloudBlobClient(uri, new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(settings.AccountId, settings.AccessKey));
+            return new CloudBlobClient(uri, new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(_connectionSettings.AccountId, _connectionSettings.AccessKey));
         }
 
-        private async Task<InvokeResult<CloudBlobContainer>> GetStorageContainerAsync(IConnectionSettings settings, string containerName)
+        private async Task<InvokeResult<CloudBlobContainer>> GetStorageContainerAsync( string containerName)
         {
-            var client = CreateBlobClient(settings);
+            var client = CreateBlobClient();
             var container = client.GetContainerReference(containerName);
             try
             {
@@ -62,10 +56,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
         }
 
-
-        public async Task<InvokeResult> AddMediaAsync(DeviceRepository repo, byte[] data, string fileName, string contentType)
+        public async Task<InvokeResult> AddBinAsync(byte[] data, string fileName)
         {
-            var result = await GetStorageContainerAsync(repo.DeviceArchiveStorageSettings, repo.GetDeviceMediaStorageName());
+            var result = await GetStorageContainerAsync("firmware");
             if (!result.Successful)
             {
                 return result.ToInvokeResult();
@@ -74,7 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var container = result.Result;
 
             var blob = container.GetBlockBlobReference(fileName);
-            blob.Properties.ContentType = contentType;
+            blob.Properties.ContentType = "application/octet-stream";
 
             //TODO: Should really encapsulate the idea of retry of an action w/ error reporting
             var numberRetries = 5;
@@ -106,47 +99,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return InvokeResult.Success;
         }
 
-        public async Task<InvokeResult> DeleteMediaAsync(DeviceRepository repo, string fileName)
+        public async Task<InvokeResult<byte[]>> GetMediaAsync(string fileName)
         {
-            var result = await GetStorageContainerAsync(repo.DeviceArchiveStorageSettings, repo.GetDeviceMediaStorageName());
-            if (!result.Successful)
-            {
-                return result.ToInvokeResult();
-            }
-
-            var container = result.Result;
-
-            var blob = container.GetBlockBlobReference(fileName);
-            var numberRetries = 5;
-            var retryCount = 0;
-            var completed = false;
-            while (retryCount++ < numberRetries && !completed)
-            {
-                try
-                {
-                    await blob.DeleteIfExistsAsync();
-                }
-                catch (Exception ex)
-                {
-                    if (retryCount == numberRetries)
-                    {
-                        _logger.AddException("DeviceMediaRepo_DeleteMediaAsync", ex);
-                        return InvokeResult.FromException("AzureBlobConnector_DeleteMediaAsync", ex);
-                    }
-                    else
-                    {
-                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_DeleteMediaAsync", "", ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
-                    }
-                    await Task.Delay(retryCount * 250);
-                }
-            }
-
-            return InvokeResult.Success;
-        }
-
-        public async Task<InvokeResult<byte[]>> GetMediaAsync(DeviceRepository repo, string fileName)
-        {
-            var result = await GetStorageContainerAsync(repo.DeviceArchiveStorageSettings, repo.GetDeviceMediaStorageName());
+            var result = await GetStorageContainerAsync("firmware");
             if (!result.Successful)
             {
                 return InvokeResult<byte[]>.FromInvokeResult(result.ToInvokeResult());
@@ -178,7 +133,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     }
                     else
                     {
-                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_GetMediAsync", "", fileName.ToKVP("fileName"), repo.Id.ToKVP("repoId"),
+                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_GetMediAsync", "", fileName.ToKVP("fileName"),
                             ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
                     }
                     await Task.Delay(retryCount * 250);

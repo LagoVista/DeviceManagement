@@ -65,7 +65,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader DeviceRepository { get; set; }
 
-
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Status, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<DeviceStates> Status { get; set; }
 

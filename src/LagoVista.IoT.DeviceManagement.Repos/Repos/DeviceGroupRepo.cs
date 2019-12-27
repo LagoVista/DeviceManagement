@@ -11,7 +11,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceGroupRepo : DocumentDBRepoBase<DeviceGroup>, IDeviceGroupRepo
     {
-        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
+        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) 
+            : base(logger)
         {
 
         }

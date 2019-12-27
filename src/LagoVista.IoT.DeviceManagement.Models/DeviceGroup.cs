@@ -28,7 +28,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_Repository, HelpResource: DeviceManagementResources.Names.DeviceGroup_Repository_Help, FieldType: FieldTypes.EntityHeaderPicker, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceRepository { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_Devices, HelpResource: DeviceManagementResources.Names.DeviceGroup_Devices_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Key, HelpResource: DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Key { get; set; }
 
         public DeviceGroupSummary CreateSummary()
@@ -56,7 +56,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             };
         }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Key, HelpResource: DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_Devices, HelpResource: DeviceManagementResources.Names.DeviceGroup_Devices_Help, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public List<DeviceGroupEntry> Devices { get; set; }
 
         public EntityHeader<DeviceGroup> ToEntityHeader()

@@ -515,6 +515,63 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_ServiceBoard_Select
 
 		public static string DeviceRepo_ServiceBoard_Select { get { return GetResourceString("DeviceRepo_ServiceBoard_Select"); } }
+//Resources:DeviceManagementResources:Firmware_Description
+
+		public static string Firmware_Description { get { return GetResourceString("Firmware_Description"); } }
+//Resources:DeviceManagementResources:Firmware_DeviceType
+
+		public static string Firmware_DeviceType { get { return GetResourceString("Firmware_DeviceType"); } }
+//Resources:DeviceManagementResources:Firmware_FirmwareSKU
+
+		public static string Firmware_FirmwareSKU { get { return GetResourceString("Firmware_FirmwareSKU"); } }
+//Resources:DeviceManagementResources:Firmware_Help
+
+		public static string Firmware_Help { get { return GetResourceString("Firmware_Help"); } }
+//Resources:DeviceManagementResources:Firmware_Title
+
+		public static string Firmware_Title { get { return GetResourceString("Firmware_Title"); } }
+//Resources:DeviceManagementResources:FirmwareReivsion_TimeStamp
+
+		public static string FirmwareReivsion_TimeStamp { get { return GetResourceString("FirmwareReivsion_TimeStamp"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Description
+
+		public static string FirmwareRevision_Description { get { return GetResourceString("FirmwareRevision_Description"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Help
+
+		public static string FirmwareRevision_Help { get { return GetResourceString("FirmwareRevision_Help"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Notes
+
+		public static string FirmwareRevision_Notes { get { return GetResourceString("FirmwareRevision_Notes"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status
+
+		public static string FirmwareRevision_Status { get { return GetResourceString("FirmwareRevision_Status"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Alpha
+
+		public static string FirmwareRevision_Status_Alpha { get { return GetResourceString("FirmwareRevision_Status_Alpha"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Beta
+
+		public static string FirmwareRevision_Status_Beta { get { return GetResourceString("FirmwareRevision_Status_Beta"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Obsolete
+
+		public static string FirmwareRevision_Status_Obsolete { get { return GetResourceString("FirmwareRevision_Status_Obsolete"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Production
+
+		public static string FirmwareRevision_Status_Production { get { return GetResourceString("FirmwareRevision_Status_Production"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Prototype
+
+		public static string FirmwareRevision_Status_Prototype { get { return GetResourceString("FirmwareRevision_Status_Prototype"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Status_Select
+
+		public static string FirmwareRevision_Status_Select { get { return GetResourceString("FirmwareRevision_Status_Select"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Title
+
+		public static string FirmwareRevision_Title { get { return GetResourceString("FirmwareRevision_Title"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_Version
+
+		public static string FirmwareRevision_Version { get { return GetResourceString("FirmwareRevision_Version"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_VersionCodeRegEx
+
+		public static string FirmwareRevision_VersionCodeRegEx { get { return GetResourceString("FirmwareRevision_VersionCodeRegEx"); } }
 
 		public static class Names
 		{
@@ -672,6 +729,25 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard = "DeviceRepo_ServiceBoard";
 			public const string DeviceRepo_ServiceBoard_Help = "DeviceRepo_ServiceBoard_Help";
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
+			public const string Firmware_Description = "Firmware_Description";
+			public const string Firmware_DeviceType = "Firmware_DeviceType";
+			public const string Firmware_FirmwareSKU = "Firmware_FirmwareSKU";
+			public const string Firmware_Help = "Firmware_Help";
+			public const string Firmware_Title = "Firmware_Title";
+			public const string FirmwareReivsion_TimeStamp = "FirmwareReivsion_TimeStamp";
+			public const string FirmwareRevision_Description = "FirmwareRevision_Description";
+			public const string FirmwareRevision_Help = "FirmwareRevision_Help";
+			public const string FirmwareRevision_Notes = "FirmwareRevision_Notes";
+			public const string FirmwareRevision_Status = "FirmwareRevision_Status";
+			public const string FirmwareRevision_Status_Alpha = "FirmwareRevision_Status_Alpha";
+			public const string FirmwareRevision_Status_Beta = "FirmwareRevision_Status_Beta";
+			public const string FirmwareRevision_Status_Obsolete = "FirmwareRevision_Status_Obsolete";
+			public const string FirmwareRevision_Status_Production = "FirmwareRevision_Status_Production";
+			public const string FirmwareRevision_Status_Prototype = "FirmwareRevision_Status_Prototype";
+			public const string FirmwareRevision_Status_Select = "FirmwareRevision_Status_Select";
+			public const string FirmwareRevision_Title = "FirmwareRevision_Title";
+			public const string FirmwareRevision_Version = "FirmwareRevision_Version";
+			public const string FirmwareRevision_VersionCodeRegEx = "FirmwareRevision_VersionCodeRegEx";
 		}
 	}
 }
