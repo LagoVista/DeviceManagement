@@ -1,4 +1,5 @@
-﻿using LagoVista.Core.Models.UIMetaData;
+﻿using LagoVista.Core;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -68,6 +69,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpPut("/api/firmware")]
         public Task<InvokeResult> UpdateFirmwareAsync([FromBody] Firmware firmware)
         {
+            SetUpdatedProperties(firmware);
             return _firmwareManager.UpdateFirmwareAsync(firmware, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -121,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/firmware/{firmwareid}/{versioncode}")]
-        public async Task<InvokeResult<FirmwareRevision>> AddFirmwareRevisionAsync(string firmwareid, string versioncode, [FromBody] IFormFile file)
+        public async Task<InvokeResult<FirmwareRevision>> AddFirmwareRevisionAsync(string firmwareid, string versioncode, [FromForm] IFormFile file)
         {
             using (var strm = file.OpenReadStream())
             {
@@ -137,7 +139,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public  DetailResponse<Firmware> Factory()
         {
             var response = DetailResponse<Firmware>.Create();
-            response.Model.Id = Guid.NewGuid().ToString();
+            response.Model.Id = Guid.NewGuid().ToId();
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 

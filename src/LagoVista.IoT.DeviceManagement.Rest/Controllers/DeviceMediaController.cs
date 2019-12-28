@@ -61,7 +61,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         /// <summary>
         /// Device - Media Upload
-        /// </summary>
+        /// </summary
         /// <param name="repoid"></param>
         /// <param name="id"></param>
         /// <param name="file"></param>

@@ -14,7 +14,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         public Firmware()
         {
-            Revisions = new List<FirmwareRevision>();
+            Revisions = new List<FirmwareRevision>();           
         }
 
         public string DatabaseName { get; set; }
