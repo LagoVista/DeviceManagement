@@ -99,6 +99,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var request = new FirmwareDownloadRequest()
             {
                 FirmwareId = firmwareId,
+                OrgId = org.Id,
                 FirmwareRevisionId = revisionId,
                 ExpiresUTC = DateTime.UtcNow.AddMinutes(5).ToJSONString(),
                 DeviceId = deviceId,
@@ -110,7 +111,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<FirmwareDownloadRequest>.FromError("Can not request firmware from a different organization.");
             }
 
-            await AuthorizeAsync(user.Id, org.Id, "RequestFirmware");
+            await AuthorizeAsync(firmware, AuthorizeResult.AuthorizeActions.Update, user, org, "updateDeviceFirmware");
 
             await _repo.AddDownloadRequestAsync(request);
 

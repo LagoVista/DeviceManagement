@@ -9,7 +9,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     {
         public FirmwareDownloadRequest()
         {
-            DownloadId = Guid.NewGuid().ToString();
+            DownloadId = Guid.NewGuid().ToId();
             Timestamp = DateTime.UtcNow.ToJSONString();
         }
 

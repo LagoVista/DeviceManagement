@@ -252,8 +252,8 @@
   <data name="Device_DeviceType_Select" xml:space="preserve">
     <value>-select device type-</value>
   </data>
-  <data name="Device_FirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+  <data name="Device_ActualFirmware" xml:space="preserve">
+    <value>Actual firmware revision</value>
   </data>
   <data name="Device_Help" xml:space="preserve">
     <value>Devices represent their physical counterparts ** Needs Better Definition</value>
@@ -641,5 +641,20 @@
   </data>
   <data name="Firmware_Default_Select" xml:space="preserve">
     <value>-select default revision-</value>
+  </data>
+  <data name="Device_DesiredFirmware" xml:space="preserve">
+    <value>Desired firmware</value>
+  </data>
+  <data name="Device_DesiredFirmwareRevision" xml:space="preserve">
+    <value>Desired firmware revision</value>
+  </data>
+  <data name="Device_ActualFirmware_Date" xml:space="preserve">
+    <value>Actual firmware as of</value>
+  </data>
+  <data name="Device_ActualFirmware_Date_Help" xml:space="preserve">
+    <value>The date that the device sent the last update for it's actual device firmware.</value>
+  </data>
+  <data name="Device_ActualFirmware_Revision" xml:space="preserve">
+    <value>Actual firmware revision</value>
   </data>
 </root>

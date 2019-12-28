@@ -107,6 +107,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
+//Resources:DeviceManagementResources:Device_ActualFirmware
+
+		public static string Device_ActualFirmware { get { return GetResourceString("Device_ActualFirmware"); } }
+//Resources:DeviceManagementResources:Device_ActualFirmware_Date
+
+		public static string Device_ActualFirmware_Date { get { return GetResourceString("Device_ActualFirmware_Date"); } }
+//Resources:DeviceManagementResources:Device_ActualFirmware_Date_Help
+
+		public static string Device_ActualFirmware_Date_Help { get { return GetResourceString("Device_ActualFirmware_Date_Help"); } }
+//Resources:DeviceManagementResources:Device_ActualFirmware_Revision
+
+		public static string Device_ActualFirmware_Revision { get { return GetResourceString("Device_ActualFirmware_Revision"); } }
 //Resources:DeviceManagementResources:Device_AssignedUser
 
 		public static string Device_AssignedUser { get { return GetResourceString("Device_AssignedUser"); } }
@@ -176,6 +188,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Description
 
 		public static string Device_Description { get { return GetResourceString("Device_Description"); } }
+//Resources:DeviceManagementResources:Device_DesiredFirmware
+
+		public static string Device_DesiredFirmware { get { return GetResourceString("Device_DesiredFirmware"); } }
+//Resources:DeviceManagementResources:Device_DesiredFirmwareRevision
+
+		public static string Device_DesiredFirmwareRevision { get { return GetResourceString("Device_DesiredFirmwareRevision"); } }
 //Resources:DeviceManagementResources:Device_DeviceConfiguration
 
 		public static string Device_DeviceConfiguration { get { return GetResourceString("Device_DeviceConfiguration"); } }
@@ -197,9 +215,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DeviceURI_Help
 
 		public static string Device_DeviceURI_Help { get { return GetResourceString("Device_DeviceURI_Help"); } }
-//Resources:DeviceManagementResources:Device_FirmwareVersion
-
-		public static string Device_FirmwareVersion { get { return GetResourceString("Device_FirmwareVersion"); } }
 //Resources:DeviceManagementResources:Device_GeoLocation
 
 		public static string Device_GeoLocation { get { return GetResourceString("Device_GeoLocation"); } }
@@ -599,6 +614,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Common_Name = "Common_Name";
 			public const string Common_Notes = "Common_Notes";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
+			public const string Device_ActualFirmware = "Device_ActualFirmware";
+			public const string Device_ActualFirmware_Date = "Device_ActualFirmware_Date";
+			public const string Device_ActualFirmware_Date_Help = "Device_ActualFirmware_Date_Help";
+			public const string Device_ActualFirmware_Revision = "Device_ActualFirmware_Revision";
 			public const string Device_AssignedUser = "Device_AssignedUser";
 			public const string Device_AssignedUser_Select = "Device_AssignedUser_Select";
 			public const string Device_AssignedUserHelp = "Device_AssignedUserHelp";
@@ -622,6 +641,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DebugMode = "Device_DebugMode";
 			public const string Device_DebugMode_Help = "Device_DebugMode_Help";
 			public const string Device_Description = "Device_Description";
+			public const string Device_DesiredFirmware = "Device_DesiredFirmware";
+			public const string Device_DesiredFirmwareRevision = "Device_DesiredFirmwareRevision";
 			public const string Device_DeviceConfiguration = "Device_DeviceConfiguration";
 			public const string Device_DeviceConfiguration_Select = "Device_DeviceConfiguration_Select";
 			public const string Device_DeviceId = "Device_DeviceId";
@@ -629,7 +650,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DeviceType_Select = "Device_DeviceType_Select";
 			public const string Device_DeviceURI = "Device_DeviceURI";
 			public const string Device_DeviceURI_Help = "Device_DeviceURI_Help";
-			public const string Device_FirmwareVersion = "Device_FirmwareVersion";
 			public const string Device_GeoLocation = "Device_GeoLocation";
 			public const string Device_GeoLocation_Help = "Device_GeoLocation_Help";
 			public const string Device_Heading = "Device_Heading";

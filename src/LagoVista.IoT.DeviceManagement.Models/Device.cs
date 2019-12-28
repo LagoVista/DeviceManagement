@@ -108,6 +108,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice,FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader<string> ParentDevice { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DesiredFirmware, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader DesiredFirmware { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DesiredFirmwareRevision, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public EntityHeader DesiredFirmwareRevision { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        public string ActualFirmware { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware_Revision, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        public string ActualFirmwareRevision { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware_Date, HelpResource:DeviceManagementResources.Names.Device_ActualFirmware_Date_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        public string ActualFirmwareDate { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public string ShowDiagnostics { get; set; }
@@ -115,8 +129,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string SerialNumber { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_FirmwareVersion, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
-        public string FirmwareVersion { get; set; }
+        
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string IsConnected { get; set; }
