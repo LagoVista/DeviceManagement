@@ -33,6 +33,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Firmware_FirmwareSKU, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public String FirmwareSku { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Firmware_Default, WaterMark: DeviceManagementResources.Names.Firmware_Default_Select, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader DefaultRevision { get; set; }
+
         public FirmwareSummary CreateSummary()
         {
             return new FirmwareSummary()

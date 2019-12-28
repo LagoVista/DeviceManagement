@@ -636,4 +636,10 @@
   <data name="Firmware_Title" xml:space="preserve">
     <value>Firmware</value>
   </data>
+  <data name="Firmware_Default" xml:space="preserve">
+    <value>Default Revision</value>
+  </data>
+  <data name="Firmware_Default_Select" xml:space="preserve">
+    <value>-select default revision-</value>
+  </data>
 </root>

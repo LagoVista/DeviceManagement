@@ -515,6 +515,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_ServiceBoard_Select
 
 		public static string DeviceRepo_ServiceBoard_Select { get { return GetResourceString("DeviceRepo_ServiceBoard_Select"); } }
+//Resources:DeviceManagementResources:Firmware_Default
+
+		public static string Firmware_Default { get { return GetResourceString("Firmware_Default"); } }
+//Resources:DeviceManagementResources:Firmware_Default_Select
+
+		public static string Firmware_Default_Select { get { return GetResourceString("Firmware_Default_Select"); } }
 //Resources:DeviceManagementResources:Firmware_Description
 
 		public static string Firmware_Description { get { return GetResourceString("Firmware_Description"); } }
@@ -729,6 +735,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard = "DeviceRepo_ServiceBoard";
 			public const string DeviceRepo_ServiceBoard_Help = "DeviceRepo_ServiceBoard_Help";
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
+			public const string Firmware_Default = "Firmware_Default";
+			public const string Firmware_Default_Select = "Firmware_Default_Select";
 			public const string Firmware_Description = "Firmware_Description";
 			public const string Firmware_DeviceType = "Firmware_DeviceType";
 			public const string Firmware_FirmwareSKU = "Firmware_FirmwareSKU";
