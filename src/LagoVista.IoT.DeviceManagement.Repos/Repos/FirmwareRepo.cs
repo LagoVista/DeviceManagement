@@ -22,6 +22,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             _adminLogger = logger ?? throw new ArgumentNullException(nameof(repoSettings));
         }
 
+        protected override bool ShouldConsolidateCollections => true;
+
         public Task AddDownloadRequestAsync(FirmwareDownloadRequest request)
         {
             var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
