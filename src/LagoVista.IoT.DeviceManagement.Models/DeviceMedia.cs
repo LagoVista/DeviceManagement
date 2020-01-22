@@ -1,4 +1,6 @@
-﻿namespace LagoVista.IoT.DeviceManagement.Models
+﻿using LagoVista.Core.Models.Geo;
+
+namespace LagoVista.IoT.DeviceManagement.Models
 {
     public class DeviceMedia
     {
@@ -9,5 +11,6 @@
         public string Title { get; set; }
         public string FileName { get; set; }
         public long Length { get; set; }
+        public GeoLocation Location { get; set; }
     }
 }

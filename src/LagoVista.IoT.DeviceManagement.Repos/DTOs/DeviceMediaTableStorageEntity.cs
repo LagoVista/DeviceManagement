@@ -12,6 +12,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos
         public string ContentType { get; set; }
         public string FileName { get; set; }
         public string Title { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
 
         public DeviceMedia ToDeviceMedia()
         {
@@ -22,7 +25,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos
                 FileName = FileName,
                 Title = Title,
                 TimeStamp = TimeStamp,
-                ItemId = RowKey
+                ItemId = RowKey,
+                Location = (Latitude.HasValue && Longitude.HasValue) ? new LagoVista.Core.Models.Geo.GeoLocation(Latitude.Value, Longitude.Value) : null
+               
             };
         }
 
@@ -37,6 +42,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos
                 TimeStamp = item.TimeStamp,
                 FileName = item.FileName,
                 Title = item.Title,
+                Latitude = item.Location != null ? item.Location.Latitude : null,
+                Longitude = item.Location != null ? item.Location.Longitude : null,
             };
         }
     }
