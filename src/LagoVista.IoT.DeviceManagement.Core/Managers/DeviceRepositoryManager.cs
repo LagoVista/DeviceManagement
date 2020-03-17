@@ -9,6 +9,7 @@ using LagoVista.IoT.Logging.Loggers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -186,8 +187,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user)
         {
+            Console.WriteLine("Getting device repo.");
+            var sw = Stopwatch.StartNew();
+
             var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
+
+            Console.WriteLine("Got repo." + sw.Elapsed.TotalMilliseconds);
+
             await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+
+            Console.WriteLine("Authorized." + sw.Elapsed.TotalMilliseconds);
 
             if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
             {
@@ -235,6 +244,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     deviceRepo.AccessKey = getSettingsResult.Result;
                 }
             }
+
+            Console.WriteLine("Getting device repo." + sw.Elapsed.TotalMilliseconds);
+
             return deviceRepo;
         }
 
