@@ -33,12 +33,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         [HttpGet("/api/firmware/download/{requestid}")]
-        public async Task<IActionResult> DownloadFirmwareAsync(string requestid)
+        public async Task<IActionResult> DownloadFirmwareAsync(string requestid, int start, int length)
         {
-            var firmware = await _firmwareManager.DownloadFirmwareAsync(requestid);
+            var firmware = await _firmwareManager.DownloadFirmwareAsync(requestid, start, length);
 
             var ms = new MemoryStream(firmware.Result);
             return new FileStreamResult(ms, "application/octet-stream");
+        }
+
+        [HttpGet("/api/firmware/download/{requestid}/size")]
+        public async Task<int> GetFirmwareSize(string requestid)
+        {
+            var firmware = await _firmwareManager.GetFirmwareLengthAsync(requestid);
+            return firmware.Result;
         }
     }
 
