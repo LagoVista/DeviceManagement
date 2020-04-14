@@ -101,7 +101,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 FirmwareId = firmwareId,
                 OrgId = org.Id,
                 FirmwareRevisionId = revisionId,
-                ExpiresUTC = DateTime.UtcNow.AddMinutes(5).ToJSONString(),
+                ExpiresUTC = DateTime.UtcNow.AddMinutes(30).ToJSONString(),
                 DeviceId = deviceId,
             };
 
@@ -126,7 +126,26 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return await _repo.GetFirmareBinaryAsync(firmwareId, revisionId);
         }
 
-        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId)
+        public async Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            if (result.Successful)
+            {
+                return InvokeResult<int>.Create(result.Result.Length);
+            }
+            else
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+        }
+
+        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
         {
             var request = await _repo.GetDownloadRequestAsync(downloadId);
             if (request == null)
@@ -139,17 +158,37 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 throw new NotAuthorizedException("Request has already been handled or has expired.");
             }
 
-            if ((DateTime.UtcNow - request.ExpiresUTC.ToDateTime()).TotalMinutes > 2)
+            if ((DateTime.UtcNow - request.ExpiresUTC.ToDateTime()).TotalMinutes > 10)
             {
                 request.Expired = true;
                 await _repo.UpdateDownloadRequestAsync(request);
                 throw new NotAuthorizedException("Firmware request has expired.");
             }
 
-            request.Expired = true;
             await _repo.UpdateDownloadRequestAsync(request);
 
-            return await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            if (result.Successful)
+            {
+                if (start.HasValue && length.HasValue)
+                {
+                    var buffer = result.Result;
+
+                    var remainingLength = buffer.Length - start.Value;
+                    var sendLength = Math.Min(length.Value, remainingLength);
+
+                    var output = new byte[sendLength];
+                    Array.Copy(buffer, start.Value, output, 0, sendLength);
+
+                    return InvokeResult<byte[]>.Create(output);
+                }
+                else
+                    return result;
+            }
+            else
+            {
+                return result;
+            }
         }
     }
 }

@@ -18,6 +18,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult<FirmwareRevision>> UploadRevision(string firmwareId, string versionCode, Stream stream, EntityHeader org, EntityHeader user);
         Task<InvokeResult<FirmwareDownloadRequest>> RequestDownloadLinkAsync(string deviceId, string firmwareId, string revisionId, EntityHeader org, EntityHeader user);
         Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string firmwareId, string revisionId, EntityHeader org, EntityHeader user);
-        Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId);
+        Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? startIndex = null, int? length = null);
+        Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId);
+
     }
 }
