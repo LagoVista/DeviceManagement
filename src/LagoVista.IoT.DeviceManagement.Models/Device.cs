@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using LagoVista.Core;
 using System.Collections.Generic;
 using LagoVista.Core.Models;
 using LagoVista.Core.Interfaces;
@@ -10,6 +11,7 @@ using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.IoT.DeviceAdmin.Models.Resources;
 using LagoVista.Core.Models.Geo;
 using LagoVista.IoT.DeviceManagement.Models;
+using System;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -105,7 +107,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceURI { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice,FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader<string> ParentDevice { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DesiredFirmware, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
@@ -120,7 +122,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware_Revision, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string ActualFirmwareRevision { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware_Date, HelpResource:DeviceManagementResources.Names.Device_ActualFirmware_Date_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ActualFirmware_Date, HelpResource: DeviceManagementResources.Names.Device_ActualFirmware_Date_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string ActualFirmwareDate { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
@@ -129,7 +131,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string SerialNumber { get; set; }
 
-        
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string IsConnected { get; set; }
@@ -165,10 +167,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public int? WatchdogSecondsOverride { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_AssignedUserHelp, WaterMark:DeviceManagementResources.Names.Device_AssignedUser_Select, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_AssignedUserHelp, WaterMark: DeviceManagementResources.Names.Device_AssignedUser_Select, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark:DeviceManagementResources.Names.Device_Watchdog_Notification_User_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Watchdog_Notification_User_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
@@ -219,14 +221,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public List<InputCommandEndPoint> InputCommandEndPoints { get; set; }
 
         public List<EntityHeader> DeviceGroups { get; set; }
-        
+
         public string DeviceLabel { get; set; }
         public string DeviceIdLabel { get; set; }
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
-     
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
 
@@ -274,18 +276,59 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [CustomValidator]
         public void Validate(ValidationResult result, Actions action)
         {
-            if(PropertiesMetaData != null)
+            try
             {
-                foreach(var propertyMetaData in PropertiesMetaData)
+                if (Properties == null)
                 {
-                    var property = Properties.Where(prop => prop.Key == propertyMetaData.Key).FirstOrDefault();
-                    propertyMetaData.Validate(property?.Value, result, action);
+                    Properties = new List<AttributeValue>();
                 }
-            }
 
-            if(ParentDevice != null && string.IsNullOrEmpty(ParentDevice.Value))
+                if (PropertiesMetaData != null)
+                {
+                    foreach (var propertyMetaData in PropertiesMetaData)
+                    {
+                        var property = Properties.Where(prop => prop.Key == propertyMetaData.Key).FirstOrDefault();
+                        if (property == null)
+                        {
+                            var prop = new AttributeValue()
+                            {
+                                AttributeType = propertyMetaData.FieldType,
+                                Key = propertyMetaData.Key,
+                                Name = propertyMetaData.Name,
+                                Value = String.IsNullOrEmpty(propertyMetaData.DefaultValue) ? null : propertyMetaData.DefaultValue,
+                                LastUpdated = DateTime.UtcNow.ToJSONString(),
+                                LastUpdatedBy = LastUpdatedBy.Text
+                            };
+
+                            Properties.Add(prop);
+                        }
+                        else
+                        {
+                            if(property.Value == null)
+                            {
+                                property.Value = propertyMetaData.DefaultValue;
+                            }
+
+                            propertyMetaData.Validate(property.Value, result, action);
+                        }
+                    }
+                }
+
+                if (ParentDevice != null && string.IsNullOrEmpty(ParentDevice.Value))
+                {
+                    result.AddUserError("If parent device is set the parent device value must contain the Device Id");
+                }
+
+                System.Console.WriteLine("OUT VALIDATE.");
+            }
+            catch (Exception ex)
             {
-                result.AddUserError("If parent device is set the parent device value must contain the Device Id");
+                System.Console.ForegroundColor = ConsoleColor.Red;
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                System.Console.ResetColor();
+
+                result.AddSystemError(ex.Message);
             }
         }
     }
