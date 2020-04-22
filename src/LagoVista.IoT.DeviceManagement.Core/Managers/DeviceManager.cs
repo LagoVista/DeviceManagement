@@ -140,7 +140,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
             var repo = GetRepo(deviceRepo);
-            if(repo == null)
+            if (repo == null)
             {
                 throw new NullReferenceException(nameof(repo));
             }
@@ -313,9 +313,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
-            device.LastUpdatedBy = user;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
-
             if (string.IsNullOrEmpty(note.CreationDate))
             {
                 note.CreationDate = device.CreationDate;
@@ -335,6 +332,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 note.CreatedBy = user;
             }
+
+            if(String.IsNullOrEmpty(note.Id))
+            {
+                note.Id = Guid.NewGuid().ToId();
+            }
+
+            ValidationCheck(note, Actions.Create);
 
             device.Notes.Add(note);
 
@@ -409,7 +413,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AttachChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            if(parentDeviceId == childDeviceId)
+            if (parentDeviceId == childDeviceId)
             {
                 return InvokeResult.FromError("Parent is the same as the child device.");
             }
@@ -424,7 +428,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             childDevice.ParentDevice = new EntityHeader<string>()
             {
-                Id  = parentDeviceId,
+                Id = parentDeviceId,
                 Text = parentDevice.Name,
                 Value = parentDevice.DeviceId,
             };

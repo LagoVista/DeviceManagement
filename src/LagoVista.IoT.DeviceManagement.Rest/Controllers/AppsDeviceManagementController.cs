@@ -355,14 +355,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Client API Device Management - Add Note to Device
         /// </summary>
-        /// <param name="id">Unique id of device</param>
+        /// <param name="deviceid">Unique id of device</param>
         /// <param name="deviceNote"></param>
         /// <returns></returns>
         [HttpPost("/clientapi/device/{deviceid}/note")]
-        public async Task<InvokeResult> AddNoteAsync(string id, [FromBody] DeviceNote deviceNote)
+        public async Task<InvokeResult> AddNoteAsync(string deviceid, [FromBody] DeviceNote deviceNote)
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
-            return await _deviceManager.AddNoteAsync(repo, id, deviceNote, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddNoteAsync(repo, deviceid, deviceNote, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
