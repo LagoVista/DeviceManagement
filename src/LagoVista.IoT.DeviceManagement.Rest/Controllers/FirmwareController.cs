@@ -33,7 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         [HttpGet("/api/firmware/download/{requestid}")]
-        public async Task<IActionResult> DownloadFirmwareAsync(string requestid, int start, int length)
+        public async Task<IActionResult> DownloadFirmwareAsync(string requestid, int? start, int? length)
         {
             var firmware = await _firmwareManager.DownloadFirmwareAsync(requestid, start, length);
 
