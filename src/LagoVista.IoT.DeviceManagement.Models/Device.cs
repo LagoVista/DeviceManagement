@@ -318,8 +318,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 {
                     result.AddUserError("If parent device is set the parent device value must contain the Device Id");
                 }
-
-                System.Console.WriteLine("OUT VALIDATE.");
             }
             catch (Exception ex)
             {
