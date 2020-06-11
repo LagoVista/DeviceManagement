@@ -23,6 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
         Mock<IProxyFactory> _proxyFactory = new Mock<IProxyFactory>();
+        Mock<IDeviceExceptionRepo> _deviceExceptionRepo = new Mock<IDeviceExceptionRepo>();
 
         [TestInitialize]
         public void Init()
@@ -32,9 +33,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _deviceConfigHelper.Object, 
                 _logger.Object,
                 _secureStorage.Object, 
-                _appConfig.Object, 
+                _appConfig.Object,
                 _dependencyManager.Object, 
-                _security.Object, 
+                _security.Object,
+                _deviceExceptionRepo.Object,
                 _proxyFactory.Object);
         }
     }
