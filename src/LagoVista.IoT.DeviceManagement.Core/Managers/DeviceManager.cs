@@ -9,6 +9,7 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ISecureStorage _secureStorage;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         private readonly IProxyFactory _proxyFactory;
+        private readonly IDeviceExceptionRepo _deviceExceptionRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -46,6 +48,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IAppConfig appConfig,
             IDependencyManager depmanager,
             ISecurity security,
+            IDeviceExceptionRepo deviceExceptionRepo,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
@@ -53,6 +56,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _secureStorage = secureStorage;
             _deviceConfigHelper = deviceConfigHelper;
             _proxyFactory = proxyFactory;
+            _deviceExceptionRepo = deviceExceptionRepo;
         }
 
         /* 
@@ -452,6 +456,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await repo.UpdateDeviceAsync(deviceRepo, childDevice);
 
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> AddDeviceExceptionAsync(DeviceRepository deviceRepo, DeviceException deviceException)
+        {
+            await _deviceExceptionRepo.AddDeviceExceptionAsync(deviceRepo, deviceException);
             return InvokeResult.Success;
         }
     }

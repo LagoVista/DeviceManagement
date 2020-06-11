@@ -3,6 +3,7 @@ using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Models;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core
@@ -109,5 +110,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult> AttachChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
         Task<InvokeResult> RemoveChildDeviceAsync(DeviceRepository deviceRepo, string parentDeviceId, string childDeviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult> AddDeviceExceptionAsync(DeviceRepository deviceRepo, DeviceException deviceException);
     }
 }
