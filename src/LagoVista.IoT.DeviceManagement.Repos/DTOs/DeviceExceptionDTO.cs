@@ -9,20 +9,22 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
     {
         public DeviceExceptionDTO(DeviceException exception)
         {
-            PartitionKey = exception.DeviceId;
-            DeviceId = exception.DeviceId;
+            RowKey = DateTime.UtcNow.ToInverseTicksRowKey();
+            PartitionKey = exception.DeviceUniqueId;
+
+            DeviceId = exception.DeviceId;            
+            DeviceUniqueId = exception.DeviceUniqueId;            
             DeviceRepositoryId = exception.DeviceRepositoryId;
             Timestamp = exception.Timestamp;
             ErrorCode = exception.ErrorCode;
             Details = exception.Details;
-
-            RowKey = DateTime.UtcNow.ToInverseTicksRowKey();
         }
 
         public DeviceExceptionDTO()
         {
         }
 
+        public string DeviceUniqueId { get; set; }
         public string DeviceId { get; set; }
         public string DeviceRepositoryId { get; set; }
         public string ErrorCode { get; set; }
@@ -35,7 +37,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
             {
                 Details = Details,
                 ErrorCode = ErrorCode,
-                DeviceId = RowKey,
+                DeviceId = DeviceId,
+                DeviceUniqueId = DeviceUniqueId,
                 DeviceRepositoryId = DeviceRepositoryId,
                 Timestamp = Timestamp
             };

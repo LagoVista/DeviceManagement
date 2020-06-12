@@ -160,6 +160,22 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 return $"{Key}{Id}devicearchives";
         }
 
+        public string GetDeviceExceptionsStorageName()
+        {
+            if (Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}deviceexceptions";
+            else
+                return $"{Key}{Id}deviceexceptions";
+        }
+
+        public string GetDeviceStatusStorageName()
+        {
+            if (Key.Length > 20)
+                return $"{Key.Substring(0, 20)}{Id}devicestatus";
+            else
+                return $"{Key}{Id}devicestatus";
+        }
+
         public string GetDeviceMediaStorageName()
         {
             if (Key.Length > 20)

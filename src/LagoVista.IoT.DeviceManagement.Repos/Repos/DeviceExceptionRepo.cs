@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
 using LagoVista.IoT.Logging.Loggers;
@@ -18,14 +19,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task AddDeviceExceptionAsync(DeviceRepository deviceRepo, DeviceException exception)
         {
-            SetTableName(deviceRepo.GetDeviceArchiveStorageName());
+            SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(new DeviceExceptionDTO(exception));
         }
 
         public async Task<ListResponse<DeviceException>> GetDeviceExceptionsAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
-            SetTableName(deviceRepo.GetDeviceArchiveStorageName());
+            SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             var result = await base.GetPagedResultsAsync(deviceId, request);
