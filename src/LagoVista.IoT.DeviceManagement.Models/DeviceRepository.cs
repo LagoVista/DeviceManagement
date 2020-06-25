@@ -128,60 +128,45 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader Instance { get; set; }
 
+        private string GetTableName(String suffix)
+        {
+            var tableName = (Key.Length > 20) ? $"{Key.Substring(0, 20)}{Id}suffix" : $"{Key}{Id}{suffix}";
+            return tableName.Length > 64 ? tableName.Substring(0, 64) : tableName;
+        }
+
         public string GetPEMStorageName()
         {
-            if(Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}pems";
-            else
-                return $"{Key}{Id}pems";
+            return GetTableName("pems");
         }
 
         public string GetDeviceLocationStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}devicelocations";
-            else
-                return $"{Key}{Id}devicelocations";
+            return GetTableName("devicelocations");
         }
 
         public string GetDeviceWatchdogStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}watchdog";
-            else
-                return $"{Key}{Id}watchdog";
+            return GetTableName("watchdog");
         }
 
         public string GetDeviceArchiveStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}devicearchives";
-            else
-                return $"{Key}{Id}devicearchives";
+            return GetTableName("devicearchives");
         }
 
         public string GetDeviceExceptionsStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}deviceexceptions";
-            else
-                return $"{Key}{Id}deviceexceptions";
+            return GetTableName("exceptions");
         }
 
         public string GetDeviceStatusStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}devicestatus";
-            else
-                return $"{Key}{Id}devicestatus";
+            return GetTableName("status");
         }
 
         public string GetDeviceMediaStorageName()
         {
-            if (Key.Length > 20)
-                return $"{Key.Substring(0, 20)}{Id}devicemedia";
-            else
-                return $"{Key}{Id}devicemedia".ToLower();
+            return GetTableName("devicemedia").ToLower();
         }
 
         public IEntityHeader ToEntityHeader()

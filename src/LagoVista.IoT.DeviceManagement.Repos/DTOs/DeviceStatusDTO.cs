@@ -2,8 +2,6 @@
 using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 {
@@ -15,9 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 
             this.DeviceUniqueId = status.DeviceId;
             PartitionKey = status.DeviceId;
-                        
 
-            this.DeviceRepositoryId = status.DeviceRepositoryId;
             this.NewStatus = status.NewStatus;
             this.PreviouStatus = status.PreviouStatus;
             this.Details = status.Details;
@@ -33,7 +29,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
             {
                 DeviceId = this.DeviceUniqueId,
                 DeviceUniqueId = this.DeviceUniqueId,
-                DeviceRepositoryId = this.DeviceRepositoryId,
                 Timestamp = this.Timestamp,
                 PreviouStatus = this.PreviouStatus,
                 NewStatus = this.NewStatus,

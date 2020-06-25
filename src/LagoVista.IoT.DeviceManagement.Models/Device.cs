@@ -55,6 +55,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Notes = new List<DeviceNote>();
             DeviceGroups = new List<EntityHeader>();
             DeviceTwinDetails = new List<DeviceTwinDetails>();
+            Errors = new List<DeviceError>();
         }
 
         public string DatabaseName { get; set; }
@@ -228,6 +229,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceTypeLabel { get; set; }
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
+
+        public List<DeviceError> Errors { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }

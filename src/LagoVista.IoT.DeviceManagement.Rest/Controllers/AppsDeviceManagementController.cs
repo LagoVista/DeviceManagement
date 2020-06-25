@@ -35,9 +35,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public AppsDeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager,
             IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(repoManager, userManager, logger)
         {
-            _orgManager = orgManager;
-            _deviceManager = deviceManager;
-            _userManager = userManager;
+            _orgManager = orgManager ?? throw new ArgumentNullException(nameof(orgManager));
+            _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         /// <summary>
