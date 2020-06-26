@@ -464,5 +464,33 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await _deviceExceptionRepo.AddDeviceExceptionAsync(deviceRepo, deviceException);
             return InvokeResult.Success;
         }
+
+        public async Task<InvokeResult> ClearDeviceErrorAsync(DeviceRepository deviceRepo, string deviceId, string errorCode, EntityHeader org, EntityHeader user)
+        {
+            var repo = GetRepo(deviceRepo);
+            var device = await repo.GetDeviceByIdAsync(deviceRepo, deviceId);
+
+            var errorToRemove = device.Errors.Where(err => err.DeviceErrorCode == errorCode).FirstOrDefault();
+            if (errorToRemove != null)
+            {
+                device.Errors.Remove(errorToRemove);
+                await repo.UpdateDeviceAsync(deviceRepo, device);
+
+                await _deviceExceptionRepo.AddDeviceExceptionAsync(deviceRepo, new DeviceException()
+                {
+                    DeviceId = device.DeviceId,
+                    DeviceUniqueId = deviceId,
+                    DeviceRepositoryId = deviceRepo.Id,
+                    Details = $"Error cleared by {user.Text}",
+                    ErrorCode = errorCode,
+                    Timestamp = DateTime.UtcNow.ToJSONString()
+                });
+                return InvokeResult.Success;
+            }
+            else
+            {
+                return InvokeResult.FromError($"Could not find error {errorCode} on {device.DeviceId}.");
+            }
+        }
     }
 }

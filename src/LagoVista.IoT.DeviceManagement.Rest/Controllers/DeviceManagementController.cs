@@ -384,6 +384,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Clear device error code
+        /// </summary>
+        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// <param name="id">Unique id of device</param>
+        /// <param name="errorcode">Error code to clear</param>
+        /// <returns></returns>
+        [HttpDelete("/api/device/{devicerepoid}/{deviceid}/error/{errorcode}")]
+        public async Task<InvokeResult> ClearErrorCodeAsync(string devicerepoid, string deviceid, string errorcode)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.ClearDeviceErrorAsync(repo, deviceid, errorcode, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
         /// <param name="devicerepoid">Device Repoistory Id</param>
