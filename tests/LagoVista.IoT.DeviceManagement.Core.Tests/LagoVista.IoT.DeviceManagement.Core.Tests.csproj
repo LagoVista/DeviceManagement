@@ -8,10 +8,10 @@
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.4;portable-net451+win8</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.1061-beta1313" />
-    <PackageReference Include="LagoVista.Core.Networking" Version="2.1.1061-beta1313" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.1061-beta1313" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.1061-beta1313" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.1124-beta1005" />
+    <PackageReference Include="LagoVista.Core.Networking" Version="2.1.1124-beta1005" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="2.1.1124-beta1005" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="2.1.1124-beta1005" />
     <PackageReference Include="Moq" Version="4.13.1" />
     
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
