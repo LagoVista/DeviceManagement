@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
 using LagoVista.IoT.Logging.Loggers;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(new DeviceExceptionDTO(exception));
+        }
+
+        public Task ClearDeviceExceptionsAsync(DeviceRepository deviceRepo, string id)
+        {
+            return Task.CompletedTask;    
         }
 
         public async Task<ListResponse<DeviceException>> GetDeviceExceptionsAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)

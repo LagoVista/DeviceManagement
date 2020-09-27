@@ -657,4 +657,16 @@
   <data name="Device_ActualFirmware_Revision" xml:space="preserve">
     <value>Actual firmware revision</value>
   </data>
+  <data name="Device_IsBeta" xml:space="preserve">
+    <value>Is Beta Device</value>
+  </data>
+  <data name="Device_IsBeta_Help" xml:space="preserve">
+    <value>You can make this device a beta device, if you do so it will execute any scripts workflows or pipleline modules that are configured as in beta.</value>
+  </data>
+  <data name="Device_SilenceAlarms" xml:space="preserve">
+    <value>Silence Alarms</value>
+  </data>
+  <data name="Device_SilenceAlarms_Help" xml:space="preserve">
+    <value>When you select silence alarms any business rules assocaited with the device will not be run.</value>
+  </data>
 </root>

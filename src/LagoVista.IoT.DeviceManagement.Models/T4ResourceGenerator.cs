@@ -239,6 +239,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_inputCommandEndPoints_Help
 
 		public static string Device_inputCommandEndPoints_Help { get { return GetResourceString("Device_inputCommandEndPoints_Help"); } }
+//Resources:DeviceManagementResources:Device_IsBeta
+
+		public static string Device_IsBeta { get { return GetResourceString("Device_IsBeta"); } }
+//Resources:DeviceManagementResources:Device_IsBeta_Help
+
+		public static string Device_IsBeta_Help { get { return GetResourceString("Device_IsBeta_Help"); } }
 //Resources:DeviceManagementResources:Device_IsConnected
 
 		public static string Device_IsConnected { get { return GetResourceString("Device_IsConnected"); } }
@@ -377,6 +383,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_ShowDiagnostics_Help
 
 		public static string Device_ShowDiagnostics_Help { get { return GetResourceString("Device_ShowDiagnostics_Help"); } }
+//Resources:DeviceManagementResources:Device_SilenceAlarms
+
+		public static string Device_SilenceAlarms { get { return GetResourceString("Device_SilenceAlarms"); } }
+//Resources:DeviceManagementResources:Device_SilenceAlarms_Help
+
+		public static string Device_SilenceAlarms_Help { get { return GetResourceString("Device_SilenceAlarms_Help"); } }
 //Resources:DeviceManagementResources:Device_Speed
 
 		public static string Device_Speed { get { return GetResourceString("Device_Speed"); } }
@@ -658,6 +670,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_ImageURL = "Device_ImageURL";
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
 			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
+			public const string Device_IsBeta = "Device_IsBeta";
+			public const string Device_IsBeta_Help = "Device_IsBeta_Help";
 			public const string Device_IsConnected = "Device_IsConnected";
 			public const string Device_LastContact = "Device_LastContact";
 			public const string Device_Location = "Device_Location";
@@ -704,6 +718,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_ShowDiagnostics = "Device_ShowDiagnostics";
 			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
+			public const string Device_SilenceAlarms = "Device_SilenceAlarms";
+			public const string Device_SilenceAlarms_Help = "Device_SilenceAlarms_Help";
 			public const string Device_Speed = "Device_Speed";
 			public const string Device_Speed_Help = "Device_Speed_Help";
 			public const string Device_StateMachineMetaData = "Device_StateMachineMetaData";

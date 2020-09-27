@@ -203,6 +203,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Get Devices In Custom Status
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id">Unique id of the device</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{id}/reset")]
+        public async Task<InvokeResult> ResetDeviceDataAsync(string devicerepoid, string id)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.ClearDeviceDataAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get Devices In Custom Status
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="customstatus">Custom Status for Device</param>
         /// <returns></returns>
         [HttpGet("/api/devices/{devicerepoid}/customstatus/{customstatus}")]

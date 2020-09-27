@@ -133,7 +133,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string SerialNumber { get; set; }
 
 
-
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string IsConnected { get; set; }
 
@@ -176,6 +175,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DebugMode, HelpResource: DeviceManagementResources.Names.Device_DebugMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DebugMode { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_IsBeta, HelpResource: DeviceManagementResources.Names.Device_IsBeta_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool IsBeta { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_SilenceAlarms, HelpResource: DeviceManagementResources.Names.Device_SilenceAlarms_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool SilenceAlarms { get; set; }
 
         /// <summary>
         /// Properties are design time/values added with device configuration

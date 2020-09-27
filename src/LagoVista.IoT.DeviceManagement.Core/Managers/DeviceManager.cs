@@ -26,6 +26,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         private readonly IProxyFactory _proxyFactory;
         private readonly IDeviceExceptionRepo _deviceExceptionRepo;
+        private readonly IDeviceArchiveRepo _deviceArchiveRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -49,14 +50,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IDependencyManager depmanager,
             ISecurity security,
             IDeviceExceptionRepo deviceExceptionRepo,
+            IDeviceArchiveRepo deviceArchiveRepo,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
-            _defaultRepo = deviceRepo;
-            _secureStorage = secureStorage;
-            _deviceConfigHelper = deviceConfigHelper;
-            _proxyFactory = proxyFactory;
-            _deviceExceptionRepo = deviceExceptionRepo;
+            _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
+            _secureStorage = secureStorage ?? throw new ArgumentNullException(nameof(secureStorage));
+            _deviceConfigHelper = deviceConfigHelper ?? throw new ArgumentNullException(nameof(deviceConfigHelper));
+            _proxyFactory = proxyFactory ?? throw new ArgumentNullException(nameof(proxyFactory));
+            _deviceExceptionRepo = deviceExceptionRepo ?? throw new ArgumentNullException(nameof(deviceExceptionRepo));
+            _deviceArchiveRepo = deviceArchiveRepo ?? throw new ArgumentNullException(nameof(deviceArchiveRepo));
         }
 
         /* 
@@ -491,6 +494,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 return InvokeResult.FromError($"Could not find error {errorCode} on {device.DeviceId}.");
             }
+        }
+
+        public async Task<InvokeResult> ClearDeviceDataAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            device.Attributes = new System.Collections.Generic.List<AttributeValue>();
+            device.Properties = new System.Collections.Generic.List<AttributeValue>();
+            device.PropertyBag = new System.Collections.Generic.Dictionary<string, object>();
+            device.Notes = new System.Collections.Generic.List<DeviceNote>();
+            device.States = new System.Collections.Generic.List<AttributeValue>();
+            device.DeviceTwinDetails = new System.Collections.Generic.List<DeviceTwinDetails>();
+            device.Errors = new System.Collections.Generic.List<DeviceError>();
+            device.GeoLocation = null;
+
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            await _deviceArchiveRepo.ClearDeviceArchivesAsync(deviceRepo, id);
+            await _deviceExceptionRepo.ClearDeviceExceptionsAsync(deviceRepo, id);
+
+            return InvokeResult.Success;
+
         }
     }
 }

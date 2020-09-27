@@ -28,7 +28,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(archiveEntry);
         }
-        
+
+        public Task ClearDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId)
+        {
+            return Task.CompletedTask;
+        }
 
         public async Task<ListResponse<List<Object>>> GetForDateRangeAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
