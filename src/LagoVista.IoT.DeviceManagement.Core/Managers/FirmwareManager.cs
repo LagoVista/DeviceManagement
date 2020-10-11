@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -49,6 +50,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeOrgAccessAsync(user, orgId, typeof(Firmware), Actions.Read);
             return await _repo.GetFirmwareForOrgAsync(orgId, listRequest);
+        }
+
+        public async Task<ListResponse<FirmwareDownloadRequest>> GetRequestsForDeviceAsync(string deviceRepoId, string deviceId, EntityHeader user, EntityHeader org, ListRequest listRequest)
+        {
+            await AuthorizeOrgAccessAsync(user, org.Id, typeof(FirmwareDownloadRequest), Actions.Read);
+
+            return await _repo.GetDownloadRequestsForDeviceAsync(deviceRepoId, deviceId);
         }
 
         public async Task<InvokeResult> UpdateFirmwareAsync(Firmware firmware, EntityHeader org, EntityHeader user)
@@ -94,22 +102,32 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<FirmwareRevision>.Create(revision);
         }
 
-        public async Task<InvokeResult<FirmwareDownloadRequest>> RequestDownloadLinkAsync(string deviceId, string firmwareId, string revisionId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<FirmwareDownloadRequest>> RequestDownloadLinkAsync(string deviceRepoId, string deviceId, string firmwareId, string revisionId, EntityHeader org, EntityHeader user)
         {
-            var request = new FirmwareDownloadRequest()
-            {
-                FirmwareId = firmwareId,
-                OrgId = org.Id,
-                FirmwareRevisionId = revisionId,
-                ExpiresUTC = DateTime.UtcNow.AddMinutes(30).ToJSONString(),
-                DeviceId = deviceId,
-            };
-
             var firmware = await _repo.GetFirmwareAsync(firmwareId);
             if (firmware.OwnerOrganization.Id != org.Id)
             {
                 return InvokeResult<FirmwareDownloadRequest>.FromError("Can not request firmware from a different organization.");
             }
+
+            var revision = firmware.Revisions.SingleOrDefault(rev => rev.Id == revisionId);
+            if(revision == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareRevision), revisionId);
+            }
+            
+            var request = new FirmwareDownloadRequest()
+            {
+                FirmwareId = firmwareId,
+                FirmwareName = $"{firmware.FirmwareSku} {revision.VersionCode}",
+                OrgId = org.Id,
+                FirmwareRevisionId = revisionId,
+                ExpiresUTC = DateTime.UtcNow.AddMinutes(30).ToJSONString(),
+                DeviceId = deviceId,
+                DeviceRepoId = deviceRepoId,
+                Status = "New",
+                PercentRequested = 0,
+            };
 
             await AuthorizeAsync(firmware, AuthorizeResult.AuthorizeActions.Update, user, org, "updateDeviceFirmware");
 
@@ -161,6 +179,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if ((DateTime.UtcNow - request.ExpiresUTC.ToDateTime()).TotalMinutes > 10)
             {
                 request.Expired = true;
+                request.Status = "Expired";
+                request.Error = "Requested after expired.";
                 await _repo.UpdateDownloadRequestAsync(request);
                 throw new NotAuthorizedException("Firmware request has expired.");
             }
@@ -180,15 +200,59 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     var output = new byte[sendLength];
                     Array.Copy(buffer, start.Value, output, 0, sendLength);
 
+                    var requestedSoFar = start.Value + length.Value;
+                    request.PercentRequested = (requestedSoFar * 100) / buffer.Length;
+                    request.Status = "Downloading";
+                    await _repo.UpdateDownloadRequestAsync(request);
+
                     return InvokeResult<byte[]>.Create(output);
                 }
                 else
+                {
+                    request.PercentRequested = 100;
+                    request.Status = "Downloading";
                     return result;
+                }
             }
             else
             {
                 return result;
             }
+        }
+
+        public async Task<InvokeResult> MarkAsCompleteAsync(string downloadId)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            request.Expired = true;
+            request.Status = "Completed";
+            request.PercentRequested = 100;
+            request.Error = "noerror";
+
+            await _repo.UpdateDownloadRequestAsync(request);
+
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> MarkAsFailedAsync(string downloadId, string err)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            request.Expired = true;
+            request.Status = "Failed";
+            request.Error = err;
+
+            await _repo.UpdateDownloadRequestAsync(request);
+
+            return InvokeResult.Success;
         }
     }
 }

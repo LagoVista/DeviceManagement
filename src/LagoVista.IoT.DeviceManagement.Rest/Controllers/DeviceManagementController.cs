@@ -400,7 +400,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Clear device error code
         /// </summary>
         /// <param name="devicerepoid">Device Repoistory Id</param>
-        /// <param name="id">Unique id of device</param>
+        /// <param name="deviceid">Unique id of device</param>
         /// <param name="errorcode">Error code to clear</param>
         /// <returns></returns>
         [HttpDelete("/api/device/{devicerepoid}/{deviceid}/error/{errorcode}")]

@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement
@@ -15,6 +16,10 @@ namespace LagoVista.IoT.DeviceManagement
         Task<bool> QueryKeyInUseAsync(string key, string org);
 
         Task<FirmwareDownloadRequest> GetDownloadRequestAsync(string id);
+
+        Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string deviceRepoId, string deviceId);
+
+
         Task AddDownloadRequestAsync(FirmwareDownloadRequest request);
         Task UpdateDownloadRequestAsync(FirmwareDownloadRequest request);
 

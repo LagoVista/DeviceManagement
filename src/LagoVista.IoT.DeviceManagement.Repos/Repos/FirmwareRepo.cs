@@ -90,5 +90,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             return UpsertDocumentAsync(firmware);
         }
+
+        public async Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string deviceRepoId, string deviceId)
+        {
+            var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
+            var requests = await downloadRequestRepo.GetForDeviceAsync(deviceRepoId, deviceId);
+            requests = requests.OrderByDescending(rqst => rqst.Timestamp);
+            return ListResponse<FirmwareDownloadRequest>.Create(requests);
+        }
     }
 }

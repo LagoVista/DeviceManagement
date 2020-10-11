@@ -41,6 +41,18 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return new FileStreamResult(ms, "application/octet-stream");
         }
 
+        [HttpGet("/api/firmware/download/{requestid}/failed")]
+        public async Task<InvokeResult> MarkAsFailedAsync(string requestid, string err)
+        {
+            return await _firmwareManager.MarkAsFailedAsync(requestid, err);
+        }
+
+        [HttpGet("/api/firmware/download/{requestid}/success")]
+        public async Task<InvokeResult> MarkAsSuccessAsync(string requestid)
+        {
+            return await _firmwareManager.MarkAsCompleteAsync(requestid);
+        }
+
         [HttpGet("/api/firmware/download/{requestid}/size")]
         public async Task<int> GetFirmwareSize(string requestid)
         {
@@ -86,6 +98,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             return _firmwareManager.GetFirmwareForOrgAsync(OrgEntityHeader.Id, UserEntityHeader, GetListRequestFromHeader());
         }
+
+        /// <summary>
+        /// Get the firmware dowwnload history for a device.
+        /// </summary>
+        /// <param name="repoid"></param>
+        /// <param name="deviceid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/firmware/history/{repoid}/{deviceid}")]
+        public Task<ListResponse<FirmwareDownloadRequest>> GetFirmwaresForOrgAsync(string repoid, string deviceid)
+        {
+            return _firmwareManager.GetRequestsForDeviceAsync(repoid, deviceid, UserEntityHeader, OrgEntityHeader, GetListRequestFromHeader());
+        }
+
 
         /// <summary>
         /// Firmware - Get firmawre.
