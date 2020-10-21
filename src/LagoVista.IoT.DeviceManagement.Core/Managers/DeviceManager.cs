@@ -27,6 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IProxyFactory _proxyFactory;
         private readonly IDeviceExceptionRepo _deviceExceptionRepo;
         private readonly IDeviceArchiveRepo _deviceArchiveRepo;
+        private readonly IDeviceConnectionEventRepo _deviceConnectionEventRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -51,6 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ISecurity security,
             IDeviceExceptionRepo deviceExceptionRepo,
             IDeviceArchiveRepo deviceArchiveRepo,
+            IDeviceConnectionEventRepo deviceConnectionEventRepo,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
@@ -60,6 +62,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _proxyFactory = proxyFactory ?? throw new ArgumentNullException(nameof(proxyFactory));
             _deviceExceptionRepo = deviceExceptionRepo ?? throw new ArgumentNullException(nameof(deviceExceptionRepo));
             _deviceArchiveRepo = deviceArchiveRepo ?? throw new ArgumentNullException(nameof(deviceArchiveRepo));
+            _deviceConnectionEventRepo = deviceConnectionEventRepo ?? throw new ArgumentNullException(nameof(deviceConnectionEventRepo));
         }
 
         /* 
@@ -126,6 +129,28 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await repo.UpdateDeviceAsync(deviceRepo, device);
 
             return InvokeResult.Success;
+        }
+
+        public IDeviceConnectionEventRepo GetConnectionEventRepo(DeviceRepository deviceRepo)
+        {
+            return deviceRepo.RepositoryType.Value == RepositoryTypes.Local
+                ? _proxyFactory.Create<IDeviceConnectionEventRepo>(
+                    new ProxySettings
+                    {
+                        OrganizationId = deviceRepo.OwnerOrganization.Id,
+                        InstanceId = deviceRepo.Instance.Id
+                    })
+                : _deviceConnectionEventRepo;
+        }
+
+
+        public async Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            await AuthorizeAsync(user, org, "deviceconnectionlog", $"DeviceRepoId={deviceRepo.Id},DeviceId={deviceId}");
+
+            var connectionEventRepo = GetConnectionEventRepo(deviceRepo);
+
+            return await connectionEventRepo.GetConnectionEventsForDeviceAsync(deviceRepo, deviceId, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)

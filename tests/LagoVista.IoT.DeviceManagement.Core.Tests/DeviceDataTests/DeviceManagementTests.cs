@@ -25,6 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceArchiveRepo> _deviceArchiveRepo = new Mock<IDeviceArchiveRepo>();
         Mock<IProxyFactory> _proxyFactory = new Mock<IProxyFactory>();
         Mock<IDeviceExceptionRepo> _deviceExceptionRepo = new Mock<IDeviceExceptionRepo>();
+        Mock<IDeviceConnectionEventRepo> _connectionEventRepo = new Mock<IDeviceConnectionEventRepo>();
 
         [TestInitialize]
         public void Init()
@@ -39,6 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _security.Object,
                 _deviceExceptionRepo.Object,
                 _deviceArchiveRepo.Object,
+                _connectionEventRepo.Object,
                 _proxyFactory.Object);
         }
     }
