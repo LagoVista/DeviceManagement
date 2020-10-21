@@ -170,6 +170,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Capacity_Custom
 
 		public static string Device_Capacity_Custom { get { return GetResourceString("Device_Capacity_Custom"); } }
+//Resources:DeviceManagementResources:Device_ConnectionEstablishedTimeStamp
+
+		public static string Device_ConnectionEstablishedTimeStamp { get { return GetResourceString("Device_ConnectionEstablishedTimeStamp"); } }
 //Resources:DeviceManagementResources:Device_CustomStatus
 
 		public static string Device_CustomStatus { get { return GetResourceString("Device_CustomStatus"); } }
@@ -647,6 +650,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Capacity_50000_Units = "Device_Capacity_50000_Units";
 			public const string Device_Capacity_500000_Units = "Device_Capacity_500000_Units";
 			public const string Device_Capacity_Custom = "Device_Capacity_Custom";
+			public const string Device_ConnectionEstablishedTimeStamp = "Device_ConnectionEstablishedTimeStamp";
 			public const string Device_CustomStatus = "Device_CustomStatus";
 			public const string Device_CustomStatus_Help = "Device_CustomStatus_Help";
 			public const string Device_DateProvisioned = "Device_DateProvisioned";

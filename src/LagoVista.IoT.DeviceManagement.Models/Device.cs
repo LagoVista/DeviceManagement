@@ -136,6 +136,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IsConnected, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string IsConnected { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ConnectionEstablishedTimeStamp, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        public string ConnectionTimeStamp { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string LastContact { get; set; }
 
