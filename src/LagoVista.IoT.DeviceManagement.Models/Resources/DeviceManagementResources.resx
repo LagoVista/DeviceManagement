@@ -669,4 +669,7 @@
   <data name="Device_SilenceAlarms_Help" xml:space="preserve">
     <value>When you select silence alarms any business rules assocaited with the device will not be run.</value>
   </data>
+  <data name="Device_ConnectionEstablishedTimeStamp" xml:space="preserve">
+    <value>Connection Established</value>
+  </data>
 </root>
