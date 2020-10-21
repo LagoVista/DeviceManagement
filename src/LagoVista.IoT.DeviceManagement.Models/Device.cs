@@ -234,6 +234,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
+        public IOConfig IOConfig { get; set; }
+
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
 
         public List<DeviceError> Errors { get; set; }
