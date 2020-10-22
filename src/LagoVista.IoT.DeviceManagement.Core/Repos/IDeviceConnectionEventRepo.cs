@@ -4,7 +4,7 @@ using LagoVista.IoT.DeviceManagement.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
+namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDeviceConnectionEventRepo
     {

@@ -131,7 +131,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public IDeviceConnectionEventRepo GetConnectionEventRepo(DeviceRepository deviceRepo)
+        private IDeviceConnectionEventRepo GetConnectionEventRepo(DeviceRepository deviceRepo)
         {
             return deviceRepo.RepositoryType.Value == RepositoryTypes.Local
                 ? _proxyFactory.Create<IDeviceConnectionEventRepo>(

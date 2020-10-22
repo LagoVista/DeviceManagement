@@ -116,5 +116,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult> ClearDeviceErrorAsync(DeviceRepository deviceRepo, string deviceId, string errorCode, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult> ClearDeviceDataAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user);
+
+        Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
     }
 }

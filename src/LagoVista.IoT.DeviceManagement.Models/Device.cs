@@ -56,6 +56,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             DeviceGroups = new List<EntityHeader>();
             DeviceTwinDetails = new List<DeviceTwinDetails>();
             Errors = new List<DeviceError>();
+            IOConfig = new IOConfig();
         }
 
         public string DatabaseName { get; set; }
@@ -237,6 +238,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
+        [JsonProperty("ioconfig")]
         public IOConfig IOConfig { get; set; }
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }

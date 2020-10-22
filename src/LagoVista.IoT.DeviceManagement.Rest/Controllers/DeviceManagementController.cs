@@ -6,6 +6,7 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
@@ -322,6 +323,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.CheckIfDeviceIdInUse(repo, deviceid, OrgEntityHeader, UserEntityHeader);
         }
+
+        /// <summary>
+        /// Device Management - Get device connection log
+        /// </summary>
+        /// <param name="devicerepoid">Device Repo Id</param>
+        /// <param name="deviceid">Device Id</param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{deviceid}/connectionlog")]
+        public async Task<ListResponse<DeviceConnectionEvent>> GetDeviceConnectionEventsAsync(string devicerepoid, string deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetConnectionEventsForDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
 
         /// <summary>
         /// Device Management - Delete

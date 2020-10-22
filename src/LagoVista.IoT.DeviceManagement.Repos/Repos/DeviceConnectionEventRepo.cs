@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
 using LagoVista.IoT.Logging.Loggers;
