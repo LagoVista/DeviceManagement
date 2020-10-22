@@ -9,6 +9,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 {
     public class DeviceConnectionEventDTO : TableStorageEntity
     {
+        public DeviceConnectionEventDTO()
+        {
+
+        }
+
         public DeviceConnectionEventDTO(DeviceConnectionEvent connectionEvent)
         {
             RowKey = DateTime.UtcNow.ToInverseTicksRowKey();
