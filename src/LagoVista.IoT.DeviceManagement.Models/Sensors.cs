@@ -20,5 +20,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         public PortConfig[] AdcConfigs { get; set; } = new PortConfig[8];
         public PortConfig[] IoConfigs { get; set; } = new PortConfig[8];
+
+        public double[] AdcValues { get; set; } = new double[8];
+        public double[] IoValues { get; set; } = new double[8];
     }
 }
