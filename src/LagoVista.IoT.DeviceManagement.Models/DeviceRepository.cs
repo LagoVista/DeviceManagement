@@ -130,8 +130,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         private string GetTableName(String suffix)
         {
-            var tableName = (Key.Length > 20) ? $"{Key.Substring(0, 20)}{Id}suffix" : $"{Key}{Id}{suffix}";
-            return tableName.Length > 64 ? tableName.Substring(0, 64) : tableName;
+            var tableName = (Key.Length > 20) ? $"{Key.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
+            return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
         }
 
         public string GetPEMStorageName()
