@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.MediaServices.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -26,22 +27,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IProxyFactory> _proxyFactory = new Mock<IProxyFactory>();
         Mock<IDeviceExceptionRepo> _deviceExceptionRepo = new Mock<IDeviceExceptionRepo>();
         Mock<IDeviceConnectionEventRepo> _connectionEventRepo = new Mock<IDeviceConnectionEventRepo>();
+        Mock<IMediaServicesManager> _mediaServiceManager = new Mock<IMediaServicesManager>();
 
         [TestInitialize]
         public void Init()
         {
             _deviceManager = new DeviceManager(
-                _devMgmt.Object, 
-                _deviceConfigHelper.Object, 
+                _devMgmt.Object,
+                _deviceConfigHelper.Object,
                 _logger.Object,
-                _secureStorage.Object, 
+                _secureStorage.Object,
                 _appConfig.Object,
-                _dependencyManager.Object, 
+                _dependencyManager.Object,
                 _security.Object,
                 _deviceExceptionRepo.Object,
                 _deviceArchiveRepo.Object,
                 _connectionEventRepo.Object,
-                _proxyFactory.Object);
+                _mediaServiceManager.Object,
+                _proxyFactory.Object); 
         }
     }
 }

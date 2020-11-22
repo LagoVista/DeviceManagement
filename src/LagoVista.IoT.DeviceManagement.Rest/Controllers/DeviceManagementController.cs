@@ -10,12 +10,15 @@ using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Managers;
 using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,6 +58,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Add an image to device.
+        /// </summary>
+        /// <param name="deviceid"></param>
+        /// <param name="devicerepoid"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/device/{deviceid}/image")]
+        public async Task<InvokeResult<MediaResource>> AddDeviceImage(string devicerepoid, string deviceid, [FromForm] IFormFile file)
+        {
+            using (var strm = file.OpenReadStream())
+            {
+                var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+                return await _deviceManager.AddDeviceImageAsync(repo, deviceid, strm, file.FileName, file.ContentType, OrgEntityHeader, UserEntityHeader);
+            }
+        }
+
+        /// <summary>
         /// Device Management - Update
         /// </summary>
         /// <param name="devicerepoid"></param>
@@ -66,6 +85,24 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             SetUpdatedProperties(device);
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Download an image.        
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="deviceid"></param>
+        /// <param name="mediaid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/device/{deviceid}/image/{mediaid}")]
+        public async Task<IActionResult> DownloadMediaAsync(string devicerepoid, string deviceid,  string mediaid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+
+            var response = await _deviceManager.GetDeviceImageAsync(repo, deviceid, mediaid, OrgEntityHeader, UserEntityHeader);
+
+            var ms = new MemoryStream(response.ImageBytes);
+            return new FileStreamResult(ms, response.ContentType);
         }
 
         /// <summary>

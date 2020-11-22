@@ -4,6 +4,8 @@ using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
+using LagoVista.MediaServices.Models;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Core
@@ -88,6 +90,11 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="user"></param>
         /// <returns></returns>
         Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<MediaResource>> AddDeviceImageAsync(DeviceRepository deviceRepo, string deviceid, Stream strm, string fileName, string contentType, EntityHeader org, EntityHeader user);
+
+        Task<MediaServices.Models.MediaItemResponse> GetDeviceImageAsync(DeviceRepository deviceRepo, string deviceId, string mediaId, EntityHeader org, EntityHeader user);
+
 
         Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user);
 

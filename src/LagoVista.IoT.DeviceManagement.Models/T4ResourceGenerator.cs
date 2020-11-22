@@ -188,6 +188,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DebugMode_Help
 
 		public static string Device_DebugMode_Help { get { return GetResourceString("Device_DebugMode_Help"); } }
+//Resources:DeviceManagementResources:Device_DefaultImage
+
+		public static string Device_DefaultImage { get { return GetResourceString("Device_DefaultImage"); } }
 //Resources:DeviceManagementResources:Device_Description
 
 		public static string Device_Description { get { return GetResourceString("Device_Description"); } }
@@ -206,6 +209,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DeviceId
 
 		public static string Device_DeviceId { get { return GetResourceString("Device_DeviceId"); } }
+//Resources:DeviceManagementResources:Device_DeviceImages
+
+		public static string Device_DeviceImages { get { return GetResourceString("Device_DeviceImages"); } }
 //Resources:DeviceManagementResources:Device_DeviceType
 
 		public static string Device_DeviceType { get { return GetResourceString("Device_DeviceType"); } }
@@ -656,12 +662,14 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DateProvisioned = "Device_DateProvisioned";
 			public const string Device_DebugMode = "Device_DebugMode";
 			public const string Device_DebugMode_Help = "Device_DebugMode_Help";
+			public const string Device_DefaultImage = "Device_DefaultImage";
 			public const string Device_Description = "Device_Description";
 			public const string Device_DesiredFirmware = "Device_DesiredFirmware";
 			public const string Device_DesiredFirmwareRevision = "Device_DesiredFirmwareRevision";
 			public const string Device_DeviceConfiguration = "Device_DeviceConfiguration";
 			public const string Device_DeviceConfiguration_Select = "Device_DeviceConfiguration_Select";
 			public const string Device_DeviceId = "Device_DeviceId";
+			public const string Device_DeviceImages = "Device_DeviceImages";
 			public const string Device_DeviceType = "Device_DeviceType";
 			public const string Device_DeviceType_Select = "Device_DeviceType_Select";
 			public const string Device_DeviceURI = "Device_DeviceURI";

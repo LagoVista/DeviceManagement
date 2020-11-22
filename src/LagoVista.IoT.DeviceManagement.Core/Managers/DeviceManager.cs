@@ -11,7 +11,10 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.MediaServices.Interfaces;
+using LagoVista.MediaServices.Models;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
@@ -25,6 +28,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ISecureStorage _secureStorage;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         private readonly IProxyFactory _proxyFactory;
+        private readonly IMediaServicesManager _mediaServicesManager;
         private readonly IDeviceExceptionRepo _deviceExceptionRepo;
         private readonly IDeviceArchiveRepo _deviceArchiveRepo;
         private readonly IDeviceConnectionEventRepo _deviceConnectionEventRepo;
@@ -53,6 +57,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IDeviceExceptionRepo deviceExceptionRepo,
             IDeviceArchiveRepo deviceArchiveRepo,
             IDeviceConnectionEventRepo deviceConnectionEventRepo,
+            IMediaServicesManager mediaServicesManager,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
@@ -63,6 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceExceptionRepo = deviceExceptionRepo ?? throw new ArgumentNullException(nameof(deviceExceptionRepo));
             _deviceArchiveRepo = deviceArchiveRepo ?? throw new ArgumentNullException(nameof(deviceArchiveRepo));
             _deviceConnectionEventRepo = deviceConnectionEventRepo ?? throw new ArgumentNullException(nameof(deviceConnectionEventRepo));
+            _mediaServicesManager = mediaServicesManager ?? throw new ArgumentNullException(nameof(mediaServicesManager));
         }
 
         /* 
@@ -418,6 +424,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromError("Geolocation must not be null.");
             }
 
+            // todo: would really like to add history of device llocations, likely only if it moved.
+
 
             var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (device == null)
@@ -430,6 +438,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.GeoLocation = geoLocation;
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LocationLastUpdatedDate = device.LastUpdatedDate;
 
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
@@ -539,7 +548,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await _deviceExceptionRepo.ClearDeviceExceptionsAsync(deviceRepo, id);
 
             return InvokeResult.Success;
+        }
 
+        public async Task<InvokeResult<MediaResource>> AddDeviceImageAsync(DeviceRepository deviceRepo, string deviceId, Stream stream, string fileName, string contentType, EntityHeader org, EntityHeader user)
+        {
+            var imageId = Guid.NewGuid().ToId();
+            await AuthorizeAsync(user.Id, org.Id, "Upload Device Image", $"Firmware Id: {deviceId}");
+            var mediaSummary = await _mediaServicesManager.AddResourceMediaAsync(imageId, stream, fileName, contentType, org, user);
+
+            var device = await _defaultRepo.GetDeviceByIdAsync(deviceRepo, deviceId);
+            device.DeviceImages.Add(mediaSummary.Result);
+
+            return mediaSummary;
+        }
+
+        public async Task<MediaServices.Models.MediaItemResponse> GetDeviceImageAsync(DeviceRepository deviceRepo, string deviceId, string mediaId, EntityHeader org, EntityHeader user)
+        {
+            await AuthorizeAsync(user.Id, org.Id, "Get Device Image", $"Device Id: {deviceId}, Image Id: {mediaId}");
+            return await _mediaServicesManager.GetResourceMediaAsync(mediaId, org, user);
         }
     }
 }
