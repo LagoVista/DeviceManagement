@@ -435,7 +435,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Add Note to Device
+        /// Device Management - Set 
         /// </summary>
         /// <param name="devicerepoid">Device Repoistory Id</param>
         /// <param name="id">Unique id of device</param>
