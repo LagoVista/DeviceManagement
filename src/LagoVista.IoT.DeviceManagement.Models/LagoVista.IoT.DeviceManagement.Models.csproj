@@ -8,13 +8,15 @@
     <Authors>Software Logsitics, LLC</Authors>
     <Company>Software Logsitics, LLC</Company>
     <Product>Lago Vista Devices, IoT and Home Automation Frameworks</Product>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>LagoVista.IoT.DeviceManagement.Models.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.1293-beta0543" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.1293-beta0543" />
-    <PackageReference Include="LagoVista.MediaServices.Models" Version="2.1.1293-beta0543" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1293-beta0543" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.1293-beta0543" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.1353-beta1658" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.1353-beta1658" />
+    <PackageReference Include="LagoVista.MediaServices.Models" Version="2.1.1353-beta1658" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1353-beta1658" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.1353-beta1658" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.4;portable-net451+win8</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.1124-beta1005" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.1353-beta1658" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />

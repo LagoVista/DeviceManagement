@@ -678,4 +678,10 @@
   <data name="Device_DefaultImage" xml:space="preserve">
     <value>Default Image</value>
   </data>
+  <data name="Device_Repo_DevicesInUse" xml:space="preserve">
+    <value>Device In Use</value>
+  </data>
+  <data name="Device_Repo_MaxDevices" xml:space="preserve">
+    <value>Maximum Devices</value>
+  </data>
 </root>

@@ -62,6 +62,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OwnerUser { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse,FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
+        public int DevicesInUse { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_MaxDevices, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
+        public int DeviceMaxDevices { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_RepoType, HelpResource:DeviceManagementResources.Names.Device_Repo_RepoType_Help, EnumType: (typeof(RepositoryTypes)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_RepoType_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<RepositoryTypes> RepositoryType { get; set; }
 

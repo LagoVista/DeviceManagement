@@ -326,12 +326,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Repo_DevceWatchDog_NotificationContact_Select
 
 		public static string Device_Repo_DevceWatchDog_NotificationContact_Select { get { return GetResourceString("Device_Repo_DevceWatchDog_NotificationContact_Select"); } }
+//Resources:DeviceManagementResources:Device_Repo_DevicesInUse
+
+		public static string Device_Repo_DevicesInUse { get { return GetResourceString("Device_Repo_DevicesInUse"); } }
 //Resources:DeviceManagementResources:Device_Repo_Help
 
 		public static string Device_Repo_Help { get { return GetResourceString("Device_Repo_Help"); } }
 //Resources:DeviceManagementResources:Device_Repo_Instance
 
 		public static string Device_Repo_Instance { get { return GetResourceString("Device_Repo_Instance"); } }
+//Resources:DeviceManagementResources:Device_Repo_MaxDevices
+
+		public static string Device_Repo_MaxDevices { get { return GetResourceString("Device_Repo_MaxDevices"); } }
 //Resources:DeviceManagementResources:Device_Repo_RepoType
 
 		public static string Device_Repo_RepoType { get { return GetResourceString("Device_Repo_RepoType"); } }
@@ -708,8 +714,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Repo_DevceWatchDog_NotificationContact = "Device_Repo_DevceWatchDog_NotificationContact";
 			public const string Device_Repo_DevceWatchDog_NotificationContact_Help = "Device_Repo_DevceWatchDog_NotificationContact_Help";
 			public const string Device_Repo_DevceWatchDog_NotificationContact_Select = "Device_Repo_DevceWatchDog_NotificationContact_Select";
+			public const string Device_Repo_DevicesInUse = "Device_Repo_DevicesInUse";
 			public const string Device_Repo_Help = "Device_Repo_Help";
 			public const string Device_Repo_Instance = "Device_Repo_Instance";
+			public const string Device_Repo_MaxDevices = "Device_Repo_MaxDevices";
 			public const string Device_Repo_RepoType = "Device_Repo_RepoType";
 			public const string Device_Repo_RepoType_AzureIoTHub = "Device_Repo_RepoType_AzureIoTHub";
 			public const string Device_Repo_RepoType_Dedicated = "Device_Repo_RepoType_Dedicated";
