@@ -60,7 +60,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string firmwareId, string revisionId)
         {
             var binRepo = new FirmwareBinRepo(_adminLogger, _repoSettings.FirmwareBinSettings);
-            return binRepo.GetMediaAsync(GetFileName(firmwareId, revisionId));
+            return binRepo.GetFirmwareBinaryAsync(GetFileName(firmwareId, revisionId));
         }
 
         public Task<Firmware> GetFirmwareAsync(string firmwareId)

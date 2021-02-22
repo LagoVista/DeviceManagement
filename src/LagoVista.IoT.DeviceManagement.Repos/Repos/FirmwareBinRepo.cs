@@ -46,13 +46,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
             catch (ArgumentException ex)
             {
-                _logger.AddException("DeviceMediaRepo_GetStorageContainerAsync", ex);
-                return InvokeResult<CloudBlobContainer>.FromException("DeviceMediaRepo_GetStorageContainerAsync_InitAsync", ex);
+                _logger.AddException("FirmwareBinRepo_GetStorageContainerAsync", ex);
+                return InvokeResult<CloudBlobContainer>.FromException("FirmwareBinRepo_GetStorageContainerAsync_InitAsync", ex);
             }
             catch (StorageException ex)
             {
-                _logger.AddException("DeviceMediaRepo_GetStorageContainerAsync", ex);
-                return InvokeResult<CloudBlobContainer>.FromException("DeviceMediaRepo_GetStorageContainerAsync", ex);
+                _logger.AddException("FirmwareBinRepo_GetStorageContainerAsync", ex);
+                return InvokeResult<CloudBlobContainer>.FromException("FirmwareBinRepo_GetStorageContainerAsync", ex);
             }
         }
 
@@ -85,12 +85,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 {
                     if (retryCount == numberRetries)
                     {
-                        _logger.AddException("DeviceMediaRepo_AddItemAsync", ex);
-                        return InvokeResult.FromException("DeviceMediaRepo_AddItemAsync", ex);
+                        _logger.AddException("FirmwareBinRepo_AddItemAsync", ex);
+                        return InvokeResult.FromException("FirmwareBinRepo_AddItemAsync", ex);
                     }
                     else
                     {
-                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_AddItemAsync", "", ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
+                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "FirmwareBinRepo_AddItemAsync", "", ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
                     }
                     await Task.Delay(retryCount * 250);
                 }
@@ -99,7 +99,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return InvokeResult.Success;
         }
 
-        public async Task<InvokeResult<byte[]>> GetMediaAsync(string fileName)
+        public async Task<InvokeResult<byte[]>> GetFirmwareBinaryAsync(string fileName)
         {
             var result = await GetStorageContainerAsync("firmware");
             if (!result.Successful)
@@ -128,19 +128,19 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 {
                     if (retryCount == numberRetries)
                     {
-                        _logger.AddException("DeviceMediaRepo_GetMediaAsync", ex);
-                        return InvokeResult<byte[]>.FromException("DeviceMediaRepo_GetMediaAsync", ex);
+                        _logger.AddException("FirmwareBinRepo_GetFirmwareBinaryAsync", ex);
+                        return InvokeResult<byte[]>.FromException("FirmwareBinRepo_GetFirmwareBinaryAsync", ex);
                     }
                     else
                     {
-                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceMediaRepo_GetMediAsync", "", fileName.ToKVP("fileName"),
+                        _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "FirmwareBinRepo_GetFirmwareBinaryAsync", "", fileName.ToKVP("fileName"),
                             ex.Message.ToKVP("exceptionMessage"), ex.GetType().Name.ToKVP("exceptionType"), retryCount.ToString().ToKVP("retryCount"));
                     }
                     await Task.Delay(retryCount * 250);
                 }
             }
 
-            return InvokeResult<byte[]>.FromError("Could not retrieve Media Item");
+            return InvokeResult<byte[]>.FromError("Could not retrieve fimrware binary");
         }
     }
 }
