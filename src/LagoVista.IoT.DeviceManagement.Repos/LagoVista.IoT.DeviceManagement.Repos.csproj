@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <NetStandardImplicitPackageVersion>2.0.1</NetStandardImplicitPackageVersion>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.Core" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1353-beta1658" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1433-beta0722" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.17.3" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.14.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
   <ItemGroup>

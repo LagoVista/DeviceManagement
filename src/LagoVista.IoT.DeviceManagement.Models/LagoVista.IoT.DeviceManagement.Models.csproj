@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.2</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <NetStandardImplicitPackageVersion>2.0.1</NetStandardImplicitPackageVersion>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyVersion>1.2.211.1114</AssemblyVersion>
     <FileVersion>1.2.211.1114</FileVersion>
     <Authors>Software Logsitics, LLC</Authors>
@@ -12,12 +11,12 @@
     <AssemblyOriginatorKeyFile>LagoVista.IoT.DeviceManagement.Models.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.MediaServices.Models" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1353-beta1658" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.1353-beta1658" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.MediaServices.Models" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="2.1.1433-beta0722" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="2.1.1433-beta0722" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\DeviceManagementResources.resx">

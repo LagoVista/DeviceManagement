@@ -62,6 +62,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="deviceid"></param>
         /// <param name="devicerepoid"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}/device/{deviceid}/image")]
         public async Task<InvokeResult<MediaResource>> AddDeviceImage(string devicerepoid, string deviceid, [FromForm] IFormFile file)

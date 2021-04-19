@@ -35,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             return deviceRepo;
         }
 
-        private static void RemoveTestContainerAsync()
+        private static async Task RemoveTestContainerAsync()
         {
             var settings = new ConnectionSettings()
             {
@@ -50,7 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
 
             var container = client.GetContainerReference(GetTestDeviceRepo().GetDeviceMediaStorageName());
             var opContext = new OperationContext();
-            container.DeleteIfExists();
+            await container.DeleteIfExistsAsync();
         }
 
         [TestMethod]
@@ -110,9 +110,9 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
         }
 
         [ClassCleanup]
-        public static void TestCleanup()
+        public static async Task TestCleanup()
         {
-            RemoveTestContainerAsync();
+            await RemoveTestContainerAsync();
         }
     }
 }
