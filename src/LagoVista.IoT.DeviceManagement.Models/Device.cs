@@ -340,12 +340,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 }
             }
             catch (Exception ex)
-            {
-                System.Console.ForegroundColor = ConsoleColor.Red;
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
-                System.Console.ResetColor();
-
+            {                
                 result.AddSystemError(ex.Message);
             }
         }
