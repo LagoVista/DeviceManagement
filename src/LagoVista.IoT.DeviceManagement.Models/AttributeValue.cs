@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Attributes;
 using LagoVista.Core.Models;
+using LagoVista.Core.Models.ML;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 
@@ -22,6 +23,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Value, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string Value { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Inference, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        public MLInference Inference { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.AttributeValue_Type, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public EntityHeader<ParameterTypes> AttributeType { get; set; }

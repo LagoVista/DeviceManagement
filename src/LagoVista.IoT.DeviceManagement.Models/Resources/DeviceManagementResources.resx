@@ -684,4 +684,7 @@
   <data name="Device_Repo_MaxDevices" xml:space="preserve">
     <value>Maximum Devices</value>
   </data>
+  <data name="AttributeValue_Inference" xml:space="preserve">
+    <value>Inference</value>
+  </data>
 </root>

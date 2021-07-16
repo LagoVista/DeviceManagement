@@ -59,6 +59,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Errors = new List<DeviceError>();
             Sensors = new Sensors();
             DeviceImages = new List<MediaResource>();
+            GeoFences = new List<GeoFence>();
         }
 
         public string DatabaseName { get; set; }
@@ -242,6 +243,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceIdLabel { get; set; }
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
+
+        public IEnumerable<GeoFence> GeoFences { get; set; }
 
         public Sensors Sensors{ get; set; }
 
