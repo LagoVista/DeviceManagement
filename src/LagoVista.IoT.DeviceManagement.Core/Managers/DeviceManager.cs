@@ -167,6 +167,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return result;
         }
 
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoForUserAsync(DeviceRepository deviceRepo, string userId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            await AuthorizeOrgAccessAsync(user, org, typeof(Device));
+            var repo = GetRepo(deviceRepo);
+            var result = await repo.GetDevicesForRepositoryForUserAsync(deviceRepo, userId, org.Id, listRequest);
+            return result;
+        }
+
         public Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             //TODO: Need to extender manager class for location access.

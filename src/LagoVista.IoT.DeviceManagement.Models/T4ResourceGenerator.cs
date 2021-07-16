@@ -59,6 +59,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:AttributeValue_Help
 
 		public static string AttributeValue_Help { get { return GetResourceString("AttributeValue_Help"); } }
+//Resources:DeviceManagementResources:AttributeValue_Inference
+
+		public static string AttributeValue_Inference { get { return GetResourceString("AttributeValue_Inference"); } }
 //Resources:DeviceManagementResources:AttributeValue_Key
 
 		public static string AttributeValue_Key { get { return GetResourceString("AttributeValue_Key"); } }
@@ -625,6 +628,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 		{
 			public const string AttributeValue_Description = "AttributeValue_Description";
 			public const string AttributeValue_Help = "AttributeValue_Help";
+			public const string AttributeValue_Inference = "AttributeValue_Inference";
 			public const string AttributeValue_Key = "AttributeValue_Key";
 			public const string AttributeValue_LastUpdated = "AttributeValue_LastUpdated";
 			public const string AttributeValue_LastUpdatedBy = "AttributeValue_LastUpdatedBy";

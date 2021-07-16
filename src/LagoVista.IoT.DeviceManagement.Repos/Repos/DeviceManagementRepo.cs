@@ -423,5 +423,25 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             lr.PageIndex = items.PageIndex;
             return lr;
         }
+
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryForUserAsync(DeviceRepository deviceRepo, string userId, string orgId, ListRequest listRequest)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+
+            var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId &&
+                                               (qry.AssignedUser != null && qry.AssignedUser.Id == userId) && 
+                                               qry.DeviceRepository.Id == deviceRepo.Id, listRequest);
+
+            var summaries = from item in items.Model
+                            select item.CreateSummary();
+
+            var lr = ListResponse<DeviceSummary>.Create(summaries);
+            lr.NextPartitionKey = items.NextPartitionKey;
+            lr.NextRowKey = items.NextRowKey;
+            lr.PageSize = items.PageSize;
+            lr.HasMoreRecords = items.HasMoreRecords;
+            lr.PageIndex = items.PageIndex;
+            return lr;
+        }
     }
 }

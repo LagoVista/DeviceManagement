@@ -119,6 +119,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get devices for a device repository that are assigned to a user.
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="userid">User Id to filter devices</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{userid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoForUserAsync(string devicerepoid, string userid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDevicesForDeviceRepoForUserAsync(repo, userid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Get For a Location
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
