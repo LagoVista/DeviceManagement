@@ -1,12 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using LagoVista.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
-    public class PortConfig
+    public class PortConfig    
     {
+        public PortConfig()
+        {
+            Id = Guid.NewGuid().ToId();
+        }
+
+        public string Id { get; set; }
+        public string Address { get; set; }
         public byte Config { get; set; } = 0;
         public int SensorIndex { get; set; }
         public string Key { get; set; }
