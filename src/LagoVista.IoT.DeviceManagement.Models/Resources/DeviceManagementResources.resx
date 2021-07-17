@@ -687,4 +687,16 @@
   <data name="AttributeValue_Inference" xml:space="preserve">
     <value>Inference</value>
   </data>
+  <data name="Device_DisableGeofenceDetection" xml:space="preserve">
+    <value>Disable Geofence Detection</value>
+  </data>
+  <data name="Device_DisableGeofenceDetection_Help" xml:space="preserve">
+    <value>Let's you disable geo fence location services.</value>
+  </data>
+  <data name="Device_GeofenceTrackingMode" xml:space="preserve">
+    <value>Geofence Tracking Mode</value>
+  </data>
+  <data name="Device_GeofenceTrackingMode_Help" xml:space="preserve">
+    <value>Enable the tracking mode feature to be notified more often when your device is not within a predetermined geofence</value>
+  </data>
 </root>

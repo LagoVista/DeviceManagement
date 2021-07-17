@@ -9,6 +9,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
     {
         public byte Config { get; set; } = 0;
         public int SensorIndex { get; set; }
+        public string Key { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Units { get; set; }

@@ -227,6 +227,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DeviceURI_Help
 
 		public static string Device_DeviceURI_Help { get { return GetResourceString("Device_DeviceURI_Help"); } }
+//Resources:DeviceManagementResources:Device_DisableGeofenceDetection
+
+		public static string Device_DisableGeofenceDetection { get { return GetResourceString("Device_DisableGeofenceDetection"); } }
+//Resources:DeviceManagementResources:Device_DisableGeofenceDetection_Help
+
+		public static string Device_DisableGeofenceDetection_Help { get { return GetResourceString("Device_DisableGeofenceDetection_Help"); } }
+//Resources:DeviceManagementResources:Device_GeofenceTrackingMode
+
+		public static string Device_GeofenceTrackingMode { get { return GetResourceString("Device_GeofenceTrackingMode"); } }
+//Resources:DeviceManagementResources:Device_GeofenceTrackingMode_Help
+
+		public static string Device_GeofenceTrackingMode_Help { get { return GetResourceString("Device_GeofenceTrackingMode_Help"); } }
 //Resources:DeviceManagementResources:Device_GeoLocation
 
 		public static string Device_GeoLocation { get { return GetResourceString("Device_GeoLocation"); } }
@@ -684,6 +696,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DeviceType_Select = "Device_DeviceType_Select";
 			public const string Device_DeviceURI = "Device_DeviceURI";
 			public const string Device_DeviceURI_Help = "Device_DeviceURI_Help";
+			public const string Device_DisableGeofenceDetection = "Device_DisableGeofenceDetection";
+			public const string Device_DisableGeofenceDetection_Help = "Device_DisableGeofenceDetection_Help";
+			public const string Device_GeofenceTrackingMode = "Device_GeofenceTrackingMode";
+			public const string Device_GeofenceTrackingMode_Help = "Device_GeofenceTrackingMode_Help";
 			public const string Device_GeoLocation = "Device_GeoLocation";
 			public const string Device_GeoLocation_Help = "Device_GeoLocation_Help";
 			public const string Device_Heading = "Device_Heading";

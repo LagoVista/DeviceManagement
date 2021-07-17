@@ -193,6 +193,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SilenceAlarms, HelpResource: DeviceManagementResources.Names.Device_SilenceAlarms_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool SilenceAlarms { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection, HelpResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool DisableGeofenceDetection { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeofenceTrackingMode, HelpResource: DeviceManagementResources.Names.Device_GeofenceTrackingMode_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool EnableGeofenceTrackingMode { get; set; }
+
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
@@ -244,7 +250,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
-        public IEnumerable<GeoFence> GeoFences { get; set; }
+        public List<GeoFence> GeoFences { get; set; }
 
         public Sensors Sensors{ get; set; }
 
