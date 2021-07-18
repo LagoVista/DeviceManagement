@@ -24,5 +24,12 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public double DeviceScaler { get; set; } = 1;
         public double Calibration { get; set; } = 1;
         public double Zero { get; set; } = 0;
+
+        public double LowThreshold { get; set; }
+        public double HighTheshold { get; set; }
+
+        public string LowValueErrorCode { get; set; }
+        public string HighValueErrorCode { get; set; }
+        public bool InTolerance { get; set; }
     }
 }
