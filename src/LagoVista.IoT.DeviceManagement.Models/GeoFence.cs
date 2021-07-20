@@ -15,11 +15,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         }
 
         public string Name { get; set; }
-            
+        
+        public bool IgnoreIfHasSecondaryLocation { get; set; }
+
         public bool Enabled { get; set; }
 
         public GeoLocation Center { get; set; }
 
         public double RadiusMeters { get; set; }
+        
+        public string Description { get; set; }
     }
 }

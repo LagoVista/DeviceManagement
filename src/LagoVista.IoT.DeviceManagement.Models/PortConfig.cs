@@ -31,5 +31,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string LowValueErrorCode { get; set; }
         public string HighValueErrorCode { get; set; }
         public bool InTolerance { get; set; }
+        public bool AlertsEnabled { get; set; }
     }
 }
