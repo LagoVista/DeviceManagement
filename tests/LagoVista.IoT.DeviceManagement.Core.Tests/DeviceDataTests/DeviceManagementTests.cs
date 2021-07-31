@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Rpc.Client;
+using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -28,6 +29,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceExceptionRepo> _deviceExceptionRepo = new Mock<IDeviceExceptionRepo>();
         Mock<IDeviceConnectionEventRepo> _connectionEventRepo = new Mock<IDeviceConnectionEventRepo>();
         Mock<IMediaServicesManager> _mediaServiceManager = new Mock<IMediaServicesManager>();
+        Mock<IDeviceTypeRepo> _deviceTypeRepo = new Mock<IDeviceTypeRepo>();
+        Mock<IDeviceRepositoryRepo> _deviceRepoRepo = new Mock<IDeviceRepositoryRepo>();
 
         [TestInitialize]
         public void Init()
@@ -44,6 +47,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _deviceArchiveRepo.Object,
                 _connectionEventRepo.Object,
                 _mediaServiceManager.Object,
+                _deviceRepoRepo.Object,
+                _deviceTypeRepo.Object,
                 _proxyFactory.Object); 
         }
     }

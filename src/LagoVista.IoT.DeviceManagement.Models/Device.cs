@@ -60,6 +60,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Sensors = new Sensors();
             DeviceImages = new List<MediaResource>();
             GeoFences = new List<GeoFence>();
+            Id = Guid.NewGuid().ToId();
         }
 
         public string DatabaseName { get; set; }

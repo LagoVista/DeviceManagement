@@ -96,7 +96,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="mediaid"></param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/device/{deviceid}/image/{mediaid}")]
-        public async Task<IActionResult> DownloadMediaAsync(string devicerepoid, string deviceid,  string mediaid)
+        public async Task<IActionResult> DownloadMediaAsync(string devicerepoid, string deviceid, string mediaid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
 
@@ -418,6 +418,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             SetOwnedProperties(response.Model);
 
             return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="devicetypeid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{devicetypeid}/create")]
+        public async Task<InvokeResult<Device>> CreateDeviceAsync(string devicerepoid, string devicetypeid)
+        {
+            var deviceRepo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.CeateDeviceAsync(deviceRepo, devicetypeid, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
