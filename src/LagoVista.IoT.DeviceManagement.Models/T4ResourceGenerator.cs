@@ -281,6 +281,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Location_Select
 
 		public static string Device_Location_Select { get { return GetResourceString("Device_Location_Select"); } }
+//Resources:DeviceManagementResources:Device_MACAddress
+
+		public static string Device_MACAddress { get { return GetResourceString("Device_MACAddress"); } }
 //Resources:DeviceManagementResources:Device_MessageValues
 
 		public static string Device_MessageValues { get { return GetResourceString("Device_MessageValues"); } }
@@ -656,6 +659,171 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_VersionCodeRegEx
 
 		public static string FirmwareRevision_VersionCodeRegEx { get { return GetResourceString("FirmwareRevision_VersionCodeRegEx"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config
+
+		public static string SensorDefinition_Config { get { return GetResourceString("SensorDefinition_Config"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_ADC
+
+		public static string SensorDefinition_Config_ADC_ADC { get { return GetResourceString("SensorDefinition_Config_ADC_ADC"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_CT
+
+		public static string SensorDefinition_Config_ADC_CT { get { return GetResourceString("SensorDefinition_Config_ADC_CT"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_Help
+
+		public static string SensorDefinition_Config_Help { get { return GetResourceString("SensorDefinition_Config_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_DHT11
+
+		public static string SensorDefinition_Config_IO_DHT11 { get { return GetResourceString("SensorDefinition_Config_IO_DHT11"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_DHT22
+
+		public static string SensorDefinition_Config_IO_DHT22 { get { return GetResourceString("SensorDefinition_Config_IO_DHT22"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_DS18B
+
+		public static string SensorDefinition_Config_IO_DS18B { get { return GetResourceString("SensorDefinition_Config_IO_DS18B"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_Input
+
+		public static string SensorDefinition_Config_IO_Input { get { return GetResourceString("SensorDefinition_Config_IO_Input"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_Output
+
+		public static string SensorDefinition_Config_IO_Output { get { return GetResourceString("SensorDefinition_Config_IO_Output"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_PulseCounter
+
+		public static string SensorDefinition_Config_IO_PulseCounter { get { return GetResourceString("SensorDefinition_Config_IO_PulseCounter"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_None
+
+		public static string SensorDefinition_Config_None { get { return GetResourceString("SensorDefinition_Config_None"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_Select
+
+		public static string SensorDefinition_Config_Select { get { return GetResourceString("SensorDefinition_Config_Select"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultHighThreshold
+
+		public static string SensorDefinition_DefaultHighThreshold { get { return GetResourceString("SensorDefinition_DefaultHighThreshold"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultLowThreshold
+
+		public static string SensorDefinition_DefaultLowThreshold { get { return GetResourceString("SensorDefinition_DefaultLowThreshold"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultSlotIndex
+
+		public static string SensorDefinition_DefaultSlotIndex { get { return GetResourceString("SensorDefinition_DefaultSlotIndex"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultSlotIndex_Help
+
+		public static string SensorDefinition_DefaultSlotIndex_Help { get { return GetResourceString("SensorDefinition_DefaultSlotIndex_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Description
+
+		public static string SensorDefinition_Description { get { return GetResourceString("SensorDefinition_Description"); } }
+//Resources:DeviceManagementResources:SensorDefinition_HasConfigurableThreshold_HighValue
+
+		public static string SensorDefinition_HasConfigurableThreshold_HighValue { get { return GetResourceString("SensorDefinition_HasConfigurableThreshold_HighValue"); } }
+//Resources:DeviceManagementResources:SensorDefinition_HasConfigurableThreshold_HighValue_Help
+
+		public static string SensorDefinition_HasConfigurableThreshold_HighValue_Help { get { return GetResourceString("SensorDefinition_HasConfigurableThreshold_HighValue_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_HasConfigurableThreshold_LowValue
+
+		public static string SensorDefinition_HasConfigurableThreshold_LowValue { get { return GetResourceString("SensorDefinition_HasConfigurableThreshold_LowValue"); } }
+//Resources:DeviceManagementResources:SensorDefinition_HasConfigurableThreshold_LowValue_Help
+
+		public static string SensorDefinition_HasConfigurableThreshold_LowValue_Help { get { return GetResourceString("SensorDefinition_HasConfigurableThreshold_LowValue_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Help
+
+		public static string SensorDefinition_Help { get { return GetResourceString("SensorDefinition_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_IconKey
+
+		public static string SensorDefinition_IconKey { get { return GetResourceString("SensorDefinition_IconKey"); } }
+//Resources:DeviceManagementResources:SensorDefinition_IconKey_Help
+
+		public static string SensorDefinition_IconKey_Help { get { return GetResourceString("SensorDefinition_IconKey_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_QRCode
+
+		public static string SensorDefinition_QRCode { get { return GetResourceString("SensorDefinition_QRCode"); } }
+//Resources:DeviceManagementResources:SensorDefinition_QRCode_Help
+
+		public static string SensorDefinition_QRCode_Help { get { return GetResourceString("SensorDefinition_QRCode_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorClass_String
+
+		public static string SensorDefinition_SensorClass_String { get { return GetResourceString("SensorDefinition_SensorClass_String"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology
+
+		public static string SensorDefinition_SensorTechnology { get { return GetResourceString("SensorDefinition_SensorTechnology"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology_ADC
+
+		public static string SensorDefinition_SensorTechnology_ADC { get { return GetResourceString("SensorDefinition_SensorTechnology_ADC"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology_Bluetooth
+
+		public static string SensorDefinition_SensorTechnology_Bluetooth { get { return GetResourceString("SensorDefinition_SensorTechnology_Bluetooth"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology_Help
+
+		public static string SensorDefinition_SensorTechnology_Help { get { return GetResourceString("SensorDefinition_SensorTechnology_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology_IO
+
+		public static string SensorDefinition_SensorTechnology_IO { get { return GetResourceString("SensorDefinition_SensorTechnology_IO"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorTechnology_Select
+
+		public static string SensorDefinition_SensorTechnology_Select { get { return GetResourceString("SensorDefinition_SensorTechnology_Select"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType
+
+		public static string SensorDefinition_SensorValueType { get { return GetResourceString("SensorDefinition_SensorValueType"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType_Boolean
+
+		public static string SensorDefinition_SensorValueType_Boolean { get { return GetResourceString("SensorDefinition_SensorValueType_Boolean"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType_Help
+
+		public static string SensorDefinition_SensorValueType_Help { get { return GetResourceString("SensorDefinition_SensorValueType_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType_Number
+
+		public static string SensorDefinition_SensorValueType_Number { get { return GetResourceString("SensorDefinition_SensorValueType_Number"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType_Select
+
+		public static string SensorDefinition_SensorValueType_Select { get { return GetResourceString("SensorDefinition_SensorValueType_Select"); } }
+//Resources:DeviceManagementResources:SensorDefinition_SensorValueType_String
+
+		public static string SensorDefinition_SensorValueType_String { get { return GetResourceString("SensorDefinition_SensorValueType_String"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Title
+
+		public static string SensorDefinition_Title { get { return GetResourceString("SensorDefinition_Title"); } }
+//Resources:DeviceManagementResources:SensorDefinition_UnitsLabel
+
+		public static string SensorDefinition_UnitsLabel { get { return GetResourceString("SensorDefinition_UnitsLabel"); } }
+//Resources:DeviceManagementResources:SensorDefinition_UnitsLabel_Help
+
+		public static string SensorDefinition_UnitsLabel_Help { get { return GetResourceString("SensorDefinition_UnitsLabel_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_WebLink
+
+		public static string SensorDefinition_WebLink { get { return GetResourceString("SensorDefinition_WebLink"); } }
+//Resources:DeviceManagementResources:SensorDefinition_WebLink_Help
+
+		public static string SensorDefinition_WebLink_Help { get { return GetResourceString("SensorDefinition_WebLink_Help"); } }
+//Resources:DeviceManagementResources:SensorDefintion_DefaultHighThreshold
+
+		public static string SensorDefintion_DefaultHighThreshold { get { return GetResourceString("SensorDefintion_DefaultHighThreshold"); } }
+//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_Off
+
+		public static string SensorDefintion_GenerateError_With_Off { get { return GetResourceString("SensorDefintion_GenerateError_With_Off"); } }
+//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_Off_Help
+
+		public static string SensorDefintion_GenerateError_With_Off_Help { get { return GetResourceString("SensorDefintion_GenerateError_With_Off_Help"); } }
+//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_On
+
+		public static string SensorDefintion_GenerateError_With_On { get { return GetResourceString("SensorDefintion_GenerateError_With_On"); } }
+//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_On_Help
+
+		public static string SensorDefintion_GenerateError_With_On_Help { get { return GetResourceString("SensorDefintion_GenerateError_With_On_Help"); } }
+//Resources:DeviceManagementResources:SensorDefintion_HighThresholdErrorCode
+
+		public static string SensorDefintion_HighThresholdErrorCode { get { return GetResourceString("SensorDefintion_HighThresholdErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefintion_LowThresholdErrorCode
+
+		public static string SensorDefintion_LowThresholdErrorCode { get { return GetResourceString("SensorDefintion_LowThresholdErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefintion_OffErrorCode
+
+		public static string SensorDefintion_OffErrorCode { get { return GetResourceString("SensorDefintion_OffErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefintion_OffErrorCode_Help
+
+		public static string SensorDefintion_OffErrorCode_Help { get { return GetResourceString("SensorDefintion_OffErrorCode_Help"); } }
+//Resources:DeviceManagementResources:SensorDefintion_OnErrorCode
+
+		public static string SensorDefintion_OnErrorCode { get { return GetResourceString("SensorDefintion_OnErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefintion_OnErrorCode_Help
+
+		public static string SensorDefintion_OnErrorCode_Help { get { return GetResourceString("SensorDefintion_OnErrorCode_Help"); } }
 
 		public static class Names
 		{
@@ -735,6 +903,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_LastContact = "Device_LastContact";
 			public const string Device_Location = "Device_Location";
 			public const string Device_Location_Select = "Device_Location_Select";
+			public const string Device_MACAddress = "Device_MACAddress";
 			public const string Device_MessageValues = "Device_MessageValues";
 			public const string Device_MessageValues_Help = "Device_MessageValues_Help";
 			public const string Device_Notes = "Device_Notes";
@@ -860,6 +1029,61 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string FirmwareRevision_Title = "FirmwareRevision_Title";
 			public const string FirmwareRevision_Version = "FirmwareRevision_Version";
 			public const string FirmwareRevision_VersionCodeRegEx = "FirmwareRevision_VersionCodeRegEx";
+			public const string SensorDefinition_Config = "SensorDefinition_Config";
+			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
+			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
+			public const string SensorDefinition_Config_Help = "SensorDefinition_Config_Help";
+			public const string SensorDefinition_Config_IO_DHT11 = "SensorDefinition_Config_IO_DHT11";
+			public const string SensorDefinition_Config_IO_DHT22 = "SensorDefinition_Config_IO_DHT22";
+			public const string SensorDefinition_Config_IO_DS18B = "SensorDefinition_Config_IO_DS18B";
+			public const string SensorDefinition_Config_IO_Input = "SensorDefinition_Config_IO_Input";
+			public const string SensorDefinition_Config_IO_Output = "SensorDefinition_Config_IO_Output";
+			public const string SensorDefinition_Config_IO_PulseCounter = "SensorDefinition_Config_IO_PulseCounter";
+			public const string SensorDefinition_Config_None = "SensorDefinition_Config_None";
+			public const string SensorDefinition_Config_Select = "SensorDefinition_Config_Select";
+			public const string SensorDefinition_DefaultHighThreshold = "SensorDefinition_DefaultHighThreshold";
+			public const string SensorDefinition_DefaultLowThreshold = "SensorDefinition_DefaultLowThreshold";
+			public const string SensorDefinition_DefaultSlotIndex = "SensorDefinition_DefaultSlotIndex";
+			public const string SensorDefinition_DefaultSlotIndex_Help = "SensorDefinition_DefaultSlotIndex_Help";
+			public const string SensorDefinition_Description = "SensorDefinition_Description";
+			public const string SensorDefinition_HasConfigurableThreshold_HighValue = "SensorDefinition_HasConfigurableThreshold_HighValue";
+			public const string SensorDefinition_HasConfigurableThreshold_HighValue_Help = "SensorDefinition_HasConfigurableThreshold_HighValue_Help";
+			public const string SensorDefinition_HasConfigurableThreshold_LowValue = "SensorDefinition_HasConfigurableThreshold_LowValue";
+			public const string SensorDefinition_HasConfigurableThreshold_LowValue_Help = "SensorDefinition_HasConfigurableThreshold_LowValue_Help";
+			public const string SensorDefinition_Help = "SensorDefinition_Help";
+			public const string SensorDefinition_IconKey = "SensorDefinition_IconKey";
+			public const string SensorDefinition_IconKey_Help = "SensorDefinition_IconKey_Help";
+			public const string SensorDefinition_QRCode = "SensorDefinition_QRCode";
+			public const string SensorDefinition_QRCode_Help = "SensorDefinition_QRCode_Help";
+			public const string SensorDefinition_SensorClass_String = "SensorDefinition_SensorClass_String";
+			public const string SensorDefinition_SensorTechnology = "SensorDefinition_SensorTechnology";
+			public const string SensorDefinition_SensorTechnology_ADC = "SensorDefinition_SensorTechnology_ADC";
+			public const string SensorDefinition_SensorTechnology_Bluetooth = "SensorDefinition_SensorTechnology_Bluetooth";
+			public const string SensorDefinition_SensorTechnology_Help = "SensorDefinition_SensorTechnology_Help";
+			public const string SensorDefinition_SensorTechnology_IO = "SensorDefinition_SensorTechnology_IO";
+			public const string SensorDefinition_SensorTechnology_Select = "SensorDefinition_SensorTechnology_Select";
+			public const string SensorDefinition_SensorValueType = "SensorDefinition_SensorValueType";
+			public const string SensorDefinition_SensorValueType_Boolean = "SensorDefinition_SensorValueType_Boolean";
+			public const string SensorDefinition_SensorValueType_Help = "SensorDefinition_SensorValueType_Help";
+			public const string SensorDefinition_SensorValueType_Number = "SensorDefinition_SensorValueType_Number";
+			public const string SensorDefinition_SensorValueType_Select = "SensorDefinition_SensorValueType_Select";
+			public const string SensorDefinition_SensorValueType_String = "SensorDefinition_SensorValueType_String";
+			public const string SensorDefinition_Title = "SensorDefinition_Title";
+			public const string SensorDefinition_UnitsLabel = "SensorDefinition_UnitsLabel";
+			public const string SensorDefinition_UnitsLabel_Help = "SensorDefinition_UnitsLabel_Help";
+			public const string SensorDefinition_WebLink = "SensorDefinition_WebLink";
+			public const string SensorDefinition_WebLink_Help = "SensorDefinition_WebLink_Help";
+			public const string SensorDefintion_DefaultHighThreshold = "SensorDefintion_DefaultHighThreshold";
+			public const string SensorDefintion_GenerateError_With_Off = "SensorDefintion_GenerateError_With_Off";
+			public const string SensorDefintion_GenerateError_With_Off_Help = "SensorDefintion_GenerateError_With_Off_Help";
+			public const string SensorDefintion_GenerateError_With_On = "SensorDefintion_GenerateError_With_On";
+			public const string SensorDefintion_GenerateError_With_On_Help = "SensorDefintion_GenerateError_With_On_Help";
+			public const string SensorDefintion_HighThresholdErrorCode = "SensorDefintion_HighThresholdErrorCode";
+			public const string SensorDefintion_LowThresholdErrorCode = "SensorDefintion_LowThresholdErrorCode";
+			public const string SensorDefintion_OffErrorCode = "SensorDefintion_OffErrorCode";
+			public const string SensorDefintion_OffErrorCode_Help = "SensorDefintion_OffErrorCode_Help";
+			public const string SensorDefintion_OnErrorCode = "SensorDefintion_OnErrorCode";
+			public const string SensorDefintion_OnErrorCode_Help = "SensorDefintion_OnErrorCode_Help";
 		}
 	}
 }

@@ -14,6 +14,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
     {
         Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
 
+        Task<InvokeResult> UpdateDeviceMacAddressAsync(DeviceRepository deviceRepo, string id, string macAddress, EntityHeader org, EntityHeader user);
+
         /// <summary>
         /// Get the Device by the unique identifier that was generated for the device (not device id)
         /// </summary>

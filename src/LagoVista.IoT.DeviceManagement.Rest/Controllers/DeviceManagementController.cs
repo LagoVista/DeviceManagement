@@ -89,6 +89,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Update
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="id"></param>
+        /// <param name="macaddress"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/{macaddress}")]
+        public async Task<InvokeResult> UpdateDeviceMacAddressAsync(string devicerepoid, string id, string macaddress)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);            
+            return await _deviceManager.UpdateDeviceMacAddressAsync(repo, id, macaddress, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Download an image.        
         /// </summary>
         /// <param name="devicerepoid"></param>

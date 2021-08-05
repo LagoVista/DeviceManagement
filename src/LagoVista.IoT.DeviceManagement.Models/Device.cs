@@ -171,6 +171,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceAddress_Address, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public Address Address { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_MACAddress, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public string MacAddress { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public bool DisableWatchdog { get; set; }
 
@@ -298,7 +302,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return new EntityHeader<Device>()
             {
                 Id = Id,
-                Text = DeviceId,
+                Key = DeviceId,
+                Text = Name,
                 Value = this
             };
         }

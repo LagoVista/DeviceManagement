@@ -131,9 +131,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             ValidationCheck(device, Actions.Update);
 
+            device.DeviceType.Value = null;
             device.DeviceURI = null;
             device.PropertiesMetaData = null;
             device.InputCommandEndPoints = null;
+            device.DeviceLabel = null;
+            device.DeviceIdLabel = null;
+            device.DeviceNameLabel = null;
+            device.DeviceTypeLabel = null;
 
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
@@ -634,6 +639,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             return InvokeResult<Device>.Create(device);
+        }
+
+        public async Task<InvokeResult> UpdateDeviceMacAddressAsync(DeviceRepository deviceRepo, string id, string macAddress, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            device.MacAddress = macAddress;
+            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedBy = user;
+            return await UpdateDeviceAsync(deviceRepo, device, org, user);
         }
     }
 }

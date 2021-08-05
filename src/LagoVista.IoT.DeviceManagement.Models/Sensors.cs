@@ -11,8 +11,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
         {
             for (int idx = 0; idx < 8; ++idx)
             {
-                AdcConfigs[idx] = new PortConfig() { SensorIndex = idx };
-                IoConfigs[idx] = new PortConfig() { SensorIndex = idx };
+                AdcConfigs[idx] = new SensorConfig() { SensorIndex = idx };
+                IoConfigs[idx] = new SensorConfig() { SensorIndex = idx };
             }
 
             BluetoothValues = new List<double>();
@@ -20,10 +20,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         public string LastUpdateFromDevice { get; set; }
 
-        public PortConfig[] AdcConfigs { get; set; } = new PortConfig[8];
-        public PortConfig[] IoConfigs { get; set; } = new PortConfig[8];
+        public SensorConfig[] AdcConfigs { get; set; } = new SensorConfig[8];
+        public SensorConfig[] IoConfigs { get; set; } = new SensorConfig[8];
 
-        public List<PortConfig> BluetoothConfigs { get; set; }
+        public List<SensorConfig> BluetoothConfigs { get; set; }
 
         public double[] AdcValues { get; set; } = new double[8];
         public double[] IoValues { get; set; } = new double[8];

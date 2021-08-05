@@ -720,4 +720,172 @@
   <data name="DeviceRepo_UserOwnedDevices_Help" xml:space="preserve">
     <value>Devices that are created should be owned by the user that creates them</value>
   </data>
+  <data name="Device_MACAddress" xml:space="preserve">
+    <value>MAC Address</value>
+  </data>
+  <data name="SensorDefinition_Config" xml:space="preserve">
+    <value>Sensor Config</value>
+  </data>
+  <data name="SensorDefinition_Config_ADC_ADC" xml:space="preserve">
+    <value>Analog to Digital Converter</value>
+  </data>
+  <data name="SensorDefinition_Config_ADC_CT" xml:space="preserve">
+    <value>Current Transformer</value>
+  </data>
+  <data name="SensorDefinition_Config_Help" xml:space="preserve">
+    <value>If you are using standard NuvIoT hardware, you can select the type of sensor that will be connected and processed with the NuvIoT standard firmware.</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_DHT11" xml:space="preserve">
+    <value>DHT11 (Temperature and Humidity)</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_DHT22" xml:space="preserve">
+    <value>DHT22 (Temperature and Humidity)</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_DS18B" xml:space="preserve">
+    <value>DS18B (Temperature)</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_Output" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_PulseCounter" xml:space="preserve">
+    <value>Pulse Counter</value>
+  </data>
+  <data name="SensorDefinition_Config_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SensorDefinition_Config_Select" xml:space="preserve">
+    <value>-select sensor config-</value>
+  </data>
+  <data name="SensorDefinition_DefaultLowThreshold" xml:space="preserve">
+    <value>Default Low Threshold</value>
+  </data>
+  <data name="SensorDefinition_Description" xml:space="preserve">
+    <value>A sensor definition will describe attributes of a sensor that potentially can be attached to a device with this device configuration</value>
+  </data>
+  <data name="SensorDefinition_HasConfigurableThreshold_HighValue" xml:space="preserve">
+    <value>Has High Value Threshold Detection</value>
+  </data>
+  <data name="SensorDefinition_HasConfigurableThreshold_HighValue_Help" xml:space="preserve">
+    <value>Provide a user interface mechanism to generate an error condition when a value is above a threshold.</value>
+  </data>
+  <data name="SensorDefinition_HasConfigurableThreshold_LowValue" xml:space="preserve">
+    <value>Has Low Threshold Detection</value>
+  </data>
+  <data name="SensorDefinition_HasConfigurableThreshold_LowValue_Help" xml:space="preserve">
+    <value>Provide a user interface mechanism to generate an error condition when a value is below a threshold.</value>
+  </data>
+  <data name="SensorDefinition_Help" xml:space="preserve">
+    <value>A sensor definition will describe attributes of a sensor that potentially can be attached to a device with this device configuration</value>
+  </data>
+  <data name="SensorDefinition_IconKey" xml:space="preserve">
+    <value>Icon Key</value>
+  </data>
+  <data name="SensorDefinition_IconKey_Help" xml:space="preserve">
+    <value>Enter a value that can be used to look up a font icon to be displayed for this value.  This will generally be used in custom applications.</value>
+  </data>
+  <data name="SensorDefinition_QRCode" xml:space="preserve">
+    <value>QR Code Value</value>
+  </data>
+  <data name="SensorDefinition_QRCode_Help" xml:space="preserve">
+    <value>You can provide a QR code that is associated with this sensor defintion that can be used to lookup information about this sensor type.</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType" xml:space="preserve">
+    <value>Sensor Value Type</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType_Boolean" xml:space="preserve">
+    <value>On/Off (boolean)</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType_Help" xml:space="preserve">
+    <value>The Sensor Class describe the output value</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType_Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType_Select" xml:space="preserve">
+    <value>-select sensor value type-</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology" xml:space="preserve">
+    <value>Sensor Technology</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology_ADC" xml:space="preserve">
+    <value>Analog to Digital</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology_Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology_Help" xml:space="preserve">
+    <value>Describe how the sensor is connected to the contorl board.</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology_IO" xml:space="preserve">
+    <value>Digital I/O</value>
+  </data>
+  <data name="SensorDefinition_SensorTechnology_Select" xml:space="preserve">
+    <value>-select sensor technology-</value>
+  </data>
+  <data name="SensorDefinition_SensorClass_String" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="SensorDefinition_Title" xml:space="preserve">
+    <value>Sensor Definition</value>
+  </data>
+  <data name="SensorDefinition_WebLink" xml:space="preserve">
+    <value>Web Link</value>
+  </data>
+  <data name="SensorDefinition_WebLink_Help" xml:space="preserve">
+    <value>You can provide a web link that is associated with this sensor this can be used to provide more information about the sensor and how to install it.</value>
+  </data>
+  <data name="SensorDefintion_DefaultHighThreshold" xml:space="preserve">
+    <value>Default High Threshold</value>
+  </data>
+  <data name="SensorDefintion_GenerateError_With_Off" xml:space="preserve">
+    <value>Generate error code with off condition</value>
+  </data>
+  <data name="SensorDefintion_GenerateError_With_Off_Help" xml:space="preserve">
+    <value>You can configure this sensor to generate an error code when an off or 0 value is detected.</value>
+  </data>
+  <data name="SensorDefintion_GenerateError_With_On" xml:space="preserve">
+    <value>Generate error code with on condition</value>
+  </data>
+  <data name="SensorDefintion_GenerateError_With_On_Help" xml:space="preserve">
+    <value>You can configure this sensor to generate an error code when an on or 1 value is detected.</value>
+  </data>
+  <data name="SensorDefintion_HighThresholdErrorCode" xml:space="preserve">
+    <value>High Threshold Error Code</value>
+  </data>
+  <data name="SensorDefintion_LowThresholdErrorCode" xml:space="preserve">
+    <value>Low Threshold Error Code</value>
+  </data>
+  <data name="SensorDefintion_OffErrorCode" xml:space="preserve">
+    <value>Off Error Code</value>
+  </data>
+  <data name="SensorDefintion_OffErrorCode_Help" xml:space="preserve">
+    <value>This is the error code that should be generated when an off or 0 value is detected</value>
+  </data>
+  <data name="SensorDefintion_OnErrorCode_Help" xml:space="preserve">
+    <value>This is the error code that should be generated when an on or 1 value is detected</value>
+  </data>
+  <data name="SensorDefintion_OnErrorCode" xml:space="preserve">
+    <value>On Error Code</value>
+  </data>
+  <data name="SensorDefinition_DefaultHighThreshold" xml:space="preserve">
+    <value>Default High Threshold</value>
+  </data>
+  <data name="SensorDefinition_DefaultSlotIndex" xml:space="preserve">
+    <value>Default Slot Index</value>
+  </data>
+  <data name="SensorDefinition_DefaultSlotIndex_Help" xml:space="preserve">
+    <value>In some cases the sensor will always be configured in the same slot, if that is the case that slot can be set here.</value>
+  </data>
+  <data name="SensorDefinition_SensorValueType_String" xml:space="preserve">
+    <value>String</value>
+  </data>
+  <data name="SensorDefinition_UnitsLabel" xml:space="preserve">
+    <value>Units Label</value>
+  </data>
+  <data name="SensorDefinition_UnitsLabel_Help" xml:space="preserve">
+    <value>Add a units label that can be added to the value.</value>
+  </data>
 </root>
