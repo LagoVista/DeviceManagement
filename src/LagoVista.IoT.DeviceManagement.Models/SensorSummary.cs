@@ -16,10 +16,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
     public class SensorSummary : ModelBase
     {
         SensorStates _state;
-        SensorTechnology _technology;
-        SensorConfig _config;
+        readonly SensorTechnology _technology;
+        readonly Sensor _config;
 
-        public SensorSummary(SensorConfig portConfig, SensorTechnology technology)
+        public SensorSummary(Sensor portConfig, SensorTechnology technology)
         {
             _config = portConfig ?? throw new ArgumentNullException(nameof(portConfig));
             Label = portConfig.Name;
@@ -36,7 +36,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         private void Evaluate(double value)
         {
-            if (_config.Class == SensorValueType.Boolean)
+            if (_config.AttributeType.Value == DeviceAdmin.Models.ParameterTypes.TrueFalse)
             {
                 if (value == 0)
                 {
@@ -51,13 +51,13 @@ namespace LagoVista.IoT.DeviceManagement.Models
             }
             else
             {
-                if (String.IsNullOrEmpty(_config.Units))
+                if (EntityHeader.IsNullOrEmpty(_config.UnitSet))
                 {
                     Display = $"{Value}";
                 }
                 else
                 {
-                    Display = $"{Value} {_config.Units}";
+                    Display = $"{Value}";
                 }
 
                 var dblValue = Convert.ToDouble(value);
@@ -106,7 +106,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Label { get; }
         public string Description { get; }
 
-        public SensorConfig Config => _config;
+        public Sensor Config => _config;
         public SensorTechnology Technology => _technology;
     }
 }

@@ -25,8 +25,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class DeviceGroupsController : LagoVistaBaseController
     {
 
-        IDeviceGroupManager _deviceGroupManager;
-        IDeviceRepositoryManager _repoManager;
+        readonly IDeviceGroupManager _deviceGroupManager;
+        readonly IDeviceRepositoryManager _repoManager;
 
         public DeviceGroupsController(IDeviceRepositoryManager repoManager, IDeviceGroupManager deviceGroupManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {

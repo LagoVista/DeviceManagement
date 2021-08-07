@@ -57,7 +57,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             DeviceGroups = new List<EntityHeader>();
             DeviceTwinDetails = new List<DeviceTwinDetails>();
             Errors = new List<DeviceError>();
-            Sensors = new Sensors();
+            Sensors = new List<Sensor>();
             DeviceImages = new List<MediaResource>();
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
@@ -257,7 +257,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public List<GeoFence> GeoFences { get; set; }
 
-        public Sensors Sensors{ get; set; }
+        public List<Sensor> Sensors{ get; set; }
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
 

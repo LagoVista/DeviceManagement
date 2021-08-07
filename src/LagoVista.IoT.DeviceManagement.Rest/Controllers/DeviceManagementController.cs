@@ -31,10 +31,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     [ConfirmedUser]
     public class DeviceManagementController : LagoVistaBaseController
     {
-        private IDeviceManager _deviceManager;
-        private IOrganizationManager _orgManager;
-        private IDeviceRepositoryManager _repoManager;
-        private UserManager<AppUser> _userManager;
+        private readonly IDeviceManager _deviceManager;
+        private readonly IOrganizationManager _orgManager;
+        private readonly IDeviceRepositoryManager _repoManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
