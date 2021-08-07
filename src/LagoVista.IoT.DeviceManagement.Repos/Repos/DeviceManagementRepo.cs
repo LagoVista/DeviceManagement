@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using LagoVista.Core;
 using Microsoft.Azure.Documents.Linq;
 using System.Collections.Generic;
+using LagoVista.Core.Models;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -190,6 +191,42 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
+            /* Make sure that any data that might be sent along with the device but not required is note saved */
+            if (device.Sensors != null)
+            {
+                foreach (var sensor in device.Sensors)
+                {
+                    if (!EntityHeader.IsNullOrEmpty(sensor.UnitSet))
+                    {
+                        sensor.UnitSet.Value = null;
+                    }
+
+                    if (!EntityHeader.IsNullOrEmpty(sensor.SensorDefinition))
+                    {
+                        sensor.SensorDefinition.Value = null;
+                    }
+                }
+            }
+
+            device.AttributeMetaData = null;
+            if(device.Attributes != null)
+            {
+                foreach(var attribute in device.Attributes)
+                {
+                    if(!EntityHeader.IsNullOrEmpty(attribute.UnitSet))
+                    {
+                        attribute.UnitSet.Value = null;
+                    }
+
+                    if (!EntityHeader.IsNullOrEmpty(attribute.StateSet))
+                    {
+                        attribute.StateSet.Value = null;
+                    }
+                }
+            }
+
+            device.DeviceType.Value = null;            
+
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             await UpsertDocumentAsync(device);

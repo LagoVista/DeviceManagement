@@ -659,6 +659,84 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_VersionCodeRegEx
 
 		public static string FirmwareRevision_VersionCodeRegEx { get { return GetResourceString("FirmwareRevision_VersionCodeRegEx"); } }
+//Resources:DeviceManagementResources:Sensor_Address
+
+		public static string Sensor_Address { get { return GetResourceString("Sensor_Address"); } }
+//Resources:DeviceManagementResources:Sensor_AlertsEnabled
+
+		public static string Sensor_AlertsEnabled { get { return GetResourceString("Sensor_AlertsEnabled"); } }
+//Resources:DeviceManagementResources:Sensor_AttributeType
+
+		public static string Sensor_AttributeType { get { return GetResourceString("Sensor_AttributeType"); } }
+//Resources:DeviceManagementResources:Sensor_AttributeType_Select
+
+		public static string Sensor_AttributeType_Select { get { return GetResourceString("Sensor_AttributeType_Select"); } }
+//Resources:DeviceManagementResources:Sensor_Calibration
+
+		public static string Sensor_Calibration { get { return GetResourceString("Sensor_Calibration"); } }
+//Resources:DeviceManagementResources:Sensor_Description
+
+		public static string Sensor_Description { get { return GetResourceString("Sensor_Description"); } }
+//Resources:DeviceManagementResources:Sensor_DeviceScaler
+
+		public static string Sensor_DeviceScaler { get { return GetResourceString("Sensor_DeviceScaler"); } }
+//Resources:DeviceManagementResources:Sensor_Help
+
+		public static string Sensor_Help { get { return GetResourceString("Sensor_Help"); } }
+//Resources:DeviceManagementResources:Sensor_HighThreshold
+
+		public static string Sensor_HighThreshold { get { return GetResourceString("Sensor_HighThreshold"); } }
+//Resources:DeviceManagementResources:Sensor_HighThreshold_ErrorCode
+
+		public static string Sensor_HighThreshold_ErrorCode { get { return GetResourceString("Sensor_HighThreshold_ErrorCode"); } }
+//Resources:DeviceManagementResources:Sensor_LowThreshold
+
+		public static string Sensor_LowThreshold { get { return GetResourceString("Sensor_LowThreshold"); } }
+//Resources:DeviceManagementResources:Sensor_LowThreshold_ErrorCode
+
+		public static string Sensor_LowThreshold_ErrorCode { get { return GetResourceString("Sensor_LowThreshold_ErrorCode"); } }
+//Resources:DeviceManagementResources:Sensor_PortIndex
+
+		public static string Sensor_PortIndex { get { return GetResourceString("Sensor_PortIndex"); } }
+//Resources:DeviceManagementResources:Sensor_PortIndex_Help
+
+		public static string Sensor_PortIndex_Help { get { return GetResourceString("Sensor_PortIndex_Help"); } }
+//Resources:DeviceManagementResources:Sensor_SensorDefinition
+
+		public static string Sensor_SensorDefinition { get { return GetResourceString("Sensor_SensorDefinition"); } }
+//Resources:DeviceManagementResources:Sensor_SensorType_Select
+
+		public static string Sensor_SensorType_Select { get { return GetResourceString("Sensor_SensorType_Select"); } }
+//Resources:DeviceManagementResources:Sensor_SensorTypeId
+
+		public static string Sensor_SensorTypeId { get { return GetResourceString("Sensor_SensorTypeId"); } }
+//Resources:DeviceManagementResources:Sensor_SensorTypeId_Help
+
+		public static string Sensor_SensorTypeId_Help { get { return GetResourceString("Sensor_SensorTypeId_Help"); } }
+//Resources:DeviceManagementResources:Sensor_State
+
+		public static string Sensor_State { get { return GetResourceString("Sensor_State"); } }
+//Resources:DeviceManagementResources:Sensor_Technology
+
+		public static string Sensor_Technology { get { return GetResourceString("Sensor_Technology"); } }
+//Resources:DeviceManagementResources:Sensor_Technology_Select
+
+		public static string Sensor_Technology_Select { get { return GetResourceString("Sensor_Technology_Select"); } }
+//Resources:DeviceManagementResources:Sensor_Title
+
+		public static string Sensor_Title { get { return GetResourceString("Sensor_Title"); } }
+//Resources:DeviceManagementResources:Sensor_Units
+
+		public static string Sensor_Units { get { return GetResourceString("Sensor_Units"); } }
+//Resources:DeviceManagementResources:Sensor_Units_Select
+
+		public static string Sensor_Units_Select { get { return GetResourceString("Sensor_Units_Select"); } }
+//Resources:DeviceManagementResources:Sensor_Value
+
+		public static string Sensor_Value { get { return GetResourceString("Sensor_Value"); } }
+//Resources:DeviceManagementResources:Sensor_Zero
+
+		public static string Sensor_Zero { get { return GetResourceString("Sensor_Zero"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config
 
 		public static string SensorDefinition_Config { get { return GetResourceString("SensorDefinition_Config"); } }
@@ -701,15 +779,30 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_DefaultLowThreshold
 
 		public static string SensorDefinition_DefaultLowThreshold { get { return GetResourceString("SensorDefinition_DefaultLowThreshold"); } }
-//Resources:DeviceManagementResources:SensorDefinition_DefaultSlotIndex
+//Resources:DeviceManagementResources:SensorDefinition_DefaultPortIndex
 
-		public static string SensorDefinition_DefaultSlotIndex { get { return GetResourceString("SensorDefinition_DefaultSlotIndex"); } }
-//Resources:DeviceManagementResources:SensorDefinition_DefaultSlotIndex_Help
+		public static string SensorDefinition_DefaultPortIndex { get { return GetResourceString("SensorDefinition_DefaultPortIndex"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultPortIndex_Help
 
-		public static string SensorDefinition_DefaultSlotIndex_Help { get { return GetResourceString("SensorDefinition_DefaultSlotIndex_Help"); } }
+		public static string SensorDefinition_DefaultPortIndex_Help { get { return GetResourceString("SensorDefinition_DefaultPortIndex_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_DefaultPortIndex_Select
+
+		public static string SensorDefinition_DefaultPortIndex_Select { get { return GetResourceString("SensorDefinition_DefaultPortIndex_Select"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Description
 
 		public static string SensorDefinition_Description { get { return GetResourceString("SensorDefinition_Description"); } }
+//Resources:DeviceManagementResources:SensorDefinition_GenerateError_With_Off
+
+		public static string SensorDefinition_GenerateError_With_Off { get { return GetResourceString("SensorDefinition_GenerateError_With_Off"); } }
+//Resources:DeviceManagementResources:SensorDefinition_GenerateError_With_Off_Help
+
+		public static string SensorDefinition_GenerateError_With_Off_Help { get { return GetResourceString("SensorDefinition_GenerateError_With_Off_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_GenerateError_With_On
+
+		public static string SensorDefinition_GenerateError_With_On { get { return GetResourceString("SensorDefinition_GenerateError_With_On"); } }
+//Resources:DeviceManagementResources:SensorDefinition_GenerateError_With_On_Help
+
+		public static string SensorDefinition_GenerateError_With_On_Help { get { return GetResourceString("SensorDefinition_GenerateError_With_On_Help"); } }
 //Resources:DeviceManagementResources:SensorDefinition_HasConfigurableThreshold_HighValue
 
 		public static string SensorDefinition_HasConfigurableThreshold_HighValue { get { return GetResourceString("SensorDefinition_HasConfigurableThreshold_HighValue"); } }
@@ -725,12 +818,54 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Help
 
 		public static string SensorDefinition_Help { get { return GetResourceString("SensorDefinition_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_HighThresholdErrorCode
+
+		public static string SensorDefinition_HighThresholdErrorCode { get { return GetResourceString("SensorDefinition_HighThresholdErrorCode"); } }
 //Resources:DeviceManagementResources:SensorDefinition_IconKey
 
 		public static string SensorDefinition_IconKey { get { return GetResourceString("SensorDefinition_IconKey"); } }
 //Resources:DeviceManagementResources:SensorDefinition_IconKey_Help
 
 		public static string SensorDefinition_IconKey_Help { get { return GetResourceString("SensorDefinition_IconKey_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_LowThresholdErrorCode
+
+		public static string SensorDefinition_LowThresholdErrorCode { get { return GetResourceString("SensorDefinition_LowThresholdErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefinition_OffErrorCode
+
+		public static string SensorDefinition_OffErrorCode { get { return GetResourceString("SensorDefinition_OffErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefinition_OffErrorCode_Help
+
+		public static string SensorDefinition_OffErrorCode_Help { get { return GetResourceString("SensorDefinition_OffErrorCode_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_OnErrorCode
+
+		public static string SensorDefinition_OnErrorCode { get { return GetResourceString("SensorDefinition_OnErrorCode"); } }
+//Resources:DeviceManagementResources:SensorDefinition_OnErrorCode_Help
+
+		public static string SensorDefinition_OnErrorCode_Help { get { return GetResourceString("SensorDefinition_OnErrorCode_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port1
+
+		public static string SensorDefinition_Ports_Port1 { get { return GetResourceString("SensorDefinition_Ports_Port1"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port2
+
+		public static string SensorDefinition_Ports_Port2 { get { return GetResourceString("SensorDefinition_Ports_Port2"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port3
+
+		public static string SensorDefinition_Ports_Port3 { get { return GetResourceString("SensorDefinition_Ports_Port3"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port4
+
+		public static string SensorDefinition_Ports_Port4 { get { return GetResourceString("SensorDefinition_Ports_Port4"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port5
+
+		public static string SensorDefinition_Ports_Port5 { get { return GetResourceString("SensorDefinition_Ports_Port5"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port6
+
+		public static string SensorDefinition_Ports_Port6 { get { return GetResourceString("SensorDefinition_Ports_Port6"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port7
+
+		public static string SensorDefinition_Ports_Port7 { get { return GetResourceString("SensorDefinition_Ports_Port7"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Ports_Port8
+
+		public static string SensorDefinition_Ports_Port8 { get { return GetResourceString("SensorDefinition_Ports_Port8"); } }
 //Resources:DeviceManagementResources:SensorDefinition_QRCode
 
 		public static string SensorDefinition_QRCode { get { return GetResourceString("SensorDefinition_QRCode"); } }
@@ -791,39 +926,24 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_WebLink_Help
 
 		public static string SensorDefinition_WebLink_Help { get { return GetResourceString("SensorDefinition_WebLink_Help"); } }
-//Resources:DeviceManagementResources:SensorDefintion_DefaultHighThreshold
+//Resources:DeviceManagementResources:SensorState_Error
 
-		public static string SensorDefintion_DefaultHighThreshold { get { return GetResourceString("SensorDefintion_DefaultHighThreshold"); } }
-//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_Off
+		public static string SensorState_Error { get { return GetResourceString("SensorState_Error"); } }
+//Resources:DeviceManagementResources:SensorState_Nominal
 
-		public static string SensorDefintion_GenerateError_With_Off { get { return GetResourceString("SensorDefintion_GenerateError_With_Off"); } }
-//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_Off_Help
+		public static string SensorState_Nominal { get { return GetResourceString("SensorState_Nominal"); } }
+//Resources:DeviceManagementResources:SensorState_Off
 
-		public static string SensorDefintion_GenerateError_With_Off_Help { get { return GetResourceString("SensorDefintion_GenerateError_With_Off_Help"); } }
-//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_On
+		public static string SensorState_Off { get { return GetResourceString("SensorState_Off"); } }
+//Resources:DeviceManagementResources:SensorState_Offline
 
-		public static string SensorDefintion_GenerateError_With_On { get { return GetResourceString("SensorDefintion_GenerateError_With_On"); } }
-//Resources:DeviceManagementResources:SensorDefintion_GenerateError_With_On_Help
+		public static string SensorState_Offline { get { return GetResourceString("SensorState_Offline"); } }
+//Resources:DeviceManagementResources:SensorState_On
 
-		public static string SensorDefintion_GenerateError_With_On_Help { get { return GetResourceString("SensorDefintion_GenerateError_With_On_Help"); } }
-//Resources:DeviceManagementResources:SensorDefintion_HighThresholdErrorCode
+		public static string SensorState_On { get { return GetResourceString("SensorState_On"); } }
+//Resources:DeviceManagementResources:SensorState_Warning
 
-		public static string SensorDefintion_HighThresholdErrorCode { get { return GetResourceString("SensorDefintion_HighThresholdErrorCode"); } }
-//Resources:DeviceManagementResources:SensorDefintion_LowThresholdErrorCode
-
-		public static string SensorDefintion_LowThresholdErrorCode { get { return GetResourceString("SensorDefintion_LowThresholdErrorCode"); } }
-//Resources:DeviceManagementResources:SensorDefintion_OffErrorCode
-
-		public static string SensorDefintion_OffErrorCode { get { return GetResourceString("SensorDefintion_OffErrorCode"); } }
-//Resources:DeviceManagementResources:SensorDefintion_OffErrorCode_Help
-
-		public static string SensorDefintion_OffErrorCode_Help { get { return GetResourceString("SensorDefintion_OffErrorCode_Help"); } }
-//Resources:DeviceManagementResources:SensorDefintion_OnErrorCode
-
-		public static string SensorDefintion_OnErrorCode { get { return GetResourceString("SensorDefintion_OnErrorCode"); } }
-//Resources:DeviceManagementResources:SensorDefintion_OnErrorCode_Help
-
-		public static string SensorDefintion_OnErrorCode_Help { get { return GetResourceString("SensorDefintion_OnErrorCode_Help"); } }
+		public static string SensorState_Warning { get { return GetResourceString("SensorState_Warning"); } }
 
 		public static class Names
 		{
@@ -1029,6 +1149,32 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string FirmwareRevision_Title = "FirmwareRevision_Title";
 			public const string FirmwareRevision_Version = "FirmwareRevision_Version";
 			public const string FirmwareRevision_VersionCodeRegEx = "FirmwareRevision_VersionCodeRegEx";
+			public const string Sensor_Address = "Sensor_Address";
+			public const string Sensor_AlertsEnabled = "Sensor_AlertsEnabled";
+			public const string Sensor_AttributeType = "Sensor_AttributeType";
+			public const string Sensor_AttributeType_Select = "Sensor_AttributeType_Select";
+			public const string Sensor_Calibration = "Sensor_Calibration";
+			public const string Sensor_Description = "Sensor_Description";
+			public const string Sensor_DeviceScaler = "Sensor_DeviceScaler";
+			public const string Sensor_Help = "Sensor_Help";
+			public const string Sensor_HighThreshold = "Sensor_HighThreshold";
+			public const string Sensor_HighThreshold_ErrorCode = "Sensor_HighThreshold_ErrorCode";
+			public const string Sensor_LowThreshold = "Sensor_LowThreshold";
+			public const string Sensor_LowThreshold_ErrorCode = "Sensor_LowThreshold_ErrorCode";
+			public const string Sensor_PortIndex = "Sensor_PortIndex";
+			public const string Sensor_PortIndex_Help = "Sensor_PortIndex_Help";
+			public const string Sensor_SensorDefinition = "Sensor_SensorDefinition";
+			public const string Sensor_SensorType_Select = "Sensor_SensorType_Select";
+			public const string Sensor_SensorTypeId = "Sensor_SensorTypeId";
+			public const string Sensor_SensorTypeId_Help = "Sensor_SensorTypeId_Help";
+			public const string Sensor_State = "Sensor_State";
+			public const string Sensor_Technology = "Sensor_Technology";
+			public const string Sensor_Technology_Select = "Sensor_Technology_Select";
+			public const string Sensor_Title = "Sensor_Title";
+			public const string Sensor_Units = "Sensor_Units";
+			public const string Sensor_Units_Select = "Sensor_Units_Select";
+			public const string Sensor_Value = "Sensor_Value";
+			public const string Sensor_Zero = "Sensor_Zero";
 			public const string SensorDefinition_Config = "SensorDefinition_Config";
 			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
 			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
@@ -1043,16 +1189,35 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Config_Select = "SensorDefinition_Config_Select";
 			public const string SensorDefinition_DefaultHighThreshold = "SensorDefinition_DefaultHighThreshold";
 			public const string SensorDefinition_DefaultLowThreshold = "SensorDefinition_DefaultLowThreshold";
-			public const string SensorDefinition_DefaultSlotIndex = "SensorDefinition_DefaultSlotIndex";
-			public const string SensorDefinition_DefaultSlotIndex_Help = "SensorDefinition_DefaultSlotIndex_Help";
+			public const string SensorDefinition_DefaultPortIndex = "SensorDefinition_DefaultPortIndex";
+			public const string SensorDefinition_DefaultPortIndex_Help = "SensorDefinition_DefaultPortIndex_Help";
+			public const string SensorDefinition_DefaultPortIndex_Select = "SensorDefinition_DefaultPortIndex_Select";
 			public const string SensorDefinition_Description = "SensorDefinition_Description";
+			public const string SensorDefinition_GenerateError_With_Off = "SensorDefinition_GenerateError_With_Off";
+			public const string SensorDefinition_GenerateError_With_Off_Help = "SensorDefinition_GenerateError_With_Off_Help";
+			public const string SensorDefinition_GenerateError_With_On = "SensorDefinition_GenerateError_With_On";
+			public const string SensorDefinition_GenerateError_With_On_Help = "SensorDefinition_GenerateError_With_On_Help";
 			public const string SensorDefinition_HasConfigurableThreshold_HighValue = "SensorDefinition_HasConfigurableThreshold_HighValue";
 			public const string SensorDefinition_HasConfigurableThreshold_HighValue_Help = "SensorDefinition_HasConfigurableThreshold_HighValue_Help";
 			public const string SensorDefinition_HasConfigurableThreshold_LowValue = "SensorDefinition_HasConfigurableThreshold_LowValue";
 			public const string SensorDefinition_HasConfigurableThreshold_LowValue_Help = "SensorDefinition_HasConfigurableThreshold_LowValue_Help";
 			public const string SensorDefinition_Help = "SensorDefinition_Help";
+			public const string SensorDefinition_HighThresholdErrorCode = "SensorDefinition_HighThresholdErrorCode";
 			public const string SensorDefinition_IconKey = "SensorDefinition_IconKey";
 			public const string SensorDefinition_IconKey_Help = "SensorDefinition_IconKey_Help";
+			public const string SensorDefinition_LowThresholdErrorCode = "SensorDefinition_LowThresholdErrorCode";
+			public const string SensorDefinition_OffErrorCode = "SensorDefinition_OffErrorCode";
+			public const string SensorDefinition_OffErrorCode_Help = "SensorDefinition_OffErrorCode_Help";
+			public const string SensorDefinition_OnErrorCode = "SensorDefinition_OnErrorCode";
+			public const string SensorDefinition_OnErrorCode_Help = "SensorDefinition_OnErrorCode_Help";
+			public const string SensorDefinition_Ports_Port1 = "SensorDefinition_Ports_Port1";
+			public const string SensorDefinition_Ports_Port2 = "SensorDefinition_Ports_Port2";
+			public const string SensorDefinition_Ports_Port3 = "SensorDefinition_Ports_Port3";
+			public const string SensorDefinition_Ports_Port4 = "SensorDefinition_Ports_Port4";
+			public const string SensorDefinition_Ports_Port5 = "SensorDefinition_Ports_Port5";
+			public const string SensorDefinition_Ports_Port6 = "SensorDefinition_Ports_Port6";
+			public const string SensorDefinition_Ports_Port7 = "SensorDefinition_Ports_Port7";
+			public const string SensorDefinition_Ports_Port8 = "SensorDefinition_Ports_Port8";
 			public const string SensorDefinition_QRCode = "SensorDefinition_QRCode";
 			public const string SensorDefinition_QRCode_Help = "SensorDefinition_QRCode_Help";
 			public const string SensorDefinition_SensorClass_String = "SensorDefinition_SensorClass_String";
@@ -1073,17 +1238,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_UnitsLabel_Help = "SensorDefinition_UnitsLabel_Help";
 			public const string SensorDefinition_WebLink = "SensorDefinition_WebLink";
 			public const string SensorDefinition_WebLink_Help = "SensorDefinition_WebLink_Help";
-			public const string SensorDefintion_DefaultHighThreshold = "SensorDefintion_DefaultHighThreshold";
-			public const string SensorDefintion_GenerateError_With_Off = "SensorDefintion_GenerateError_With_Off";
-			public const string SensorDefintion_GenerateError_With_Off_Help = "SensorDefintion_GenerateError_With_Off_Help";
-			public const string SensorDefintion_GenerateError_With_On = "SensorDefintion_GenerateError_With_On";
-			public const string SensorDefintion_GenerateError_With_On_Help = "SensorDefintion_GenerateError_With_On_Help";
-			public const string SensorDefintion_HighThresholdErrorCode = "SensorDefintion_HighThresholdErrorCode";
-			public const string SensorDefintion_LowThresholdErrorCode = "SensorDefintion_LowThresholdErrorCode";
-			public const string SensorDefintion_OffErrorCode = "SensorDefintion_OffErrorCode";
-			public const string SensorDefintion_OffErrorCode_Help = "SensorDefintion_OffErrorCode_Help";
-			public const string SensorDefintion_OnErrorCode = "SensorDefintion_OnErrorCode";
-			public const string SensorDefintion_OnErrorCode_Help = "SensorDefintion_OnErrorCode_Help";
+			public const string SensorState_Error = "SensorState_Error";
+			public const string SensorState_Nominal = "SensorState_Nominal";
+			public const string SensorState_Off = "SensorState_Off";
+			public const string SensorState_Offline = "SensorState_Offline";
+			public const string SensorState_On = "SensorState_On";
+			public const string SensorState_Warning = "SensorState_Warning";
 		}
 	}
 }

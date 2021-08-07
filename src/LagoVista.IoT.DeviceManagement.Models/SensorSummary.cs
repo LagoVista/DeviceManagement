@@ -1,21 +1,34 @@
-﻿using LagoVista.Core.Models;
+﻿using LagoVista.Core.Attributes;
+using LagoVista.Core.Models;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
     public enum SensorStates
     {
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Offline, typeof(DeviceManagementResources))]
         Offline,
+
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Nominal, typeof(DeviceManagementResources))]
         Nominal,
+
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Warning, typeof(DeviceManagementResources))]
         Warning,
+
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Error, typeof(DeviceManagementResources))]
         Error,
+
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Off, typeof(DeviceManagementResources))]
         Off,
+
+        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_On, typeof(DeviceManagementResources))]
         On,
     }
 
     public class SensorSummary : ModelBase
     {
-        SensorStates _state;
+        EntityHeader<SensorStates> _state;
         readonly SensorTechnology _technology;
         readonly Sensor _config;
 
@@ -24,11 +37,11 @@ namespace LagoVista.IoT.DeviceManagement.Models
             _config = portConfig ?? throw new ArgumentNullException(nameof(portConfig));
             Label = portConfig.Name;
             Description = portConfig.Description;
-            State = SensorStates.Nominal;
+            State = EntityHeader<SensorStates>.Create(SensorStates.Nominal);
             _technology = technology;
         }
 
-        public SensorStates State
+        public EntityHeader<SensorStates> State
         {
             get => _state;
             set => Set(ref _state, value);
@@ -36,16 +49,18 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         private void Evaluate(double value)
         {
+            SensorStates state = SensorStates.Offline;
+
             if (_config.AttributeType.Value == DeviceAdmin.Models.ParameterTypes.TrueFalse)
             {
                 if (value == 0)
                 {
-                    State = SensorStates.Off;
+                    state = SensorStates.Off;
                     Display = "Off";
                 }
                 else
                 {
-                    State = SensorStates.On;
+                    state = SensorStates.On;
                     Display = "On";
                 }
             }
@@ -61,28 +76,29 @@ namespace LagoVista.IoT.DeviceManagement.Models
                 }
 
                 var dblValue = Convert.ToDouble(value);
-                var range = _config.HighTheshold - _config.LowThreshold;
+                var range = _config.HighThreshold - _config.LowThreshold;
                 var warningThreshold = range * 0.20;
 
                 Set(ref _value, value);
                 if (dblValue < _config.LowThreshold ||
-                    dblValue > _config.HighTheshold)
+                    dblValue > _config.HighThreshold)
                 {
-                    State = SensorStates.Error;
+                    state = SensorStates.Error;
                 }
                 else if (dblValue < (_config.LowThreshold + warningThreshold) ||
-                         dblValue > _config.HighTheshold - warningThreshold)
+                         dblValue > _config.HighThreshold - warningThreshold)
                 {
-                    State = SensorStates.Warning;
+                    state = SensorStates.Warning;
                 }
                 else
                 {
-                    State = SensorStates.Nominal;
-                    
+                    state = SensorStates.Nominal;
+
                 }
             }
 
-            _config.State = State;
+            State = EntityHeader<SensorStates>.Create(state);
+            _config.State = EntityHeader<SensorStates>.Create(state);
         }
 
         double _value;
@@ -107,6 +123,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Description { get; }
 
         public Sensor Config => _config;
-        public SensorTechnology Technology => _technology;
+        public EntityHeader<SensorTechnology> Technology => EntityHeader<SensorTechnology>.Create(_technology);
     }
 }

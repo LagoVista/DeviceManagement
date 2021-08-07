@@ -837,47 +837,44 @@
   <data name="SensorDefinition_WebLink_Help" xml:space="preserve">
     <value>You can provide a web link that is associated with this sensor this can be used to provide more information about the sensor and how to install it.</value>
   </data>
-  <data name="SensorDefintion_DefaultHighThreshold" xml:space="preserve">
-    <value>Default High Threshold</value>
-  </data>
-  <data name="SensorDefintion_GenerateError_With_Off" xml:space="preserve">
+  <data name="SensorDefinition_GenerateError_With_Off" xml:space="preserve">
     <value>Generate error code with off condition</value>
   </data>
-  <data name="SensorDefintion_GenerateError_With_Off_Help" xml:space="preserve">
+  <data name="SensorDefinition_GenerateError_With_Off_Help" xml:space="preserve">
     <value>You can configure this sensor to generate an error code when an off or 0 value is detected.</value>
   </data>
-  <data name="SensorDefintion_GenerateError_With_On" xml:space="preserve">
+  <data name="SensorDefinition_GenerateError_With_On" xml:space="preserve">
     <value>Generate error code with on condition</value>
   </data>
-  <data name="SensorDefintion_GenerateError_With_On_Help" xml:space="preserve">
+  <data name="SensorDefinition_GenerateError_With_On_Help" xml:space="preserve">
     <value>You can configure this sensor to generate an error code when an on or 1 value is detected.</value>
   </data>
-  <data name="SensorDefintion_HighThresholdErrorCode" xml:space="preserve">
+  <data name="SensorDefinition_HighThresholdErrorCode" xml:space="preserve">
     <value>High Threshold Error Code</value>
   </data>
-  <data name="SensorDefintion_LowThresholdErrorCode" xml:space="preserve">
+  <data name="SensorDefinition_LowThresholdErrorCode" xml:space="preserve">
     <value>Low Threshold Error Code</value>
   </data>
-  <data name="SensorDefintion_OffErrorCode" xml:space="preserve">
+  <data name="SensorDefinition_OffErrorCode" xml:space="preserve">
     <value>Off Error Code</value>
   </data>
-  <data name="SensorDefintion_OffErrorCode_Help" xml:space="preserve">
+  <data name="SensorDefinition_OffErrorCode_Help" xml:space="preserve">
     <value>This is the error code that should be generated when an off or 0 value is detected</value>
   </data>
-  <data name="SensorDefintion_OnErrorCode_Help" xml:space="preserve">
+  <data name="SensorDefinition_OnErrorCode_Help" xml:space="preserve">
     <value>This is the error code that should be generated when an on or 1 value is detected</value>
   </data>
-  <data name="SensorDefintion_OnErrorCode" xml:space="preserve">
+  <data name="SensorDefinition_OnErrorCode" xml:space="preserve">
     <value>On Error Code</value>
   </data>
   <data name="SensorDefinition_DefaultHighThreshold" xml:space="preserve">
     <value>Default High Threshold</value>
   </data>
-  <data name="SensorDefinition_DefaultSlotIndex" xml:space="preserve">
-    <value>Default Slot Index</value>
+  <data name="SensorDefinition_DefaultPortIndex" xml:space="preserve">
+    <value>Default Port Index</value>
   </data>
-  <data name="SensorDefinition_DefaultSlotIndex_Help" xml:space="preserve">
-    <value>In some cases the sensor will always be configured in the same slot, if that is the case that slot can be set here.</value>
+  <data name="SensorDefinition_DefaultPortIndex_Help" xml:space="preserve">
+    <value>In some cases the sensor will always be configured in the same port, if that is the case that slot can be set here.</value>
   </data>
   <data name="SensorDefinition_SensorValueType_String" xml:space="preserve">
     <value>String</value>
@@ -887,5 +884,128 @@
   </data>
   <data name="SensorDefinition_UnitsLabel_Help" xml:space="preserve">
     <value>Add a units label that can be added to the value.</value>
+  </data>
+  <data name="SensorDefinition_DefaultPortIndex_Select" xml:space="preserve">
+    <value>-select port index-</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port1" xml:space="preserve">
+    <value>Port 1</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port2" xml:space="preserve">
+    <value>Port 2</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port3" xml:space="preserve">
+    <value>Port 3</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port4" xml:space="preserve">
+    <value>Port 4</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port5" xml:space="preserve">
+    <value>Port 5</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port6" xml:space="preserve">
+    <value>Port 6</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port7" xml:space="preserve">
+    <value>Port 7</value>
+  </data>
+  <data name="SensorDefinition_Ports_Port8" xml:space="preserve">
+    <value>Port 8</value>
+  </data>
+  <data name="SensorState_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SensorState_Nominal" xml:space="preserve">
+    <value>Nominal</value>
+  </data>
+  <data name="SensorState_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="SensorState_Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="SensorState_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="SensorState_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Sensor_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Sensor_AlertsEnabled" xml:space="preserve">
+    <value>Alerts Enabled</value>
+  </data>
+  <data name="Sensor_AttributeType" xml:space="preserve">
+    <value>Attribute Type</value>
+  </data>
+  <data name="Sensor_AttributeType_Select" xml:space="preserve">
+    <value>-select attribute type-</value>
+  </data>
+  <data name="Sensor_Calibration" xml:space="preserve">
+    <value>Calibration</value>
+  </data>
+  <data name="Sensor_Description" xml:space="preserve">
+    <value>A sensor is an electrical or mechanical device that collects data for an IoT device.</value>
+  </data>
+  <data name="Sensor_DeviceScaler" xml:space="preserve">
+    <value>Device Scaler</value>
+  </data>
+  <data name="Sensor_Help" xml:space="preserve">
+    <value>A sensor is an electrical or mechanical device that collects data for an IoT device.</value>
+  </data>
+  <data name="Sensor_HighThreshold" xml:space="preserve">
+    <value>High Threshold</value>
+  </data>
+  <data name="Sensor_HighThreshold_ErrorCode" xml:space="preserve">
+    <value>High Threshold Error Code</value>
+  </data>
+  <data name="Sensor_LowThreshold" xml:space="preserve">
+    <value>Low Threshold</value>
+  </data>
+  <data name="Sensor_LowThreshold_ErrorCode" xml:space="preserve">
+    <value>Low Threshold Error Code</value>
+  </data>
+  <data name="Sensor_PortIndex" xml:space="preserve">
+    <value>Port Index</value>
+  </data>
+  <data name="Sensor_PortIndex_Help" xml:space="preserve">
+    <value>The Port Index is used by the device to determine which logical port is used to access data from the device.</value>
+  </data>
+  <data name="Sensor_SensorDefinition" xml:space="preserve">
+    <value>Sensor Definition</value>
+  </data>
+  <data name="Sensor_SensorTypeId" xml:space="preserve">
+    <value>Sensor Type Id</value>
+  </data>
+  <data name="Sensor_SensorTypeId_Help" xml:space="preserve">
+    <value>The Sensor Type Id is used by the device to identify which algorithm should be used to obtain data from the physical device</value>
+  </data>
+  <data name="Sensor_SensorType_Select" xml:space="preserve">
+    <value>-select sensor type-</value>
+  </data>
+  <data name="Sensor_State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Sensor_Technology" xml:space="preserve">
+    <value>Technology</value>
+  </data>
+  <data name="Sensor_Technology_Select" xml:space="preserve">
+    <value>-select technology type-</value>
+  </data>
+  <data name="Sensor_Title" xml:space="preserve">
+    <value>Sensor</value>
+  </data>
+  <data name="Sensor_Units" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="Sensor_Units_Select" xml:space="preserve">
+    <value>-select units-</value>
+  </data>
+  <data name="Sensor_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Sensor_Zero" xml:space="preserve">
+    <value>Zero</value>
   </data>
 </root>

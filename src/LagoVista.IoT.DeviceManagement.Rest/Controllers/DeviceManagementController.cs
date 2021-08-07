@@ -464,7 +464,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
-        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid">Unique id of device</param>
         /// <param name="deviceNote"></param>
         /// <returns></returns>
@@ -478,7 +478,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>
         /// Device Management - Set 
         /// </summary>
-        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id">Unique id of device</param>
         /// <param name="geolocation"></param>
         /// <returns></returns>
@@ -491,8 +491,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         /// <summary>
         /// Device Management - Clear device error code
-        /// </summary>
-        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// </summary>  
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid">Unique id of device</param>
         /// <param name="errorcode">Error code to clear</param>
         /// <returns></returns>
@@ -503,10 +503,21 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.ClearDeviceErrorAsync(repo, deviceid, errorcode, OrgEntityHeader, UserEntityHeader);
         }
 
+
+        /// <summary>
+        /// Device Management - Create a new empty sensor that can be attached to a device.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/device/sensor/factory")]
+        public DetailResponse<Sensor> CreateSensor()
+        {
+            return DetailResponse<Sensor>.Create();
+        }
+
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
-        /// <param name="devicerepoid">Device Repoistory Id</param>
+        /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="newuser">A new user to be added as a device</param>
         /// <returns>App User</returns>
 
