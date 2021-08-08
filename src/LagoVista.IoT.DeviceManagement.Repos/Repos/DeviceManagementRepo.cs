@@ -192,9 +192,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
             /* Make sure that any data that might be sent along with the device but not required is note saved */
-            if (device.Sensors != null)
+            if (device.SensorCollection != null)
             {
-                foreach (var sensor in device.Sensors)
+                foreach (var sensor in device.SensorCollection)
                 {
                     if (!EntityHeader.IsNullOrEmpty(sensor.UnitSet))
                     {
