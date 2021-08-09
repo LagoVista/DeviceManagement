@@ -259,6 +259,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public List<Sensor> SensorCollection{ get; set; }
 
+        public Object Sensors { get; set; }
+
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
 
         public List<DeviceError> Errors { get; set; }
