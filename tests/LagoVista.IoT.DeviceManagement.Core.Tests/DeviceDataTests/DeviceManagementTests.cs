@@ -20,7 +20,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceManagementRepo> _devMgmt = new Mock<IDeviceManagementRepo>();
         Mock<IDeviceConfigHelper> _deviceConfigHelper = new Mock<IDeviceConfigHelper>();
         Mock<IAdminLogger> _logger = new Mock<IAdminLogger>();
-        Mock<ISecureStorage> _secureStorage = new Mock<ISecureStorage>();
         Mock<IAppConfig> _appConfig = new Mock<IAppConfig>();
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
@@ -39,7 +38,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _devMgmt.Object,
                 _deviceConfigHelper.Object,
                 _logger.Object,
-                _secureStorage.Object,
                 _appConfig.Object,
                 _dependencyManager.Object,
                 _security.Object,

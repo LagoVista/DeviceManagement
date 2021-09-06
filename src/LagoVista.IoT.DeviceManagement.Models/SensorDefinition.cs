@@ -149,6 +149,9 @@ namespace LagoVista.IoT.DeviceManagement.Models
             Id = Guid.NewGuid().ToId();
             ValueType = EntityHeader<SensorValueType>.Create(SensorValueType.Number);
             Technology = null;
+            DefaultScaler = 1.0;
+            DefaultZero = 0.0;
+            DefaultCalibration = 1.0;
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology, HelpResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(SensorTechnology)), WaterMark: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Select, ResourceType: typeof(DeviceManagementResources))]
@@ -194,6 +197,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public bool HasConfigurableThresholdLowValue { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Scaler,  HelpResource: DeviceManagementResources.Names.SensorDefinition_Scaler_Help, FieldType: FieldTypes.Decimal, IsRequired: true, ResourceType: typeof(DeviceManagementResources))]
+        public double DefaultScaler { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefintiion_Calibration, HelpResource: DeviceManagementResources.Names.SensorDefinition_Calibration_Help, FieldType: FieldTypes.Decimal, IsRequired: true, ResourceType: typeof(DeviceManagementResources))]
+        public double DefaultCalibration { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Zero, HelpResource:DeviceManagementResources.Names.SensorDefinition_Zero_Help, FieldType: FieldTypes.Decimal, IsRequired:true, ResourceType: typeof(DeviceManagementResources))]
+        public double DefaultZero { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultLowThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public double? DefaultLowThreshold { get; set; }
 
@@ -219,6 +231,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string OffErrorCode { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex, HelpResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Help, IsRequired:false, FieldType: FieldTypes.Picker, EnumType:typeof(SensorPorts), WaterMark:DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Select, ResourceType: typeof(DeviceManagementResources))]
-        public EntityHeader<SensorPorts> PortIndex { get; set; }
+        public EntityHeader<SensorPorts> DefaultPortIndex { get; set; }
     }
 }

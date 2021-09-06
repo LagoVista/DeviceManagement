@@ -737,6 +737,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_Zero
 
 		public static string Sensor_Zero { get { return GetResourceString("Sensor_Zero"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Calibration_Help
+
+		public static string SensorDefinition_Calibration_Help { get { return GetResourceString("SensorDefinition_Calibration_Help"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config
 
 		public static string SensorDefinition_Config { get { return GetResourceString("SensorDefinition_Config"); } }
@@ -872,6 +875,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_QRCode_Help
 
 		public static string SensorDefinition_QRCode_Help { get { return GetResourceString("SensorDefinition_QRCode_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Scaler
+
+		public static string SensorDefinition_Scaler { get { return GetResourceString("SensorDefinition_Scaler"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Scaler_Help
+
+		public static string SensorDefinition_Scaler_Help { get { return GetResourceString("SensorDefinition_Scaler_Help"); } }
 //Resources:DeviceManagementResources:SensorDefinition_SensorClass_String
 
 		public static string SensorDefinition_SensorClass_String { get { return GetResourceString("SensorDefinition_SensorClass_String"); } }
@@ -926,6 +935,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_WebLink_Help
 
 		public static string SensorDefinition_WebLink_Help { get { return GetResourceString("SensorDefinition_WebLink_Help"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Zero
+
+		public static string SensorDefinition_Zero { get { return GetResourceString("SensorDefinition_Zero"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Zero_Help
+
+		public static string SensorDefinition_Zero_Help { get { return GetResourceString("SensorDefinition_Zero_Help"); } }
+//Resources:DeviceManagementResources:SensorDefintiion_Calibration
+
+		public static string SensorDefintiion_Calibration { get { return GetResourceString("SensorDefintiion_Calibration"); } }
 //Resources:DeviceManagementResources:SensorState_Error
 
 		public static string SensorState_Error { get { return GetResourceString("SensorState_Error"); } }
@@ -1175,6 +1193,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Sensor_Units_Select = "Sensor_Units_Select";
 			public const string Sensor_Value = "Sensor_Value";
 			public const string Sensor_Zero = "Sensor_Zero";
+			public const string SensorDefinition_Calibration_Help = "SensorDefinition_Calibration_Help";
 			public const string SensorDefinition_Config = "SensorDefinition_Config";
 			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
 			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
@@ -1220,6 +1239,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Ports_Port8 = "SensorDefinition_Ports_Port8";
 			public const string SensorDefinition_QRCode = "SensorDefinition_QRCode";
 			public const string SensorDefinition_QRCode_Help = "SensorDefinition_QRCode_Help";
+			public const string SensorDefinition_Scaler = "SensorDefinition_Scaler";
+			public const string SensorDefinition_Scaler_Help = "SensorDefinition_Scaler_Help";
 			public const string SensorDefinition_SensorClass_String = "SensorDefinition_SensorClass_String";
 			public const string SensorDefinition_SensorTechnology = "SensorDefinition_SensorTechnology";
 			public const string SensorDefinition_SensorTechnology_ADC = "SensorDefinition_SensorTechnology_ADC";
@@ -1238,6 +1259,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_UnitsLabel_Help = "SensorDefinition_UnitsLabel_Help";
 			public const string SensorDefinition_WebLink = "SensorDefinition_WebLink";
 			public const string SensorDefinition_WebLink_Help = "SensorDefinition_WebLink_Help";
+			public const string SensorDefinition_Zero = "SensorDefinition_Zero";
+			public const string SensorDefinition_Zero_Help = "SensorDefinition_Zero_Help";
+			public const string SensorDefintiion_Calibration = "SensorDefintiion_Calibration";
 			public const string SensorState_Error = "SensorState_Error";
 			public const string SensorState_Nominal = "SensorState_Nominal";
 			public const string SensorState_Off = "SensorState_Off";

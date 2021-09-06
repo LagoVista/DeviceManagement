@@ -95,11 +95,24 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="id"></param>
         /// <param name="macaddress"></param>
         /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/{id}/{macaddress}")]
+        [HttpGet("/api/device/{devicerepoid}/{id}/macaddress/{macaddress}/set")]
         public async Task<InvokeResult> UpdateDeviceMacAddressAsync(string devicerepoid, string id, string macaddress)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);            
             return await _deviceManager.UpdateDeviceMacAddressAsync(repo, id, macaddress, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get Device by MacAddress (mainly used to check if it's already registered)
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="macaddress"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/macaddress/{macaddress}")]
+        public async Task<InvokeResult<Device>> GetDeviceByMacAddress(string devicerepoid, string macaddress)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDeviceByMacAddressAsync(repo,macaddress, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -444,7 +457,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult<Device>> CreateDeviceAsync(string devicerepoid, string devicetypeid)
         {
             var deviceRepo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.CeateDeviceAsync(deviceRepo, devicetypeid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.CreateDeviceAsync(deviceRepo, devicetypeid, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>

@@ -1008,4 +1008,22 @@
   <data name="Sensor_Zero" xml:space="preserve">
     <value>Zero</value>
   </data>
+  <data name="SensorDefinition_Calibration_Help" xml:space="preserve">
+    <value>The calibration value is applied to the raw sensor output prior to the zero being removed and the scaler factor being applied.</value>
+  </data>
+  <data name="SensorDefinition_Scaler" xml:space="preserve">
+    <value>Default Scaler</value>
+  </data>
+  <data name="SensorDefinition_Scaler_Help" xml:space="preserve">
+    <value>The scaler is a value that can be applied to the raw value after the calibration and zero have been applied.</value>
+  </data>
+  <data name="SensorDefinition_Zero" xml:space="preserve">
+    <value>Default Zero</value>
+  </data>
+  <data name="SensorDefinition_Zero_Help" xml:space="preserve">
+    <value>The zero value is subtracted from the value after the calibration value has been applied.</value>
+  </data>
+  <data name="SensorDefintiion_Calibration" xml:space="preserve">
+    <value>Default Calibration</value>
+  </data>
 </root>

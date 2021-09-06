@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core;
+using LagoVista.Core.Exceptions;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
@@ -15,18 +16,19 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
-    public sealed class DeviceManager : ManagerBase, IDeviceManager
+    public class DeviceManager : ManagerBase, IDeviceManager
     {
         //private readonly string _deviceRepoKey;
         private readonly IDeviceManagementRepo _defaultRepo;
-        private readonly ISecureStorage _secureStorage;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
         private readonly IProxyFactory _proxyFactory;
         private readonly IMediaServicesManager _mediaServicesManager;
@@ -53,8 +55,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IDeviceManagementRepo deviceRepo,
             IDeviceConfigHelper deviceConfigHelper,
             IAdminLogger logger,
-            ISecureStorage secureStorage,
-            IAppConfig appConfig,
+             IAppConfig appConfig,
             IDependencyManager depmanager,
             ISecurity security,
             IDeviceExceptionRepo deviceExceptionRepo,
@@ -67,7 +68,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
-            _secureStorage = secureStorage ?? throw new ArgumentNullException(nameof(secureStorage));
             _deviceConfigHelper = deviceConfigHelper ?? throw new ArgumentNullException(nameof(deviceConfigHelper));
             _proxyFactory = proxyFactory ?? throw new ArgumentNullException(nameof(proxyFactory));
             _deviceExceptionRepo = deviceExceptionRepo ?? throw new ArgumentNullException(nameof(deviceExceptionRepo));
@@ -103,12 +103,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
-            ValidationCheck(device, Actions.Create);
+            device.OwnerOrganization = org;
+            if (String.IsNullOrEmpty(device.PrimaryAccessKey))
+            {
+                var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
+                var timeStamp = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStamp);
+                device.PrimaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
+            }
+
+            if (String.IsNullOrEmpty(device.SecondaryAccessKey))
+            {
+                var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
+                var timeStamp = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStamp);
+                device.SecondaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
+            }
+
             device.DeviceRepository = new EntityHeader
             {
                 Id = deviceRepo.Id,
                 Text = deviceRepo.Name
             };
+
+            ValidationCheck(device, Actions.Create);
 
             var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
             if (existingDevice != null)
@@ -161,6 +179,33 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 : _deviceConnectionEventRepo;
         }
 
+        public async Task<InvokeResult<Device>> GetDeviceByMacAddressAsync(DeviceRepository deviceRepo, string macAddress, EntityHeader org, EntityHeader user)
+        {
+            if (String.IsNullOrEmpty(macAddress))
+            {
+                throw new ArgumentNullException(nameof(macAddress));
+            }
+
+            if (!Regex.IsMatch(macAddress, @"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"))
+            {
+                throw new ValidationException("Invalid mac address", false, $"{macAddress} is not a valid mac address.");
+            }
+
+            var repo = GetRepo(deviceRepo);
+            if (repo == null)
+            {
+                throw new NullReferenceException(nameof(repo));
+            }
+
+            var device = await repo.GetDeviceByMacAddressAsync(deviceRepo, macAddress);
+            if (device == null)
+            {
+                return InvokeResult<Device>.FromError($"Could not find device with mac address {macAddress}");
+            }
+
+            await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
+            return InvokeResult<Device>.Create(device);
+        }
 
         public async Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
@@ -588,7 +633,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return await _mediaServicesManager.GetResourceMediaAsync(mediaId, org, user);
         }
 
-        public async Task<InvokeResult<Device>> CeateDeviceAsync(DeviceRepository deviceRepo, string deviceTypeId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<Device>> CreateDeviceAsync(DeviceRepository deviceRepo, string deviceTypeId, EntityHeader org, EntityHeader user)
         {
             if (!deviceRepo.AutoGenerateDeviceIds)
             {
@@ -610,6 +655,22 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedBy = user;
             device.CreationDate = timeStamp;
             device.LastUpdatedDate = timeStamp;
+
+            if (String.IsNullOrEmpty(device.PrimaryAccessKey))
+            {
+                var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
+                var timeStampBytes = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStampBytes);
+                device.PrimaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
+            }
+
+            if (String.IsNullOrEmpty(device.SecondaryAccessKey))
+            {
+                var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
+                var timeStampBytes = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStampBytes);
+                device.SecondaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
+            }
 
             var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(deviceTypeId);
 

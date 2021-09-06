@@ -68,6 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 }
                 await regManager.AddDeviceAsync(iotHubDevice);
             }
+
             await CreateDocumentAsync(device);
 
             return InvokeResult.Success;
@@ -479,6 +480,16 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             lr.HasMoreRecords = items.HasMoreRecords;
             lr.PageIndex = items.PageIndex;
             return lr;
+        }
+
+        public async Task<Device> GetDeviceByMacAddressAsync(DeviceRepository deviceRepo, string macAddress)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+
+            var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
+                                                       qry.DeviceRepository.Id == deviceRepo.Id &&
+                                                       qry.MacAddress == macAddress);
+            return devices.FirstOrDefault();
         }
     }
 }

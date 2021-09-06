@@ -49,9 +49,9 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         private void Evaluate(double value)
         {
-            SensorStates state = SensorStates.Offline;
+            SensorStates state;
 
-            if (_config.AttributeType.Value == DeviceAdmin.Models.ParameterTypes.TrueFalse)
+            if (_config.AttributeType.Value == SensorValueType.Boolean)
             {
                 if (value == 0)
                 {
@@ -64,7 +64,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
                     Display = "On";
                 }
             }
-            else
+            else if(_config.AttributeType.Value == SensorValueType.Number)
             {
                 if (EntityHeader.IsNullOrEmpty(_config.UnitSet))
                 {
@@ -95,6 +95,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
                     state = SensorStates.Nominal;
 
                 }
+            }
+            else
+            {
+                state = SensorStates.Nominal;
             }
 
             State = EntityHeader<SensorStates>.Create(state);

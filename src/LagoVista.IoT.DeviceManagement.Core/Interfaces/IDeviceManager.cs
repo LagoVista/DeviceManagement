@@ -16,6 +16,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult> UpdateDeviceMacAddressAsync(DeviceRepository deviceRepo, string id, string macAddress, EntityHeader org, EntityHeader user);
 
+        Task<InvokeResult<Device>> GetDeviceByMacAddressAsync(DeviceRepository deviceRepo, string macAddress, EntityHeader org, EntityHeader user);
+
         /// <summary>
         /// Get the Device by the unique identifier that was generated for the device (not device id)
         /// </summary>
@@ -130,6 +132,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult<Device>> CeateDeviceAsync(DeviceRepository deviceRepo, string deviceTypeId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<Device>> CreateDeviceAsync(DeviceRepository deviceRepo, string deviceTypeId, EntityHeader org, EntityHeader user);
     }
 }
