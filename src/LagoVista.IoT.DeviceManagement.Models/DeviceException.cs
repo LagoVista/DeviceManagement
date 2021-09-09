@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LagoVista.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,9 +9,11 @@ namespace LagoVista.IoT.DeviceManagement.Models
     {
         public DeviceException()
         {
-
+            AdditionalDetails = new List<string>();
+            Id = Guid.NewGuid().ToId();
         }
 
+        public string Id { get; set; }
         public string Timestamp{ get; set; }
         public string DeviceRepositoryId { get; set; }
         public string DeviceUniqueId { get; set; }

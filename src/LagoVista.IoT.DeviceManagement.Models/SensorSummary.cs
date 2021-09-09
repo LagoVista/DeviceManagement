@@ -10,19 +10,19 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Offline, typeof(DeviceManagementResources))]
         Offline,
 
-        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Nominal, typeof(DeviceManagementResources))]
+        [EnumLabel(Sensor.Sensor_Nominal, DeviceManagementResources.Names.SensorState_Nominal, typeof(DeviceManagementResources))]
         Nominal,
 
-        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Warning, typeof(DeviceManagementResources))]
+        [EnumLabel(Sensor.Sensor_Warning, DeviceManagementResources.Names.SensorState_Warning, typeof(DeviceManagementResources))]
         Warning,
 
-        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Error, typeof(DeviceManagementResources))]
+        [EnumLabel(Sensor.Sensor_Error, DeviceManagementResources.Names.SensorState_Error, typeof(DeviceManagementResources))]
         Error,
 
-        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_Off, typeof(DeviceManagementResources))]
+        [EnumLabel(Sensor.Sensor_Off, DeviceManagementResources.Names.SensorState_Off, typeof(DeviceManagementResources))]
         Off,
 
-        [EnumLabel(Sensor.Sensor_Offline, DeviceManagementResources.Names.SensorState_On, typeof(DeviceManagementResources))]
+        [EnumLabel(Sensor.Sensor_On, DeviceManagementResources.Names.SensorState_On, typeof(DeviceManagementResources))]
         On,
     }
 
