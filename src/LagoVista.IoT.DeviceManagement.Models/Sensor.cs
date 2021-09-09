@@ -122,14 +122,14 @@ namespace LagoVista.IoT.DeviceManagement.Models
                 {
                     switch (value.Value)
                     {
-                        case 0: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port1); break;
-                        case 1: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port2); break;
-                        case 2: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port3); break;
-                        case 3: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port4); break;
-                        case 4: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port5); break;
-                        case 5: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port6); break;
-                        case 6: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port7); break;
-                        case 7: SensorType = EntityHeader<SensorPorts>.Create(SensorPorts.Port8); break;
+                        case 0: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port1); break;
+                        case 1: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port2); break;
+                        case 2: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port3); break;
+                        case 3: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port4); break;
+                        case 4: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port5); break;
+                        case 5: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port6); break;
+                        case 6: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port7); break;
+                        case 7: PortIndexSelection = EntityHeader<SensorPorts>.Create(SensorPorts.Port8); break;
                     }
                 }
             }
