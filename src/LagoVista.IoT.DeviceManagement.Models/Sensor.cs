@@ -35,6 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         {
             Name = definition.Name;
             Key = definition.Key;
+            ValueType = definition.ValueType;
             Description = definition.Description;
             SensorDefinition = new EntityHeader<SensorDefinition>() { Id = definition.Id, Text = definition.Name, Key = definition.Key };
             SensorDefinition.Value = null;
@@ -72,7 +73,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Address { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_AttributeType, FieldType: FieldTypes.Picker, EnumType: typeof(SensorValueType), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_AttributeType_Select)]
-        public EntityHeader<SensorValueType> AttributeType { get; set; }
+        public EntityHeader<SensorValueType> ValueType { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Technology, FieldType: FieldTypes.Picker, EnumType: typeof(SensorTechnology), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_Technology_Select)]
         public EntityHeader<SensorTechnology> Technology { get; set; }

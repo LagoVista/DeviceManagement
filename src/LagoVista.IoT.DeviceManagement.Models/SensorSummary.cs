@@ -47,64 +47,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
             set => Set(ref _state, value);
         }
 
-        private void Evaluate(double value)
-        {
-            SensorStates state;
-
-            if (_config.AttributeType.Value == SensorValueType.Boolean)
-            {
-                if (value == 0)
-                {
-                    state = SensorStates.Off;
-                    Display = "Off";
-                }
-                else
-                {
-                    state = SensorStates.On;
-                    Display = "On";
-                }
-            }
-            else if(_config.AttributeType.Value == SensorValueType.Number)
-            {
-                if (EntityHeader.IsNullOrEmpty(_config.UnitSet))
-                {
-                    Display = $"{Value}";
-                }
-                else
-                {
-                    Display = $"{Value}";
-                }
-
-                var dblValue = Convert.ToDouble(value);
-                var range = _config.HighThreshold - _config.LowThreshold;
-                var warningThreshold = range * 0.20;
-
-                Set(ref _value, value);
-                if (dblValue < _config.LowThreshold ||
-                    dblValue > _config.HighThreshold)
-                {
-                    state = SensorStates.Error;
-                }
-                else if (dblValue < (_config.LowThreshold + warningThreshold) ||
-                         dblValue > _config.HighThreshold - warningThreshold)
-                {
-                    state = SensorStates.Warning;
-                }
-                else
-                {
-                    state = SensorStates.Nominal;
-
-                }
-            }
-            else
-            {
-                state = SensorStates.Nominal;
-            }
-
-            State = EntityHeader<SensorStates>.Create(state);
-            _config.State = EntityHeader<SensorStates>.Create(state);
-        }
-
         double _value;
         public double Value
         {
@@ -112,7 +54,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
             set
             {
                 Set(ref _value, value);
-                Evaluate(value);
             }
         }
 
