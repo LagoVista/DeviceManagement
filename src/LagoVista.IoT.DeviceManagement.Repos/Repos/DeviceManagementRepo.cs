@@ -491,5 +491,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                                                        qry.MacAddress == macAddress);
             return devices.FirstOrDefault();
         }
+
+        public async Task<Device> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+
+            var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
+                                                       qry.DeviceRepository.Id == deviceRepo.Id &&
+                                                       qry.iosBLEAddress == iosBLEAddress);
+            return devices.FirstOrDefault();
+        }
     }
 }

@@ -263,6 +263,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_inputCommandEndPoints_Help
 
 		public static string Device_inputCommandEndPoints_Help { get { return GetResourceString("Device_inputCommandEndPoints_Help"); } }
+//Resources:DeviceManagementResources:Device_iOS_BLE_Address
+
+		public static string Device_iOS_BLE_Address { get { return GetResourceString("Device_iOS_BLE_Address"); } }
 //Resources:DeviceManagementResources:Device_IsBeta
 
 		public static string Device_IsBeta { get { return GetResourceString("Device_IsBeta"); } }
@@ -1035,6 +1038,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_ImageURL = "Device_ImageURL";
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
 			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
+			public const string Device_iOS_BLE_Address = "Device_iOS_BLE_Address";
 			public const string Device_IsBeta = "Device_IsBeta";
 			public const string Device_IsBeta_Help = "Device_IsBeta_Help";
 			public const string Device_IsConnected = "Device_IsConnected";

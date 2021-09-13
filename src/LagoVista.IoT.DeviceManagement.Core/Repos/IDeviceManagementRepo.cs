@@ -24,6 +24,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository repo, string locationId, ListRequest listRequest);
 
         Task<Device> GetDeviceByMacAddressAsync(DeviceRepository deviceRepo, string macAddress);
+        Task<Device> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress);
 
         Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository repo, string id);
 

@@ -1026,4 +1026,7 @@
   <data name="SensorDefintiion_Calibration" xml:space="preserve">
     <value>Default Calibration</value>
   </data>
+  <data name="Device_iOS_BLE_Address" xml:space="preserve">
+    <value>iOS BLE Address</value>
+  </data>
 </root>

@@ -710,5 +710,42 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedBy = user;
             return await UpdateDeviceAsync(deviceRepo, device, org, user);
         }
+
+        public async Task<InvokeResult> UpdateDeviceiOSBleAddressAsync(DeviceRepository deviceRepo, string id, string iosBLEAddress, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            device.iosBLEAddress = iosBLEAddress;
+            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedBy = user;
+            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+        }
+
+        public async Task<InvokeResult<Device>> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress, EntityHeader org, EntityHeader user)
+        {
+            if (String.IsNullOrEmpty(iosBLEAddress))
+            {
+                throw new ArgumentNullException(nameof(iosBLEAddress));
+            }
+
+            if (!Regex.IsMatch(iosBLEAddress, @"^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+            {
+                throw new ValidationException("Invalid mac address", false, $"{iosBLEAddress} is not a valid mac address.");
+            }
+
+            var repo = GetRepo(deviceRepo);
+            if (repo == null)
+            {
+                throw new NullReferenceException(nameof(repo));
+            }
+
+            var device = await repo.GetDeviceByiOSBLEAddressAsync(deviceRepo, iosBLEAddress);
+            if (device == null)
+            {
+                return InvokeResult<Device>.FromError($"Could not find device with mac address {iosBLEAddress}");
+            }
+
+            await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
+            return InvokeResult<Device>.Create(device);
+        }
     }
 }

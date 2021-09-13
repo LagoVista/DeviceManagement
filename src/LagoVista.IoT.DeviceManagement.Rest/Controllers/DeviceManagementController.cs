@@ -103,6 +103,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Update
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="id"></param>
+        /// <param name="iosbleaddress"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/iosbleaddress/{iosbleaddress}/set")]
+        public async Task<InvokeResult> UpdateDeviceiOSBLEAddressAsync(string devicerepoid, string id, string iosbleaddress)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.UpdateDeviceiOSBleAddressAsync(repo, id, iosbleaddress, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Get Device by MacAddress (mainly used to check if it's already registered)
         /// </summary>
         /// <param name="devicerepoid"></param>
@@ -113,6 +127,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.GetDeviceByMacAddressAsync(repo,macaddress, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Management - Get Device by MacAddress (mainly used to check if it's already registered)
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="iosbleaddress"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/iosbleaddress/{iosbleaddress}")]
+        public async Task<InvokeResult<Device>> GetDeviceByiOSBLEAddress(string devicerepoid, string iosbleaddress)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDeviceByiOSBLEAddressAsync(repo, iosbleaddress, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
