@@ -33,12 +33,17 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         public Sensor(SensorDefinition definition) : this()
         {
+            if(definition == null)
+            {
+                throw new ArgumentNullException(nameof(definition));
+            }
+
             Name = definition.Name;
             Key = definition.Key;
+            IconKey = definition.IconKey;
             ValueType = definition.ValueType;
             Description = definition.Description;
-            SensorDefinition = new EntityHeader<SensorDefinition>() { Id = definition.Id, Text = definition.Name, Key = definition.Key };
-            SensorDefinition.Value = null;
+            SensorDefinition = new EntityHeader() { Id = definition.Id, Text = definition.Name, Key = definition.Key };
             Technology = definition.Technology;
             SensorType = definition.SensorType;
             DeviceScaler = definition.DefaultScaler;
@@ -81,7 +86,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string LastUpdated { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorDefinition, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public EntityHeader<SensorDefinition> SensorDefinition { get; set; }
+        public EntityHeader SensorDefinition { get; set; }
 
         /// <summary>
         /// Type of Sensor 
@@ -165,6 +170,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string UnitsLabel { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_IconKey, HelpResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public string IconKey { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Units, FieldType: FieldTypes.EntityHeaderPicker, IsUserEditable: true, EnumType: typeof(SensorStates), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_Units_Select)]
         public EntityHeader<UnitSet> UnitSet { get; set; }
 
@@ -174,7 +183,28 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string OffErrorCode { get; set; }
 
+        private string _value;
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Value, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false, IsUserEditable: false)]
-        public string Value { get; set; }
+        public string Value
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                LastUpdated = DateTime.UtcNow.ToJSONString();
+            }
+        }
+
+        public override string ToString()
+        {
+            if(String.IsNullOrEmpty(UnitsLabel))
+            {
+                return Value;
+            }
+            else
+            {
+                return $"{Value} {UnitsLabel}";
+            }
+        }
     }
 }

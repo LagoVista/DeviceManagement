@@ -201,11 +201,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                     {
                         sensor.UnitSet.Value = null;
                     }
-
-                    if (!EntityHeader.IsNullOrEmpty(sensor.SensorDefinition))
-                    {
-                        sensor.SensorDefinition.Value = null;
-                    }
                 }
             }
 

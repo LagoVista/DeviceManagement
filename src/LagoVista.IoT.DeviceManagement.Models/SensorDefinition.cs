@@ -66,6 +66,9 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         [EnumLabel(SensorDefinition.ADCSensorTypes_ct_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_CT, typeof(DeviceManagementResources))]
         CurentTransformer,
+  
+        [EnumLabel(SensorDefinition.ADCSensorTypes_onoff_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_ONOFF, typeof(DeviceManagementResources))]
+        OnOff,
     }
 
     public enum SensorPorts
@@ -131,6 +134,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string ADCSensorTypes_none_Idx = "0";
         public const string ADCSensorTypes_adc_Idx = "1";
         public const string ADCSensorTypes_ct_Idx = "2";
+        public const string ADCSensorTypes_onoff_Idx = "3";
 
         public const string SensorDefinition_Port1 = "1";
         public const string SensorDefinition_Port2 = "2";

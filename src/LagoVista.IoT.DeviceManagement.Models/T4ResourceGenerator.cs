@@ -752,6 +752,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Config_ADC_CT
 
 		public static string SensorDefinition_Config_ADC_CT { get { return GetResourceString("SensorDefinition_Config_ADC_CT"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_ONOFF
+
+		public static string SensorDefinition_Config_ADC_ONOFF { get { return GetResourceString("SensorDefinition_Config_ADC_ONOFF"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_Help
 
 		public static string SensorDefinition_Config_Help { get { return GetResourceString("SensorDefinition_Config_Help"); } }
@@ -1201,6 +1204,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Config = "SensorDefinition_Config";
 			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
 			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
+			public const string SensorDefinition_Config_ADC_ONOFF = "SensorDefinition_Config_ADC_ONOFF";
 			public const string SensorDefinition_Config_Help = "SensorDefinition_Config_Help";
 			public const string SensorDefinition_Config_IO_DHT11 = "SensorDefinition_Config_IO_DHT11";
 			public const string SensorDefinition_Config_IO_DHT22 = "SensorDefinition_Config_IO_DHT22";

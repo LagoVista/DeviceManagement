@@ -1029,4 +1029,7 @@
   <data name="Device_iOS_BLE_Address" xml:space="preserve">
     <value>iOS BLE Address</value>
   </data>
+  <data name="SensorDefinition_Config_ADC_ONOFF" xml:space="preserve">
+    <value>On/Off</value>
+  </data>
 </root>
