@@ -14,7 +14,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
             services.AddTransient<IDeviceGroupManager, DeviceGroupManager>();
             services.AddTransient<IDeviceManager, DeviceManager>();
             services.AddTransient<IDevicePEMManager, DevicePEMManager>();
-            services.AddTransient<IDeviceLogManager, DeviceLogManager>();                        
+            services.AddTransient<IDeviceLogManager, DeviceLogManager>();
             services.AddTransient<IDeviceRepositoryManager, DeviceRepositoryManager>();
             services.AddTransient<IDeviceArchiveReportUtils, DeviceArchiveReportUtils>();
             services.AddTransient<IDeviceMediaManager, DeviceMediaManager>();
@@ -22,6 +22,11 @@ namespace LagoVista.IoT.DeviceManagement.Core
             services.AddTransient<IDeviceArchiveManagerRemote, DeviceArchiveManager>();
             services.AddTransient<IDeviceRepositoryManagerRemote, DeviceRepositoryManager>();
             services.AddTransient<IFirmwareManager, FirmwareManager>();
+        }
+
+        public static void ConfigureFirmwareDownloadServices(IServiceCollection services)
+        {
+            services.AddTransient<IFirmwareDownloadManager, FirmwareDownloadManager>();
         }
     }
 }

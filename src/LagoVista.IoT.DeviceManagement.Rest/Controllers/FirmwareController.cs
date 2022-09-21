@@ -21,21 +21,21 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
     /// <summary>
     /// This is a public controller, it will pass in a GUID that will be used to do
-    /// a lookup on a download of a firmare revision.
+    /// a lookup on a download of a firmware revision.
     /// </summary>
     public class FirmwarDownloaddController : Controller
     {
-        readonly IFirmwareManager _firmwareManager;
+        readonly IFirmwareDownloadManager _firmwareDownloadManager;
 
-        public FirmwarDownloaddController(IFirmwareManager firmwareManager)
+        public FirmwarDownloaddController(IFirmwareDownloadManager firmwareDownlaodManager)
         {
-            _firmwareManager = firmwareManager ?? throw new ArgumentNullException();
+            _firmwareDownloadManager = firmwareDownlaodManager ?? throw new ArgumentNullException();
         }
 
         [HttpGet("/api/firmware/download/{requestid}")]
         public async Task<IActionResult> DownloadFirmwareAsync(string requestid, int? start, int? length)
         {
-            var firmware = await _firmwareManager.DownloadFirmwareAsync(requestid, start, length);
+            var firmware = await _firmwareDownloadManager.DownloadFirmwareAsync(requestid, start, length);
 
             var ms = new MemoryStream(firmware.Result);
             return new FileStreamResult(ms, "application/octet-stream");
@@ -44,19 +44,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/firmware/download/{requestid}/failed")]
         public async Task<InvokeResult> MarkAsFailedAsync(string requestid, string err)
         {
-            return await _firmwareManager.MarkAsFailedAsync(requestid, err);
+            return await _firmwareDownloadManager.MarkAsFailedAsync(requestid, err);
         }
 
         [HttpGet("/api/firmware/download/{requestid}/success")]
         public async Task<InvokeResult> MarkAsSuccessAsync(string requestid)
         {
-            return await _firmwareManager.MarkAsCompleteAsync(requestid);
+            return await _firmwareDownloadManager.MarkAsCompleteAsync(requestid);
         }
 
         [HttpGet("/api/firmware/download/{requestid}/size")]
         public async Task<int> GetFirmwareSize(string requestid)
         {
-            var firmware = await _firmwareManager.GetFirmwareLengthAsync(requestid);
+            var firmware = await _firmwareDownloadManager.GetFirmwareLengthAsync(requestid);
             return firmware.Result;
         }
     }

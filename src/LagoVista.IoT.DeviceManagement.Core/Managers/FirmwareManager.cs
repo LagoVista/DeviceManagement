@@ -9,12 +9,132 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
+    public class FirmwareDownloadManager : IFirmwareDownloadManager
+    {
+        private readonly IFirmwareRepo _repo;
+
+        public FirmwareDownloadManager(IFirmwareRepo repo)
+        {
+            _repo = repo ?? throw new ArgumentNullException();
+        }
+
+        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            if (request.Expired)
+            {
+                throw new NotAuthorizedException("Request has already been handled or has expired.");
+            }
+
+            if ((DateTime.UtcNow - request.ExpiresUTC.ToDateTime()).TotalMinutes > 10)
+            {
+                request.Expired = true;
+                request.Status = "Expired";
+                request.Error = "Requested after expired.";
+                await _repo.UpdateDownloadRequestAsync(request);
+                throw new NotAuthorizedException("Firmware request has expired.");
+            }
+
+            await _repo.UpdateDownloadRequestAsync(request);
+
+            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            if (result.Successful)
+            {
+                if (start.HasValue && length.HasValue)
+                {
+                    var buffer = result.Result;
+
+                    var remainingLength = buffer.Length - start.Value;
+                    var sendLength = Math.Min(length.Value, remainingLength);
+
+                    var output = new byte[sendLength];
+                    Array.Copy(buffer, start.Value, output, 0, sendLength);
+
+                    var requestedSoFar = start.Value + length.Value;
+                    request.PercentRequested = (requestedSoFar * 100) / buffer.Length;
+                    request.Status = "Downloading";
+                    await _repo.UpdateDownloadRequestAsync(request);
+
+                    return InvokeResult<byte[]>.Create(output);
+                }
+                else
+                {
+                    request.PercentRequested = 100;
+                    request.Status = "Downloading";
+                    return result;
+                }
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        public async Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            if (result.Successful)
+            {
+                return InvokeResult<int>.Create(result.Result.Length);
+            }
+            else
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+        }
+        
+        public async Task<InvokeResult> MarkAsCompleteAsync(string downloadId)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            request.Expired = true;
+            request.Status = "Completed";
+            request.PercentRequested = 100;
+            request.Error = "noerror";
+
+            await _repo.UpdateDownloadRequestAsync(request);
+
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> MarkAsFailedAsync(string downloadId, string err)
+        {
+            var request = await _repo.GetDownloadRequestAsync(downloadId);
+            if (request == null)
+            {
+                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
+            }
+
+            request.Expired = true;
+            request.Status = "Failed";
+            request.Error = err;
+
+            await _repo.UpdateDownloadRequestAsync(request);
+
+            return InvokeResult.Success;
+        }
+    }
+
     public class FirmwareManager : ManagerBase, IFirmwareManager
     {
         IFirmwareRepo _repo;
@@ -142,117 +262,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(user.Id, org.Id, "DownloadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionId}");
 
             return await _repo.GetFirmareBinaryAsync(firmwareId, revisionId);
-        }
-
-        public async Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId)
-        {
-            var request = await _repo.GetDownloadRequestAsync(downloadId);
-            if (request == null)
-            {
-                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
-            }
-
-            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
-            if (result.Successful)
-            {
-                return InvokeResult<int>.Create(result.Result.Length);
-            }
-            else
-            {
-                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
-            }
-        }
-
-        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
-        {
-            var request = await _repo.GetDownloadRequestAsync(downloadId);
-            if (request == null)
-            {
-                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
-            }
-
-            if (request.Expired)
-            {
-                throw new NotAuthorizedException("Request has already been handled or has expired.");
-            }
-
-            if ((DateTime.UtcNow - request.ExpiresUTC.ToDateTime()).TotalMinutes > 10)
-            {
-                request.Expired = true;
-                request.Status = "Expired";
-                request.Error = "Requested after expired.";
-                await _repo.UpdateDownloadRequestAsync(request);
-                throw new NotAuthorizedException("Firmware request has expired.");
-            }
-
-            await _repo.UpdateDownloadRequestAsync(request);
-
-            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
-            if (result.Successful)
-            {
-                if (start.HasValue && length.HasValue)
-                {
-                    var buffer = result.Result;
-
-                    var remainingLength = buffer.Length - start.Value;
-                    var sendLength = Math.Min(length.Value, remainingLength);
-
-                    var output = new byte[sendLength];
-                    Array.Copy(buffer, start.Value, output, 0, sendLength);
-
-                    var requestedSoFar = start.Value + length.Value;
-                    request.PercentRequested = (requestedSoFar * 100) / buffer.Length;
-                    request.Status = "Downloading";
-                    await _repo.UpdateDownloadRequestAsync(request);
-
-                    return InvokeResult<byte[]>.Create(output);
-                }
-                else
-                {
-                    request.PercentRequested = 100;
-                    request.Status = "Downloading";
-                    return result;
-                }
-            }
-            else
-            {
-                return result;
-            }
-        }
-
-        public async Task<InvokeResult> MarkAsCompleteAsync(string downloadId)
-        {
-            var request = await _repo.GetDownloadRequestAsync(downloadId);
-            if (request == null)
-            {
-                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
-            }
-
-            request.Expired = true;
-            request.Status = "Completed";
-            request.PercentRequested = 100;
-            request.Error = "noerror";
-
-            await _repo.UpdateDownloadRequestAsync(request);
-
-            return InvokeResult.Success;
-        }
-
-        public async Task<InvokeResult> MarkAsFailedAsync(string downloadId, string err)
-        {
-            var request = await _repo.GetDownloadRequestAsync(downloadId);
-            if (request == null)
-            {
-                throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
-            }
-
-            request.Expired = true;
-            request.Status = "Failed";
-            request.Error = err;
-
-            await _repo.UpdateDownloadRequestAsync(request);
-
-            return InvokeResult.Success;
         }
     }
 }

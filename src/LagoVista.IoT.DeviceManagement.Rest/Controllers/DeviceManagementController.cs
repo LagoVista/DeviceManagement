@@ -554,6 +554,24 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return DetailResponse<Sensor>.Create();
         }
 
+        
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}/sensor")]
+        public async Task<InvokeResult> SetSensorAsync(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, false);
+            if (device.SensorCollection == null)
+                device.SensorCollection = new System.Collections.Generic.List<Sensor>();
+
+            var existingSensor = device.SensorCollection.Where(snsr => snsr.Technology.HasValue && snsr.Technology == sensor.Technology && snsr.PortIndex.HasValue && snsr.PortIndex == sensor.PortIndex).FirstOrDefault();
+            if (existingSensor != null)
+                device.SensorCollection.Remove(existingSensor);
+
+            device.SensorCollection.Add(sensor);
+
+            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+        }
+
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
