@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Rest</id>
-    <version>2.1.1434.0352</version>
+    <version>3.0.1954.1953</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\release\net5.0\LagoVista.IoT.DeviceManagement.Rest.xml" target="contentFiles\wwwroot\xmldocs" />
-    <file src="bin\release\net5.0\*.dll" target="lib\net5.0" />
+    <file src="bin\release\net6.0\LagoVista.IoT.DeviceManagement.Rest.xml" target="contentFiles\wwwroot\xmldocs" />
+    <file src="bin\release\net6.0\*.dll" target="lib\net6.0" />
   </files>
 </package>
