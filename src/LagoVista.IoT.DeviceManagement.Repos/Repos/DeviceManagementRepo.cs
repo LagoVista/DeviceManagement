@@ -5,15 +5,13 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.IoT.Logging.Loggers;
-using Microsoft.Azure.Documents;
-using Microsoft.Azure.Documents.Client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using LagoVista.Core;
-using Microsoft.Azure.Documents.Linq;
 using System.Collections.Generic;
 using LagoVista.Core.Models;
+using LagoVista.CloudStorage;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -205,11 +203,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
 
             device.AttributeMetaData = null;
-            if(device.Attributes != null)
+            if (device.Attributes != null)
             {
-                foreach(var attribute in device.Attributes)
+                foreach (var attribute in device.Attributes)
                 {
-                    if(!EntityHeader.IsNullOrEmpty(attribute.UnitSet))
+                    if (!EntityHeader.IsNullOrEmpty(attribute.UnitSet))
                     {
                         attribute.UnitSet.Value = null;
                     }
@@ -221,7 +219,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 }
             }
 
-            device.DeviceType.Value = null;            
+            device.DeviceType.Value = null;
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
@@ -382,18 +380,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         }
 
         public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository deviceRepo, string groupId, ListRequest listRequest)
-        {            
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-            
-            var options = new FeedOptions()
-            {
-                MaxItemCount = (listRequest.PageSize == 0) ? 50 : listRequest.PageSize
-            };
+        {
 
-            if (!String.IsNullOrEmpty(listRequest.NextRowKey))
-            {
-                options.RequestContinuation = listRequest.NextRowKey;
-            }
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
 
             var query = @"SELECT c.id, c.Status, c.Speed, c.Heading, c.Name, c.DeviceType, c.DeviceConfiguration, c.DeviceRepository,
@@ -403,35 +392,18 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
    and c.DeviceRepository.Id = @repodid
    and d.Id = @groupid";
 
-            var sqlParams = new SqlParameterCollection();
-            sqlParams.Add(new SqlParameter("@repodid", deviceRepo.Id));
-            sqlParams.Add(new SqlParameter("@groupid", groupId));
+            var queryParams = new List<QueryParameter>();
+            queryParams.Add(new QueryParameter("@repodid", deviceRepo.Id));
+            queryParams.Add(new QueryParameter("@groupid", groupId));
 
-            try
-            {
-                var spec = new SqlQuerySpec(query, sqlParams);
-                var link = await GetCollectionDocumentsLinkAsync();
+            var devices = await QueryAsync(query, queryParams.ToArray());
 
-                var docQuery = Client.CreateDocumentQuery<DeviceSummaryData>(link, spec, options).AsDocumentQuery();
-                var result = await docQuery.ExecuteNextAsync<DeviceSummaryData>();
+            var items = devices.Select(dvc => DeviceSummaryData.FromDevice(dvc));
+            var listResponse = ListResponse<DeviceSummaryData>.Create(items);
+            listResponse.PageSize = items.Count();
+            listResponse.HasMoreRecords = false;
 
-                var listResponse = ListResponse<DeviceSummaryData>.Create(result);
-                listResponse.NextRowKey = result.ResponseContinuation;
-                listResponse.PageSize = result.Count;
-                listResponse.HasMoreRecords = result.Count == listRequest.PageSize;
-                listResponse.PageIndex = listRequest.PageIndex;
-
-                return listResponse;
-            }
-            catch(Exception ex)
-            {
-                _logger.AddException("DeviceManagementRepo_GetDeviceGroupSummaryDataAsync", ex, typeof(DeviceSummaryData).Name.ToKVP("entityType"), groupId.ToKVP("groupId"), deviceRepo.Id.ToKVP("deviceRepoId"));
-
-                var listResponse = ListResponse<DeviceSummaryData>.Create(new List<DeviceSummaryData>());
-                listResponse.Errors.Add(new ErrorMessage(ex.Message));
-                return listResponse;
-
-            }
+            return listResponse;
         }
 
         public Task<string> Echo(string value)
@@ -441,7 +413,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetChildDevicesAsync(DeviceRepository repo, string parentDeviceId, ListRequest listRequest)
         {
-            SetConnection(repo.DeviceStorageSettings.Uri, repo.DeviceStorageSettings.AccessKey,repo.DeviceStorageSettings.ResourceName);
+            SetConnection(repo.DeviceStorageSettings.Uri, repo.DeviceStorageSettings.AccessKey, repo.DeviceStorageSettings.ResourceName);
 
             var items = await base.QueryAsync(qry => qry.ParentDevice != null && qry.ParentDevice.Id == parentDeviceId && qry.DeviceRepository.Id == repo.Id, listRequest);
 
@@ -462,7 +434,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId &&
-                                               (qry.AssignedUser != null && qry.AssignedUser.Id == userId) && 
+                                               (qry.AssignedUser != null && qry.AssignedUser.Id == userId) &&
                                                qry.DeviceRepository.Id == deviceRepo.Id, listRequest);
 
             var summaries = from item in items.Model
