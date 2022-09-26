@@ -3,9 +3,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.1954.1953" />
-    <PackageReference Include="LagoVista.Core" Version="3.0.1954.1953" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="3.0.1954.1953" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.1958.0509" />
+    <PackageReference Include="LagoVista.Core" Version="3.0.1958.0509" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="3.0.1958.0509" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.17.3" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.30.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
