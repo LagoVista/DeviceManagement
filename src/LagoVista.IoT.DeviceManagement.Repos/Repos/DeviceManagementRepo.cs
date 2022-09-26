@@ -33,7 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             _shouldConsolidateCollections = true;
         }
 
-        protected override String GetCollectionName()
+        public override String GetCollectionName()
         {
             return "Devices";
         }

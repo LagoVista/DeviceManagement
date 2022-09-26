@@ -17,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         }
 
-        protected override String GetCollectionName()
+        public override String GetCollectionName()
         {
             return "Devices";
         }
