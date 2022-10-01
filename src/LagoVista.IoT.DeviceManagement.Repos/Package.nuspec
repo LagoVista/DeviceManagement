@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Repos</id>
-    <version>3.0.1963.1145</version>
+    <version>3.0.1963.1257</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,20 +12,16 @@
     <copyright>Copyright Software Logistics - 2022</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 10/1/2022 3:45:22 PM UTC</releaseNotes>
-    <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.CloudStorage" version="3.0.1963.1145" />
-        <dependency id="LagoVista.Core" version="3.0.1963.1145" />
-        <dependency id="LagoVista.IoT.Logging" version="3.0.1963.1145" />
+        <dependency id="LagoVista.CloudStorage" version="3.0.1963.1257" />
         <dependency id="Microsoft.Azure.Devices" version="1.17.3" />
-        <dependency id="Microsoft.Azure.Cosmos" version="3.30.1" />
-        <dependency id="Newtonsoft.Json" version="13.0.1" />
         <dependency id="WindowsAzure.Storage" version="9.3.3" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.1963.1145" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.1963.1257" />
       </group>
     </dependencies>
+    <releaseNotes>Build Date: 10/1/2022 4:57:03 PM UTC</releaseNotes>
+    <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
   </metadata>
   <files>
     <file src="LagoVistaIcon.png" target="LagoVistaIcon.png" />
