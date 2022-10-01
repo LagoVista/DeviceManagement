@@ -1,22 +1,35 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Rest</id>
-    <version>3.0.1958.0509</version>
+    <version>3.0.1963.1145</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/LagoVista/IoTEngine</projectUrl>
+    <projectUrl>https://www.nuviot.com</projectUrl>
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
     <description>Provides ASP.NET Core MVC Services for Managing Devices for the LagoVista Devices, IoT and Home Automation Frameworks</description>
-    <releaseNotes>Initial and Unstable Release</releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright Software Logistics - 2022</copyright>
     <tags>HomeAutomation IoT Cloud LagoVista</tags>
+    <icon>LagoVistaIcon.png</icon>
+    <releaseNotes>Build Date: 10/1/2022 3:45:22 PM UTC</releaseNotes>
+    <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="LagoVista.AspNetCore.Identity" version="3.0.1963.1145" />
+        <dependency id="LagoVista.IoT.Logging" version="3.0.1963.1145" />
+        <dependency id="LagoVista.IoT.ProductStore" version="3.0.1963.1145" />
+        <dependency id="LagoVista.IoT.Web.Common" version="3.0.1963.1145" />
+        <dependency id="LagoVista.UserAdmin" version="3.0.1963.1145" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.1963.1145" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.1963.1145" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\release\net6.0\LagoVista.IoT.DeviceManagement.Rest.xml" target="contentFiles\wwwroot\xmldocs" />
-    <file src="bin\release\net6.0\*.dll" target="lib\net6.0" />
+    <file src="LagoVistaIcon.png" target="LagoVistaIcon.png" />
+    <file src="bin\release\net6.0\LagoVista.IoT.DeviceManagement.Rest.dll" target="lib\net6.0\LagoVista.IoT.DeviceManagement.Rest.dll" />
+    <file src="bin\release\net6.0\LagoVista.IoT.DeviceManagement.Rest.pdb" target="lib\net6.0\LagoVista.IoT.DeviceManagement.Rest.pdb" />
   </files>
 </package>
