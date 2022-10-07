@@ -33,6 +33,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             _shouldConsolidateCollections = true;
         }
 
+        public override string GetPartitionKey()
+        {
+            return "/DeviceRepository/Id";
+        }
+
         public override String GetCollectionName()
         {
             return "Devices";
