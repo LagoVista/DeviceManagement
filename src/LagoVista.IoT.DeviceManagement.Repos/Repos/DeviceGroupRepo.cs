@@ -22,6 +22,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return "Devices";
         }
 
+        public override string GetPartitionKey()
+        {
+            return "/DeviceRepository/Id";
+        }
+
         public Task AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
