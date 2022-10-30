@@ -1032,4 +1032,16 @@
   <data name="SensorDefinition_Config_ADC_ONOFF" xml:space="preserve">
     <value>On/Off</value>
   </data>
+  <data name="Device_IPAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="RelayState_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="RelayState_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="RelayState_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
 </root>

@@ -266,6 +266,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_iOS_BLE_Address
 
 		public static string Device_iOS_BLE_Address { get { return GetResourceString("Device_iOS_BLE_Address"); } }
+//Resources:DeviceManagementResources:Device_IPAddress
+
+		public static string Device_IPAddress { get { return GetResourceString("Device_IPAddress"); } }
 //Resources:DeviceManagementResources:Device_IsBeta
 
 		public static string Device_IsBeta { get { return GetResourceString("Device_IsBeta"); } }
@@ -662,6 +665,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_VersionCodeRegEx
 
 		public static string FirmwareRevision_VersionCodeRegEx { get { return GetResourceString("FirmwareRevision_VersionCodeRegEx"); } }
+//Resources:DeviceManagementResources:RelayState_Off
+
+		public static string RelayState_Off { get { return GetResourceString("RelayState_Off"); } }
+//Resources:DeviceManagementResources:RelayState_On
+
+		public static string RelayState_On { get { return GetResourceString("RelayState_On"); } }
+//Resources:DeviceManagementResources:RelayState_Unknown
+
+		public static string RelayState_Unknown { get { return GetResourceString("RelayState_Unknown"); } }
 //Resources:DeviceManagementResources:Sensor_Address
 
 		public static string Sensor_Address { get { return GetResourceString("Sensor_Address"); } }
@@ -1042,6 +1054,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_inputCommandEndPoints = "Device_inputCommandEndPoints";
 			public const string Device_inputCommandEndPoints_Help = "Device_inputCommandEndPoints_Help";
 			public const string Device_iOS_BLE_Address = "Device_iOS_BLE_Address";
+			public const string Device_IPAddress = "Device_IPAddress";
 			public const string Device_IsBeta = "Device_IsBeta";
 			public const string Device_IsBeta_Help = "Device_IsBeta_Help";
 			public const string Device_IsConnected = "Device_IsConnected";
@@ -1174,6 +1187,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string FirmwareRevision_Title = "FirmwareRevision_Title";
 			public const string FirmwareRevision_Version = "FirmwareRevision_Version";
 			public const string FirmwareRevision_VersionCodeRegEx = "FirmwareRevision_VersionCodeRegEx";
+			public const string RelayState_Off = "RelayState_Off";
+			public const string RelayState_On = "RelayState_On";
+			public const string RelayState_Unknown = "RelayState_Unknown";
 			public const string Sensor_Address = "Sensor_Address";
 			public const string Sensor_AlertsEnabled = "Sensor_AlertsEnabled";
 			public const string Sensor_AttributeType = "Sensor_AttributeType";

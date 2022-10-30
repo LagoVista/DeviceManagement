@@ -59,6 +59,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Errors = new List<DeviceError>();
             SensorCollection = new List<Sensor>();
             DeviceImages = new List<MediaResource>();
+            Relays = new List<Relay>();
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
         }
@@ -270,6 +271,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Notes, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<DeviceNote> Notes { get; set; }
+
+        public List<Relay> Relays { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_IPAddress, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
+        public string IPAddress { get; set; }
 
         public DeviceSummary CreateSummary()
         {
