@@ -8,10 +8,10 @@
     <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.1963.1145" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.1963.1145" />
-    <PackageReference Include="LagoVista.MediaServices" Version="3.0.1963.1145" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="3.0.1963.1145" />
+    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.2049.0919" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.2049.0919" />
+    <PackageReference Include="LagoVista.MediaServices" Version="3.0.2049.0919" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="3.0.2049.0919" />
    </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />

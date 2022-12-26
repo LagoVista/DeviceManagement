@@ -6,9 +6,9 @@
     <NoWarn>1701;1702;1705;1591</NoWarn> 
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.AspNetCore.Identity" Version="3.0.1963.1145" />
-    <PackageReference Include="LagoVista.IoT.ProductStore" Version="3.0.1963.1145" />
-    <PackageReference Include="LagoVista.IoT.Web.Common" Version="3.0.1963.1145" />
+    <PackageReference Include="LagoVista.AspNetCore.Identity" Version="3.0.2049.0919" />
+    <PackageReference Include="LagoVista.IoT.ProductStore" Version="3.0.2049.0919" />
+    <PackageReference Include="LagoVista.IoT.Web.Common" Version="3.0.2049.0919" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />

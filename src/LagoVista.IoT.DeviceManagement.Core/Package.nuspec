@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Core</id>
-    <version>3.0.1963.1145</version>
+    <version>3.0.2049.0919</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,18 +12,15 @@
     <copyright>Copyright Software Logistics - 2022</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 10/1/2022 3:45:22 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 12/26/2022 2:19:13 PM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.Core" version="3.0.1963.1145" />
-        <dependency id="LagoVista.Core.Networking" version="3.0.1963.1145" />
-        <dependency id="LagoVista.Core.Rpc" version="3.0.1963.1145" />
-        <dependency id="LagoVista.MediaServices" version="3.0.1963.1145" />
-        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.1963.1145" />
-        <dependency id="LagoVista.IoT.Logging" version="3.0.1963.1145" />
-        <dependency id="Newtonsoft.Json" version="13.0.1" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.1963.1145" />
+        <dependency id="LagoVista.Core.Networking" version="3.0.2049.0919" />
+        <dependency id="LagoVista.Core.Rpc" version="3.0.2049.0919" />
+        <dependency id="LagoVista.MediaServices" version="3.0.2049.0919" />
+        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.2049.0919" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.2049.0919" />
       </group>
     </dependencies>
   </metadata>
