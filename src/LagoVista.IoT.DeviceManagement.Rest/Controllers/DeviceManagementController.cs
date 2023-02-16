@@ -543,6 +543,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.ClearDeviceErrorAsync(repo, deviceid, errorcode, OrgEntityHeader, UserEntityHeader);
         }
 
+        /// <summary>
+        /// Device Management - Attach WiFi Connection Profile
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="deviceid"></param>
+        /// <param name="connectionProfile"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}/wificonnection")]
+        public async Task<InvokeResult> UpdateWiFiConnectionProfileForDeviceAsync(string devicerepoid, string deviceid, [FromBody] EntityHeader connectionProfile)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            device.WiFiConnectionProfile = connectionProfile;
+            await  _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return InvokeResult.Success;
+        }
 
         /// <summary>
         /// Device Management - Create a new empty sensor that can be attached to a device.

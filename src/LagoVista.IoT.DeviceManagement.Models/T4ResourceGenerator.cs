@@ -527,6 +527,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Watchdog_Seconds_Override_Help
 
 		public static string Device_Watchdog_Seconds_Override_Help { get { return GetResourceString("Device_Watchdog_Seconds_Override_Help"); } }
+//Resources:DeviceManagementResources:Device_WiFiConnectionProfile
+
+		public static string Device_WiFiConnectionProfile { get { return GetResourceString("Device_WiFiConnectionProfile"); } }
 //Resources:DeviceManagementResources:DeviceAddress_Address
 
 		public static string DeviceAddress_Address { get { return GetResourceString("DeviceAddress_Address"); } }
@@ -1141,6 +1144,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Watchdog_Notification_User_Select = "Device_Watchdog_Notification_User_Select";
 			public const string Device_Watchdog_Seconds_Override = "Device_Watchdog_Seconds_Override";
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
+			public const string Device_WiFiConnectionProfile = "Device_WiFiConnectionProfile";
 			public const string DeviceAddress_Address = "DeviceAddress_Address";
 			public const string DeviceGroup_AssignedUser = "DeviceGroup_AssignedUser";
 			public const string DeviceGroup_AssignedUserHelp = "DeviceGroup_AssignedUserHelp";

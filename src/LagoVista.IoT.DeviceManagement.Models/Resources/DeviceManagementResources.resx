@@ -1044,4 +1044,7 @@
   <data name="RelayState_Unknown" xml:space="preserve">
     <value>Unknown</value>
   </data>
+  <data name="Device_WiFiConnectionProfile" xml:space="preserve">
+    <value>WiFi Connection Profile</value>
+  </data>
 </root>
