@@ -296,6 +296,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceTypeId = DeviceType.Id,
                 CustomStatus = CustomStatus,
                 GeoLocation = GeoLocation,
+                iosBLEAddress = iosBLEAddress,
+                MacAddress = MacAddress,
+                DeviceRepoId = DeviceRepository.Id,
+                DeviceRepo = DeviceRepository.Text
             };
         }
 
@@ -387,6 +391,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+
+        public string MacAddress { get; set; }
+
+        public string iosBLEAddress { get; set; }
+
+        public string DeviceRepoId { get; set; }
+        public string DeviceRepo { get; set; }
 
         public GeoLocation GeoLocation { get; set; }
 
