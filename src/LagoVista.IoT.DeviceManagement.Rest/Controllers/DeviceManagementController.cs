@@ -51,10 +51,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="device"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}")]
-        public async Task<InvokeResult> AddDeviceAsync(string devicerepoid, [FromBody] Device device)
+        public async Task<InvokeResult<Device>> AddDeviceAsync(string devicerepoid, [FromBody] Device device, bool reassign = false)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.AddDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddDeviceAsync(repo, device, reassign, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -597,7 +597,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         [OrgAdmin]
         [HttpPost("/api/device/{devicerepoid}/userdevice")]
-        public async Task<InvokeResult<AppUser>> AddDeviceUser(string devicerepoid, [FromBody] DeviceUserRegistrationRequest newuser)
+        public async Task<InvokeResult<AppUser>> AddDeviceUser(string devicerepoid, [FromBody] DeviceUserRegistrationRequest newuser, bool overwrite = false)
         {
             String userId = Guid.NewGuid().ToId();
 
@@ -605,10 +605,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(newuser.Device.DeviceRepository.Id, OrgEntityHeader, UserEntityHeader);
 
-            var addDeviceResult = await _deviceManager.AddDeviceAsync(repo, newuser.Device, OrgEntityHeader, UserEntityHeader);
+            var addDeviceResult = await _deviceManager.AddDeviceAsync(repo, newuser.Device, overwrite, OrgEntityHeader, UserEntityHeader);
             if (!addDeviceResult.Successful)
             {
-                return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult);
+                return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult.ToInvokeResult());
             }
 
             var appUser = new AppUser()

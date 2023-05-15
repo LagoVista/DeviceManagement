@@ -46,10 +46,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="device"></param>
         /// <returns></returns>
         [HttpPost("/clientapi/device")]
-        public async Task<InvokeResult> AddDeviceAsync([FromBody] Device device)
+        public async Task<InvokeResult<Device>> AddDeviceAsync([FromBody] Device device, bool overwrite = false)
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
-            return await _deviceManager.AddDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddDeviceAsync(repo, device, overwrite, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <returns>App User</returns>
         [OrgAdmin]
         [HttpPost("/clientapi/device/userdevice")]
-        public async Task<InvokeResult<AppUser>> AddDeviceUser([FromBody] DeviceUserRegistrationRequest newuser)
+        public async Task<InvokeResult<AppUser>> AddDeviceUser([FromBody] DeviceUserRegistrationRequest newuser, bool replace = false)
         {
             String userId = Guid.NewGuid().ToId();
 
@@ -393,10 +393,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             var repo = await GetDeviceRepositoryWithSecretsAsync();
 
-            var addDeviceResult = await _deviceManager.AddDeviceAsync(repo, newuser.Device, OrgEntityHeader, UserEntityHeader);
+            var addDeviceResult = await _deviceManager.AddDeviceAsync(repo, newuser.Device, replace, OrgEntityHeader, UserEntityHeader);
             if (!addDeviceResult.Successful)
             {
-                return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult);
+                return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult.ToInvokeResult());
             }
 
             var appUser = new AppUser()

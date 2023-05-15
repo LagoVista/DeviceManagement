@@ -62,6 +62,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Relays = new List<Relay>();
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
+            Icon = "icon-ae-device-config";
         }
 
         public string DatabaseName { get; set; }
@@ -103,6 +104,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         public bool IsPublic { get; set; }
+
+
+        public string Icon { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Organization, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: true, WaterMark: DeviceManagementResources.Names.Device_Organization_Select)]
         public EntityHeader OwnerOrganization { get; set; }
@@ -297,6 +301,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 CustomStatus = CustomStatus,
                 GeoLocation = GeoLocation,
                 iosBLEAddress = iosBLEAddress,
+                Icon = Icon,
                 MacAddress = MacAddress,
                 DeviceRepoId = DeviceRepository.Id,
                 DeviceRepo = DeviceRepository.Text
@@ -391,6 +396,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+        public string Icon { get; set; }
 
         public string MacAddress { get; set; }
 

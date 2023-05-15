@@ -85,7 +85,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// /// <returns></returns>
         Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool populateMetaData = false);
 
-        Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user);
         
         /// <summary>
         /// Delete the device id by the generated device id.

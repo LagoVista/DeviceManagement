@@ -100,23 +100,28 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         //    return InvokeResult.Success;
         //}
 
-        public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user)
         {
+            var timeStamp = DateTime.UtcNow.ToJSONString();
+
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             device.OwnerOrganization = org;
+            device.CreatedBy = user;
+            device.CreationDate = timeStamp;
+            device.LastUpdatedDate = timeStamp;
             if (String.IsNullOrEmpty(device.PrimaryAccessKey))
             {
                 var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
-                var timeStamp = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
-                guidBytes.AddRange(timeStamp);
+                var timeStampTicks = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStampTicks);
                 device.PrimaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
             }
 
             if (String.IsNullOrEmpty(device.SecondaryAccessKey))
             {
                 var guidBytes = new List<byte>(Guid.NewGuid().ToByteArray());
-                var timeStamp = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
-                guidBytes.AddRange(timeStamp);
+                var timeStamTicks = new List<byte>(BitConverter.GetBytes(DateTime.Now.Ticks));
+                guidBytes.AddRange(timeStamTicks);
                 device.SecondaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
             }
 
@@ -128,16 +133,60 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             ValidationCheck(device, Actions.Create);
 
+            var repo = GetRepo(deviceRepo);
+
             var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
             if (existingDevice != null)
             {
-                return InvokeResult.FromErrors(Resources.ErrorCodes.DeviceExists.ToErrorMessage($"DeviceId={device.DeviceId}"));
+                if (reassign)
+                {
+                    var note = $"Device replaced by {user.Text};";
+                    if (existingDevice.DeviceConfiguration.Id != device.DeviceConfiguration.Id)
+                    {
+                        note += $" Device Configuration Changed from {existingDevice.DeviceConfiguration.Text} to {device.DeviceConfiguration.Text}; ";
+                    }
+
+                    if (existingDevice.DeviceType.Id != device.DeviceType.Id)
+                    {
+                        note += $" Device Configuration Changed from {existingDevice.DeviceType.Text} to {device.DeviceConfiguration.Text}; ";
+                    }
+
+                    existingDevice.DeviceConfiguration = device.DeviceConfiguration;
+                    existingDevice.DeviceType = device.DeviceType;
+                    existingDevice.Name = device.Name;
+                    existingDevice.iosBLEAddress = device.iosBLEAddress;
+                    existingDevice.MacAddress = device.MacAddress;
+                    existingDevice.Notes.Insert(0, new DeviceNote()
+                    {
+                        Id = Guid.NewGuid().ToId(),
+                        Title = "Device Replaced",
+                        Notes = note,
+                        CreatedBy = user,
+                        LastUpdatedBy = user,
+                        LastUpdatedDate = timeStamp,
+                        CreationDate = timeStamp,
+                    });
+
+                    existingDevice.LastUpdatedBy = user;
+                    existingDevice.LastUpdatedDate = timeStamp;
+
+                    await repo.UpdateDeviceAsync(deviceRepo, existingDevice);
+
+                    return InvokeResult<Device>.Create(existingDevice);
+                }
+                else
+                    return InvokeResult<Device>.FromErrors(new ErrorMessage()
+                    {
+                        Message = Resources.ErrorCodes.DeviceExists.Message,
+                        ErrorCode = Resources.ErrorCodes.DeviceExists.Code,
+                        SystemError = false,
+                        Details = $"A device with the device id: {device.DeviceId} already exists."
+                    });
             }
 
-            var repo = GetRepo(deviceRepo);
             var result = await repo.AddDeviceAsync(deviceRepo, device);
-
-            return result;
+            if (!result.Successful) return InvokeResult<Device>.FromInvokeResult(result);
+            return InvokeResult<Device>.Create(device);
         }
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
@@ -693,10 +742,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.OwnerUser = user;
             }
 
-            var result = await AddDeviceAsync(deviceRepo, device, org, user);
+            var result = await AddDeviceAsync(deviceRepo, device, false, org, user);
             if (!result.Successful)
             {
-                return InvokeResult<Device>.FromInvokeResult(result);
+                return result;
             }
 
             return InvokeResult<Device>.Create(device);
