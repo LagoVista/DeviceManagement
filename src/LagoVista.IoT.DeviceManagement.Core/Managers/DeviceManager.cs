@@ -102,6 +102,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user)
         {
+            Console.WriteLine($"[DeviceManager__AddDeviceAsync] - Reassign ${reassign}");
+
             var timeStamp = DateTime.UtcNow.ToJSONString();
 
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
@@ -138,6 +140,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
             if (existingDevice != null)
             {
+                Console.WriteLine($"[DeviceManager__AddDeviceAsync__FoundExisting] - Reassign ${reassign}");
+
                 if (reassign)
                 {
                     var note = $"Device replaced by {user.Text};";
@@ -169,6 +173,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                     existingDevice.LastUpdatedBy = user;
                     existingDevice.LastUpdatedDate = timeStamp;
+
+                    Console.WriteLine($"[DeviceManager__AddDeviceAsync__Updating Existing] - Reassign ${reassign} - {existingDevice.Id}");
 
                     await repo.UpdateDeviceAsync(deviceRepo, existingDevice);
 

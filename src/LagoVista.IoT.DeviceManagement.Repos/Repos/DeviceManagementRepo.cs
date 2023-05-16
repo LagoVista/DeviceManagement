@@ -227,7 +227,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             device.DeviceType.Value = null;
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
+            Console.WriteLine($"[DeviceManagementRepo__UpdateDeviceAsync] Upodate Device with Id {device.Id} and Device Id {device.DeviceId}");
             await UpsertDocumentAsync(device);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
