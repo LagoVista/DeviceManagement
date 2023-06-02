@@ -15,6 +15,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<IEnumerable<DeviceGroupSummary>> GetDeviceGroupsForOrgAsync(DeviceRepository deviceRepo, string orgId, EntityHeader user);
 
         Task<DeviceGroup> GetDeviceGroupAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user);
+        Task<DeviceGroup> GetDeviceGroupByKeyAsync(DeviceRepository deviceRepo, string key, EntityHeader org, EntityHeader user);
 
         Task<DependentObjectCheckResult> CheckDeviceGroupInUseAsync(DeviceRepository deviceRepo, string groupId, EntityHeader org, EntityHeader user);
 

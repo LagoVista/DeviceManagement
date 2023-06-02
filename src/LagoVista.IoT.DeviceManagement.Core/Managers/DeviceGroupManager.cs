@@ -81,6 +81,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return deviceGroup;
         }
 
+        public async Task<DeviceGroup> GetDeviceGroupByKeyAsync(DeviceRepository deviceRepo, string key, EntityHeader org, EntityHeader user)
+        {
+            var deviceGroup = await GetDeviceGroupRepo(deviceRepo).GetDeviceGroupByKeyAsync(deviceRepo, key);
+            await AuthorizeAsync(deviceGroup, AuthorizeResult.AuthorizeActions.Read, user, org);
+            return deviceGroup;
+        }
+
         public async Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(DeviceRepository deviceRepo, String deviceGroupId, String deviceUniqueId, EntityHeader org, EntityHeader user)
         {
             var group = await GetDeviceGroupAsync(deviceRepo, deviceGroupId, org, user);

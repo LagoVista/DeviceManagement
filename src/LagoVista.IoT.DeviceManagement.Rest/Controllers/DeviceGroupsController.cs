@@ -136,6 +136,21 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Groups - Get by key
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [HttpGet("/api/repo/{devicerepoid}/group/key/{id}")]
+        public async Task<DetailResponse<DeviceGroup>> GetDeviceGroupByKeyAsync(string devicerepoid, string key)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var deviceGroup = await _deviceGroupManager.GetDeviceGroupByKeyAsync(repo, key, OrgEntityHeader, UserEntityHeader);
+
+            return DetailResponse<DeviceGroup>.Create(deviceGroup);
+        }
+
+        /// <summary>
         /// Device Groups - Key In Use
         /// </summary>
         /// <param name="devicerepoid"></param>
