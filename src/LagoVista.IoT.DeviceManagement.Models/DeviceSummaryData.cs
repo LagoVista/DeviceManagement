@@ -39,6 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Attributes = device.Attributes,
                 DeviceConfiguration = device.DeviceConfiguration,
                 DeviceId = device.DeviceId,
+                DeviceRepository = device.DeviceRepository,
                 DeviceType = device.DeviceType,
                 GeoLocation = device.GeoLocation,
                 Headig = device.Heading,
