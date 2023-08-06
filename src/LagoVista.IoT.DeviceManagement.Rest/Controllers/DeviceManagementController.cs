@@ -475,6 +475,27 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Change Device Id
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="id">id</param>
+        /// <param name="newdeviceid">new device id</param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/set/deviceid/{newdeviceid}")]
+        public async Task<InvokeResult<Device>> ChangeDeviceIdAsync(string devicerepoid, string id, string newdeviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var existingDevice = _deviceManager.GetDeviceByDeviceIdAsync(repo, newdeviceid, OrgEntityHeader, UserEntityHeader);
+            if (existingDevice != null)
+                return InvokeResult<Device>.FromError($"The device id {newdeviceid} is already assigned to a different device, device ids must be unique.");
+
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            device.DeviceId = newdeviceid;
+            await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return InvokeResult<Device>.Create(device);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="devicerepoid"></param>
