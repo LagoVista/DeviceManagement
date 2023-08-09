@@ -1,10 +1,12 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Attributes;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
+using System.Collections.Generic;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
@@ -101,7 +103,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.SensorDefinition_Title, DeviceManagementResources.Names.SensorDefinition_Help,
         DeviceManagementResources.Names.SensorDefinition_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class SensorDefinition
+    public class SensorDefinition : IFormDescriptor
     {
         public const string SensorTechnology_ADC = "adc";
         public const string SensorTechnology_IO = "io";
@@ -236,5 +238,30 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex, HelpResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Help, IsRequired:false, FieldType: FieldTypes.Picker, EnumType:typeof(SensorPorts), WaterMark:DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Select, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader<SensorPorts> DefaultPortIndex { get; set; }
-    }
+
+		public List<string> GetFormFields()
+		{
+            return new List<string>()
+			{
+				nameof(Name),
+				nameof(Key),
+				nameof(ValueType),
+				nameof(SensorType),
+				nameof(UnitsLabel),
+				nameof(UnitSet),
+				nameof(DefaultPortIndex),
+				nameof(IconKey),
+				nameof(Description),
+				nameof(QrCode),
+				nameof(WebLink),
+				nameof(DefaultCalibration),
+				nameof(DefaultZero),
+				nameof(DefaultScaler),
+				nameof(DefaultHighThreshold),
+				nameof(DefaultLowThreshold),
+				nameof(GenerateErrorWithOn),
+				nameof(GenerateErrorWithOff)
+			};
+		}
+	}
 }
