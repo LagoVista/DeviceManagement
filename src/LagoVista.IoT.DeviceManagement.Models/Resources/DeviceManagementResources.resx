@@ -1047,4 +1047,10 @@
   <data name="Device_WiFiConnectionProfile" xml:space="preserve">
     <value>WiFi Connection Profile</value>
   </data>
+  <data name="FirmwareRevision_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Firmware_Revisions" xml:space="preserve">
+    <value>Revisions</value>
+  </data>
 </root>

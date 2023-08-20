@@ -1,5 +1,6 @@
-﻿using System.Globalization;
-using System.Reflection;  
+﻿/*8/19/2023 2:18:13 PM*/
+using System.Globalization;
+using System.Reflection;
 
 //Resources:DeviceManagementResources:AttributeValue_Description
 namespace LagoVista.IoT.DeviceManagement.Models.Resources
@@ -623,6 +624,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Firmware_Help
 
 		public static string Firmware_Help { get { return GetResourceString("Firmware_Help"); } }
+//Resources:DeviceManagementResources:Firmware_Revisions
+
+		public static string Firmware_Revisions { get { return GetResourceString("Firmware_Revisions"); } }
 //Resources:DeviceManagementResources:Firmware_Title
 
 		public static string Firmware_Title { get { return GetResourceString("Firmware_Title"); } }
@@ -632,6 +636,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_Description
 
 		public static string FirmwareRevision_Description { get { return GetResourceString("FirmwareRevision_Description"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_File
+
+		public static string FirmwareRevision_File { get { return GetResourceString("FirmwareRevision_File"); } }
 //Resources:DeviceManagementResources:FirmwareRevision_Help
 
 		public static string FirmwareRevision_Help { get { return GetResourceString("FirmwareRevision_Help"); } }
@@ -1176,9 +1183,11 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Firmware_DeviceType = "Firmware_DeviceType";
 			public const string Firmware_FirmwareSKU = "Firmware_FirmwareSKU";
 			public const string Firmware_Help = "Firmware_Help";
+			public const string Firmware_Revisions = "Firmware_Revisions";
 			public const string Firmware_Title = "Firmware_Title";
 			public const string FirmwareReivsion_TimeStamp = "FirmwareReivsion_TimeStamp";
 			public const string FirmwareRevision_Description = "FirmwareRevision_Description";
+			public const string FirmwareRevision_File = "FirmwareRevision_File";
 			public const string FirmwareRevision_Help = "FirmwareRevision_Help";
 			public const string FirmwareRevision_Notes = "FirmwareRevision_Notes";
 			public const string FirmwareRevision_Status = "FirmwareRevision_Status";
@@ -1299,3 +1308,4 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 		}
 	}
 }
+

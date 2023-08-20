@@ -76,7 +76,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="firmware"></param>
         [HttpPost("/api/firmware")]
-        public Task<InvokeResult> AddPartAsync([FromBody] Firmware firmware)
+        public Task<InvokeResult> AddFirmawre([FromBody] Firmware firmware)
         {
             return _firmwareManager.AddFirmwareAsync(firmware, OrgEntityHeader, UserEntityHeader);
         }

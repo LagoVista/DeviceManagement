@@ -3,6 +3,8 @@ using LagoVista.Core.Models;
 using LagoVista.Core;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
+using System.Collections.Generic;
+using LagoVista.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -26,7 +28,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.FirmwareRevision_Title, DeviceManagementResources.Names.FirmwareRevision_Help,
         DeviceManagementResources.Names.FirmwareRevision_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class FirmwareRevision
+    public class FirmwareRevision : IFormDescriptor
     {
         public FirmwareRevision()
         {
@@ -43,18 +45,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public String Id { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Version, FieldType: FieldTypes.Text, ValidationRegEx: @"^\d+\.\d+\.\d+$", RegExValidationMessageResource:  DeviceManagementResources.Names.FirmwareRevision_VersionCodeRegEx, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Version, FieldType: FieldTypes.Text, ValidationRegEx: @"^\d+\.\d+\.\d+$", RegExValidationMessageResource: DeviceManagementResources.Names.FirmwareRevision_VersionCodeRegEx, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string VersionCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Version, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable:false)]
         public string TimeStamp { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Notes, FieldType: FieldTypes.MultiLineText, ResourceType: typeof(DeviceManagementResources))]
         public string Notes { get; set; }
 
-
         [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Status, EnumType: (typeof(FirmwareRevisionStatus)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<FirmwareRevisionStatus> Status { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Status, FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
+        public string File { get; set; }
+
+        public List<string> GetFormFields()
+        {
+            return new List<string>()
+            {
+                nameof(VersionCode),
+                nameof(Notes),
+                nameof(Status),
+                nameof(File),
+            };
+        }
 
     }
 }

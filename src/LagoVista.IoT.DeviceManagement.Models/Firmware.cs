@@ -49,6 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             };
         }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Firmware_Revisions, FieldType: FieldTypes.ChildListInline, ResourceType: typeof(DeviceManagementResources))]
         public List<FirmwareRevision> Revisions { get; set; }
 
         public List<string> GetFormFields()
@@ -58,7 +59,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Name),
                 nameof(Key),
                 nameof(DeviceType),
-                nameof(Description)
+                nameof(FirmwareSku),
+                nameof(DefaultRevision),
+                nameof(Description),
+                nameof(Revisions),
             };
         }
     }
