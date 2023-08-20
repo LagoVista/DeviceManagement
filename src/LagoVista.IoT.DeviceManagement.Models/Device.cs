@@ -152,7 +152,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ConnectionEstablishedTimeStamp, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string ConnectionTimeStamp { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_LastContact, FieldType: FieldTypes.DateTime, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public string LastContact { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_PrimaryKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
@@ -304,7 +304,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Icon = Icon,
                 MacAddress = MacAddress,
                 DeviceRepoId = DeviceRepository.Id,
-                DeviceRepo = DeviceRepository.Text
+                DeviceRepo = DeviceRepository.Text,
+                LastContact = LastContact
             };
         }
 
@@ -316,8 +317,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DeviceId),
                 nameof(Device.SerialNumber),
                 nameof(Device.Status),
+                nameof(Device.DebugMode),
+                nameof(Device.IsBeta),
                 nameof(Device.DeviceType),
-                nameof(Device.DeviceConfiguration)
+                nameof(Device.DeviceConfiguration),
+                nameof(Device.PrimaryAccessKey),
+                nameof(Device.SecondaryAccessKey),
+                nameof(Device.AssignedUser),
+                nameof(Device.WatchdogNotificationUser),
+                nameof(Device.DisableWatchdog),
+                nameof(Device.WatchdogSecondsOverride),
             };
         }
 
@@ -396,6 +405,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+        public string LastContact { get; set; }
         public string Icon { get; set; }
 
         public string MacAddress { get; set; }
