@@ -181,10 +181,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("/api/repo/{devicerepoid}/group/factory")]
-        public DetailResponse<DeviceGroup> CreateDeviceGroup()
+        public async Task<DetailResponse<DeviceGroup>> CreateDeviceGroup(string devicerepoid)
         {
             var response = DetailResponse<DeviceGroup>.Create();
             response.Model.Id = Guid.NewGuid().ToId();
+            var repo = await _repoManager.GetDeviceRepositoryAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            response.Model.DeviceRepository = EntityHeader.Create(repo.Id, repo.Key, repo.Name);
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 
