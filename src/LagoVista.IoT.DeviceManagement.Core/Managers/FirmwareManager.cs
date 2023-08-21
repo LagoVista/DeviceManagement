@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using LagoVista.IoT.DeviceManagement.Models;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -23,7 +24,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _repo = repo ?? throw new ArgumentNullException();
         }
 
-        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
+        public async Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
         {
             var request = await _repo.GetDownloadRequestAsync(downloadId);
             if (request == null)
@@ -65,18 +66,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     request.Status = "Downloading";
                     await _repo.UpdateDownloadRequestAsync(request);
 
-                    return InvokeResult<byte[]>.Create(output);
+                    return InvokeResult<FirmwareDownload>.Create(new FirmwareDownload
+                    {
+                        Buffer = output,
+                        PercentComplete = request.PercentRequested,
+                        Size = buffer.Length,
+                        Message = $"Percent Complete {request.PercentRequested}"
+                    });
                 }
                 else
                 {
                     request.PercentRequested = 100;
                     request.Status = "Downloading";
-                    return result;
+                    return InvokeResult<FirmwareDownload>.FromInvokeResult(result.ToInvokeResult());
                 }
             }
             else
             {
-                return result;
+                return InvokeResult<FirmwareDownload>.FromInvokeResult(result.ToInvokeResult());
             }
         }
 
@@ -98,7 +105,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
             }
         }
-        
+
         public async Task<InvokeResult> MarkAsCompleteAsync(string downloadId)
         {
             var request = await _repo.GetDownloadRequestAsync(downloadId);
@@ -231,11 +238,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             var revision = firmware.Revisions.SingleOrDefault(rev => rev.Id == revisionId);
-            if(revision == null)
+            if (revision == null)
             {
                 throw new RecordNotFoundException(nameof(FirmwareRevision), revisionId);
             }
-            
+
             var request = new FirmwareDownloadRequest()
             {
                 FirmwareId = firmwareId,

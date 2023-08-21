@@ -2,6 +2,7 @@
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Models;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
 {
     public interface IFirmwareDownloadManager
     {
-        Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string downloadId, int? startIndex = null, int? length = null);
+        Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string downloadId, int? startIndex = null, int? length = null);
         Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId);
         Task<InvokeResult> MarkAsCompleteAsync(string downloadId);
         Task<InvokeResult> MarkAsFailedAsync(string downloadId, string err);
