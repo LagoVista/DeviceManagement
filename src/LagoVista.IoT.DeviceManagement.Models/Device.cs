@@ -287,7 +287,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public DeviceSummary CreateSummary()
         {
-            return new DeviceSummary()
+            var summary = new DeviceSummary()
             {
                 Id = this.Id,
                 DeviceName = string.IsNullOrEmpty(this.Name) ? this.DeviceId : this.Name,
@@ -305,8 +305,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 MacAddress = MacAddress,
                 DeviceRepoId = DeviceRepository.Id,
                 DeviceRepo = DeviceRepository.Text,
-                LastContact = LastContact
+                LastContact = LastContact,
             };
+
+            if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
+                summary.Firmware = $"{ActualFirmware} {ActualFirmwareRevision}";
+
+            return summary;
         }
 
         public List<string> GetFormFields()
@@ -402,6 +407,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceName { get; set; }
         public string DeviceType { get; set; }
         public string DeviceTypeId { get; set; }
+        public string Firmware { get; set; }
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
