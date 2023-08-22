@@ -71,7 +71,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         Buffer = output,
                         PercentComplete = request.PercentRequested,
                         Size = buffer.Length,
-                        Message = $"Percent Complete {request.PercentRequested}"
+                        Message = $"Percent Complete {request.PercentRequested}%"
                     });
                 }
                 else
