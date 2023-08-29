@@ -262,6 +262,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public List<EntityHeader> DeviceGroups { get; set; }
 
+        public string InternalSummary { get; set; }
+
         public string DeviceLabel { get; set; }
         public string DeviceIdLabel { get; set; }
         public string DeviceNameLabel { get; set; }
@@ -299,6 +301,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceType = DeviceType.Text,
                 DeviceTypeId = DeviceType.Id,
                 CustomStatus = CustomStatus,
+                InternalSummary = InternalSummary,
                 GeoLocation = GeoLocation,
                 iosBLEAddress = iosBLEAddress,
                 Icon = Icon,
@@ -411,6 +414,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceId { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+        public string InternalSummary { get; set; }
         public string LastContact { get; set; }
         public string Icon { get; set; }
 
