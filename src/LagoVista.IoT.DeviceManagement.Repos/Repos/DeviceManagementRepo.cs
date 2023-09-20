@@ -132,7 +132,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var device = await this.GetDeviceByDeviceIdAsync(deviceRepo, deviceId);
             await DeleteDeviceAsync(deviceRepo, device.Id);
 
-            
+            foreach(var group in device.DeviceGroups)
+            {
+                
+            }
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
