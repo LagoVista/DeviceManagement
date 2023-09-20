@@ -63,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
                 DeviceConfiguration = new EntityHeader() { Id = "28B8128506A14D4FBC76A61D2AC2D733", Text = "DeviceConfig" },
             };
 
-            _deviceManagementRepo.Setup<Task<Device>>(dev => dev.GetDeviceByIdAsync(_repo.Object, DEVICEID)).ReturnsAsync(_device);
+            _deviceManagementRepo.Setup<Task<Device>>(dev => dev.GetDeviceByIdAsync(_repo.Object, DEVICEID, true)).ReturnsAsync(_device);
 
             _deviceGroup = new DeviceGroup()
             {

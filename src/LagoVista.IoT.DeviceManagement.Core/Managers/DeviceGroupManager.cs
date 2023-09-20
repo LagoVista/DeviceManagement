@@ -157,25 +157,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var group = await GetDeviceGroupRepo(deviceRepo).GetDeviceGroupAsync(deviceRepo, deviceGroupId);
             await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Update, user, org, "Remove Device From Device Group");
-
-            var device = await GetDeviceManagementRepo(deviceRepo).GetDeviceByIdAsync(deviceRepo, deviceUniqueId);
-            await AuthorizeAsync(group, AuthorizeResult.AuthorizeActions.Update, user, org, "Remove Device From Device Group");
-
             //TODO: Add localization
             if (!group.Devices.Where(grp => grp.DeviceUniqueId == deviceUniqueId).Any())
             {
-                return InvokeResult.FromError($"The device [{device.DeviceId}] does not belong to this device group and can not be removed again.");
+                return InvokeResult.FromError($"The device [{deviceUniqueId}] does not belong to this device group and can not be removed again.");
             }
 
-            var deviceInGroup = device.DeviceGroups.Where(devc => devc.Id == deviceGroupId).FirstOrDefault();
-            if (deviceInGroup == null)
+            var device = await GetDeviceManagementRepo(deviceRepo).GetDeviceByIdAsync(deviceRepo, deviceUniqueId, false);
+
+            if (device != null)
             {
-                Logger.AddCustomEvent(LogLevel.Error, "DeviceGroupManager_RemoveDeviceFromGroup", "Device Group does not exist in list of groups for device.", org.Id.ToKVP("orgId"), deviceUniqueId.ToKVP("deviceId"), deviceGroupId.ToKVP("deviceGroupId"));
-            }
-            else
-            {
-                device.DeviceGroups.Remove(deviceInGroup);
-                await GetDeviceManagementRepo(deviceRepo).UpdateDeviceAsync(deviceRepo, device);
+
+                var deviceInGroup = device.DeviceGroups.Where(devc => devc.Id == deviceGroupId).FirstOrDefault();
+                if (deviceInGroup == null)
+                {
+                    Logger.AddCustomEvent(LogLevel.Error, "DeviceGroupManager_RemoveDeviceFromGroup", "Device Group does not exist in list of groups for device.", org.Id.ToKVP("orgId"), deviceUniqueId.ToKVP("deviceId"), deviceGroupId.ToKVP("deviceGroupId"));
+                }
+                else
+                {
+                    device.DeviceGroups.Remove(deviceInGroup);
+                    await GetDeviceManagementRepo(deviceRepo).UpdateDeviceAsync(deviceRepo, device);
+                }
             }
 
             var deviceGroupEntry = group.Devices.Where(dev => dev.DeviceUniqueId == deviceUniqueId).First();

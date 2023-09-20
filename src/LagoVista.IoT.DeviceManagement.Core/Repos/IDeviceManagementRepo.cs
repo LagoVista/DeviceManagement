@@ -30,7 +30,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 
         Task<bool> CheckIfDeviceIdInUse(DeviceRepository repo, string id, string orgid);
 
-        Task<Device> GetDeviceByIdAsync(DeviceRepository repo, string id);
+        Task<Device> GetDeviceByIdAsync(DeviceRepository repo, string id, bool throwOnRecordNotFound = true);
 
         Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository repo, string status, ListRequest listRequest);
 

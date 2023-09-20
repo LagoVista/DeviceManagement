@@ -20,12 +20,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private const string AZURE_DEVICE_CLIENT_STR = "HostName={0}.azure-devices.net;SharedAccessKeyName={1};SharedAccessKey={2}";
 
         private bool _shouldConsolidateCollections;
-        IAdminLogger _logger;
+        private readonly IAdminLogger _logger;
+        private readonly IDeviceGroupRepo _deviceGroupRepo;
 
-        public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) : base(logger)
+        public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger) : base(logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
         }
 
         public DeviceManagementRepo(IAdminLogger logger) : base(logger)
@@ -130,6 +132,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var device = await this.GetDeviceByDeviceIdAsync(deviceRepo, deviceId);
             await DeleteDeviceAsync(deviceRepo, device.Id);
 
+            
+
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 var connString = String.Format(AZURE_DEVICE_CLIENT_STR, deviceRepo.ResourceName, deviceRepo.AccessKeyName, deviceRepo.AccessKey);
@@ -182,7 +186,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return (await base.QueryAsync(device => device.OwnerOrganization.Id == id && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceId == id)).Any();
         }
 
-        public Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id)
+        public Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, bool throwOnRecordNotFound = true)
         {
             if (deviceRepo == null) throw new NullReferenceException(nameof(deviceRepo));
             if (String.IsNullOrEmpty(id)) throw new NullReferenceException(nameof(id));
@@ -190,7 +194,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return GetDocumentAsync(id, deviceRepo.Id);
+            return GetDocumentAsync(id, deviceRepo.Id, throwOnRecordNotFound);
         }
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
