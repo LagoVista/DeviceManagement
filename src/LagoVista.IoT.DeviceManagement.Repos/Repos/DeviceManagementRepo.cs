@@ -132,9 +132,22 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var device = await this.GetDeviceByDeviceIdAsync(deviceRepo, deviceId);
             await DeleteDeviceAsync(deviceRepo, device.Id);
 
-            foreach(var group in device.DeviceGroups)
+            foreach (var groupEH in device.DeviceGroups)
             {
-                
+                var group = await _deviceGroupRepo.GetDeviceGroupAsync(deviceRepo, groupEH.Id);
+                var entry = group.Devices.SingleOrDefault(dgr => dgr.DeviceUniqueId == device.Id);
+                if (entry != null)
+                {
+                    group.Devices.Remove(entry);
+                    await _deviceGroupRepo.UpdateDeviceGroupAsync(deviceRepo, group);
+                    Console.WriteLine("[DeviceManagementRepo__DeleteDeviceByIdAsync]", $"Removed device {device.DeviceId} from group {group.Name} upon device delete.");
+                }
+                else
+                {
+                    _logger.AddCustomEvent(LagoVista.Core.PlatformSupport.LogLevel.Warning, "DeviceManagementRepo__DeleteDeviceByIdAsync", $"Could not find associated device in device group for ${device.DeviceId}");
+                }
+
+
             }
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
