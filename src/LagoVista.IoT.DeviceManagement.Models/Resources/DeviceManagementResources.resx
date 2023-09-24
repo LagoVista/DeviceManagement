@@ -1062,4 +1062,10 @@
   <data name="SensorDefinition_Config_IO_HX711" xml:space="preserve">
     <value>HX711 Load Cell Amplifer</value>
   </data>
+  <data name="Sensor_SelectErroCodeWatermark" xml:space="preserve">
+    <value>-select error code-</value>
+  </data>
+  <data name="Sensor_SelectIcon" xml:space="preserve">
+    <value>-select sensor icon-</value>
+  </data>
 </root>

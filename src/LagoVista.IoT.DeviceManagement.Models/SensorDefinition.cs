@@ -2,6 +2,7 @@
 using LagoVista.Core.Attributes;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
@@ -14,7 +15,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
     {
         [EnumLabel(SensorDefinition.SensorTechnology_ADC, DeviceManagementResources.Names.SensorDefinition_SensorTechnology_ADC, typeof(DeviceManagementResources))]
         ADC,
-        
+
         [EnumLabel(SensorDefinition.SensorTechnology_IO, DeviceManagementResources.Names.SensorDefinition_SensorTechnology_IO, typeof(DeviceManagementResources))]
         IO,
 
@@ -74,7 +75,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         [EnumLabel(SensorDefinition.ADCSensorTypes_ct_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_CT, typeof(DeviceManagementResources))]
         CurentTransformer,
-  
+
         [EnumLabel(SensorDefinition.ADCSensorTypes_onoff_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_ONOFF, typeof(DeviceManagementResources))]
         OnOff,
 
@@ -112,7 +113,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.SensorDefinition_Title, DeviceManagementResources.Names.SensorDefinition_Help,
         DeviceManagementResources.Names.SensorDefinition_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class SensorDefinition : IFormDescriptor
+    public class SensorDefinition : IFormDescriptor, IFormConditionalFields
     {
         public const string SensorTechnology_ADC = "adc";
         public const string SensorTechnology_IO = "io";
@@ -171,9 +172,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
             Id = Guid.NewGuid().ToId();
             ValueType = EntityHeader<SensorValueType>.Create(SensorValueType.Number);
             Technology = null;
-            DefaultScaler = 1.0;
-            DefaultZero = 0.0;
-            DefaultCalibration = 1.0;
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology, HelpResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(SensorTechnology)), WaterMark: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Select, ResourceType: typeof(DeviceManagementResources))]
@@ -192,25 +190,48 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Common_Description, FieldType: FieldTypes.MultiLineText, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string Description { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_IconKey, HelpResource: DeviceManagementResources.Names.SensorDefinition_IconKey_Help, FieldType: FieldTypes.Text,  ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_IconKey, HelpResource: DeviceManagementResources.Names.SensorDefinition_IconKey_Help, WaterMark:DeviceManagementResources.Names.Sensor_SelectIcon,
+            FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string IconKey { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_QRCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_QRCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string QrCode { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_WebLink, HelpResource: DeviceManagementResources.Names.SensorDefinition_WebLink_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public string WebLink { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel, HelpResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string UnitsLabel { get; set; }
+
+
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Units, FieldType: FieldTypes.EntityHeaderPicker, IsUserEditable: true, EnumType: typeof(SensorStates), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_Units_Select)]
         public EntityHeader<UnitSet> UnitSet { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_WebLink, HelpResource: DeviceManagementResources.Names.SensorDefinition_WebLink_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string WebLink { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(IOSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public EntityHeader SensorType { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(ADCSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader<ADCSensorTypes> AdcSensorType { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(IOSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader<IOSensorTypes> IoSensorType { get; set; }
+
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Scaler, HelpResource: DeviceManagementResources.Names.SensorDefinition_Scaler_Help, FieldType: FieldTypes.Decimal, IsRequired: false, ResourceType: typeof(DeviceManagementResources))]
+        public double? DefaultScaler { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefintiion_Calibration, HelpResource: DeviceManagementResources.Names.SensorDefinition_Calibration_Help, FieldType: FieldTypes.Decimal, IsRequired: false, ResourceType: typeof(DeviceManagementResources))]
+        public double? DefaultCalibration { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Zero, HelpResource: DeviceManagementResources.Names.SensorDefinition_Zero_Help, FieldType: FieldTypes.Decimal, IsRequired: false, ResourceType: typeof(DeviceManagementResources))]
+        public double? DefaultZero { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HasConfigurableThreshold_HighValue, HelpResource: DeviceManagementResources.Names.SensorDefinition_HasConfigurableThreshold_HighValue_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool HasConfigurableThresholdHighValue { get; set; }
@@ -219,26 +240,21 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public bool HasConfigurableThresholdLowValue { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Scaler,  HelpResource: DeviceManagementResources.Names.SensorDefinition_Scaler_Help, FieldType: FieldTypes.Decimal, IsRequired: true, ResourceType: typeof(DeviceManagementResources))]
-        public double DefaultScaler { get; set; }
-
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefintiion_Calibration, HelpResource: DeviceManagementResources.Names.SensorDefinition_Calibration_Help, FieldType: FieldTypes.Decimal, IsRequired: true, ResourceType: typeof(DeviceManagementResources))]
-        public double DefaultCalibration { get; set; }
-
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_Zero, HelpResource:DeviceManagementResources.Names.SensorDefinition_Zero_Help, FieldType: FieldTypes.Decimal, IsRequired:true, ResourceType: typeof(DeviceManagementResources))]
-        public double DefaultZero { get; set; }
-
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultLowThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public double? DefaultLowThreshold { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultHighThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired:false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultHighThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public double? DefaultHighThreshold { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_LowThresholdErrorCode, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string LowValueErrorCode { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_LowThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker,
+            WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader LowValueErrorCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HighThresholdErrorCode, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string HighValueErrorCode { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HighThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker,
+            WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader HighValueErrorCode { get; set; }
+
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_On, HelpResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_On_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool GenerateErrorWithOn { get; set; }
@@ -246,43 +262,107 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off, HelpResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool GenerateErrorWithOff { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string OnErrorCode { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode_Help,
+           WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader OnErrorCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string OffErrorCode { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, 
+           WaterMark:DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader OffErrorCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex, HelpResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Help, IsRequired:false, FieldType: FieldTypes.Picker, EnumType:typeof(SensorPorts), WaterMark:DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Select, ResourceType: typeof(DeviceManagementResources))]
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex, HelpResource: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Help, IsRequired: false, FieldType: FieldTypes.Picker, EnumType: typeof(SensorPorts), WaterMark: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Select, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader<SensorPorts> DefaultPortIndex { get; set; }
 
-		public List<string> GetFormFields()
-		{
+        public List<string> GetFormFields()
+        {
             return new List<string>()
-			{
-				nameof(Name),
-				nameof(Key),
-				nameof(ValueType),
-				nameof(SensorType),
-                nameof(Technology),
-				nameof(UnitsLabel),
-				nameof(UnitSet),
-				nameof(DefaultPortIndex),
-				nameof(IconKey),
-				nameof(Description),
-				nameof(QrCode),
-				nameof(WebLink),
-				nameof(DefaultCalibration),
-				nameof(DefaultZero),
-				nameof(DefaultScaler),
-				nameof(DefaultHighThreshold),
-				nameof(DefaultLowThreshold),
+            {
+                nameof(Name),
+                nameof(Key),
+                
+                nameof(ValueType),
 
+
+                nameof(Technology),
+                nameof(AdcSensorType),
+                nameof(IoSensorType),
+                nameof(DefaultPortIndex),
+
+                nameof(UnitsLabel),
+                nameof(UnitSet),
+                nameof(IconKey),
+                nameof(Description),
+                nameof(QrCode),
+                nameof(WebLink),
+
+                nameof(DefaultCalibration),
+                nameof(DefaultZero),
+                nameof(DefaultScaler),
+
+                nameof(DefaultHighThreshold),
+                nameof(DefaultLowThreshold),
+                nameof(LowValueErrorCode),
+                nameof(HighValueErrorCode),
 
                 nameof(GenerateErrorWithOn),
                 nameof(OnErrorCode),
-				nameof(GenerateErrorWithOff),
+                nameof(GenerateErrorWithOff),
                 nameof(OffErrorCode),
             };
-		}
-	}
+        }
+
+        public FormConditionals GetConditionalFields()
+        {
+            return new FormConditionals()
+            {
+                ConditionalFields = new List<string>()
+                 {
+                     nameof(OnErrorCode),
+                     nameof(OffErrorCode),
+                     nameof(AdcSensorType),
+                     nameof(IoSensorType),
+                     nameof(DefaultCalibration),
+                     nameof(DefaultZero),
+                     nameof(DefaultScaler),
+                     nameof(DefaultHighThreshold),
+                     nameof(DefaultLowThreshold),
+                     nameof(LowValueErrorCode),
+                     nameof(HighValueErrorCode),
+                     nameof(GenerateErrorWithOn),
+                     nameof(GenerateErrorWithOff),
+                     nameof(OnErrorCode),
+                     nameof(OffErrorCode)
+                 },
+                Conditionals = new List<FormConditional>()
+                {
+                    new FormConditional()
+                    {
+                         Field = nameof(Technology),
+                         Value = SensorTechnology_ADC,
+                         VisibleFields = new List<string>() {nameof(AdcSensorType)}
+                    },
+                    new FormConditional()
+                    {
+                         Field = nameof(Technology),
+                         Value = SensorTechnology_IO,
+                         VisibleFields = new List<string>() {nameof(IoSensorType)}
+                    },
+                    new FormConditional()
+                    {
+                        Field = nameof(ValueType),
+                        Value = SensorValueType_Number,
+                        VisibleFields = new List<string>() { nameof(DefaultHighThreshold), nameof(DefaultLowThreshold), nameof(DefaultScaler), nameof(DefaultCalibration), nameof(DefaultZero), nameof(LowValueErrorCode), nameof(HighValueErrorCode)}
+                    },
+                    new FormConditional()
+                    {
+                        Field = nameof(ValueType),
+                        Value = SensorValueType_Boolean,
+                        VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
+                    }
+                }
+            };
+        }
+    }
 }

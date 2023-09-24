@@ -45,7 +45,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
             Description = definition.Description;
             SensorDefinition = new EntityHeader() { Id = definition.Id, Text = definition.Name, Key = definition.Key };
             Technology = definition.Technology;
-            SensorType = definition.SensorType;
+            AdcSensorType = definition.AdcSensorType;
+            IoSensorType = definition.IoSensorType;
             DeviceScaler = definition.DefaultScaler;
             Zero = definition.DefaultZero;
             Calibration = definition.DefaultCalibration;
@@ -92,7 +93,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         /// Type of Sensor 
         /// </summary>
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(IOSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public EntityHeader SensorType { get; set; }
+        public EntityHeader<IOSensorTypes> IoSensorType { get; set; }
+
+
+        /// <summary>
+        /// Type of Sensor 
+        /// </summary>
+        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(IOSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public EntityHeader<ADCSensorTypes> AdcSensorType { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_PortIndex, HelpResource: DeviceManagementResources.Names.Sensor_PortIndex_Help, IsRequired: false, FieldType: FieldTypes.Picker, EnumType: typeof(SensorPorts), WaterMark: DeviceManagementResources.Names.SensorDefinition_DefaultPortIndex_Select, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader<SensorPorts> PortIndexSelection { get; set; }
@@ -142,11 +151,11 @@ namespace LagoVista.IoT.DeviceManagement.Models
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_DeviceScaler, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public double DeviceScaler { get; set; } = 1;
+        public double? DeviceScaler { get; set; }
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Calibration, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public double Calibration { get; set; } = 1;
+        public double? Calibration { get; set; }
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Zero, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public double Zero { get; set; } = 0;
+        public double? Zero { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_LowThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public double? LowThreshold { get; set; }
@@ -155,10 +164,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public double? HighThreshold { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_LowThreshold_ErrorCode, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string LowValueErrorCode { get; set; }
+        public EntityHeader LowValueErrorCode { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_HighThreshold_ErrorCode, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string HighValueErrorCode { get; set; }
+        public EntityHeader HighValueErrorCode { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_AlertsEnabled, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool AlertsEnabled { get; set; }
@@ -178,10 +187,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public EntityHeader<UnitSet> UnitSet { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string OnErrorCode { get; set; }
+        public EntityHeader OnErrorCode { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string OffErrorCode { get; set; }
+        public EntityHeader OffErrorCode { get; set; }
 
         private string _value;
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Value, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false, IsUserEditable: false)]

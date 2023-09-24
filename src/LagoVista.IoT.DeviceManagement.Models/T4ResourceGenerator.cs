@@ -1,4 +1,4 @@
-﻿/*9/23/2023 12:58:53 PM*/
+﻿/*9/24/2023 7:35:45 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -726,6 +726,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_PortIndex_Help
 
 		public static string Sensor_PortIndex_Help { get { return GetResourceString("Sensor_PortIndex_Help"); } }
+//Resources:DeviceManagementResources:Sensor_SelectErroCodeWatermark
+
+		public static string Sensor_SelectErroCodeWatermark { get { return GetResourceString("Sensor_SelectErroCodeWatermark"); } }
+//Resources:DeviceManagementResources:Sensor_SelectIcon
+
+		public static string Sensor_SelectIcon { get { return GetResourceString("Sensor_SelectIcon"); } }
 //Resources:DeviceManagementResources:Sensor_SensorDefinition
 
 		public static string Sensor_SensorDefinition { get { return GetResourceString("Sensor_SensorDefinition"); } }
@@ -1226,6 +1232,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Sensor_LowThreshold_ErrorCode = "Sensor_LowThreshold_ErrorCode";
 			public const string Sensor_PortIndex = "Sensor_PortIndex";
 			public const string Sensor_PortIndex_Help = "Sensor_PortIndex_Help";
+			public const string Sensor_SelectErroCodeWatermark = "Sensor_SelectErroCodeWatermark";
+			public const string Sensor_SelectIcon = "Sensor_SelectIcon";
 			public const string Sensor_SensorDefinition = "Sensor_SensorDefinition";
 			public const string Sensor_SensorType_Select = "Sensor_SensorType_Select";
 			public const string Sensor_SensorTypeId = "Sensor_SensorTypeId";
