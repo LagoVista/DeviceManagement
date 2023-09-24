@@ -52,7 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId && qry.DeviceRepository.Id == deviceRepo.Id);
 
-            return from item in items
+            return from item in items.OrderBy(itm=>itm.Name)
                    select item.CreateSummary();
         }
 

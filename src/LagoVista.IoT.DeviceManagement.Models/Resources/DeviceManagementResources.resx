@@ -1053,4 +1053,13 @@
   <data name="Firmware_Revisions" xml:space="preserve">
     <value>Revisions</value>
   </data>
+  <data name="SensorDefinition_Config_ADC_THERMISTOR" xml:space="preserve">
+    <value>Thermistor</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_DHT22_Humidity" xml:space="preserve">
+    <value>Humidity</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_HX711" xml:space="preserve">
+    <value>HX711 Load Cell Amplifer</value>
+  </data>
 </root>

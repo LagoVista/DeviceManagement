@@ -1,4 +1,4 @@
-﻿/*8/19/2023 2:18:13 PM*/
+﻿/*9/23/2023 12:58:53 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -777,6 +777,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Config_ADC_ONOFF
 
 		public static string SensorDefinition_Config_ADC_ONOFF { get { return GetResourceString("SensorDefinition_Config_ADC_ONOFF"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_THERMISTOR
+
+		public static string SensorDefinition_Config_ADC_THERMISTOR { get { return GetResourceString("SensorDefinition_Config_ADC_THERMISTOR"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_Help
 
 		public static string SensorDefinition_Config_Help { get { return GetResourceString("SensorDefinition_Config_Help"); } }
@@ -786,9 +789,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Config_IO_DHT22
 
 		public static string SensorDefinition_Config_IO_DHT22 { get { return GetResourceString("SensorDefinition_Config_IO_DHT22"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_DHT22_Humidity
+
+		public static string SensorDefinition_Config_IO_DHT22_Humidity { get { return GetResourceString("SensorDefinition_Config_IO_DHT22_Humidity"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_IO_DS18B
 
 		public static string SensorDefinition_Config_IO_DS18B { get { return GetResourceString("SensorDefinition_Config_IO_DS18B"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_HX711
+
+		public static string SensorDefinition_Config_IO_HX711 { get { return GetResourceString("SensorDefinition_Config_IO_HX711"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_IO_Input
 
 		public static string SensorDefinition_Config_IO_Input { get { return GetResourceString("SensorDefinition_Config_IO_Input"); } }
@@ -1234,10 +1243,13 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
 			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
 			public const string SensorDefinition_Config_ADC_ONOFF = "SensorDefinition_Config_ADC_ONOFF";
+			public const string SensorDefinition_Config_ADC_THERMISTOR = "SensorDefinition_Config_ADC_THERMISTOR";
 			public const string SensorDefinition_Config_Help = "SensorDefinition_Config_Help";
 			public const string SensorDefinition_Config_IO_DHT11 = "SensorDefinition_Config_IO_DHT11";
 			public const string SensorDefinition_Config_IO_DHT22 = "SensorDefinition_Config_IO_DHT22";
+			public const string SensorDefinition_Config_IO_DHT22_Humidity = "SensorDefinition_Config_IO_DHT22_Humidity";
 			public const string SensorDefinition_Config_IO_DS18B = "SensorDefinition_Config_IO_DS18B";
+			public const string SensorDefinition_Config_IO_HX711 = "SensorDefinition_Config_IO_HX711";
 			public const string SensorDefinition_Config_IO_Input = "SensorDefinition_Config_IO_Input";
 			public const string SensorDefinition_Config_IO_Output = "SensorDefinition_Config_IO_Output";
 			public const string SensorDefinition_Config_IO_PulseCounter = "SensorDefinition_Config_IO_PulseCounter";

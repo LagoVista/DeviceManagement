@@ -55,7 +55,13 @@ namespace LagoVista.IoT.DeviceManagement.Models
         DHT11,
 
         [EnumLabel(SensorDefinition.IOSensorTypes_dht22_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_DHT22, typeof(DeviceManagementResources))]
-        DHT22
+        DHT22,
+
+        [EnumLabel(SensorDefinition.IOSensorTypes_dht22_humidity_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_DHT22_Humidity, typeof(DeviceManagementResources))]
+        DHT22Humidity,
+
+        [EnumLabel(SensorDefinition.IOSensorTypes_hx711, DeviceManagementResources.Names.SensorDefinition_Config_IO_HX711, typeof(DeviceManagementResources))]
+        HX711
     }
 
     public enum ADCSensorTypes
@@ -71,6 +77,9 @@ namespace LagoVista.IoT.DeviceManagement.Models
   
         [EnumLabel(SensorDefinition.ADCSensorTypes_onoff_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_ONOFF, typeof(DeviceManagementResources))]
         OnOff,
+
+        [EnumLabel(SensorDefinition.ADCSensorTypes_thermistor_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_THERMISTOR, typeof(DeviceManagementResources))]
+        Thermistor,
     }
 
     public enum SensorPorts
@@ -113,17 +122,21 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string SensorValueType_String = "string";
         public const string SensorValueType_Number = "number";
 
-        public const string IOSensorTypes_None = "io_none";
-        public const string IOSensorTypes_input = "io_input";
-        public const string IOSensorTypes_output = "io_output";
-        public const string IOSensorTypes_pulsecounter = "io_pulsecounter";
-        public const string IOSensorTypes_ds18b = "io_ds18B";
-        public const string IOSensorTypes_dht11 = "io_dht11";
-        public const string IOSensorTypes_dht22 = "io_dht22";
+        public const string IOSensorTypes_None = "io_none"; // 0
+        public const string IOSensorTypes_input = "io_input"; // 1
+        public const string IOSensorTypes_output = "io_output"; // 2
+        public const string IOSensorTypes_pulsecounter = "io_pulsecounter"; //3
+        public const string IOSensorTypes_ds18b = "io_ds18B"; // 4
+        public const string IOSensorTypes_dht11 = "io_dht11"; // 5
+        public const string IOSensorTypes_dht22 = "io_dht22"; // 6
+        public const string IOSensorTypes_dht22_humidity = "io_dht22_humidity"; // 7
+        public const string IOSensorTypes_hx711 = "io_hx711"; // 8
 
-        public const string ADCSensorTypes_none = "adc_none";
-        public const string ADCSensorTypes_adc = "adc_adc";
-        public const string ADCSensorTypes_ct = "adc_ct";
+        public const string ADCSensorTypes_none = "adc_none"; // 0
+        public const string ADCSensorTypes_adc = "adc_adc"; // 1
+        public const string ADCSensorTypes_ct = "adc_ct"; // 2
+        public const string ADCSensorTypes_onoff = "adc_onoff"; // 3
+        public const string ADCSensorTypes_thermistor = "adc_thermistor"; // 4
 
         public const string IOSensorTypes_None_Idx = "0";
         public const string IOSensorTypes_input_Idx = "1";
@@ -132,11 +145,14 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string IOSensorTypes_ds18b_Idx = "4";
         public const string IOSensorTypes_dht11_Idx = "5";
         public const string IOSensorTypes_dht22_Idx = "6";
+        public const string IOSensorTypes_dht22_humidity_Idx = "7";
+        public const string IOSensorTypes_hx711_Idx = "8";
 
         public const string ADCSensorTypes_none_Idx = "0";
         public const string ADCSensorTypes_adc_Idx = "1";
         public const string ADCSensorTypes_ct_Idx = "2";
         public const string ADCSensorTypes_onoff_Idx = "3";
+        public const string ADCSensorTypes_thermistor_Idx = "4";
 
         public const string SensorDefinition_Port1 = "1";
         public const string SensorDefinition_Port2 = "2";
@@ -247,6 +263,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 				nameof(Key),
 				nameof(ValueType),
 				nameof(SensorType),
+                nameof(Technology),
 				nameof(UnitsLabel),
 				nameof(UnitSet),
 				nameof(DefaultPortIndex),
@@ -259,9 +276,13 @@ namespace LagoVista.IoT.DeviceManagement.Models
 				nameof(DefaultScaler),
 				nameof(DefaultHighThreshold),
 				nameof(DefaultLowThreshold),
-				nameof(GenerateErrorWithOn),
-				nameof(GenerateErrorWithOff)
-			};
+
+
+                nameof(GenerateErrorWithOn),
+                nameof(OnErrorCode),
+				nameof(GenerateErrorWithOff),
+                nameof(OffErrorCode),
+            };
 		}
 	}
 }
