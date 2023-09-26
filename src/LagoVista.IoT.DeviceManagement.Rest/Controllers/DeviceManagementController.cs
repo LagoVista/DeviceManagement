@@ -591,7 +591,18 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return DetailResponse<Sensor>.Create();
         }
 
-        
+
+        /// <summary>
+        /// Device Management - Create a new empty sensor that can be attached to a device.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/device/sensordefinition/factory")]
+        public DetailResponse<SensorDefinition> CreateSensorConfiguration()
+        {
+            return DetailResponse<SensorDefinition>.Create();
+        }
+
+
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/sensor")]
         public async Task<InvokeResult> SetSensorAsync(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
         {

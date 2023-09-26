@@ -13,7 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
     /// THis is a specific sensor on a board.
     /// </summary>
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Sensor_Title, DeviceManagementResources.Names.Sensor_Help,
-        DeviceManagementResources.Names.Sensor_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+        DeviceManagementResources.Names.Sensor_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), FactoryUrl: "/api/device/sensor/factory")]
     public class Sensor
     {
         public Sensor()

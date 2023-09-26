@@ -8,7 +8,8 @@ using LagoVista.Core.Validation;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceNotes_Title, DeviceManagementResources.Names.DeviceNotes_Help, DeviceManagementResources.Names.DeviceNotes_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceNotes_Title, DeviceManagementResources.Names.DeviceNotes_Help,
+        DeviceManagementResources.Names.DeviceNotes_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),FactoryUrl: "/api/device/note/factory")]
     public class DeviceNote : IAuditableEntity, IValidateable
     {
         [JsonProperty("id")]
