@@ -24,6 +24,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public string Log { get; set; }
         public string Instructions { get; set; }
         public string Device { get; set; }
+        public string SolutionVersion { get; set; }
+        public string RuntimeVersion { get; set; }
 
         public InvokeResult<string> ToPEM()
         {
@@ -140,7 +142,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 MessageId = MessageId,
                 MessageType = MessageType,
                 Status = Status,
-                TotalProcessingMS = TotalProcessingMS
+                TotalProcessingMS = TotalProcessingMS,
+                RuntimeVersion = RuntimeVersion,
+                SolutionVersion = SolutionVersion,
             };
         }
     }

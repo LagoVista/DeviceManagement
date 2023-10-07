@@ -8,6 +8,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string RowKey { get; set; }
         public string PartitionKey { get; set; }
         public string DeviceId { get; set; }
+        public string SolutionVersion { get; set; }
+        public string RuntimeVersion { get; set; }
         public String MessageId { get; set; }
         public String Status { get; set; }
         public String MessageType { get; set; }

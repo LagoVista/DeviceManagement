@@ -76,7 +76,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                         nameof(PEMIndexDTO.MessageId),
                         nameof(PEMIndexDTO.MessageType),
                         nameof(PEMIndexDTO.TotalProcessingMS),
-                        nameof(PEMIndexDTO.ErrorReason) })
+                        nameof(PEMIndexDTO.ErrorReason),
+                        nameof(PEMIndexDTO.SolutionVersion),
+                        nameof(PEMIndexDTO.RuntimeVersion)})
                         .Take(request.PageSize);
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndexDTO>(query, new TableContinuationToken()
@@ -111,8 +113,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
                 var query = new TableQuery<PEMIndexDTO>()
                     .Where(TableQuery.GenerateFilterCondition(nameof(PEMIndexDTO.PartitionKey), QueryComparisons.Equal, errorReason))
-                    .Select(new List<string> { nameof(PEMIndexDTO.RowKey), nameof(PEMIndexDTO.Status), nameof(PEMIndexDTO.CreatedTimeStamp), nameof(PEMIndexDTO.DeviceId), nameof(PEMIndexDTO.MessageId), nameof(PEMIndexDTO.MessageType),
-                        nameof(PEMIndexDTO.TotalProcessingMS), nameof(PEMIndexDTO.ErrorReason) })
+                    .Select(new List<string> { 
+                        nameof(PEMIndexDTO.RowKey), 
+                        nameof(PEMIndexDTO.Status), 
+                        nameof(PEMIndexDTO.CreatedTimeStamp),
+                        nameof(PEMIndexDTO.DeviceId),
+                        nameof(PEMIndexDTO.MessageId), 
+                        nameof(PEMIndexDTO.MessageType),
+                        nameof(PEMIndexDTO.TotalProcessingMS), 
+                        nameof(PEMIndexDTO.ErrorReason),
+                        nameof(PEMIndexDTO.SolutionVersion),
+                        nameof(PEMIndexDTO.RuntimeVersion) })
                         .Take(request.PageSize);
 
                 var results = await pems.ExecuteQuerySegmentedAsync<PEMIndexDTO>(query, new TableContinuationToken()
