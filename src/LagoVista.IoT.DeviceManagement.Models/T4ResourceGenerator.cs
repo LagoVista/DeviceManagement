@@ -1,4 +1,4 @@
-﻿/*9/24/2023 7:35:45 AM*/
+﻿/*11/4/2023 6:08:58 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -744,6 +744,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_SensorTypeId_Help
 
 		public static string Sensor_SensorTypeId_Help { get { return GetResourceString("Sensor_SensorTypeId_Help"); } }
+//Resources:DeviceManagementResources:Sensor_ServerCalculations
+
+		public static string Sensor_ServerCalculations { get { return GetResourceString("Sensor_ServerCalculations"); } }
+//Resources:DeviceManagementResources:Sensor_ServerScaling_Help
+
+		public static string Sensor_ServerScaling_Help { get { return GetResourceString("Sensor_ServerScaling_Help"); } }
 //Resources:DeviceManagementResources:Sensor_State
 
 		public static string Sensor_State { get { return GetResourceString("Sensor_State"); } }
@@ -963,6 +969,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_SensorValueType_String
 
 		public static string SensorDefinition_SensorValueType_String { get { return GetResourceString("SensorDefinition_SensorValueType_String"); } }
+//Resources:DeviceManagementResources:SensorDefinition_ServerCalculations
+
+		public static string SensorDefinition_ServerCalculations { get { return GetResourceString("SensorDefinition_ServerCalculations"); } }
+//Resources:DeviceManagementResources:SensorDefinition_ServerScaling_Help
+
+		public static string SensorDefinition_ServerScaling_Help { get { return GetResourceString("SensorDefinition_ServerScaling_Help"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Title
 
 		public static string SensorDefinition_Title { get { return GetResourceString("SensorDefinition_Title"); } }
@@ -1238,6 +1250,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Sensor_SensorType_Select = "Sensor_SensorType_Select";
 			public const string Sensor_SensorTypeId = "Sensor_SensorTypeId";
 			public const string Sensor_SensorTypeId_Help = "Sensor_SensorTypeId_Help";
+			public const string Sensor_ServerCalculations = "Sensor_ServerCalculations";
+			public const string Sensor_ServerScaling_Help = "Sensor_ServerScaling_Help";
 			public const string Sensor_State = "Sensor_State";
 			public const string Sensor_Technology = "Sensor_Technology";
 			public const string Sensor_Technology_Select = "Sensor_Technology_Select";
@@ -1311,6 +1325,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_SensorValueType_Number = "SensorDefinition_SensorValueType_Number";
 			public const string SensorDefinition_SensorValueType_Select = "SensorDefinition_SensorValueType_Select";
 			public const string SensorDefinition_SensorValueType_String = "SensorDefinition_SensorValueType_String";
+			public const string SensorDefinition_ServerCalculations = "SensorDefinition_ServerCalculations";
+			public const string SensorDefinition_ServerScaling_Help = "SensorDefinition_ServerScaling_Help";
 			public const string SensorDefinition_Title = "SensorDefinition_Title";
 			public const string SensorDefinition_UnitsLabel = "SensorDefinition_UnitsLabel";
 			public const string SensorDefinition_UnitsLabel_Help = "SensorDefinition_UnitsLabel_Help";

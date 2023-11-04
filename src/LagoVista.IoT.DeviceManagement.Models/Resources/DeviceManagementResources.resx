@@ -1068,4 +1068,16 @@
   <data name="Sensor_SelectIcon" xml:space="preserve">
     <value>-select sensor icon-</value>
   </data>
+  <data name="SensorDefinition_ServerCalculations" xml:space="preserve">
+    <value>Calculate on Server</value>
+  </data>
+  <data name="SensorDefinition_ServerScaling_Help" xml:space="preserve">
+    <value>Perform Scaling, Zeroing and Calibraiton on Server, if this is set the calculations will be done on the server, if not it is expected the firmware will perform the calculations.</value>
+  </data>
+  <data name="Sensor_ServerCalculations" xml:space="preserve">
+    <value>Calculate on Server</value>
+  </data>
+  <data name="Sensor_ServerScaling_Help" xml:space="preserve">
+    <value>Perform Scaling, Zeroing and Calibraiton on Server, if this is set the calculations will be done on the server, if not it is expected the firmware will perform the calculations.</value>
+  </data>
 </root>

@@ -239,6 +239,9 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HasConfigurableThreshold_LowValue, HelpResource: DeviceManagementResources.Names.SensorDefinition_HasConfigurableThreshold_LowValue_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool HasConfigurableThresholdLowValue { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_ServerCalculations, HelpResource: DeviceManagementResources.Names.SensorDefinition_ServerScaling_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool ServerCalculations { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultLowThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public double? DefaultLowThreshold { get; set; }
@@ -297,6 +300,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
                 nameof(QrCode),
                 nameof(WebLink),
 
+
+                nameof(ServerCalculations),
                 nameof(DefaultCalibration),
                 nameof(DefaultZero),
                 nameof(DefaultScaler),
@@ -323,6 +328,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
                      nameof(OffErrorCode),
                      nameof(AdcSensorType),
                      nameof(IoSensorType),
+                     nameof(ServerCalculations),
                      nameof(DefaultCalibration),
                      nameof(DefaultZero),
                      nameof(DefaultScaler),
@@ -333,7 +339,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
                      nameof(GenerateErrorWithOn),
                      nameof(GenerateErrorWithOff),
                      nameof(OnErrorCode),
-                     nameof(OffErrorCode)
+                     nameof(OffErrorCode),
+                     nameof(ServerCalculations),
                  },
                 Conditionals = new List<FormConditional>()
                 {
@@ -353,11 +360,16 @@ namespace LagoVista.IoT.DeviceManagement.Models
                     {
                         Field = nameof(ValueType),
                         Value = SensorValueType_Number,
-                        VisibleFields = new List<string>() { nameof(DefaultHighThreshold), nameof(DefaultLowThreshold), nameof(DefaultScaler), nameof(DefaultCalibration), nameof(DefaultZero), nameof(LowValueErrorCode), nameof(HighValueErrorCode)}
+                        VisibleFields = new List<string>() { nameof(DefaultHighThreshold), nameof(DefaultLowThreshold), nameof(ServerCalculations), nameof(DefaultScaler), nameof(DefaultCalibration), nameof(DefaultZero), nameof(LowValueErrorCode), nameof(HighValueErrorCode)}
                     },
                     new FormConditional()
                     {
                         Field = nameof(ValueType),
+                        Value = SensorValueType_Boolean,
+                        VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
+                    },
+                    new FormConditional()
+                    {
                         Value = SensorValueType_Boolean,
                         VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
                     }
