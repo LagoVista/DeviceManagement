@@ -1092,4 +1092,7 @@
   <data name="Sensor_ServerScaling_Help" xml:space="preserve">
     <value>Perform Scaling, Zeroing and Calibraiton on Server, if this is set the calculations will be done on the server, if not it is expected the firmware will perform the calculations.</value>
   </data>
+  <data name="Device_GeoLocation_HasFix" xml:space="preserve">
+    <value>Has GPS Fix</value>
+  </data>
 </root>

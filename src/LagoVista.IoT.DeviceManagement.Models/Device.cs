@@ -164,6 +164,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource: DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public GeoLocation GeoLocation { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation_HasFix, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public bool HasGeoFix { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Heading, HelpResource: DeviceManagementResources.Names.Device_Heading_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public double Heading { get; set; }
 

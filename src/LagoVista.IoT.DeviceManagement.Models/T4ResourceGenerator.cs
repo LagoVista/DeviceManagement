@@ -1,4 +1,4 @@
-﻿/*11/5/2023 6:04:58 AM*/
+﻿/*11/5/2023 4:19:56 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -243,6 +243,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_GeoLocation
 
 		public static string Device_GeoLocation { get { return GetResourceString("Device_GeoLocation"); } }
+//Resources:DeviceManagementResources:Device_GeoLocation_HasFix
+
+		public static string Device_GeoLocation_HasFix { get { return GetResourceString("Device_GeoLocation_HasFix"); } }
 //Resources:DeviceManagementResources:Device_GeoLocation_Help
 
 		public static string Device_GeoLocation_Help { get { return GetResourceString("Device_GeoLocation_Help"); } }
@@ -1095,6 +1098,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_GeofenceTrackingMode = "Device_GeofenceTrackingMode";
 			public const string Device_GeofenceTrackingMode_Help = "Device_GeofenceTrackingMode_Help";
 			public const string Device_GeoLocation = "Device_GeoLocation";
+			public const string Device_GeoLocation_HasFix = "Device_GeoLocation_HasFix";
 			public const string Device_GeoLocation_Help = "Device_GeoLocation_Help";
 			public const string Device_Heading = "Device_Heading";
 			public const string Device_Heading_Help = "Device_Heading_Help";
