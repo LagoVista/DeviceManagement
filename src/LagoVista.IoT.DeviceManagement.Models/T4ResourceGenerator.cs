@@ -1,4 +1,4 @@
-﻿/*11/4/2023 6:08:58 PM*/
+﻿/*11/5/2023 6:04:58 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -714,6 +714,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_HighThreshold_ErrorCode
 
 		public static string Sensor_HighThreshold_ErrorCode { get { return GetResourceString("Sensor_HighThreshold_ErrorCode"); } }
+//Resources:DeviceManagementResources:Sensor_LastUpdated
+
+		public static string Sensor_LastUpdated { get { return GetResourceString("Sensor_LastUpdated"); } }
 //Resources:DeviceManagementResources:Sensor_LowThreshold
 
 		public static string Sensor_LowThreshold { get { return GetResourceString("Sensor_LowThreshold"); } }
@@ -789,9 +792,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Config_ADC_ONOFF
 
 		public static string SensorDefinition_Config_ADC_ONOFF { get { return GetResourceString("SensorDefinition_Config_ADC_ONOFF"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_Other
+
+		public static string SensorDefinition_Config_ADC_Other { get { return GetResourceString("SensorDefinition_Config_ADC_Other"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_ADC_THERMISTOR
 
 		public static string SensorDefinition_Config_ADC_THERMISTOR { get { return GetResourceString("SensorDefinition_Config_ADC_THERMISTOR"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_ADC_Volts
+
+		public static string SensorDefinition_Config_ADC_Volts { get { return GetResourceString("SensorDefinition_Config_ADC_Volts"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_Help
 
 		public static string SensorDefinition_Config_Help { get { return GetResourceString("SensorDefinition_Config_Help"); } }
@@ -813,6 +822,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_Config_IO_Input
 
 		public static string SensorDefinition_Config_IO_Input { get { return GetResourceString("SensorDefinition_Config_IO_Input"); } }
+//Resources:DeviceManagementResources:SensorDefinition_Config_IO_Other
+
+		public static string SensorDefinition_Config_IO_Other { get { return GetResourceString("SensorDefinition_Config_IO_Other"); } }
 //Resources:DeviceManagementResources:SensorDefinition_Config_IO_Output
 
 		public static string SensorDefinition_Config_IO_Output { get { return GetResourceString("SensorDefinition_Config_IO_Output"); } }
@@ -1240,6 +1252,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Sensor_Help = "Sensor_Help";
 			public const string Sensor_HighThreshold = "Sensor_HighThreshold";
 			public const string Sensor_HighThreshold_ErrorCode = "Sensor_HighThreshold_ErrorCode";
+			public const string Sensor_LastUpdated = "Sensor_LastUpdated";
 			public const string Sensor_LowThreshold = "Sensor_LowThreshold";
 			public const string Sensor_LowThreshold_ErrorCode = "Sensor_LowThreshold_ErrorCode";
 			public const string Sensor_PortIndex = "Sensor_PortIndex";
@@ -1265,7 +1278,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Config_ADC_ADC = "SensorDefinition_Config_ADC_ADC";
 			public const string SensorDefinition_Config_ADC_CT = "SensorDefinition_Config_ADC_CT";
 			public const string SensorDefinition_Config_ADC_ONOFF = "SensorDefinition_Config_ADC_ONOFF";
+			public const string SensorDefinition_Config_ADC_Other = "SensorDefinition_Config_ADC_Other";
 			public const string SensorDefinition_Config_ADC_THERMISTOR = "SensorDefinition_Config_ADC_THERMISTOR";
+			public const string SensorDefinition_Config_ADC_Volts = "SensorDefinition_Config_ADC_Volts";
 			public const string SensorDefinition_Config_Help = "SensorDefinition_Config_Help";
 			public const string SensorDefinition_Config_IO_DHT11 = "SensorDefinition_Config_IO_DHT11";
 			public const string SensorDefinition_Config_IO_DHT22 = "SensorDefinition_Config_IO_DHT22";
@@ -1273,6 +1288,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_Config_IO_DS18B = "SensorDefinition_Config_IO_DS18B";
 			public const string SensorDefinition_Config_IO_HX711 = "SensorDefinition_Config_IO_HX711";
 			public const string SensorDefinition_Config_IO_Input = "SensorDefinition_Config_IO_Input";
+			public const string SensorDefinition_Config_IO_Other = "SensorDefinition_Config_IO_Other";
 			public const string SensorDefinition_Config_IO_Output = "SensorDefinition_Config_IO_Output";
 			public const string SensorDefinition_Config_IO_PulseCounter = "SensorDefinition_Config_IO_PulseCounter";
 			public const string SensorDefinition_Config_None = "SensorDefinition_Config_None";

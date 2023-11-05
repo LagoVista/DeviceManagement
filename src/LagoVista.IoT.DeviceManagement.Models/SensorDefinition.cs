@@ -49,7 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [EnumLabel(SensorDefinition.IOSensorTypes_pulsecounter_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_PulseCounter, typeof(DeviceManagementResources))]
         PulseCounter,
 
-        [EnumLabel(SensorDefinition.IOSensorTypes_ds18b_Idx, DeviceManagementResources.Names.SensorDefinition_SensorValueType_Number, typeof(DeviceManagementResources))]
+        [EnumLabel(SensorDefinition.IOSensorTypes_ds18b_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_DS18B, typeof(DeviceManagementResources))]
         DS18B,
 
         [EnumLabel(SensorDefinition.IOSensorTypes_dht11_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_DHT11, typeof(DeviceManagementResources))]
@@ -61,8 +61,12 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [EnumLabel(SensorDefinition.IOSensorTypes_dht22_humidity_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_DHT22_Humidity, typeof(DeviceManagementResources))]
         DHT22Humidity,
 
-        [EnumLabel(SensorDefinition.IOSensorTypes_hx711, DeviceManagementResources.Names.SensorDefinition_Config_IO_HX711, typeof(DeviceManagementResources))]
-        HX711
+        [EnumLabel(SensorDefinition.IOSensorTypes_hx711_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_HX711, typeof(DeviceManagementResources))]
+        HX711,
+
+        [EnumLabel(SensorDefinition.IOSensorTypes_other_Idx, DeviceManagementResources.Names.SensorDefinition_Config_IO_Other, typeof(DeviceManagementResources), SortOrder: 99)]
+        Other
+
     }
 
     public enum ADCSensorTypes
@@ -81,6 +85,12 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         [EnumLabel(SensorDefinition.ADCSensorTypes_thermistor_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_THERMISTOR, typeof(DeviceManagementResources))]
         Thermistor,
+
+        [EnumLabel(SensorDefinition.ADCSensorTypes_volts_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_Volts, typeof(DeviceManagementResources))]
+        Voltage,
+   
+        [EnumLabel(SensorDefinition.ADCSensorTypes_other_Idx, DeviceManagementResources.Names.SensorDefinition_Config_ADC_Other, typeof(DeviceManagementResources), SortOrder:99)]
+        Other
     }
 
     public enum SensorPorts
@@ -132,12 +142,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string IOSensorTypes_dht22 = "io_dht22"; // 6
         public const string IOSensorTypes_dht22_humidity = "io_dht22_humidity"; // 7
         public const string IOSensorTypes_hx711 = "io_hx711"; // 8
+        public const string IOSensorTypes_other = "io_other"; // 99
 
         public const string ADCSensorTypes_none = "adc_none"; // 0
         public const string ADCSensorTypes_adc = "adc_adc"; // 1
         public const string ADCSensorTypes_ct = "adc_ct"; // 2
         public const string ADCSensorTypes_onoff = "adc_onoff"; // 3
         public const string ADCSensorTypes_thermistor = "adc_thermistor"; // 4
+        public const string ADCSensorTypes_volts = "adc_volts"; // 5
+        public const string ADCSensorTypes_other = "adc_other"; // 99
 
         public const string IOSensorTypes_None_Idx = "0";
         public const string IOSensorTypes_input_Idx = "1";
@@ -148,12 +161,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string IOSensorTypes_dht22_Idx = "6";
         public const string IOSensorTypes_dht22_humidity_Idx = "7";
         public const string IOSensorTypes_hx711_Idx = "8";
+        public const string IOSensorTypes_other_Idx = "99";
 
         public const string ADCSensorTypes_none_Idx = "0";
         public const string ADCSensorTypes_adc_Idx = "1";
         public const string ADCSensorTypes_ct_Idx = "2";
         public const string ADCSensorTypes_onoff_Idx = "3";
         public const string ADCSensorTypes_thermistor_Idx = "4";
+        public const string ADCSensorTypes_volts_Idx = "5";
+        public const string ADCSensorTypes_other_Idx = "99";
 
         public const string SensorDefinition_Port1 = "1";
         public const string SensorDefinition_Port2 = "2";
@@ -249,11 +265,11 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_DefaultHighThreshold, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public double? DefaultHighThreshold { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_LowThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker,
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_LowThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl: "/api/errorcodes",
             WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader LowValueErrorCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HighThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker,
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_HighThresholdErrorCode, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl: "/api/errorcodes",
             WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader HighValueErrorCode { get; set; }
 
@@ -265,11 +281,11 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off, HelpResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool GenerateErrorWithOff { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode_Help,
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OnErrorCode_Help, EntityHeaderPickerUrl: "/api/errorcodes",
            WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader OnErrorCode { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, 
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, EntityHeaderPickerUrl: "/api/errorcodes",
            WaterMark:DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader OffErrorCode { get; set; }
 
@@ -328,7 +344,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
                      nameof(OffErrorCode),
                      nameof(AdcSensorType),
                      nameof(IoSensorType),
-                     nameof(ServerCalculations),
                      nameof(DefaultCalibration),
                      nameof(DefaultZero),
                      nameof(DefaultScaler),
@@ -348,28 +363,26 @@ namespace LagoVista.IoT.DeviceManagement.Models
                     {
                          Field = nameof(Technology),
                          Value = SensorTechnology_ADC,
-                         VisibleFields = new List<string>() {nameof(AdcSensorType)}
+                         VisibleFields = new List<string>() {nameof(AdcSensorType)},
+                         RequiredFields = new List<string>() { nameof(AdcSensorType)},
                     },
                     new FormConditional()
                     {
                          Field = nameof(Technology),
                          Value = SensorTechnology_IO,
-                         VisibleFields = new List<string>() {nameof(IoSensorType)}
+                         VisibleFields = new List<string>() {nameof(IoSensorType)},
+                         RequiredFields = new List<string>() { nameof(IoSensorType)},
                     },
                     new FormConditional()
                     {
                         Field = nameof(ValueType),
                         Value = SensorValueType_Number,
-                        VisibleFields = new List<string>() { nameof(DefaultHighThreshold), nameof(DefaultLowThreshold), nameof(ServerCalculations), nameof(DefaultScaler), nameof(DefaultCalibration), nameof(DefaultZero), nameof(LowValueErrorCode), nameof(HighValueErrorCode)}
+                        VisibleFields = new List<string>() { nameof(DefaultHighThreshold), nameof(DefaultLowThreshold), nameof(ServerCalculations), 
+                            nameof(DefaultScaler), nameof(DefaultCalibration), nameof(DefaultZero), nameof(LowValueErrorCode), nameof(HighValueErrorCode)}
                     },
                     new FormConditional()
                     {
                         Field = nameof(ValueType),
-                        Value = SensorValueType_Boolean,
-                        VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
-                    },
-                    new FormConditional()
-                    {
                         Value = SensorValueType_Boolean,
                         VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
                     }

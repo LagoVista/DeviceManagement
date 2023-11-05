@@ -1057,7 +1057,7 @@
     <value>Thermistor</value>
   </data>
   <data name="SensorDefinition_Config_IO_DHT22_Humidity" xml:space="preserve">
-    <value>Humidity</value>
+    <value>DHT22 - Humidity</value>
   </data>
   <data name="SensorDefinition_Config_IO_HX711" xml:space="preserve">
     <value>HX711 Load Cell Amplifer</value>
@@ -1068,11 +1068,23 @@
   <data name="Sensor_SelectIcon" xml:space="preserve">
     <value>-select sensor icon-</value>
   </data>
+  <data name="SensorDefinition_Config_ADC_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="SensorDefinition_Config_ADC_Volts" xml:space="preserve">
+    <value>Volts</value>
+  </data>
+  <data name="SensorDefinition_Config_IO_Other" xml:space="preserve">
+    <value />
+  </data>
   <data name="SensorDefinition_ServerCalculations" xml:space="preserve">
     <value>Calculate on Server</value>
   </data>
   <data name="SensorDefinition_ServerScaling_Help" xml:space="preserve">
     <value>Perform Scaling, Zeroing and Calibraiton on Server, if this is set the calculations will be done on the server, if not it is expected the firmware will perform the calculations.</value>
+  </data>
+  <data name="Sensor_LastUpdated" xml:space="preserve">
+    <value>Value Last Updated</value>
   </data>
   <data name="Sensor_ServerCalculations" xml:space="preserve">
     <value>Calculate on Server</value>
