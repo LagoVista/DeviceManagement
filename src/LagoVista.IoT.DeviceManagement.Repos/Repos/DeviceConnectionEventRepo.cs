@@ -21,16 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             var result = await base.GetPagedResultsAsync(deviceId, listRequest);
-
-            return new ListResponse<DeviceConnectionEvent>()
-            {
-                Model = result.Model.Select(dto => dto.ToDeviceConnectionEvent()),
-                NextPartitionKey = result.NextPartitionKey,
-                NextRowKey = result.NextRowKey,
-                PageIndex = result.PageIndex,
-                PageCount = result.PageCount,
-                PageSize = result.PageSize
-            };
+            return result.Create(result.Model.Select(dto => dto.ToDeviceConnectionEvent()));
         }
     }
 }

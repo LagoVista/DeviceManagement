@@ -14,9 +14,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
     [TestClass]
     public class DeviceRepoIntegrationTests
     {
-        private string? _accountId;
-        private string? _accountKey;
-        private string? _uri;
+        private string _accountId;
+        private string _accountKey;
+        private string _uri;
 
         IDeviceManagementRepo _devMgtRepo;
 

@@ -212,13 +212,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Value
         {
             get => _value;
-            set
-            {
-                if(!String.IsNullOrEmpty(value))
-                    LastUpdated = DateTime.UtcNow.ToJSONString();
-        
-                _value = value;
-            }
+            set => _value = value;
         }
 
         public override string ToString()

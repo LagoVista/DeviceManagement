@@ -44,6 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Client API Device Management - Add New
         /// </summary>
         /// <param name="device"></param>
+        /// <param name="overwrite"></param>
         /// <returns></returns>
         [HttpPost("/clientapi/device")]
         public async Task<InvokeResult<Device>> AddDeviceAsync([FromBody] Device device, bool overwrite = false)
@@ -382,6 +383,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Client API Device Management - Add Note to Device
         /// </summary>
         /// <param name="newuser">A new user to be added as a device</param>
+        /// <param name="replace"></param>
         /// <returns>App User</returns>
         [OrgAdmin]
         [HttpPost("/clientapi/device/userdevice")]

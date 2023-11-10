@@ -49,6 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <param name="device"></param>
+        /// <param name="reassign"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}")]
         public async Task<InvokeResult<Device>> AddDeviceAsync(string devicerepoid, [FromBody] Device device, bool reassign = false)
@@ -625,6 +626,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="newuser">A new user to be added as a device</param>
+        /// <param name="overwrite"></param>
         /// <returns>App User</returns>
 
         [OrgAdmin]

@@ -36,7 +36,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptor, INamedEntity
+    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptorSimple, IFormDescriptor, INamedEntity
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -339,6 +339,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),
                 nameof(Device.WatchdogSecondsOverride),
+            };
+        }
+
+        public List<string> GetSimpleFields()
+        {
+            return new List<string>()
+            {
+                nameof(Device.Name),
+                nameof(Device.DeviceId),
+                nameof(Device.SerialNumber),
+                nameof(Device.Status),
+                nameof(Device.DeviceType),
             };
         }
 
