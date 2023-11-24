@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.CloudStorage;
+using LagoVista.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
