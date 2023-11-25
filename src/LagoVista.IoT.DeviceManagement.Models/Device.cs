@@ -13,6 +13,7 @@ using LagoVista.Core.Models.Geo;
 using LagoVista.IoT.DeviceManagement.Models;
 using System;
 using LagoVista.MediaServices.Models;
+using LagoVista.UserAdmin.Models.Users;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -32,11 +33,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         Error,
         [EnumLabel(Device.Decommissioned, DeviceManagementResources.Names.Device_Status_Decommissioned, typeof(DeviceManagementResources))]
         Decommissioned
-
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class Device : IOwnedEntity, IIDEntity, IValidateable, INoSQLEntity, IAuditableEntity, IFormDescriptorSimple, IFormDescriptor, INamedEntity
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
+        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    public class Device : EntityBase, IValidateable,  IFormDescriptorSimple, IFormDescriptor
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -64,27 +65,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Id = Guid.NewGuid().ToId();
             Icon = "icon-ae-device-config";
         }
-
-        public string DatabaseName { get; set; }
-        public string EntityType { get; set; }
-        public string CreationDate { get; set; }
-        public string LastUpdatedDate { get; set; }
         public string LocationLastUpdatedDate { get; set; }
-        public EntityHeader CreatedBy { get; set; }
-        public EntityHeader LastUpdatedBy { get; set; }
 
 
+        [FKeyProperty(nameof(DeviceRepository), nameof(DeviceRepository) + ".Id = {0}")]
         public EntityHeader DeviceRepository { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Status, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<DeviceStates> Status { get; set; }
 
-        [JsonProperty("id")]
-        [FormField(LabelResource: DeviceLibraryResources.Names.Common_UniqueId, IsUserEditable: false, ResourceType: typeof(DeviceLibraryResources), IsRequired: true)]
-        public string Id { get; set; }
-
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Name, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Name { get; set; }
 
         /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only, it must however be unique for a device configuration. */
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
@@ -96,34 +85,32 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public MediaResource DefaultDeviceImage { get; set; }
 
+        [FKeyProperty(nameof(DeviceConfiguration), "DeviceConfiguration.Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
 
+
+        [FKeyProperty(nameof(DeviceType), nameof(DeviceType) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader<DeviceType> DeviceType { get; set; }
 
 
-        public bool IsPublic { get; set; }
-
-
         public string Icon { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Organization, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: true, WaterMark: DeviceManagementResources.Names.Device_Organization_Select)]
-        public EntityHeader OwnerOrganization { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Location, EnumType: (typeof(DeviceStates)), FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Location_Select)]
         public EntityHeader Location { get; set; }
 
-        public EntityHeader OwnerUser { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceURI, HelpResource: DeviceManagementResources.Names.Device_DeviceURI_Help, FieldType: FieldTypes.Text, IsUserEditable: false, ResourceType: typeof(DeviceManagementResources))]
         public string DeviceURI { get; set; }
 
-
+        [FKeyProperty(nameof(Device), nameof(ParentDevice) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader<string> ParentDevice { get; set; }
-
+        
+        [FKeyProperty(nameof(Firmware), nameof(DesiredFirmware) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DesiredFirmware, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader DesiredFirmware { get; set; }
 
@@ -174,6 +161,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Speed, HelpResource: DeviceManagementResources.Names.Device_Speed_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public double Speed { get; set; }
 
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader CustomStatus { get; set; }
 
@@ -194,9 +182,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Seconds_Override_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public int? WatchdogSecondsOverride { get; set; }
 
+        [FKeyProperty(nameof(AppUser), nameof(AssignedUser) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_AssignedUserHelp, WaterMark: DeviceManagementResources.Names.Device_AssignedUser_Select, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
 
+        [FKeyProperty(nameof(AppUser), nameof(WatchdogNotificationUser) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Notification_User_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Watchdog_Notification_User_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }
 
@@ -278,6 +268,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public List<Sensor> SensorCollection{ get; set; }
 
         public Object Sensors { get; set; }
+
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
 

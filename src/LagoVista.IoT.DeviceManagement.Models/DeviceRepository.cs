@@ -6,6 +6,7 @@ using System;
 using LagoVista.Core;
 using System.Collections.Generic;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
+using LagoVista.UserAdmin.Models.Users;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -40,7 +41,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help, DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IOwnedEntity, IKeyedEntity, INoSQLEntity, IValidateable, IEntityHeaderEntity, IFormDescriptor
+    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
         public const string DeviceRepository_Type_Local = "local";
@@ -54,13 +55,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             AuthKey2 = Guid.NewGuid().ToId() + Guid.NewGuid().ToId() + Guid.NewGuid().ToId();
             IncrementingDeviceNumber = 1;
         }
-
-        public string DatabaseName { get; set; }
-        public string EntityType { get; set; }
-
-        public bool IsPublic { get; set; }
-        public EntityHeader OwnerOrganization { get; set; }
-        public EntityHeader OwnerUser { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse,FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
@@ -88,9 +82,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public String PEMStorageSettingsSecureId { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Key, HelpResource: DeviceManagementResources.Names.Common_Key_Help, FieldType: FieldTypes.Key, RegExValidationMessageResource: DeviceManagementResources.Names.Common_Key_Validation, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Key { get; set; }
-
+        [FKeyProperty(nameof(Subscription), nameof(Subscription) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Subscription, WaterMark: DeviceManagementResources.Names.Device_Repo_SubscriptionSelect, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public EntityHeader Subscription { get; set; }
 
@@ -106,6 +98,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public String SecureAccessKeyId { get; set; }
 
+        [FKeyProperty(nameof(AppUser), nameof(WatchdogNotificationUser) + ".Id = {0}", "")]
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact, HelpResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }
@@ -115,6 +108,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader ServiceBoard { get; set; }
 
 
+        [FKeyProperty(nameof(AppUser), nameof(AssignedUser) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_Repo_AssignedUser_Help, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_AssignedUser_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
 
