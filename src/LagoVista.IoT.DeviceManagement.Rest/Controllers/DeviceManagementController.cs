@@ -603,6 +603,31 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return DetailResponse<SensorDefinition>.Create();
         }
 
+        [HttpPut("/api/device/{devicerepoid}/{deviceid}/property")]
+        public async Task<InvokeResult> UpdateDevicePropertyAsync(string devicerepoid, string deviceid, [FromBody] AttributeValue value)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, false);
+
+            var attrValue = device.Properties.FirstOrDefault(prop => prop.Key == value.Key);
+            if (attrValue == null)
+            {
+                value.Value = value.Value;
+                value.LastUpdated = DateTime.UtcNow.ToJSONString();
+                device.Properties.Add(value);
+            }
+            else
+            {
+                attrValue.Value = value.Value;
+                attrValue.LastUpdated = DateTime.UtcNow.ToJSONString();
+                attrValue.LastUpdatedBy = UserEntityHeader.Text;
+            }
+
+
+
+                return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            }
+
 
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/sensor")]
         public async Task<InvokeResult> SetSensorAsync(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
