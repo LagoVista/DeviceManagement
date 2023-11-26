@@ -193,7 +193,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return (await base.QueryAsync(device => device.DeviceId == deviceId && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
+            var device = (await base.QueryAsync(device => device.DeviceId == deviceId && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
+            if (device != null)
+            {
+                foreach (var sensor in device.SensorCollection)
+                    sensor.PostLoad();
+            }
+
+            return device;
         }
 
         public async Task<bool> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, string orgid)
@@ -203,7 +210,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return (await base.QueryAsync(device => device.OwnerOrganization.Id == id && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceId == id)).Any();
         }
 
-        public Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, bool throwOnRecordNotFound = true)
+        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, bool throwOnRecordNotFound = true)
         {
             if (deviceRepo == null) throw new NullReferenceException(nameof(deviceRepo));
             if (String.IsNullOrEmpty(id)) throw new NullReferenceException(nameof(id));
@@ -211,7 +218,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            return GetDocumentAsync(id, deviceRepo.Id, throwOnRecordNotFound);
+            var device = await GetDocumentAsync(id, deviceRepo.Id, throwOnRecordNotFound);
+            if (device != null)
+            {
+                foreach (var sensor in device.SensorCollection)
+                    sensor.PostLoad();
+            }
+
+            return device;
         }
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
@@ -484,7 +498,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
                                                        qry.DeviceRepository.Id == deviceRepo.Id &&
                                                        qry.MacAddress == macAddress);
-            return devices.FirstOrDefault();
+            var device = devices.FirstOrDefault();
+            if (device != null)
+            {
+                foreach (var sensor in device.SensorCollection)
+                    sensor.PostLoad();
+            }
+
+            return device;
         }
 
         public async Task<Device> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress)
@@ -494,7 +515,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
                                                        qry.DeviceRepository.Id == deviceRepo.Id &&
                                                        qry.iosBLEAddress == iosBLEAddress);
-            return devices.FirstOrDefault();
+            var device = devices.FirstOrDefault();
+            if (device != null)
+            {
+                foreach (var sensor in device.SensorCollection)
+                    sensor.PostLoad();
+            }
+
+            return device;
         }
     }
 }

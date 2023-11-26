@@ -3,6 +3,7 @@ using LagoVista.Core.Attributes;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
@@ -17,7 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
     /// </summary>
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Sensor_Title, DeviceManagementResources.Names.Sensor_Help,
         DeviceManagementResources.Names.Sensor_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), FactoryUrl: "/api/device/sensor/factory")]
-    public class Sensor : IFormDescriptor, IFormDescriptorCol2, IFormConditionalFields
+    public class Sensor : IValidateable, IFormDescriptor, IFormDescriptorCol2, IFormConditionalFields
     {
         public Sensor()
         {
@@ -99,7 +100,6 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_SensorTypeId, HelpResource: DeviceManagementResources.Names.Sensor_SensorTypeId_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(IOSensorTypes)), WaterMark: DeviceManagementResources.Names.Sensor_SensorType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader<IOSensorTypes> IoSensorType { get; set; }
 
-
         /// <summary>
         /// Type of Sensor 
         /// </summary>
@@ -130,7 +130,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
                         case SensorPorts.Port6: return 5;
                         case SensorPorts.Port7: return 6;
                         case SensorPorts.Port8: return 7;
-                        default: return null; ;
+                        default: return null;
                     }
                 }
                 else
@@ -213,6 +213,15 @@ namespace LagoVista.IoT.DeviceManagement.Models
         {
             get => _value;
             set => _value = value;
+        }
+
+        public void PostLoad()
+        {
+            if (String.IsNullOrEmpty(Name))
+                Name = $"{Technology.Text} - {PortIndexSelection.Text}";
+
+            if (String.IsNullOrEmpty(Key))
+                Key = Name.Replace(" ", "").Replace("-","").Replace("/","").ToLower();
         }
 
         public override string ToString()

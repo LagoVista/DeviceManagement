@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,6 +77,58 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Add an image to device.
+        /// </summary>
+        /// <param name="deviceid"></param>
+        /// <param name="devicerepoid"></param>
+        /// <param name="sensor"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/device/{deviceid}/sensor")]
+        public async Task<InvokeResult<List<Sensor>>> UpdateSensor(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var existingSensor = device.SensorCollection.Single(snsr => snsr.Id == sensor.Id);
+            if (existingSensor != null)
+            {
+                device.SensorCollection.Remove(existingSensor);
+            }
+
+            device.SensorCollection.Add(sensor);
+
+            var updateResult = await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            if (updateResult.Successful)
+                return InvokeResult<List<Sensor>>.Create(device.SensorCollection);
+            else
+                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult);
+        }
+
+        /// <summary>
+        /// Device Management - Add an image to device.
+        /// </summary>
+        /// <param name="deviceid"></param>
+        /// <param name="devicerepoid"></param>
+        /// <param name="sensorid"></param>
+        /// <returns></returns>
+        [HttpDelete("/api/device/{devicerepoid}/device/{deviceid}/sensor/{sensorid}")]
+        public async Task<InvokeResult<List<Sensor>>> DeleteSensor(string devicerepoid, string deviceid, string sensorid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var existingSensor = device.SensorCollection.Single(snsr => snsr.Id == sensorid);
+            if (existingSensor != null)
+            {
+                device.SensorCollection.Remove(existingSensor);
+            }
+
+            var updateResult = await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            if (updateResult.Successful)
+                return InvokeResult<List<Sensor>>.Create(device.SensorCollection);
+            else
+                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult);
+        }
+
+        /// <summary>
         /// Device Management - Update
         /// </summary>
         /// <param name="devicerepoid"></param>
@@ -99,7 +152,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/device/{devicerepoid}/{id}/macaddress/{macaddress}/set")]
         public async Task<InvokeResult> UpdateDeviceMacAddressAsync(string devicerepoid, string id, string macaddress)
         {
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);            
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.UpdateDeviceMacAddressAsync(repo, id, macaddress, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -127,7 +180,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult<Device>> GetDeviceByMacAddress(string devicerepoid, string macaddress)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDeviceByMacAddressAsync(repo,macaddress, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDeviceByMacAddressAsync(repo, macaddress, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
@@ -578,7 +631,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
             device.WiFiConnectionProfile = connectionProfile;
-            await  _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
             return InvokeResult.Success;
         }
 
@@ -625,8 +678,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
 
 
-                return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
-            }
+            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+        }
 
 
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/sensor")]
