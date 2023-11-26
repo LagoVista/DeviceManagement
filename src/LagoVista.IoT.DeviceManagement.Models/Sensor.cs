@@ -25,6 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
             Id = Guid.NewGuid().ToId();
             AlertsEnabled = true;
             State = EntityHeader<SensorStates>.Create(SensorStates.Offline);
+            ValueType = EntityHeader<SensorValueType>.Create(SensorValueType.String);
             Value = "";
         }
 
@@ -82,7 +83,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Address, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string Address { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_AttributeType, FieldType: FieldTypes.Picker, EnumType: typeof(SensorValueType), ResourceType: typeof(DeviceManagementResources), IsRequired: true, WaterMark: DeviceManagementResources.Names.Sensor_AttributeType_Select)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Sensor_AttributeType, FieldType: FieldTypes.Picker, EnumType: typeof(SensorValueType), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_AttributeType_Select)]
         public EntityHeader<SensorValueType> ValueType { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Technology, FieldType: FieldTypes.Picker, EnumType: typeof(SensorTechnology), ResourceType: typeof(DeviceManagementResources), IsRequired: true, WaterMark: DeviceManagementResources.Names.Sensor_Technology_Select)]
