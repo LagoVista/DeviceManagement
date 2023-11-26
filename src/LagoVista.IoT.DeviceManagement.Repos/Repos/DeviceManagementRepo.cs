@@ -48,6 +48,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
@@ -215,6 +216,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
+            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
+
             /* Make sure that any data that might be sent along with the device but not required is note saved */
             if (device.SensorCollection != null)
             {

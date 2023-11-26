@@ -197,6 +197,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
+            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
+
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
             /* We need to populate the meta data so we can use it to validate the custom properties */
@@ -209,6 +211,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.PropertiesMetaData = null;
             device.InputCommandEndPoints = null;
             device.DeviceLabel = null;
+            device.AttributeMetaData = null;
+            device.StateMachineMetaData = null;
             device.DeviceIdLabel = null;
             device.DeviceNameLabel = null;
             device.DeviceTypeLabel = null;
@@ -313,6 +317,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.Name = device.DeviceId;
             }
 
+            if(String.IsNullOrEmpty(device.Key))
+            {
+                device.Key = device.Key;
+            }
+
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
 
             if (populateMetaData)
@@ -336,6 +345,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (string.IsNullOrEmpty(device.Name))
             {
                 device.Name = device.DeviceId;
+            }
+
+            if (String.IsNullOrEmpty(device.Key))
+            {
+                device.Key = device.Key;
             }
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
@@ -437,6 +451,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 var oldState = device.Status.Text;
 
                 await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
+
+                if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
 
                 device.Status = EntityHeader<DeviceStates>.Create(newState);
                 device.LastUpdatedBy = user;

@@ -188,15 +188,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return GetTableName("devicemedia").ToLower();
         }
 
-        public IEntityHeader ToEntityHeader()
-        {
-            return new EntityHeader()
-            {
-                Id = Id,
-                Text = Name,
-            };
-        }
-
         public DeviceRepositorySummary CreateSummary()
         {
             return new DeviceRepositorySummary()

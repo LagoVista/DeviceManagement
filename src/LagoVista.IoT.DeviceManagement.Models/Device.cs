@@ -345,7 +345,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             };
         }
 
-        public EntityHeader<Device> ToEntityHeader()
+        public new EntityHeader<Device> ToEntityHeader()
         {
             return new EntityHeader<Device>()
             {

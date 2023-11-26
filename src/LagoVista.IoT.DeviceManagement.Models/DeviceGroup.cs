@@ -50,7 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_Devices, HelpResource: DeviceManagementResources.Names.DeviceGroup_Devices_Help, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public List<DeviceGroupEntry> Devices { get; set; }
 
-        public EntityHeader<DeviceGroup> ToEntityHeader()
+        public new EntityHeader<DeviceGroup> ToEntityHeader()
         {
             return new EntityHeader<DeviceGroup>()
             {
