@@ -202,7 +202,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Key = Key,
                 Name = Name,
                 Description = Description,
-                RepositoryType = RepositoryType.Text
+                RepositoryType = RepositoryType.Text,
+                Icon = Icon
             };
         }
 
@@ -265,5 +266,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     public class DeviceRepositorySummary : SummaryData
     {
         public string RepositoryType { get; set; }
+        public string Icon { get; set; }
     }
 }
