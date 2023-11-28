@@ -123,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.SensorDefinition_Title, DeviceManagementResources.Names.SensorDefinition_Help,
         DeviceManagementResources.Names.SensorDefinition_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), FactoryUrl: "/api/device/sensordefinition/factory")]
-    public class SensorDefinition : IFormDescriptor, IFormConditionalFields
+    public class SensorDefinition : IFormDescriptor, IFormConditionalFields, IFormDescriptorCol2
     {
         public const string SensorTechnology_ADC = "adc";
         public const string SensorTechnology_IO = "io";
@@ -188,6 +188,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
             Id = Guid.NewGuid().ToId();
             ValueType = EntityHeader<SensorValueType>.Create(SensorValueType.Number);
             Technology = null;
+            Icon = "icon-fo-nerve";
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology, HelpResource: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Help, FieldType: FieldTypes.Picker, EnumType: (typeof(SensorTechnology)), WaterMark: DeviceManagementResources.Names.SensorDefinition_SensorTechnology_Select, ResourceType: typeof(DeviceManagementResources))]
@@ -207,9 +208,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Description { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_IconKey, HelpResource: DeviceManagementResources.Names.SensorDefinition_IconKey_Help, WaterMark:DeviceManagementResources.Names.Sensor_SelectIcon,
-            FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string IconKey { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, HelpResource: DeviceManagementResources.Names.SensorDefinition_IconKey_Help, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        public string Icon { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_QRCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_QRCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string QrCode { get; set; }
@@ -300,7 +300,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
             {
                 nameof(Name),
                 nameof(Key),
-                
+                nameof(Icon),
+
                 nameof(ValueType),
 
 
@@ -311,26 +312,13 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
                 nameof(UnitsLabel),
                 nameof(UnitSet),
-                nameof(IconKey),
+                
                 nameof(Description),
                 nameof(QrCode),
                 nameof(WebLink),
 
 
-                nameof(ServerCalculations),
-                nameof(DefaultCalibration),
-                nameof(DefaultZero),
-                nameof(DefaultScaler),
-
-                nameof(DefaultHighThreshold),
-                nameof(DefaultLowThreshold),
-                nameof(LowValueErrorCode),
-                nameof(HighValueErrorCode),
-
-                nameof(GenerateErrorWithOn),
-                nameof(OnErrorCode),
-                nameof(GenerateErrorWithOff),
-                nameof(OffErrorCode),
+               
             };
         }
 
@@ -354,8 +342,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
                      nameof(GenerateErrorWithOn),
                      nameof(GenerateErrorWithOff),
                      nameof(OnErrorCode),
-                     nameof(OffErrorCode),
-                     nameof(ServerCalculations),
+                     nameof(OffErrorCode),                
                  },
                 Conditionals = new List<FormConditional>()
                 {
@@ -387,6 +374,28 @@ namespace LagoVista.IoT.DeviceManagement.Models
                         VisibleFields = new List<string>() { nameof(GenerateErrorWithOn), nameof(OnErrorCode), nameof(GenerateErrorWithOff), nameof(OffErrorCode)}
                     }
                 }
+            };
+        }
+
+        public List<string> GetFormFieldsCol2()
+        {
+            return new List<string>()
+            {
+                nameof(ServerCalculations),
+                nameof(DefaultCalibration),
+                nameof(DefaultZero),
+                nameof(DefaultScaler),
+
+                nameof(DefaultHighThreshold),
+                nameof(HighValueErrorCode),
+
+                nameof(DefaultLowThreshold),
+                nameof(LowValueErrorCode),              
+
+                nameof(GenerateErrorWithOn),
+                nameof(OnErrorCode),
+                nameof(GenerateErrorWithOff),
+                nameof(OffErrorCode),
             };
         }
     }

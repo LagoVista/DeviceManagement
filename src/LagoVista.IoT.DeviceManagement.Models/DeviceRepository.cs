@@ -54,6 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             AuthKey1 = Guid.NewGuid().ToId() + Guid.NewGuid().ToId() + Guid.NewGuid().ToId();
             AuthKey2 = Guid.NewGuid().ToId() + Guid.NewGuid().ToId() + Guid.NewGuid().ToId();
             IncrementingDeviceNumber = 1;
+            Icon = "icon-ae-device-repository";
         }
 
 
@@ -80,6 +81,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public ConnectionSettings PEMStorageSettings { get; set; }
         public String PEMStorageSettingsSecureId { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string Icon { get; set; }
+
 
 
         [FKeyProperty(nameof(Subscription), nameof(Subscription) + ".Id = {0}", "")]

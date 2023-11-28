@@ -427,7 +427,7 @@
     <value>Custom</value>
   </data>
   <data name="Device_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Device</value>
   </data>
   <data name="Device_DeviceURI" xml:space="preserve">
     <value>Device URI</value>
@@ -780,9 +780,6 @@
   <data name="SensorDefinition_Help" xml:space="preserve">
     <value>A sensor definition will describe attributes of a sensor that potentially can be attached to a device with this device configuration</value>
   </data>
-  <data name="SensorDefinition_IconKey" xml:space="preserve">
-    <value>Icon Key</value>
-  </data>
   <data name="SensorDefinition_IconKey_Help" xml:space="preserve">
     <value>Enter a value that can be used to look up a font icon to be displayed for this value.  This will generally be used in custom applications.</value>
   </data>
@@ -1065,9 +1062,6 @@
   <data name="Sensor_SelectErroCodeWatermark" xml:space="preserve">
     <value>-select error code-</value>
   </data>
-  <data name="Sensor_SelectIcon" xml:space="preserve">
-    <value>-select sensor icon-</value>
-  </data>
   <data name="SensorDefinition_Config_ADC_Other" xml:space="preserve">
     <value>Other</value>
   </data>
@@ -1094,5 +1088,8 @@
   </data>
   <data name="Device_GeoLocation_HasFix" xml:space="preserve">
     <value>Has GPS Fix</value>
+  </data>
+  <data name="Common_Icon" xml:space="preserve">
+    <value>Icon</value>
   </data>
 </root>

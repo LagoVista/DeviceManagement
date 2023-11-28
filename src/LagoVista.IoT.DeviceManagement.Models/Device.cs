@@ -37,7 +37,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
         EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
-    public class Device : EntityBase, IValidateable,  IFormDescriptorSimple, IFormDescriptor
+    public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -63,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Relays = new List<Relay>();
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
-            Icon = "icon-ae-device-config";
+            Icon = "icon-ae-core-2";
         }
         public string LocationLastUpdatedDate { get; set; }
 
@@ -95,6 +95,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader<DeviceType> DeviceType { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Icon { get; set; }
 
 
@@ -309,11 +310,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return summary;
         }
 
-        public List<string> GetFormFields()
+        public List<string> GetAdvancedFields()
         {
             return new List<string>()
             {
                 nameof(Device.Name),
+                nameof(Device.Icon),
                 nameof(Device.DeviceId),
                 nameof(Device.SerialNumber),
                 nameof(Device.Status),
@@ -328,9 +330,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DisableWatchdog),
                 nameof(Device.WatchdogSecondsOverride),
             };
-        }
+         }
 
-        public List<string> GetSimpleFields()
+        public List<string> GetFormFields()
         {
             return new List<string>()
             {

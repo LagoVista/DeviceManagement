@@ -6,7 +6,6 @@ using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core;
-using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
 using System.Collections.Generic;
@@ -27,6 +26,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
             State = EntityHeader<SensorStates>.Create(SensorStates.Offline);
             ValueType = EntityHeader<SensorValueType>.Create(SensorValueType.String);
             Value = "";
+            Icon = "icon-fo-nerve";
         }
 
         public const string Sensor_Offline = "offline";
@@ -45,7 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
             Name = definition.Name;
             Key = definition.Key;
-            IconKey = definition.IconKey;
+            Icon = definition.Icon;
             ValueType = definition.ValueType;
             Description = definition.Description;
             SensorDefinition = new EntityHeader() { Id = definition.Id, Text = definition.Name, Key = definition.Key };
@@ -63,6 +63,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
             UnitSet = definition.UnitSet;
             OnErrorCode = definition.OnErrorCode;
             OffErrorCode = definition.OffErrorCode;
+            GenerateErrorWithOff = definition.GenerateErrorWithOff;
+            GenerateErrorWithOn = definition.GenerateErrorWithOn;
         }
 
 
@@ -193,8 +195,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string UnitsLabel { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_IconKey, HelpResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string IconKey { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, HelpResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel_Help, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string Icon { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Units, FieldType: FieldTypes.EntityHeaderPicker, IsUserEditable: true, EnumType: typeof(SensorStates), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_Units_Select)]
@@ -207,6 +209,13 @@ namespace LagoVista.IoT.DeviceManagement.Models
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_OffErrorCode_Help, WaterMark: DeviceManagementResources.Names.Sensor_SelectErroCodeWatermark,
             EntityHeaderPickerUrl: "/api/errorcodes", FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader OffErrorCode { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_On, HelpResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_On_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool GenerateErrorWithOn { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off, HelpResource: DeviceManagementResources.Names.SensorDefinition_GenerateError_With_Off_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool GenerateErrorWithOff { get; set; }
+
 
         private string _value;
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Value, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false, IsUserEditable: false)]
@@ -305,33 +314,48 @@ namespace LagoVista.IoT.DeviceManagement.Models
             {
                 nameof(Name),
                 nameof(Key),
-                nameof(Technology),
+                nameof(Icon),
+
                 nameof(ValueType),
-                nameof(UnitSet),
-                nameof(UnitsLabel),
-                nameof(IoSensorType),
+
+                nameof(Technology),
                 nameof(AdcSensorType),
-                nameof(PortIndexSelection),
+                nameof(IoSensorType),
+
+                nameof(UnitsLabel),
+                nameof(UnitSet),
+
                 nameof(Description),
+
+                nameof(PortIndexSelection),
+                
             };
         }
 
         public List<string> GetFormFieldsCol2()
         {
             return new List<string>() {
-                nameof(State),
-                nameof(LastUpdated),
+                
                 nameof(Value),
+                nameof(LastUpdated),
+                nameof(State),
+
                 nameof(ServerCalculations),
-                nameof(Zero),
                 nameof(Calibration),
+                nameof(Zero),                
                 nameof(DeviceScaler),
+
                 nameof(AlertsEnabled),
-                nameof(LowThreshold),
-                nameof(LowValueErrorCode),
+
                 nameof(HighThreshold),
                 nameof(HighValueErrorCode),
+
+                nameof(LowThreshold),
+                nameof(LowValueErrorCode),
+
+                nameof(GenerateErrorWithOn),
                 nameof(OnErrorCode),
+                nameof(GenerateErrorWithOff),
                 nameof(OffErrorCode),
             };
         }

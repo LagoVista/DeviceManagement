@@ -453,7 +453,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
-            return DetailResponse<Device>.Create(device);
+            var form = DetailResponse<Device>.Create(device);
+
+            form.ModelTitle = device.DeviceLabel;
+            form.View[nameof(device.DeviceId).CamelCase()].Label = device.DeviceIdLabel;
+            form.View[nameof(device.Name).CamelCase()].Label = device.DeviceNameLabel;
+            form.View[nameof(device.DeviceType).CamelCase()].Label = device.DeviceTypeLabel;
+
+            return form;
         }
 
         /// <summary>

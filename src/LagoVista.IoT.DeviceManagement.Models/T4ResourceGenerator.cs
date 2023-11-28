@@ -1,4 +1,4 @@
-﻿/*11/5/2023 4:19:56 PM*/
+﻿/*11/27/2023 2:42:47 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -93,6 +93,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Common_Description
 
 		public static string Common_Description { get { return GetResourceString("Common_Description"); } }
+//Resources:DeviceManagementResources:Common_Icon
+
+		public static string Common_Icon { get { return GetResourceString("Common_Icon"); } }
 //Resources:DeviceManagementResources:Common_Key
 
 		public static string Common_Key { get { return GetResourceString("Common_Key"); } }
@@ -735,9 +738,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_SelectErroCodeWatermark
 
 		public static string Sensor_SelectErroCodeWatermark { get { return GetResourceString("Sensor_SelectErroCodeWatermark"); } }
-//Resources:DeviceManagementResources:Sensor_SelectIcon
-
-		public static string Sensor_SelectIcon { get { return GetResourceString("Sensor_SelectIcon"); } }
 //Resources:DeviceManagementResources:Sensor_SensorDefinition
 
 		public static string Sensor_SensorDefinition { get { return GetResourceString("Sensor_SensorDefinition"); } }
@@ -888,9 +888,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:SensorDefinition_HighThresholdErrorCode
 
 		public static string SensorDefinition_HighThresholdErrorCode { get { return GetResourceString("SensorDefinition_HighThresholdErrorCode"); } }
-//Resources:DeviceManagementResources:SensorDefinition_IconKey
-
-		public static string SensorDefinition_IconKey { get { return GetResourceString("SensorDefinition_IconKey"); } }
 //Resources:DeviceManagementResources:SensorDefinition_IconKey_Help
 
 		public static string SensorDefinition_IconKey_Help { get { return GetResourceString("SensorDefinition_IconKey_Help"); } }
@@ -1048,6 +1045,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string AttributeValue_Unit = "AttributeValue_Unit";
 			public const string AttributeValue_Value = "AttributeValue_Value";
 			public const string Common_Description = "Common_Description";
+			public const string Common_Icon = "Common_Icon";
 			public const string Common_Key = "Common_Key";
 			public const string Common_Key_Help = "Common_Key_Help";
 			public const string Common_Key_Validation = "Common_Key_Validation";
@@ -1262,7 +1260,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Sensor_PortIndex = "Sensor_PortIndex";
 			public const string Sensor_PortIndex_Help = "Sensor_PortIndex_Help";
 			public const string Sensor_SelectErroCodeWatermark = "Sensor_SelectErroCodeWatermark";
-			public const string Sensor_SelectIcon = "Sensor_SelectIcon";
 			public const string Sensor_SensorDefinition = "Sensor_SensorDefinition";
 			public const string Sensor_SensorType_Select = "Sensor_SensorType_Select";
 			public const string Sensor_SensorTypeId = "Sensor_SensorTypeId";
@@ -1313,7 +1310,6 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string SensorDefinition_HasConfigurableThreshold_LowValue_Help = "SensorDefinition_HasConfigurableThreshold_LowValue_Help";
 			public const string SensorDefinition_Help = "SensorDefinition_Help";
 			public const string SensorDefinition_HighThresholdErrorCode = "SensorDefinition_HighThresholdErrorCode";
-			public const string SensorDefinition_IconKey = "SensorDefinition_IconKey";
 			public const string SensorDefinition_IconKey_Help = "SensorDefinition_IconKey_Help";
 			public const string SensorDefinition_LowThresholdErrorCode = "SensorDefinition_LowThresholdErrorCode";
 			public const string SensorDefinition_OffErrorCode = "SensorDefinition_OffErrorCode";
