@@ -439,20 +439,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
-            return DetailResponse<Device>.Create(device);
-        }
-
-        /// <summary>
-        /// Device Management - Get By DeviceId
-        /// </summary>
-        /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="deviceid"></param>
-        /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/deviceid/{deviceid}")]
-        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(string devicerepoid, string deviceid)
-        {
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
             var form = DetailResponse<Device>.Create(device);
 
             form.ModelTitle = device.DeviceLabel;
@@ -469,12 +455,33 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
         /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/deviceid/{deviceid}")]
+        public async Task<DetailResponse<Device>> GetDeviceByDeviceId(string devicerepoid, string deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            return DetailResponse<Device>.Create(device);
+        }
+
+        /// <summary>
+        /// Device Management - Get By DeviceId
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="deviceid"></param>
+        /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/deviceid/{deviceid}/metadata")]
         public async Task<DetailResponse<Device>> GetDeviceByDeviceIdAndMetaData(string devicerepoid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, true);
-            return DetailResponse<Device>.Create(device);
+            var form = DetailResponse<Device>.Create(device);
+
+            form.ModelTitle = device.DeviceLabel;
+            form.View[nameof(device.DeviceId).CamelCase()].Label = device.DeviceIdLabel;
+            form.View[nameof(device.Name).CamelCase()].Label = device.DeviceNameLabel;
+            form.View[nameof(device.DeviceType).CamelCase()].Label = device.DeviceTypeLabel;
+
+            return form;
         }
 
         /// <summary>
