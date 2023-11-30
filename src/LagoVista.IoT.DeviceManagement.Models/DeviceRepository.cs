@@ -41,7 +41,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         ClusteredMongoDB
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help, DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help, 
+        DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),
+        GetListUrl: "/api/devicerepos", GetUrl: "/api/devicerepo/{id}", FactoryUrl: "/api/devicerepo/factory", SaveUrl: "/api/devicerepo", DeleteUrl: "/api/devicerepo/{id}")]
     public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor, IFormDescriptorAdvanced, IFormConditionalFields
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
@@ -57,7 +59,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             IncrementingDeviceNumber = 1;
             Icon = "icon-ae-device-repository";
         }
-
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse,FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
         public int DevicesInUse { get; set; }
@@ -214,6 +215,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(Name),
                 nameof(Key),
+                nameof(Icon),
                 nameof(Subscription),
                 nameof(DeviceCapacity),
                 nameof(StorageCapacity),
@@ -227,6 +229,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(Name),
                 nameof(Key),
+                nameof(Icon),
                 nameof(Subscription),
                 nameof(RepositoryType),
                 nameof(ResourceName),

@@ -7,7 +7,10 @@ using LagoVista.IoT.DeviceManagement.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Title, DeviceManagementResources.Names.DeviceGroup_Help, DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Title, DeviceManagementResources.Names.DeviceGroup_Help, 
+        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),
+        GetListUrl: "/api/repo/{devicerepoid}/groups", GetUrl: "/api/repo/{devicerepoid}/group/{id}",  SaveUrl: "/api/repo/{devicerepoid}/group",
+        FactoryUrl: "/api/repo/{devicerepoid}/group/factory", DeleteUrl: "/api/repo/{devicerepoid}/group/{id}")]
     public class DeviceGroup : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IFormDescriptor
     {
         public DeviceGroup()
