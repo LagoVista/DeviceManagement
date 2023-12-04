@@ -1,4 +1,4 @@
-﻿/*11/27/2023 2:42:47 PM*/
+﻿/*12/4/2023 2:53:54 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -564,6 +564,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceGroup_Repository_Help
 
 		public static string DeviceGroup_Repository_Help { get { return GetResourceString("DeviceGroup_Repository_Help"); } }
+//Resources:DeviceManagementResources:DeviceGroup_Summaries_Title
+
+		public static string DeviceGroup_Summaries_Title { get { return GetResourceString("DeviceGroup_Summaries_Title"); } }
 //Resources:DeviceManagementResources:DeviceGroup_Title
 
 		public static string DeviceGroup_Title { get { return GetResourceString("DeviceGroup_Title"); } }
@@ -1202,6 +1205,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceGroup_Help = "DeviceGroup_Help";
 			public const string DeviceGroup_Repository = "DeviceGroup_Repository";
 			public const string DeviceGroup_Repository_Help = "DeviceGroup_Repository_Help";
+			public const string DeviceGroup_Summaries_Title = "DeviceGroup_Summaries_Title";
 			public const string DeviceGroup_Title = "DeviceGroup_Title";
 			public const string DeviceNotes_Description = "DeviceNotes_Description";
 			public const string DeviceNotes_Help = "DeviceNotes_Help";

@@ -64,6 +64,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
     }
 
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Summaries_Title, DeviceManagementResources.Names.DeviceGroup_Help,
+        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources),
+        GetListUrl: "/api/repo/{devicerepoid}/groups", GetUrl: "/api/repo/{devicerepoid}/group/{id}", SaveUrl: "/api/repo/{devicerepoid}/group",
+        FactoryUrl: "/api/repo/{devicerepoid}/group/factory", DeleteUrl: "/api/repo/{devicerepoid}/group/{id}")]
     public class DeviceGroupSummary : SummaryData
     {
         public string RepoId { get; set; }

@@ -1092,4 +1092,7 @@
   <data name="Common_Icon" xml:space="preserve">
     <value>Icon</value>
   </data>
+  <data name="DeviceGroup_Summaries_Title" xml:space="preserve">
+    <value>Device Groups</value>
+  </data>
 </root>
