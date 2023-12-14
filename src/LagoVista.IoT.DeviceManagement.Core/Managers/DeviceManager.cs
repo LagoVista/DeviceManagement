@@ -106,6 +106,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             var timeStamp = DateTime.UtcNow.ToJSONString();
 
+            if(EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
+            {
+                var deviceConfig = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
+                device.DeviceConfiguration = deviceConfig.ToEntityHeader();
+            }
+
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             device.OwnerOrganization = org;
             device.CreatedBy = user;

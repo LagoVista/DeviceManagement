@@ -36,7 +36,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
-        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}", FactoryUrl: "/api/device/{devicerepoid}/factory",
+        SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
     public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor
     {
         public const string New = "new";
@@ -64,6 +65,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
             Icon = "icon-ae-core-2";
+            Key = Id.ToLower().Substring(0, 20);
         }
         public string LocationLastUpdatedDate { get; set; }
 
@@ -91,7 +93,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FKeyProperty(nameof(DeviceType), nameof(DeviceType) + ".Id = {0}", "")]
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, 
+            EntityHeaderPickerUrl: "/api/devicetypes", WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader<DeviceType> DeviceType { get; set; }
 
 
@@ -338,7 +341,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(Device.Name),
                 nameof(Device.DeviceId),
-                nameof(Device.SerialNumber),
                 nameof(Device.Status),
                 nameof(Device.DeviceType),
             };
@@ -349,7 +351,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return new EntityHeader<Device>()
             {
                 Id = Id,
-                Key = DeviceId,
+                Key = Key,
                 Text = Name,
                 Value = this
             };
@@ -435,4 +437,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader CustomStatus { get; set; }
     }
+
+
 }

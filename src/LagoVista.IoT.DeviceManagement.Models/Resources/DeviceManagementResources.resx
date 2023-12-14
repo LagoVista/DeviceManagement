@@ -235,7 +235,7 @@
     <value>Date Provisioned</value>
   </data>
   <data name="Device_Description" xml:space="preserve">
-    <value>Devices represent their physical counterparts ** Needs Better Definition</value>
+    <value>Devices are what NuvIoT is all about, once you have configured a Device Type, you can create devices that represent pyhsical devices that have been installed in the field that send data to the cloud.</value>
   </data>
   <data name="Device_DeviceConfiguration" xml:space="preserve">
     <value>Device Configuration</value>
@@ -256,7 +256,7 @@
     <value>Actual firmware revision</value>
   </data>
   <data name="Device_Help" xml:space="preserve">
-    <value>Devices represent their physical counterparts ** Needs Better Definition</value>
+    <value>Devices are what NuvIoT is all about, once you have configured a Device Type, you can create devices that represent pyhsical devices that have been installed in the field that send data to the cloud.</value>
   </data>
   <data name="Device_inputCommandEndPoints" xml:space="preserve">
     <value>Input Command Endpoints</value>

@@ -397,7 +397,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
-            return DetailResponse<Device>.Create(device);
+            var response = DetailResponse<Device>.Create(device);
+            response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
+            response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
+            response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            return response;
         }
 
         /// <summary>
@@ -445,6 +449,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             form.View[nameof(device.DeviceId).CamelCase()].Label = device.DeviceIdLabel;
             form.View[nameof(device.Name).CamelCase()].Label = device.DeviceNameLabel;
             form.View[nameof(device.DeviceType).CamelCase()].Label = device.DeviceTypeLabel;
+            form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
+            form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
+            form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
 
             return form;
         }
@@ -460,7 +467,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
-            return DetailResponse<Device>.Create(device);
+            var form = DetailResponse<Device>.Create(device);
+
+            form.ModelTitle = device.DeviceLabel;
+            form.View[nameof(device.DeviceId).CamelCase()].Label = device.DeviceIdLabel;
+            form.View[nameof(device.Name).CamelCase()].Label = device.DeviceNameLabel;
+            form.View[nameof(device.DeviceType).CamelCase()].Label = device.DeviceTypeLabel;
+            form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
+            form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
+            form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+
+            return form;
         }
 
         /// <summary>
@@ -480,6 +497,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             form.View[nameof(device.DeviceId).CamelCase()].Label = device.DeviceIdLabel;
             form.View[nameof(device.Name).CamelCase()].Label = device.DeviceNameLabel;
             form.View[nameof(device.DeviceType).CamelCase()].Label = device.DeviceTypeLabel;
+            form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
+            form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
+            form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
 
             return form;
         }
@@ -535,7 +555,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             response.Model.Id = Guid.NewGuid().ToId();
             /* Note we just create it here for now then the record gets inserted we go ahead assign the name */
             response.Model.DeviceRepository = new EntityHeader() { Id = devicerepoid, Text = "TBD" };
-
+            response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
+            response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
+            response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 
