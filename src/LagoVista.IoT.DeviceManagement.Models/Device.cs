@@ -38,7 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
         EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}", FactoryUrl: "/api/device/{devicerepoid}/factory",
         SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
-    public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor
+    public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor, ISummaryFactory
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -283,11 +283,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IPAddress, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string IPAddress { get; set; }
 
+        LagoVista.Core.Interfaces.ISummaryData ISummaryFactory.CreateSummary()
+        {
+            return this.CreateSummary();
+        }
+
         public DeviceSummary CreateSummary()
         {
             var summary = new DeviceSummary()
             {
                 Id = this.Id,
+                Key = Key,
+                IsPublic = false,
+                Name = string.IsNullOrEmpty(this.Name) ? this.DeviceId : this.Name,
                 DeviceName = string.IsNullOrEmpty(this.Name) ? this.DeviceId : this.Name,
                 DeviceId = this.DeviceId,
                 SerialNumber = SerialNumber,
@@ -410,9 +418,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
     }
 
-    public class DeviceSummary
+    public class DeviceSummary : SummaryData
     {
-        public string Id { get; set; }
         public string DeviceConfiguration { get; set; }
         public string DeviceConfigurationId { get; set; }
         public string DeviceName { get; set; }
@@ -437,6 +444,4 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader CustomStatus { get; set; }
     }
-
-
 }

@@ -108,8 +108,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if(EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
             {
-                var deviceConfig = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
-                device.DeviceConfiguration = deviceConfig.ToEntityHeader();
+                var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
+                if(EntityHeader.IsNullOrEmpty(device.DeviceType))
+                {
+                    return InvokeResult<Device>.FromError($"The Device Model {deviceType.Name} does not have an associated Device Configuration and can not be used to create a Device.");
+                }
+
+                device.DeviceConfiguration = deviceType.DefaultDeviceConfiguration;
             }
 
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);

@@ -247,7 +247,7 @@
     <value>Device Id</value>
   </data>
   <data name="Device_DeviceType" xml:space="preserve">
-    <value>Device Type</value>
+    <value>Device Model</value>
   </data>
   <data name="Device_DeviceType_Select" xml:space="preserve">
     <value>-select device type-</value>
