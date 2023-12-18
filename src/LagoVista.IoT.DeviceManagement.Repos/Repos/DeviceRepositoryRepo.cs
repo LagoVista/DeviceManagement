@@ -8,6 +8,7 @@ using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.CloudStorage;
 using LagoVista.Core.Interfaces;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -37,12 +38,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return DeleteDocumentAsync(repoId);
         }
 
-        public async Task<IEnumerable<DeviceRepositorySummary>> GetDeviceRepositoriesForOrgAsync(string orgId)
+        public async Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeviceRepositoriesForOrgAsync(string orgId, ListRequest listRequest)
         {
-            var items = await base.QueryAsync(qry => qry.OwnerOrganization.Id == orgId);
+            return await base.QuerySummaryAsync<DeviceRepositorySummary, DeviceRepository>(qry => qry.OwnerOrganization.Id == orgId && qry.Instance == null, rep => rep.Name, listRequest);
+        }
 
-            return from item in items.OrderBy(itm=>itm.Name)
-                   select item.CreateSummary();
+        public async Task<ListResponse<DeviceRepositorySummary>> GetDeviceRepositoriesForOrgAsync(string orgId, ListRequest listRequest)
+        {
+            return await base.QuerySummaryAsync<DeviceRepositorySummary, DeviceRepository>(qry => qry.OwnerOrganization.Id == orgId, rep=>rep.Name, listRequest);
         }
 
         public Task<DeviceRepository> GetDeviceRepositoryAsync(string repoId)

@@ -41,10 +41,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         ClusteredMongoDB
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help, 
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help,
         DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),
-        GetListUrl: "/api/devicerepos", GetUrl: "/api/devicerepo/{id}", FactoryUrl: "/api/devicerepo/factory", SaveUrl: "/api/devicerepo", DeleteUrl: "/api/devicerepo/{id}")]
-    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor, IFormDescriptorAdvanced, IFormConditionalFields
+        GetListUrl: "/api/devicerepos", GetUrl: "/api/devicerepo/{id}", FactoryUrl: "/api/devicerepo/standard/factory", SaveUrl: "/api/devicerepo", DeleteUrl: "/api/devicerepo/{id}")]
+    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor, IFormDescriptorAdvanced, IFormConditionalFields, IFormDescriptorAdvancedCol2, ISummaryFactory
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
         public const string DeviceRepository_Type_Local = "local";
@@ -58,16 +58,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             AuthKey2 = Guid.NewGuid().ToId() + Guid.NewGuid().ToId() + Guid.NewGuid().ToId();
             IncrementingDeviceNumber = 1;
             Icon = "icon-ae-device-repository";
+            Id = Guid.NewGuid().ToId();
         }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse,FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
         public int DevicesInUse { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_MaxDevices, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
         public int DeviceMaxDevices { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_RepoType, HelpResource:DeviceManagementResources.Names.Device_Repo_RepoType_Help, EnumType: (typeof(RepositoryTypes)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_RepoType_Select, IsRequired: true, IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_RepoType, HelpResource: DeviceManagementResources.Names.Device_Repo_RepoType_Help, EnumType: (typeof(RepositoryTypes)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_RepoType_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<RepositoryTypes> RepositoryType { get; set; }
 
         public ConnectionSettings DeviceStorageSettings { get; set; }
@@ -125,10 +126,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AuthKey1, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false)]
         public String AuthKey2 { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_StorageCapacity, FieldType: FieldTypes.ProductPicker, EntityHeaderPickerUrl:"/api/productofferings/storagecapacity", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_StorageCapacity_Select, IsRequired: true, IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_StorageCapacity, FieldType: FieldTypes.ProductPicker, EntityHeaderPickerUrl: "/api/productofferings/storagecapacity", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_StorageCapacity_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader StorageCapacity { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_UnitCapacity, FieldType: FieldTypes.ProductPicker, EntityHeaderPickerUrl: "/api/productofferings/storagecapacity", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_UnitCapacity_Select, IsRequired: true, IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_UnitCapacity, FieldType: FieldTypes.ProductPicker, EntityHeaderPickerUrl: "/api/productofferings/devicecapacity", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_UnitCapacity_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader DeviceCapacity { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AccessKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
@@ -137,10 +138,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader Instance { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceNumber, HelpResource:DeviceManagementResources.Names.DeviceRepo_DeviceNumberHelp, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceNumber, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceNumberHelp, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public int IncrementingDeviceNumber { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_AutoGenerateDeviceIds,  FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_AutoGenerateDeviceIds, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public bool AutoGenerateDeviceIds { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_UserOwnedDevices, HelpResource: DeviceManagementResources.Names.DeviceRepo_UserOwnedDevices_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
@@ -205,7 +206,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Name = Name,
                 Description = Description,
                 RepositoryType = RepositoryType.Text,
-                Icon = Icon
+                Icon = Icon,
+                Instance = Instance?.Text,
+                InstanceId = Instance?.Id,
             };
         }
 
@@ -235,6 +238,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(ResourceName),
                 nameof(AccessKeyName),
                 nameof(AccessKey),
+                nameof(Description),
+            };
+        }
+
+        public List<string> GetAdvancedFieldsCol2()
+        {
+            return new List<string>()
+            {
                 nameof(DeviceCapacity),
                 nameof(StorageCapacity),
                 nameof(ServiceBoard),
@@ -243,8 +254,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(UserOwnedDevicesOnly),
                 nameof(SecureUserOwnedDevices),
                 nameof(WatchdogNotificationUser),
-
-                nameof(Description),
             };
         }
 
@@ -282,7 +291,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public void Validate(ValidationResult result, Actions action)
         {
             //TODO: Needs localizations on error messages
-            if(EntityHeader.IsNullOrEmpty(RepositoryType))
+            if (EntityHeader.IsNullOrEmpty(RepositoryType))
             {
                 result.AddUserError("Respository Type is a Required Field.");
                 return;
@@ -304,7 +313,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 }
             }
 
-            if(RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            if (RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
                 if (String.IsNullOrEmpty(ResourceName)) result.AddUserError("Resource name which is the name of our Azure IoT Hub is a required field.");
                 if (String.IsNullOrEmpty(AccessKeyName)) result.AddUserError("Access Key name is a Required field.");
@@ -315,14 +324,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
                 if (!String.IsNullOrEmpty(AccessKey))
                 {
-                    if(!AccessKey.IsBase64String()) result.AddUserError("Access Key does not appear to be a Base 64 String.");
+                    if (!AccessKey.IsBase64String()) result.AddUserError("Access Key does not appear to be a Base 64 String.");
                 }
             }
         }
+
+        ISummaryData ISummaryFactory.CreateSummary()
+        {
+            return CreateSummary();
+        }
     }
 
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help,
+       DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources),
+       GetListUrl: "/api/devicerepos", GetUrl: "/api/devicerepo/{id}", FactoryUrl: "/api/devicerepo/standard/factory", SaveUrl: "/api/devicerepo", DeleteUrl: "/api/devicerepo/{id}")]
     public class DeviceRepositorySummary : SummaryData
     {
+        public string InstanceId { get; set; }
+        public string Instance { get; set; }
         public string RepositoryType { get; set; }
         public string Icon { get; set; }
     }

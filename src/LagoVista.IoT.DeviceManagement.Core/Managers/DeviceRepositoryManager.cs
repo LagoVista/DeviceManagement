@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -245,10 +246,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return deviceRepo;
         }
 
-        public async Task<IEnumerable<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, EntityHeader user)
+        public async Task<ListResponse<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, ListRequest listRequest, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, orgId, typeof(DeviceRepository));
-            return await _deviceRepositoryRepo.GetDeviceRepositoriesForOrgAsync(orgId);
+            return await _deviceRepositoryRepo.GetDeviceRepositoriesForOrgAsync(orgId, listRequest);
+        }
+
+
+        public async Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeploymentHostsForOrgAsync(string orgId, ListRequest listRequest, EntityHeader user)
+        {
+            await AuthorizeOrgAccessAsync(user, orgId, typeof(DeviceRepository));
+            return await _deviceRepositoryRepo.GetAvailableDeviceRepositoriesForOrgAsync(orgId, listRequest);
         }
 
         public Task<bool> QueryKeyInUserAsync(string key, EntityHeader org)

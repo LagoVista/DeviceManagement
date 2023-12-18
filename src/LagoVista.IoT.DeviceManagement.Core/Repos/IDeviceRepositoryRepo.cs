@@ -1,4 +1,5 @@
-﻿using LagoVista.IoT.DeviceManagement.Core.Models;
+﻿using LagoVista.Core.Models.UIMetaData;
+using LagoVista.IoT.DeviceManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task<DeviceRepository> GetDeviceRepositoryAsync(string repoId);
         Task<DeviceRepository> GetDeviceRepositoryForInstanceAsync(string instanceId);
 
-        Task<IEnumerable<DeviceRepositorySummary>> GetDeviceRepositoriesForOrgAsync(string orgid);
+        Task<ListResponse<DeviceRepositorySummary>> GetDeviceRepositoriesForOrgAsync(string orgid, ListRequest listRequest);
+        Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeviceRepositoriesForOrgAsync(string orgid, ListRequest listRequest);
 
         Task DeleteAsync(String repoId);
 

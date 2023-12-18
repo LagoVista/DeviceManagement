@@ -57,16 +57,24 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return _deviceRepositoryManager.UpdateDeviceRepositoryAsync(deviceGroup, OrgEntityHeader, UserEntityHeader);
         }
 
-
         /// <summary>
         /// Device Repositories - Get for Org
         /// </summary>
         /// <returns></returns>
         [HttpGet("/api/devicerepos")]
-        public async Task<ListResponse<DeviceRepositorySummary>> GetDeviceReposForOrgAsync()
+        public Task<ListResponse<DeviceRepositorySummary>> GetDeviceReposForOrgAsync()
         {
-            var hostSummaries = await _deviceRepositoryManager.GetDeploymentHostsForOrgAsync(OrgEntityHeader.Id, UserEntityHeader);
-            return ListResponse<DeviceRepositorySummary>.Create(hostSummaries);
+            return _deviceRepositoryManager.GetDeploymentHostsForOrgAsync(OrgEntityHeader.Id, GetListRequestFromHeader(), UserEntityHeader);
+        }
+
+        /// <summary>
+        /// Device Repositories - Get for Org that are not assinged to an instance.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/devicerepos/available")]
+        public Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeviceReposForOrgAsync()
+        {
+            return _deviceRepositoryManager.GetAvailableDeploymentHostsForOrgAsync(OrgEntityHeader.Id, GetListRequestFromHeader(), UserEntityHeader);
         }
 
         /// <summary>
@@ -125,6 +133,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 
+            return response;
+        }
+
+        /// <summary>
+        ///  Device Repositories - Create New
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/devicerepo/standard/factory")]
+        public DetailResponse<DeviceRepository> CreateStandardDeviceRep()
+        {
+            var response = DetailResponse<DeviceRepository>.Create();
+            SetAuditProperties(response.Model);
+            SetOwnedProperties(response.Model);
+            response.Model.RepositoryType = EntityHeader<RepositoryTypes>.Create(RepositoryTypes.NuvIoT);
             return response;
         }
     }
