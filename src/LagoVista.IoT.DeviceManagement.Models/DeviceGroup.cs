@@ -8,7 +8,7 @@ using LagoVista.IoT.DeviceManagement.Models.Resources;
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Title, DeviceManagementResources.Names.DeviceGroup_Help, 
-        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),
+        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-device-groups",
         GetListUrl: "/api/repo/{devicerepoid}/groups", GetUrl: "/api/repo/{devicerepoid}/group/{id}",  SaveUrl: "/api/repo/{devicerepoid}/group",
         FactoryUrl: "/api/repo/{devicerepoid}/group/factory", DeleteUrl: "/api/repo/{devicerepoid}/group/{id}")]
     public class DeviceGroup : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IFormDescriptor
@@ -65,7 +65,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceGroup_Summaries_Title, DeviceManagementResources.Names.DeviceGroup_Help,
-        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources),
+        DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-ae-device-groups",
         GetListUrl: "/api/repo/{devicerepoid}/groups", GetUrl: "/api/repo/{devicerepoid}/group/{id}", SaveUrl: "/api/repo/{devicerepoid}/group",
         FactoryUrl: "/api/repo/{devicerepoid}/group/factory", DeleteUrl: "/api/repo/{devicerepoid}/group/{id}")]
     public class DeviceGroupSummary : SummaryData

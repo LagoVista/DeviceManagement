@@ -1,4 +1,4 @@
-﻿/*12/4/2023 2:53:54 PM*/
+﻿/*12/28/2023 7:32:04 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -414,6 +414,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Repo_UnitCapacity_Select
 
 		public static string Device_Repo_UnitCapacity_Select { get { return GetResourceString("Device_Repo_UnitCapacity_Select"); } }
+//Resources:DeviceManagementResources:Device_ReposTitle
+
+		public static string Device_ReposTitle { get { return GetResourceString("Device_ReposTitle"); } }
 //Resources:DeviceManagementResources:Device_RepoTitle
 
 		public static string Device_RepoTitle { get { return GetResourceString("Device_RepoTitle"); } }
@@ -1155,6 +1158,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Repo_SubscriptionSelect = "Device_Repo_SubscriptionSelect";
 			public const string Device_Repo_UnitCapacity = "Device_Repo_UnitCapacity";
 			public const string Device_Repo_UnitCapacity_Select = "Device_Repo_UnitCapacity_Select";
+			public const string Device_ReposTitle = "Device_ReposTitle";
 			public const string Device_RepoTitle = "Device_RepoTitle";
 			public const string Device_SecondaryKey = "Device_SecondaryKey";
 			public const string Device_SerialNumber = "Device_SerialNumber";

@@ -9,7 +9,8 @@ using System.Collections.Generic;
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Firmware_Title, DeviceManagementResources.Names.Firmware_Help,
-        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-fo-firmware",
+        GetListUrl: "/api/firmwares", GetUrl: "/api/firmware/{id}", SaveUrl: "/api/firmware", DeleteUrl: "/api/firmware/{id}", FactoryUrl: "/api/firmware/factory")]
     public class Firmware : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase,  IValidateable, IFormDescriptor
     {
         public Firmware()
@@ -39,7 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             };
         }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Firmware_Revisions, FieldType: FieldTypes.ChildListInline, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Firmware_Revisions, FieldType: FieldTypes.ChildListInline, FactoryUrl: "/api/firmware/revision/factory", ResourceType: typeof(DeviceManagementResources))]
         public List<FirmwareRevision> Revisions { get; set; }
 
         public List<string> GetFormFields()
@@ -57,6 +58,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
     }
 
+
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Firmware_Title, DeviceManagementResources.Names.Firmware_Help,
+        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-fo-firmware",
+        GetListUrl: "/api/firmwares", GetUrl: "/api/firmware/{id}", SaveUrl: "/api/firmware", DeleteUrl: "/api/firmware/{id}", FactoryUrl: "/api/firmware/factory")]
     public class FirmwareSummary : SummaryData
     {
         public string DeviceType { get; set; }

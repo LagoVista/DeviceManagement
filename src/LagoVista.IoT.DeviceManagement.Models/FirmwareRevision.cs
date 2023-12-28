@@ -26,8 +26,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         Obsolete,
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.FirmwareRevision_Title, DeviceManagementResources.Names.FirmwareRevision_Help,
-        DeviceManagementResources.Names.FirmwareRevision_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources))]
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.FirmwareRevision_Title, DeviceManagementResources.Names.FirmwareRevision_Help, 
+        DeviceManagementResources.Names.FirmwareRevision_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-fo-firmware", 
+        FactoryUrl: "/api/firmware/revision/factory")]
     public class FirmwareRevision : IFormDescriptor
     {
         public FirmwareRevision()

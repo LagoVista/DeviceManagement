@@ -1095,4 +1095,7 @@
   <data name="DeviceGroup_Summaries_Title" xml:space="preserve">
     <value>Device Groups</value>
   </data>
+  <data name="Device_ReposTitle" xml:space="preserve">
+    <value>Device Repositories</value>
+  </data>
 </root>
