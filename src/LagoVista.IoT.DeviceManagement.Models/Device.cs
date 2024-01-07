@@ -36,7 +36,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     }
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
-        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
+        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),  Icon: "icon-ae-core-2",
+        GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
         FactoryUrl: "/api/device/{devicerepoid}/factory",
         SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
     public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor, ISummaryFactory
