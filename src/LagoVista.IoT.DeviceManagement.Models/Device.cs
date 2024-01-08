@@ -421,6 +421,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
     }
 
+
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Devices_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description,
+    EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-ae-core-2",
+    GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
+    FactoryUrl: "/api/device/{devicerepoid}/factory",
+    SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
+
     public class DeviceSummary : SummaryData
     {
         public string DeviceConfiguration { get; set; }

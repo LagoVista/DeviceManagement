@@ -1098,4 +1098,7 @@
   <data name="Device_ReposTitle" xml:space="preserve">
     <value>Device Repositories</value>
   </data>
+  <data name="Devices_Title" xml:space="preserve">
+    <value>Devices</value>
+  </data>
 </root>

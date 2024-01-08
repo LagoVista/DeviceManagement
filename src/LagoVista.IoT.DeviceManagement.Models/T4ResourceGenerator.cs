@@ -1,4 +1,4 @@
-﻿/*12/28/2023 7:32:04 AM*/
+﻿/*1/7/2024 4:05:19 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -618,6 +618,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_UserOwnedDevices_Help
 
 		public static string DeviceRepo_UserOwnedDevices_Help { get { return GetResourceString("DeviceRepo_UserOwnedDevices_Help"); } }
+//Resources:DeviceManagementResources:Devices_Title
+
+		public static string Devices_Title { get { return GetResourceString("Devices_Title"); } }
 //Resources:DeviceManagementResources:Firmware_Default
 
 		public static string Firmware_Default { get { return GetResourceString("Firmware_Default"); } }
@@ -1226,6 +1229,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 			public const string DeviceRepo_UserOwnedDevices = "DeviceRepo_UserOwnedDevices";
 			public const string DeviceRepo_UserOwnedDevices_Help = "DeviceRepo_UserOwnedDevices_Help";
+			public const string Devices_Title = "Devices_Title";
 			public const string Firmware_Default = "Firmware_Default";
 			public const string Firmware_Default_Select = "Firmware_Default_Select";
 			public const string Firmware_Description = "Firmware_Description";
