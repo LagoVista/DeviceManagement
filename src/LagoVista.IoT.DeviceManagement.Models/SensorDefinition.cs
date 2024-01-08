@@ -215,7 +215,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string QrCode { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_WebLink, HelpResource: DeviceManagementResources.Names.SensorDefinition_WebLink_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_WebLink, HelpResource: DeviceManagementResources.Names.SensorDefinition_WebLink_Help, FieldType: FieldTypes.WebLink, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string WebLink { get; set; }
 
 
