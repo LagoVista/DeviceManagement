@@ -117,6 +117,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.DeviceConfiguration = deviceType.DefaultDeviceConfiguration;
             }
 
+            if(!EntityHeader.IsNullOrEmpty(device.DeviceType))
+                device.DeviceType.Value = null;
+
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             device.OwnerOrganization = org;
             device.CreatedBy = user;
@@ -212,12 +215,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
+            device.DeviceType.Value = null;
+
             /* We need to populate the meta data so we can use it to validate the custom properties */
             await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
 
             ValidationCheck(device, Actions.Update);
 
-            device.DeviceType.Value = null;
             device.DeviceURI = null;
             device.PropertiesMetaData = null;
             device.InputCommandEndPoints = null;
@@ -230,6 +234,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+
 
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
