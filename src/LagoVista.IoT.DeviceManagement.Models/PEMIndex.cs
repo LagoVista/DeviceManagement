@@ -1,8 +1,13 @@
-﻿using System;
+﻿using LagoVista.Core.Attributes;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
+using System;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
 
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.PEMIndex_Title, DeviceManagementResources.Names.PEMIndex_Description, DeviceManagementResources.Names.PEMIndex_Description,
+       EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-core-2",
+       GetListUrl: "/api/device/{devicerepoid}/pems/errors/{errorreason}")]
     public class PEMIndex
     {
         public string RowKey { get; set; }

@@ -1,4 +1,4 @@
-﻿/*1/7/2024 4:05:19 PM*/
+﻿/*1/13/2024 8:06:40 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -690,6 +690,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_VersionCodeRegEx
 
 		public static string FirmwareRevision_VersionCodeRegEx { get { return GetResourceString("FirmwareRevision_VersionCodeRegEx"); } }
+//Resources:DeviceManagementResources:PEMIndex_Description
+
+		public static string PEMIndex_Description { get { return GetResourceString("PEMIndex_Description"); } }
+//Resources:DeviceManagementResources:PEMIndex_Title
+
+		public static string PEMIndex_Title { get { return GetResourceString("PEMIndex_Title"); } }
 //Resources:DeviceManagementResources:RelayState_Off
 
 		public static string RelayState_Off { get { return GetResourceString("RelayState_Off"); } }
@@ -1253,6 +1259,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string FirmwareRevision_Title = "FirmwareRevision_Title";
 			public const string FirmwareRevision_Version = "FirmwareRevision_Version";
 			public const string FirmwareRevision_VersionCodeRegEx = "FirmwareRevision_VersionCodeRegEx";
+			public const string PEMIndex_Description = "PEMIndex_Description";
+			public const string PEMIndex_Title = "PEMIndex_Title";
 			public const string RelayState_Off = "RelayState_Off";
 			public const string RelayState_On = "RelayState_On";
 			public const string RelayState_Unknown = "RelayState_Unknown";

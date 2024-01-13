@@ -1101,4 +1101,10 @@
   <data name="Devices_Title" xml:space="preserve">
     <value>Devices</value>
   </data>
+  <data name="PEMIndex_Description" xml:space="preserve">
+    <value>Pipeline Execution Messages as Processed by Runtime Engine</value>
+  </data>
+  <data name="PEMIndex_Title" xml:space="preserve">
+    <value>Messages</value>
+  </data>
 </root>
