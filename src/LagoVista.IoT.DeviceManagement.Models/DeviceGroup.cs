@@ -11,12 +11,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         DeviceManagementResources.Names.DeviceGroup_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-device-groups",
         GetListUrl: "/api/repo/{devicerepoid}/groups", GetUrl: "/api/repo/{devicerepoid}/group/{id}",  SaveUrl: "/api/repo/{devicerepoid}/group",
         FactoryUrl: "/api/repo/{devicerepoid}/group/factory", DeleteUrl: "/api/repo/{devicerepoid}/group/{id}")]
-    public class DeviceGroup : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IFormDescriptor
+    public class DeviceGroup : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IFormDescriptor, IIconEntity
     {
         public DeviceGroup()
         {
             Devices = new List<DeviceGroupEntry>();
+            Icon = "icon-ae-device-groups";
         }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string Icon { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_AssignedUser, HelpResource: DeviceManagementResources.Names.DeviceGroup_AssignedUserHelp, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
@@ -33,6 +37,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                  Description = Description,
                  IsPublic = IsPublic, 
                  Key = Key,
+                 Icon = Icon,
                  Name = Name,
                  RepoId = DeviceRepository.Id,
                  RepoName = DeviceRepository.Text
@@ -45,6 +50,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(DeviceGroup.Name),
                 nameof(DeviceGroup.Key),
+                nameof(DeviceGroup.Icon),
                 nameof(DeviceGroup.DeviceRepository),
                 nameof(DeviceGroup.Description),
             };

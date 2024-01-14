@@ -11,13 +11,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Firmware_Title, DeviceManagementResources.Names.Firmware_Help,
         DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-fo-firmware",
         GetListUrl: "/api/firmwares", GetUrl: "/api/firmware/{id}", SaveUrl: "/api/firmware", DeleteUrl: "/api/firmware/{id}", FactoryUrl: "/api/firmware/factory")]
-    public class Firmware : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase,  IValidateable, IFormDescriptor
+    public class Firmware : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase,  IValidateable, IFormDescriptor, IIconEntity
     {
         public Firmware()
         {
-            Revisions = new List<FirmwareRevision>();           
+            Revisions = new List<FirmwareRevision>();
+            Icon = "icon-fo-firmware";
         }
-       
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        public string Icon { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Firmware_DeviceType, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public String DeviceType { get; set; }
 
@@ -36,6 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 IsPublic = IsPublic,
                 Key = Key,
                 Name = Name,
+                Icon = Icon,
                 DeviceType = DeviceType
             };
         }
@@ -49,6 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(Name),
                 nameof(Key),
+                nameof(Icon),
                 nameof(DeviceType),
                 nameof(FirmwareSku),
                 nameof(DefaultRevision),
