@@ -123,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.SensorDefinition_Title, DeviceManagementResources.Names.SensorDefinition_Help,
         DeviceManagementResources.Names.SensorDefinition_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), FactoryUrl: "/api/device/sensordefinition/factory")]
-    public class SensorDefinition : IFormDescriptor, IFormConditionalFields, IFormDescriptorCol2
+    public class SensorDefinition : IFormDescriptor, IFormConditionalFields, IFormDescriptorCol2, IIconEntity
     {
         public const string SensorTechnology_ADC = "adc";
         public const string SensorTechnology_IO = "io";
