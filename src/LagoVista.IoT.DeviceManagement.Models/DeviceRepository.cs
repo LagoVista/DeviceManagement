@@ -44,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help,
         DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-device-repository",
         GetListUrl: "/api/devicerepos", GetUrl: "/api/devicerepo/{id}", FactoryUrl: "/api/devicerepo/standard/factory", SaveUrl: "/api/devicerepo", DeleteUrl: "/api/devicerepo/{id}")]
-    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor, IFormDescriptorAdvanced, IFormConditionalFields, IFormDescriptorAdvancedCol2, ISummaryFactory
+    public class DeviceRepository : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase, IValidateable, IEntityHeaderEntity, IFormDescriptor, IFormDescriptorAdvanced, IFormConditionalFields, IIconEntity, IFormDescriptorAdvancedCol2, ISummaryFactory
     {
         public const string DeviceRepository_Type_NuvIoT = "nuviot";
         public const string DeviceRepository_Type_Local = "local";
