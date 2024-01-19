@@ -88,7 +88,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
-            var existingSensor = device.SensorCollection.Single(snsr => snsr.Id == sensor.Id);
+            var existingSensor = device.SensorCollection.SingleOrDefault(snsr => snsr.Id == sensor.Id);
             if (existingSensor != null)
             {
                 device.SensorCollection.Remove(existingSensor);
