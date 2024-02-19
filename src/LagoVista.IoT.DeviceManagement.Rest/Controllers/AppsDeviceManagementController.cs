@@ -401,12 +401,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 return InvokeResult<AppUser>.FromInvokeResult(addDeviceResult.ToInvokeResult());
             }
 
+            var currentOrg = await _orgManager.GetOrganizationAsync(OrgEntityHeader.Id, OrgEntityHeader, UserEntityHeader);
+
             var appUser = new AppUser()
             {
                 Id = userId,
                 FirstName = newuser.FirstName,
                 LastName = newuser.LastName,
-                CurrentOrganization = OrgEntityHeader,
+                CurrentOrganization = currentOrg.CreateSummary(),
                 Email = $"{repo.Id}-{newuser.Email}",
                 PhoneNumber = newuser.PhoneNumber,
                 UserName = $"{repo.Id}-{newuser.Email}",
