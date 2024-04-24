@@ -221,6 +221,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Name),
                 nameof(Key),
                 nameof(Icon),
+                nameof(RepositoryType),
                 nameof(Subscription),
                 nameof(DeviceCapacity),
                 nameof(StorageCapacity),
