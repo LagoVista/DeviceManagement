@@ -599,6 +599,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="devicerepoid"></param>
+        /// <param name="devicetypeid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/key/{devicetypekey}/create")]
+        public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(string devicerepoid, string devicetypekey)
+        {
+            var deviceRepo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.CreateDeviceForDeviceKeyAsync(deviceRepo, devicetypekey, OrgEntityHeader, UserEntityHeader);
+        }
+
+        /// <summary>
         /// Device Management - Create
         /// </summary>
         /// <returns></returns>

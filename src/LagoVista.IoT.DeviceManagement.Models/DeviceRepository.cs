@@ -346,6 +346,5 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string InstanceId { get; set; }
         public string Instance { get; set; }
         public string RepositoryType { get; set; }
-        public string Icon { get; set; }
     }
 }

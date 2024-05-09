@@ -1107,4 +1107,10 @@
   <data name="PEMIndex_Title" xml:space="preserve">
     <value>Messages</value>
   </data>
+  <data name="Device_DistributionList" xml:space="preserve">
+    <value>Distribution List</value>
+  </data>
+  <data name="Device_DistributionList_Select" xml:space="preserve">
+    <value>-select distribution list-</value>
+  </data>
 </root>
