@@ -602,7 +602,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// 
         /// </summary>
         /// <param name="devicerepoid"></param>
-        /// <param name="devicetypeid"></param>
+        /// <param name="devicetypekey"></param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/key/{devicetypekey}/create")]
         public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(string devicerepoid, string devicetypekey)
