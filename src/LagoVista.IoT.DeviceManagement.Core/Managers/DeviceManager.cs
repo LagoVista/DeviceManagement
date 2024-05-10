@@ -792,7 +792,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, EntityHeader org, EntityHeader user)
         {
+            
+
             var deviceType = await _deviceTypeRepo.GetDeviceTypeForKeyAsync(org.Id, deviceTypeKey);
+
+            if (deviceType == null)
+                throw new RecordNotFoundException(nameof(deviceType), deviceTypeKey);
+
             return await CreateDeviceAsync(deviceRepo, deviceType, org, user);
         }
 
