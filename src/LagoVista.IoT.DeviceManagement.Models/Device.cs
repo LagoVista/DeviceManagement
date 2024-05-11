@@ -217,6 +217,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public bool EnableGeofenceTrackingMode { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Summary, FieldType: FieldTypes.MultiLineText, ResourceType: typeof(DeviceManagementResources))]
+        public string Summary { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_WiFiConnectionProfile, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader WiFiConnectionProfile { get; set; }
 

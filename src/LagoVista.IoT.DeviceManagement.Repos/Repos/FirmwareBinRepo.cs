@@ -46,13 +46,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
             catch (ArgumentException ex)
             {
-                _logger.AddException("FirmwareBinRepo_GetStorageContainerAsync", ex);
-                return InvokeResult<CloudBlobContainer>.FromException("FirmwareBinRepo_GetStorageContainerAsync_InitAsync", ex);
+                _logger.AddException("[FirmwareBinRepo_GetStorageContainerAsync]", ex);
+                return InvokeResult<CloudBlobContainer>.FromException("[FirmwareBinRepo_GetStorageContainerAsync_InitAsync]", ex);
             }
             catch (StorageException ex)
             {
-                _logger.AddException("FirmwareBinRepo_GetStorageContainerAsync", ex);
-                return InvokeResult<CloudBlobContainer>.FromException("FirmwareBinRepo_GetStorageContainerAsync", ex);
+                _logger.AddException("[FirmwareBinRepo_GetStorageContainerAsync", ex);
+                return InvokeResult<CloudBlobContainer>.FromException("[FirmwareBinRepo_GetStorageContainerAsync]", ex);
             }
         }
 

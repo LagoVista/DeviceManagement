@@ -1113,4 +1113,7 @@
   <data name="Device_DistributionList_Select" xml:space="preserve">
     <value>-select distribution list-</value>
   </data>
+  <data name="Device_Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
 </root>

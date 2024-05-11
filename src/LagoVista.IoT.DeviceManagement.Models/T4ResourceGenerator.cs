@@ -1,4 +1,4 @@
-﻿/*5/8/2024 10:08:59 AM*/
+﻿/*5/11/2024 2:10:04 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -519,6 +519,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Storage_Custom
 
 		public static string Device_Storage_Custom { get { return GetResourceString("Device_Storage_Custom"); } }
+//Resources:DeviceManagementResources:Device_Summary
+
+		public static string Device_Summary { get { return GetResourceString("Device_Summary"); } }
 //Resources:DeviceManagementResources:Device_Title
 
 		public static string Device_Title { get { return GetResourceString("Device_Title"); } }
@@ -1208,6 +1211,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Storage_500GB = "Device_Storage_500GB";
 			public const string Device_Storage_5TB = "Device_Storage_5TB";
 			public const string Device_Storage_Custom = "Device_Storage_Custom";
+			public const string Device_Summary = "Device_Summary";
 			public const string Device_Title = "Device_Title";
 			public const string Device_Watchdog_Disable_Override = "Device_Watchdog_Disable_Override";
 			public const string Device_Watchdog_Disable_Override_Help = "Device_Watchdog_Disable_Override_Help";
