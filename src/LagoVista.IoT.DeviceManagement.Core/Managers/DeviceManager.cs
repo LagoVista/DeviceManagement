@@ -16,6 +16,7 @@ using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
+using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,6 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceConnectionEventRepo _deviceConnectionEventRepo;
         private readonly IDeviceRepositoryRepo _deviceRepoRepo;
         private readonly IDeviceTypeRepo _deviceTypeRepo;
+        private readonly IOrgLocationRepo _orgLocationRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -65,6 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IMediaServicesManager mediaServicesManager,
             IDeviceRepositoryRepo deviceRepoRepo,
             IDeviceTypeRepo deviceTypeRepo,
+            IOrgLocationRepo orgLocationRepo,
             IProxyFactory proxyFactory) :
             base(logger, appConfig, depmanager, security)
         {
@@ -77,6 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _mediaServicesManager = mediaServicesManager ?? throw new ArgumentNullException(nameof(mediaServicesManager));
             _deviceRepoRepo = deviceRepoRepo ?? throw new ArgumentNullException(nameof(deviceRepoRepo));
             _deviceTypeRepo = deviceTypeRepo ?? throw new ArgumentNullException(nameof(deviceTypeRepo));
+            _orgLocationRepo = orgLocationRepo ?? throw new ArgumentNullException(nameof(orgLocationRepo));
         }
 
         /* 
@@ -790,10 +794,67 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<Device>.Create(device);
         }
 
+
+        public async Task<InvokeResult> AddDeviceToLocationAsync(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user)
+        {
+            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var location = await _orgLocationRepo.GetLocationAsync(id);
+            if (location.OwnerOrganization.Id != org.Id)
+                throw new NotAuthorizedException($"Org mismatch requested org {location.OwnerOrganization.Text}, user org {org.Text}.");
+
+            if (!EntityHeader.IsNullOrEmpty(device.Location))
+            {
+                var previousLocation = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+                var devices = previousLocation.Devices.Where(dev => dev.Device.Id == id);
+                foreach(var existingevice in devices)
+                {
+                    previousLocation.Devices.Remove(existingevice);
+                }
+
+                previousLocation.LastUpdatedBy = user;
+                previousLocation.LastUpdatedDate = timeStamp;
+                await _orgLocationRepo.UpdateLocationAsync(previousLocation);
+            }
+
+            location.Devices.Add(new UserAdmin.Models.Orgs.LocationDevice() { Device = device.ToEntityHeader() });
+            location.LastUpdatedBy = user;
+            location.LastUpdatedDate = timeStamp;
+            await _orgLocationRepo.UpdateLocationAsync(location);
+
+            device.LastUpdatedDate = timeStamp;
+            device.LastUpdatedBy = user;
+
+            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+        }
+
+
+        public async Task<InvokeResult> RemoveDeviceFromLocation(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user)
+        {
+            var timeStamp = DateTime.UtcNow.ToJSONString();
+
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var previousLocation = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+            var devices = previousLocation.Devices.Where(dev => dev.Device.Id == id);
+            foreach (var existingevice in devices)
+            {
+                previousLocation.Devices.Remove(existingevice);
+            }
+
+            previousLocation.LastUpdatedBy = user;
+            previousLocation.LastUpdatedDate = timeStamp;
+            await _orgLocationRepo.UpdateLocationAsync(previousLocation);
+
+            device.Location = null;
+            device.LastUpdatedBy= user;
+            device.LastUpdatedDate = timeStamp;
+
+            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+        }
+
         public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, EntityHeader org, EntityHeader user)
         {
-            
-
             var deviceType = await _deviceTypeRepo.GetDeviceTypeForKeyAsync(org.Id, deviceTypeKey);
 
             if (deviceType == null)

@@ -7,6 +7,7 @@ using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
+using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -30,6 +31,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IMediaServicesManager> _mediaServiceManager = new Mock<IMediaServicesManager>();
         Mock<IDeviceTypeRepo> _deviceTypeRepo = new Mock<IDeviceTypeRepo>();
         Mock<IDeviceRepositoryRepo> _deviceRepoRepo = new Mock<IDeviceRepositoryRepo>();
+        Mock<IOrgLocationRepo> _orgLocationRepo = new Mock<IOrgLocationRepo>();
 
         [TestInitialize]
         public void Init()
@@ -47,6 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _mediaServiceManager.Object,
                 _deviceRepoRepo.Object,
                 _deviceTypeRepo.Object,
+                _orgLocationRepo.Object,
                 _proxyFactory.Object); 
         }
     }

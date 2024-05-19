@@ -731,6 +731,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
 
+        [HttpGet("/api/device/{devicerepoid}/{deviceid}/location/{locationid}/add")]
+        public async Task<InvokeResult> AddDeviceToLocationAsync(string devicerepoid, string deviceid, string locationid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AddDeviceToLocationAsync(repo, deviceid, locationid, OrgEntityHeader, UserEntityHeader);
+        }
+
+        [HttpDelete("/api/device/{devicerepoid}/{deviceid}/location/{locationid}/remove")]
+        public async Task<InvokeResult> RemoveDeviceToLocationAsync(string devicerepoid, string deviceid, string locationid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.RemoveDeviceFromLocation(repo, deviceid, locationid, OrgEntityHeader, UserEntityHeader);
+        }
+
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/sensor")]
         public async Task<InvokeResult> SetSensorAsync(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
         {
