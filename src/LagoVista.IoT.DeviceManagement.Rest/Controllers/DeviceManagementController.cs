@@ -731,6 +731,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
 
+        [HttpGet("/api/device/{devicerepoid}/{id}/pin/set/{pin}")]
+        public async Task<InvokeResult<string>> CreateDeviceLink(string devicerepoid, string id, string pin)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GenerateSecureDeviceLinkAsync(repo, id, pin, OrgEntityHeader, UserEntityHeader);
+        }
+
+
         [HttpGet("/api/device/{devicerepoid}/{deviceid}/location/{locationid}/add")]
         public async Task<InvokeResult> AddDeviceToLocationAsync(string devicerepoid, string deviceid, string locationid)
         {
@@ -762,6 +770,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
 
+        [AllowAnonymous]
+        [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/view")]
+        public async Task<InvokeResult<Device>> GetDeviceAsync(string orgId, string devicerepoid, string id, string pin)
+        {
+            var org = EntityHeader.Create(orgId, "PIN Device Access");
+            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user);
+
+            return InvokeResult<Device>.Create(await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true));
+        }
+
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
@@ -769,7 +788,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="newuser">A new user to be added as a device</param>
         /// <param name="overwrite"></param>
         /// <returns>App User</returns>
-
         [OrgAdmin]
         [HttpPost("/api/device/{devicerepoid}/userdevice")]
         public async Task<InvokeResult<AppUser>> AddDeviceUser(string devicerepoid, [FromBody] DeviceUserRegistrationRequest newuser, bool overwrite = false)

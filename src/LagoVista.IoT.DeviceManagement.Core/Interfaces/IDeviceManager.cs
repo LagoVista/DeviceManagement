@@ -31,6 +31,17 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false);
 
         /// <summary>
+        /// Get the Device by the unique identifier that was generated for the device (not device id)
+        /// </summary>
+        /// <param name="deviceRepo">Repository connection data</param>
+        /// <param name="id">Unique id for the device</param>
+        /// <param name="org">User Org</param>
+        /// <param name="user">User</param>
+        /// <returns></returns>
+        Task<Device> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user,  bool populateMetaData = false);
+
+
+        /// <summary>
         /// Add a device note for a device
         /// </summary>
         /// <param name="deviceRepo"></param>
@@ -140,5 +151,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult> AddDeviceToLocationAsync(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult> RemoveDeviceFromLocation(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<string>> GenerateSecureDeviceLinkAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
     }
 }

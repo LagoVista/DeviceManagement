@@ -1,4 +1,4 @@
-﻿/*5/11/2024 2:10:04 PM*/
+﻿/*5/27/2024 8:15:48 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -321,6 +321,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_ParentDevice
 
 		public static string Device_ParentDevice { get { return GetResourceString("Device_ParentDevice"); } }
+//Resources:DeviceManagementResources:Device_Pin
+
+		public static string Device_Pin { get { return GetResourceString("Device_Pin"); } }
+//Resources:DeviceManagementResources:Device_Pin_Help
+
+		public static string Device_Pin_Help { get { return GetResourceString("Device_Pin_Help"); } }
 //Resources:DeviceManagementResources:Device_PrimaryKey
 
 		public static string Device_PrimaryKey { get { return GetResourceString("Device_PrimaryKey"); } }
@@ -1145,6 +1151,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";
 			public const string Device_ParentDevice = "Device_ParentDevice";
+			public const string Device_Pin = "Device_Pin";
+			public const string Device_Pin_Help = "Device_Pin_Help";
 			public const string Device_PrimaryKey = "Device_PrimaryKey";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";

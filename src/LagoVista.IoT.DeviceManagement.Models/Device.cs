@@ -270,6 +270,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public List<EntityHeader> DeviceGroups { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Pin, FieldType: FieldTypes.Password, ResourceType: typeof(DeviceManagementResources))]
+        public string DevicePin { get; set; }
+
+
+        public string DevicePinSecureid { get; set; }
+
         public string InternalSummary { get; set; }
 
         public string DeviceLabel { get; set; }

@@ -32,6 +32,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceTypeRepo> _deviceTypeRepo = new Mock<IDeviceTypeRepo>();
         Mock<IDeviceRepositoryRepo> _deviceRepoRepo = new Mock<IDeviceRepositoryRepo>();
         Mock<IOrgLocationRepo> _orgLocationRepo = new Mock<IOrgLocationRepo>();
+        Mock<ISecureStorage> _secureStorage = new Mock<ISecureStorage>();
+        Mock<ILinkShortener> _linkShortener = new Mock<ILinkShortener>();
 
         [TestInitialize]
         public void Init()
@@ -50,7 +52,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _deviceRepoRepo.Object,
                 _deviceTypeRepo.Object,
                 _orgLocationRepo.Object,
-                _proxyFactory.Object); 
+                _proxyFactory.Object,
+                _secureStorage.Object,
+                _linkShortener.Object); 
         }
     }
 }

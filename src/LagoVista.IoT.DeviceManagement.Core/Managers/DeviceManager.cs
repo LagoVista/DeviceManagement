@@ -40,6 +40,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceRepositoryRepo _deviceRepoRepo;
         private readonly IDeviceTypeRepo _deviceTypeRepo;
         private readonly IOrgLocationRepo _orgLocationRepo;
+        private readonly ISecureStorage _secureStorage;
+        private readonly ILinkShortener _linkShortener;
+        private readonly IAppConfig _appConfig;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -58,7 +61,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IDeviceManagementRepo deviceRepo,
             IDeviceConfigHelper deviceConfigHelper,
             IAdminLogger logger,
-             IAppConfig appConfig,
+            IAppConfig appConfig,
             IDependencyManager depmanager,
             ISecurity security,
             IDeviceExceptionRepo deviceExceptionRepo,
@@ -68,7 +71,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IDeviceRepositoryRepo deviceRepoRepo,
             IDeviceTypeRepo deviceTypeRepo,
             IOrgLocationRepo orgLocationRepo,
-            IProxyFactory proxyFactory) :
+            IProxyFactory proxyFactory,
+            ISecureStorage secureStorage,
+            ILinkShortener linkShortener) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -81,6 +86,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceRepoRepo = deviceRepoRepo ?? throw new ArgumentNullException(nameof(deviceRepoRepo));
             _deviceTypeRepo = deviceTypeRepo ?? throw new ArgumentNullException(nameof(deviceTypeRepo));
             _orgLocationRepo = orgLocationRepo ?? throw new ArgumentNullException(nameof(orgLocationRepo));
+            _secureStorage = secureStorage ?? throw new ArgumentNullException(nameof(secureStorage));
+            _linkShortener = linkShortener ?? throw new ArgumentNullException(nameof(linkShortener));
+            _appConfig = appConfig ?? throw new ArgumentNullException(nameof(appConfig));
         }
 
         /* 
@@ -111,10 +119,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             var timeStamp = DateTime.UtcNow.ToJSONString();
 
-            if(EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
+            if (EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
             {
                 var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
-                if(EntityHeader.IsNullOrEmpty(device.DeviceType))
+                if (EntityHeader.IsNullOrEmpty(device.DeviceType))
                 {
                     return InvokeResult<Device>.FromError($"The Device Model {deviceType.Name} does not have an associated Device Configuration and can not be used to create a Device.");
                 }
@@ -122,7 +130,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.DeviceConfiguration = deviceType.DefaultDeviceConfiguration;
             }
 
-            if(!EntityHeader.IsNullOrEmpty(device.DeviceType))
+            if (!EntityHeader.IsNullOrEmpty(device.DeviceType))
                 device.DeviceType.Value = null;
 
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
@@ -153,6 +161,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             };
 
             ValidationCheck(device, Actions.Create);
+
+            if (!String.IsNullOrEmpty(device.DevicePin))
+            {
+                var pinAddResult = await _secureStorage.AddSecretAsync(org, device.DevicePin);
+                device.DevicePinSecureid = pinAddResult.Result;
+                device.DevicePin = null;
+            }
 
             var repo = GetRepo(deviceRepo);
 
@@ -216,7 +231,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
-            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
+            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId.ToLower();
 
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
@@ -240,7 +255,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
 
+            if (!String.IsNullOrEmpty(device.DevicePin))
+            {
+                var pinAddResult = await _secureStorage.AddSecretAsync(org, device.DevicePin);
+                device.DevicePinSecureid = pinAddResult.Result;
+                device.DevicePin = null;
+            }
 
+       
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
 
@@ -338,7 +360,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.Name = device.DeviceId;
             }
 
-            if(String.IsNullOrEmpty(device.Key))
+            if (String.IsNullOrEmpty(device.Key))
             {
                 device.Key = device.Key;
             }
@@ -375,6 +397,48 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             deviceRepo.AccessKey = null;
+
+            if (populateMetaData)
+            {
+                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+            }
+            return device;
+        }
+
+        public async Task<Device> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string enteredPin, EntityHeader org, EntityHeader user, bool populateMetaData = false)
+        {
+            var repo = GetRepo(deviceRepo);
+            var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+
+            if (device == null)
+            {
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(device.Name))
+            {
+                device.Name = device.DeviceId;
+            }
+
+            if (String.IsNullOrEmpty(device.Key))
+            {
+                device.Key = device.Key;
+            }
+
+            if(String.IsNullOrEmpty(device.DevicePinSecureid))
+            {
+                throw new NotAuthorizedException("Device does not have a PIN.");
+            }
+
+            var devicePin = await _secureStorage.GetSecretAsync(org, device.DevicePinSecureid, user);
+
+            if (devicePin.Result != enteredPin)
+            {
+                throw new NotAuthorizedException("Invalid PIN.");
+            }
+
+            deviceRepo.AccessKey = null;
+
 
             if (populateMetaData)
             {
@@ -764,7 +828,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.SecondaryAccessKey = System.Convert.ToBase64String(guidBytes.ToArray());
             }
 
-            
+
 
             if (!EntityHeader.IsNullOrEmpty(deviceType.Firmware))
             {
@@ -807,7 +871,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 var previousLocation = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
                 var devices = previousLocation.Devices.Where(dev => dev.Device.Id == id);
-                foreach(var existingevice in devices)
+                foreach (var existingevice in devices)
                 {
                     previousLocation.Devices.Remove(existingevice);
                 }
@@ -846,11 +910,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await _orgLocationRepo.UpdateLocationAsync(previousLocation);
 
             device.Location = null;
-            device.LastUpdatedBy= user;
+            device.LastUpdatedBy = user;
             device.LastUpdatedDate = timeStamp;
 
             return await UpdateDeviceAsync(deviceRepo, device, org, user);
-
         }
 
         public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, EntityHeader org, EntityHeader user)
@@ -914,5 +977,50 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             return InvokeResult<Device>.Create(device);
         }
+
+        public async Task<InvokeResult<string>> GenerateSecureDeviceLinkAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
+        {
+            var repo = GetRepo(deviceRepo);
+            if (repo == null)
+            {
+                throw new NullReferenceException(nameof(repo));
+            }
+
+            if (String.IsNullOrEmpty(pin))
+                throw new ArgumentNullException(nameof(pin));
+
+            var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+            if (device == null)
+            {
+                return InvokeResult<string>.FromError($"Could not find device with id {id}");
+            }
+
+
+            var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
+
+
+            if(String.IsNullOrEmpty(pin))
+            {
+                return InvokeResult<string>.FromError($"Must provide a pin");
+            }
+
+
+            pin = pin.ToLower();
+            if (!regEx.Match(pin).Success)
+            {
+                return InvokeResult<string>.FromError($"Must provide a pin that is between 4 and 9 characters and must include only letters and numbers.");
+            }
+
+            device.DevicePin = pin;
+
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+
+            var link = $"{_appConfig.WebAddress}/devicemgmt/device/{org.Id}/{deviceRepo.Id}/{id}/view";
+
+            var shortened = await _linkShortener.ShortenLinkAsync(link);
+
+            return shortened;       
+         }
     }
 }
