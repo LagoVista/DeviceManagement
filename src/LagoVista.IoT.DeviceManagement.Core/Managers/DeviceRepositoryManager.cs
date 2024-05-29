@@ -21,6 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private IDeviceManagementSettings _deviceMgmtSettings;
         private ISecureStorage _secureStorage;
         private IDeviceRepositoryRepo _deviceRepositoryRepo;
+        private IAdminLogger _adminLogger;
 
         public DeviceRepositoryManager(
             IDeviceManagementSettings deviceMgmtSettings,
@@ -34,6 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceRepositoryRepo = deviceRepositoryRepo;
             _deviceMgmtSettings = deviceMgmtSettings;
             _secureStorage = secureStorage;
+            _adminLogger = logger;
         }
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
@@ -241,7 +243,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
 
-            Console.WriteLine("Getting device repo." + sw.Elapsed.TotalMilliseconds);
+            _adminLogger.Trace($"[DeviceRepositoryManager__GetDeviceRepositoryWithSecretsAsync] - Got Repo {deviceRepo.Name} in {sw.Elapsed.TotalMilliseconds} ms");
 
             return deviceRepo;
         }

@@ -28,7 +28,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// <returns></returns>
-        Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false);
+        Task<InvokeResult<Device>> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false);
 
         /// <summary>
         /// Get the Device by the unique identifier that was generated for the device (not device id)
@@ -38,7 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// <returns></returns>
-        Task<Device> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user,  bool populateMetaData = false);
+        Task<InvokeResult<Device>> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user,  bool populateMetaData = false);
 
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="org">User Org</param>
         /// <param name="user">User</param>
         /// /// <returns></returns>
-        Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool populateMetaData = false);
+        Task<InvokeResult<Device>> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string deviceId, EntityHeader org, EntityHeader user, bool populateMetaData = false);
 
         Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user);
         

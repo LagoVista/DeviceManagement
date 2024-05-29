@@ -4,6 +4,7 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
+using LagoVista.Core.Models.ML;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Validation;
@@ -19,6 +20,7 @@ using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -171,9 +173,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             var repo = GetRepo(deviceRepo);
 
-            var existingDevice = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
-            if (existingDevice != null)
+            var existingDeviceResult = await GetDeviceByDeviceIdAsync(deviceRepo, device.DeviceId, org, user);
+            if (existingDeviceResult != null && existingDeviceResult.Successful)
             {
+                var existingDevice = existingDeviceResult.Result;
                 Console.WriteLine($"[DeviceManager__AddDeviceAsync__FoundExisting] - Reassign ${reassign}");
 
                 if (reassign)
@@ -342,13 +345,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return repo.GetDevicesForLocationIdAsync(deviceRepo, locationId, listRequest);
         }
 
-        public async Task<Device> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
+        public async Task<InvokeResult<Device>> GetDeviceByDeviceIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
+            var timings = new List<ResultTiming>();
+            var sw = Stopwatch.StartNew();
             var repo = GetRepo(deviceRepo);
+            timings.Add(new ResultTiming() { Key = "Loaded Repo", Ms = sw.Elapsed.TotalMilliseconds });
             if (repo == null)
             {
                 throw new NullReferenceException(nameof(repo));
             }
+            sw.Restart();
+            timings.Add(new ResultTiming() { Key = "Loaded Device", Ms = sw.Elapsed.TotalMilliseconds });
 
             var device = await repo.GetDeviceByDeviceIdAsync(deviceRepo, id);
             if (device == null)
@@ -364,21 +372,29 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 device.Key = device.Key;
             }
+            var result = InvokeResult<Device>.Create(device);
+            result.Timings.AddRange(timings);
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
 
             if (populateMetaData)
             {
-                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                var populateConfig = await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                result.Timings.AddRange(populateConfig.Timings);
             }
 
-            return device;
+            return result;
         }
 
-        public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
+        public async Task<InvokeResult<Device>> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
+            var timings = new List<ResultTiming>();
+            var sw = Stopwatch.StartNew();
             var repo = GetRepo(deviceRepo);
+            timings.Add(new ResultTiming() { Key = "Loaded Repo", Ms = sw.Elapsed.TotalMilliseconds });
+            sw.Restart();
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+            timings.Add(new ResultTiming() { Key = "Loaded Device", Ms = sw.Elapsed.TotalMilliseconds });
 
             if (device == null)
             {
@@ -398,21 +414,31 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             deviceRepo.AccessKey = null;
 
+            var result = InvokeResult<Device>.Create(device);
+            result.Timings.AddRange(timings);
+
             if (populateMetaData)
             {
-                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                var populateConfig = await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                result.Timings.AddRange(populateConfig.Timings);
             }
-            return device;
+            return result;
         }
 
-        public async Task<Device> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string enteredPin, EntityHeader org, EntityHeader user, bool populateMetaData = false)
+        public async Task<InvokeResult<Device>> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string enteredPin, EntityHeader org, EntityHeader user, bool populateMetaData = false)
         {
+            var timings = new List<ResultTiming>();
+            var sw = Stopwatch.StartNew();
             var repo = GetRepo(deviceRepo);
+            timings.Add(new ResultTiming() { Key = "Got Repo", Ms = sw.Elapsed.TotalMilliseconds });
+            sw.Restart();
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+            timings.Add(new ResultTiming() { Key = "Loaded Device", Ms = sw.Elapsed.TotalMilliseconds });
 
+            
             if (device == null)
             {
-                return null;
+                return InvokeResult<Device>.FromError($"Could ont find device with id: {id}");
             }
 
             if (string.IsNullOrEmpty(device.Name))
@@ -430,7 +456,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 throw new NotAuthorizedException("Device does not have a PIN.");
             }
 
+            sw.Restart();
             var devicePin = await _secureStorage.GetSecretAsync(org, device.DevicePinSecureid, user);
+            timings.Add(new ResultTiming() {Key = "Get Secret", Ms= sw.Elapsed.TotalMilliseconds });
 
             if (devicePin.Result != enteredPin)
             {
@@ -439,12 +467,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             deviceRepo.AccessKey = null;
 
+            var result = InvokeResult<Device>.Create(device);
+            result.Timings.AddRange(timings);
 
             if (populateMetaData)
             {
-                await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                var populateConfig = await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
+                result.Timings.AddRange(populateConfig.Timings);
             }
-            return device;
+
+            return result;
         }
 
         public async Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
@@ -527,11 +559,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             if (Enum.TryParse<DeviceStates>(status, true, out var newState))
             {
-                var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-                if (device == null)
+                var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+                if (result == null)
                 {
+
                     return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
                 }
+
+                if(!result.Successful)
+                {
+                    return result.ToInvokeResult();
+                }
+
+                var device = result.Result;
 
                 var oldState = device.Status.Text;
 
@@ -565,11 +605,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AddNoteAsync(DeviceRepository deviceRepo, string id, DeviceNote note, EntityHeader org, EntityHeader user)
         {
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            if (device == null)
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
             {
+
                 return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
             }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result;
+
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
             if (string.IsNullOrEmpty(note.CreationDate))
@@ -609,11 +658,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, string customstatus, EntityHeader org, EntityHeader user)
         {
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            if (device == null)
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
             {
+
                 return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
             }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result;
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
             var deviceStates = await _deviceConfigHelper.GetCustomDeviceStatesAsync(device.DeviceConfiguration.Id, org, user);
@@ -646,13 +703,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             // todo: would really like to add history of device llocations, likely only if it moved.
-
-
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            if (device == null)
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
             {
+
                 return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
             }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result;
 
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
@@ -753,7 +816,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> ClearDeviceDataAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result;
+
             device.Attributes = new System.Collections.Generic.List<AttributeValue>();
             device.Properties = new System.Collections.Generic.List<AttributeValue>();
             device.PropertyBag = new System.Collections.Generic.Dictionary<string, object>();
@@ -862,8 +938,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> AddDeviceToLocationAsync(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user)
         {
             var timeStamp = DateTime.UtcNow.ToJSONString();
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            var location = await _orgLocationRepo.GetLocationAsync(id);
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result; var location = await _orgLocationRepo.GetLocationAsync(id);
             if (location.OwnerOrganization.Id != org.Id)
                 throw new NotAuthorizedException($"Org mismatch requested org {location.OwnerOrganization.Text}, user org {org.Text}.");
 
@@ -897,8 +984,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var timeStamp = DateTime.UtcNow.ToJSONString();
 
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            var previousLocation = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result; var previousLocation = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
             var devices = previousLocation.Devices.Where(dev => dev.Device.Id == id);
             foreach (var existingevice in devices)
             {
@@ -934,8 +1032,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceMacAddressAsync(DeviceRepository deviceRepo, string id, string macAddress, EntityHeader org, EntityHeader user)
         {
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            device.MacAddress = macAddress;
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result; device.MacAddress = macAddress;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
             device.LastUpdatedBy = user;
             return await UpdateDeviceAsync(deviceRepo, device, org, user);
@@ -943,8 +1052,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceiOSBleAddressAsync(DeviceRepository deviceRepo, string id, string iosBLEAddress, EntityHeader org, EntityHeader user)
         {
-            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            device.iosBLEAddress = iosBLEAddress;
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result; device.iosBLEAddress = iosBLEAddress;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
             device.LastUpdatedBy = user;
             return await UpdateDeviceAsync(deviceRepo, device, org, user);
@@ -1004,7 +1124,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<string>.FromError($"Must provide a pin");
             }
 
-
             pin = pin.ToLower();
             if (!regEx.Match(pin).Success)
             {
@@ -1015,11 +1134,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await UpdateDeviceAsync(deviceRepo, device, org, user);
 
-
             var link = $"{_appConfig.WebAddress}/devicemgmt/device/{org.Id}/{deviceRepo.Id}/{id}/view";
-
             var shortened = await _linkShortener.ShortenLinkAsync(link);
-
             return shortened;       
          }
     }

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -87,7 +88,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult<List<Sensor>>> UpdateSensor(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            if(!result.Successful)
+            {
+                return InvokeResult<List<Sensor>>.FromInvokeResult(result.ToInvokeResult());
+            }
+
+            var device = result.Result;
+            
             var existingSensor = device.SensorCollection.SingleOrDefault(snsr => snsr.Id == sensor.Id);
             if (existingSensor != null)
             {
@@ -114,7 +122,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult<List<Sensor>>> DeleteSensor(string devicerepoid, string deviceid, string sensorid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             var existingSensor = device.SensorCollection.Single(snsr => snsr.Id == sensorid);
             if (existingSensor != null)
             {
@@ -396,7 +405,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByIdAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             var response = DetailResponse<Device>.Create(device);
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
@@ -442,7 +452,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByIdAndMetaDataAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             var form = DetailResponse<Device>.Create(device);
 
             form.ModelTitle = device.DeviceLabel;
@@ -466,7 +477,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByDeviceId(string devicerepoid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             var form = DetailResponse<Device>.Create(device);
 
             form.ModelTitle = device.DeviceLabel;
@@ -490,7 +502,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByDeviceIdAndMetaData(string devicerepoid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, true);
+            var result = await _deviceManager.GetDeviceByDeviceIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             var form = DetailResponse<Device>.Create(device);
 
             form.ModelTitle = device.DeviceLabel;
@@ -579,7 +592,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (existingDevice != null)
                 return InvokeResult<Device>.FromError($"The device id {newdeviceid} is already assigned to a different device, device ids must be unique.");
 
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
             device.DeviceId = newdeviceid;
             await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
             return InvokeResult<Device>.Create(device);
@@ -678,7 +692,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> UpdateWiFiConnectionProfileForDeviceAsync(string devicerepoid, string deviceid, [FromBody] EntityHeader connectionProfile)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
+
+
             device.WiFiConnectionProfile = connectionProfile;
             await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
             return InvokeResult.Success;
@@ -709,7 +726,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> UpdateDevicePropertyAsync(string devicerepoid, string deviceid, [FromBody] AttributeValue value)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, false);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
 
             var attrValue = device.Properties.FirstOrDefault(prop => prop.Key == value.Key);
             if (attrValue == null)
@@ -757,7 +775,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> SetSensorAsync(string devicerepoid, string deviceid, [FromBody] Sensor sensor)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader, false);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
+           
             if (device.SensorCollection == null)
                 device.SensorCollection = new System.Collections.Generic.List<Sensor>();
 
@@ -774,12 +794,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/view")]
         public async Task<InvokeResult<Device>> GetDeviceAsync(string orgId, string devicerepoid, string id, string pin)
         {
+            var fullSw = Stopwatch.StartNew();
+            var sw = Stopwatch.StartNew();
             var org = EntityHeader.Create(orgId, "PIN Device Access");
             var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user);
+            sw.Stop();
+            var result =  await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true);
 
-            return InvokeResult<Device>.Create(await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true));
-        }
+            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
+            result.Timings.Add(new ResultTiming() { Key = $"Full device load {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
+
+            return result;
+         }
 
         /// <summary>
         /// Device Management - Add Note to Device
@@ -858,7 +885,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 {
                     Console.WriteLine("Error creating user - removing device - " + newuser.Device.DeviceId);
                     var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
-                    await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                    await _deviceManager.DeleteDeviceAsync(repo, device.Result.Id, OrgEntityHeader, UserEntityHeader);
                     return InvokeResult<AppUser>.FromError(result.Errors.First().Description);
                 }
             }
@@ -866,7 +893,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 Console.WriteLine("Exception - removing device - " + newuser.Device.DeviceId);
                 var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
-                await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                await _deviceManager.DeleteDeviceAsync(repo, device.Result.Id, OrgEntityHeader, UserEntityHeader);
                 throw;
             }
         }

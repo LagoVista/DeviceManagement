@@ -215,7 +215,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 throw new RecordNotFoundException("Device (by Record Id)", id);
             }
-            return DetailResponse<Device>.Create(device);
+            return DetailResponse<Device>.Create(device.Result);
         }
 
         /// <summary>
@@ -253,12 +253,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByIdAndMetaDataAsync(string id)
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
-            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
-            if (device == null)
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
+            if (result == null)
             {
                 throw new RecordNotFoundException("Device (by Record Id)", id);
             }
-            return DetailResponse<Device>.Create(device);
+            return DetailResponse<Device>.Create(result.Result);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 throw new RecordNotFoundException("Device (by DeviceId)", deviceid);
             }
-            return DetailResponse<Device>.Create(device);
+            return DetailResponse<Device>.Create(device.Result);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 throw new RecordNotFoundException("Device (by DeviceId)", deviceid);
             }
-            return DetailResponse<Device>.Create(device);
+            return DetailResponse<Device>.Create(device.Result);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 {
                     Console.WriteLine("Error creating user - removing device - " + newuser.Device.DeviceId);
                     var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
-                    await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                    await _deviceManager.DeleteDeviceAsync(repo, device.Result.Id, OrgEntityHeader, UserEntityHeader);
                     return InvokeResult<AppUser>.FromError(result.Errors.First().Description);
                 }
             }
@@ -463,7 +463,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 Console.WriteLine("Exception - removing device - " + newuser.Device.DeviceId);
                 var device = await _deviceManager.GetDeviceByDeviceIdAsync(repo, newuser.Device.DeviceId, OrgEntityHeader, UserEntityHeader);
-                await _deviceManager.DeleteDeviceAsync(repo, device.Id, OrgEntityHeader, UserEntityHeader);
+                await _deviceManager.DeleteDeviceAsync(repo, device.Result.Id, OrgEntityHeader, UserEntityHeader);
                 throw;
             }
         }
