@@ -36,14 +36,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly IDeviceManager _deviceManager;
         private readonly IOrganizationManager _orgManager;
         private readonly IDeviceRepositoryManager _repoManager;
+        private readonly IRemoteConfigurationManager _remoteConfigurationManager;
         private readonly UserManager<AppUser> _userManager;
 
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _orgManager = orgManager;
             _deviceManager = deviceManager;
             _repoManager = repoManager;
             _userManager = userManager;
+            _remoteConfigurationManager = remoteConfigMgr;
         }
 
         /// <summary>
@@ -452,7 +455,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<DetailResponse<Device>> GetDeviceByIdAndMetaDataAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader, true);
             var device = result.Result;
             var form = DetailResponse<Device>.Create(device);
 
@@ -463,6 +466,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+
+            form.Timings.AddRange(result.Timings);
 
             return form;
         }
@@ -743,8 +748,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 attrValue.LastUpdatedBy = UserEntityHeader.Text;
             }
 
-
-
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -798,7 +801,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var sw = Stopwatch.StartNew();
             var org = EntityHeader.Create(orgId, "PIN Device Access");
             var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
             sw.Stop();
             var result =  await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true);
 
@@ -807,6 +810,43 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             return result;
          }
+
+        [AllowAnonymous]
+        [HttpPut("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/properties")]
+        public async Task<InvokeResult<Device>> UpdatePropertiesWithPinAsync(string orgId, string devicerepoid, string id, string pin, [FromBody] IEnumerable<AttributeValue> values)
+        {
+            var fullSw = Stopwatch.StartNew();
+            var sw = Stopwatch.StartNew();
+            var org = EntityHeader.Create(orgId, "PIN Device Access");
+            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user);
+            sw.Stop();
+            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true);
+            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
+            result.Timings.Add(new ResultTiming() { Key = $"Load Device {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
+            sw.Restart();
+            foreach (var value in values)
+            {
+                var existing = result.Result.Properties.FirstOrDefault(prop => prop.Key == value.Key);
+                if(existing == null)
+                {
+                    value.LastUpdated = DateTime.UtcNow.ToJSONString();
+                    result.Result.Properties.Add(value);
+                }
+                else
+                {
+                    existing.LastUpdated = DateTime.UtcNow.ToJSONString();
+                    existing.Value = value.Value;
+                }
+            }
+
+            await _deviceManager.UpdateDeviceAsync(repo, result.Result, org, user);
+            result.Timings.Add(new ResultTiming() { Key = $"Full device update {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
+
+            await _remoteConfigurationManager.SendAllPropertiesAsync(devicerepoid, id, org, user);
+
+            return result;
+        }
 
         /// <summary>
         /// Device Management - Add Note to Device

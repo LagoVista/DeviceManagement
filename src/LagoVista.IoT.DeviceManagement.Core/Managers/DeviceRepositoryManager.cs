@@ -188,13 +188,22 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return deviceRepo;
         }
 
-        public async Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user)
+
+        // Not super crazy about bypassing security when we pass in a PIN, not really worried about exploit from outside world, but we are bypassing 
+        // the internal security tracking.  This should only be used when we are using the repo to get a device id, and we will perform
+        // our security check there.  Likely revisit repo in the futurue.
+        public async Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user, String pin = null)
         {
             var sw = Stopwatch.StartNew();
 
             var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
 
-            await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+            // If we are passing in a PIN, we are not expecting to have info in the claims so we can use this authorize method.
+            if (pin == null)
+                await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
+            else
+                if (deviceRepo.OwnerOrganization.Id != org.Id)
+                    throw new UnauthorizedAccessException("Org mismatch.");
 
             if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
             {

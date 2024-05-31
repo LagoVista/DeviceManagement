@@ -434,7 +434,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             sw.Restart();
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
             timings.Add(new ResultTiming() { Key = "Loaded Device", Ms = sw.Elapsed.TotalMilliseconds });
-
             
             if (device == null)
             {
