@@ -80,7 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceid"></param>
         /// <returns></returns>
         [HttpGet("/clientapi/repo/group/{groupid}/add/{deviceid}")]
-        public async Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(String groupid, string deviceid)
+        public async Task<InvokeResult<DeviceGroupEntry>> AddDeviceToGroupAsync(string groupid, string deviceid)
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             return await _deviceGroupManager.AddDeviceToGroupAsync(repo, groupid, deviceid, OrgEntityHeader, UserEntityHeader);
@@ -93,7 +93,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="deviceid"></param>
         /// <returns></returns>
         [HttpGet("/clientapi/repo/group/{groupid}/remove/{deviceid}")]
-        public async Task<InvokeResult> RemoveDeviceToGroupAsync(String groupid, string deviceid)
+        public async Task<InvokeResult> RemoveDeviceToGroupAsync(string groupid, string deviceid)
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             return await _deviceGroupManager.RemoveDeviceFromGroupAsync(repo, groupid, deviceid, OrgEntityHeader, UserEntityHeader);

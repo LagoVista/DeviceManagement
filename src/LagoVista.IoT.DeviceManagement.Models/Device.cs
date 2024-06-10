@@ -457,17 +457,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Status { get; set; }
         public string InternalSummary { get; set; }
         public string LastContact { get; set; }
-        public string Icon { get; set; }
-
         public string MacAddress { get; set; }
-
         public string iosBLEAddress { get; set; }
-
         public string DeviceRepoId { get; set; }
         public string DeviceRepo { get; set; }
-
         public GeoLocation GeoLocation { get; set; }
-
         public EntityHeader CustomStatus { get; set; }
     }
 }

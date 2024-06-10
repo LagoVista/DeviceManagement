@@ -76,5 +76,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return (await base.QueryAsync(qry => qry.Key == groupKey && qry.DeviceRepository.Id == deviceRepo.Id && qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id)).FirstOrDefault();
         }
+
+        public async Task RemoveDeviceGromGroupAsync(DeviceRepository deviceRepo, string groupId, string id)
+        {
+            var group = await GetDeviceGroupAsync(deviceRepo, groupId);
+
+            var grpEntry = group.Devices.FirstOrDefault(dev => dev.Id == id);
+            if (grpEntry != null)
+            {
+                group.Devices.Remove(grpEntry);
+                await UpdateDeviceGroupAsync(deviceRepo, group);
+            }
+        }
     }
 }

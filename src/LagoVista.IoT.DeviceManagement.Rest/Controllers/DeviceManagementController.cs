@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
+using LagoVista.Core.Models.ML;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
@@ -17,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -235,7 +237,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepo(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesForDeviceRepoAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesForDeviceRepoAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -248,7 +252,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoForUserAsync(string devicerepoid, string userid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesForDeviceRepoForUserAsync(repo, userid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesForDeviceRepoForUserAsync(repo, userid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -261,7 +267,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationAsync(string devicerepoid, string locationid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesForLocationIdAsync(repo, locationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -274,7 +282,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<Device>> GetFullDevicesForConfigAsync(string devicerepoid, string configid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetFullDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetFullDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
+
         }
 
         /// <summary>
@@ -287,7 +298,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForConfigAsync(string devicerepoid, string configid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesWithConfigurationAsync(repo, configid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -300,7 +313,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceTypeAsync(string devicerepoid, string devicetypeid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesWithDeviceTypeAsync(repo, devicetypeid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesWithDeviceTypeAsync(repo, devicetypeid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -313,7 +328,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> SearchDeviceAsync(string devicerepoid, string search)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.SearchByDeviceIdAsync(repo, search, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.SearchByDeviceIdAsync(repo, search, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
         /// <summary>
@@ -326,8 +343,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDeviceChildren(string devicerepoid, string parentid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetChildDevicesAsync(repo, parentid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetChildDevicesAsync(repo, parentid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
+           
 
         /// <summary>
         /// Device Management - Get Device Children
@@ -367,7 +387,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(string devicerepoid, string status)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesInStatusAsync(repo, status, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesInStatusAsync(repo, status, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
 
@@ -394,7 +416,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusConfigAsync(string devicerepoid, string customstatus)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.GetDevicesInCustomStatusAsync(repo, customstatus, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesInCustomStatusAsync(repo, customstatus, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
         }
 
 
@@ -414,6 +438,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            response.DeleteUrl = response.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
             return response;
         }
 

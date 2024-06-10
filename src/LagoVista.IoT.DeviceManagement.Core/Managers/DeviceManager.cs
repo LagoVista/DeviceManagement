@@ -45,6 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ISecureStorage _secureStorage;
         private readonly ILinkShortener _linkShortener;
         private readonly IAppConfig _appConfig;
+        private readonly IDeviceGroupRepo _deviceGroupRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -75,7 +76,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IOrgLocationRepo orgLocationRepo,
             IProxyFactory proxyFactory,
             ISecureStorage secureStorage,
-            ILinkShortener linkShortener) :
+            ILinkShortener linkShortener,
+            IDeviceGroupRepo deviceGroupRepo) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -91,6 +93,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _secureStorage = secureStorage ?? throw new ArgumentNullException(nameof(secureStorage));
             _linkShortener = linkShortener ?? throw new ArgumentNullException(nameof(linkShortener));
             _appConfig = appConfig ?? throw new ArgumentNullException(nameof(appConfig));
+            _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
         }
 
         /* 
@@ -482,6 +485,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var repo = GetRepo(deviceRepo);
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+
+            foreach(var grp in device.DeviceGroups)
+            {
+                await _deviceGroupRepo.RemoveDeviceGromGroupAsync(deviceRepo, grp.Id, id);
+            }
 
             await AuthorizeAsync(device, AuthorizeActions.Delete, user, org);
 
