@@ -121,8 +121,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user)
         {
-            Console.WriteLine($"[DeviceManager__AddDeviceAsync] - Reassign ${reassign}");
-
             var timeStamp = DateTime.UtcNow.ToJSONString();
 
             if (EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
@@ -181,7 +179,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (existingDeviceResult != null && existingDeviceResult.Successful)
             {
                 var existingDevice = existingDeviceResult.Result;
-                Console.WriteLine($"[DeviceManager__AddDeviceAsync__FoundExisting] - Reassign ${reassign}");
 
                 if (reassign)
                 {
@@ -257,9 +254,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
 
             var previousDevice = await repo.GetDeviceByIdAsync(deviceRepo, device.Id);
+
+            Console.WriteLine($"Updating Device Location {device.Id}.");
+
             if (EntityHeader.IsNullOrEmpty(device.Location) && !EntityHeader.IsNullOrEmpty(previousDevice.Location))
             {
-                var location = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+                // Device Location Added.
+                var location = await _orgLocationRepo.GetLocationAsync(previousDevice.Location.Id);
                 location.Devices.Add(new LocationDevice()
                 {
                     Device = device.ToEntityHeader(),
@@ -267,23 +268,27 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 });
 
                 await _orgLocationRepo.UpdateLocationAsync(location);
-                // Device Location Added.
             }
             else if (!EntityHeader.IsNullOrEmpty(device.Location) && EntityHeader.IsNullOrEmpty(previousDevice.Location))
             {
+                Console.WriteLine("Remove device location.");
                 // Device Location Removed
-                var location = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+                var location = await _orgLocationRepo.GetLocationAsync(previousDevice.Location.Id);
                 var existing = location.Devices.FirstOrDefault(dev => dev.Device.Id == device.Id);
                 if (existing != null)
                 {
                     location.Devices.Remove(existing);
                     await _orgLocationRepo.UpdateLocationAsync(location);
                 }
-                
+                Console.WriteLine("Removed device location.");
+
             }
-            else if (!EntityHeader.IsNullOrEmpty(device.Location) && !!EntityHeader.IsNullOrEmpty(previousDevice.Location) &&
+            else if (!EntityHeader.IsNullOrEmpty(device.Location) && !EntityHeader.IsNullOrEmpty(previousDevice.Location) &&
                  device.Location.Id != previousDevice.Location.Id)
             {
+
+                Console.WriteLine("Changed.");
+
                 // Device Location Changed.
                 var previousLocation = await _orgLocationRepo.GetLocationAsync(previousDevice.Location.Id);
                 var existing = previousLocation.Devices.FirstOrDefault(dev => dev.Device.Id == device.Id);
@@ -303,6 +308,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     });
                     await _orgLocationRepo.UpdateLocationAsync(previousLocation);
                 }
+
+                Console.WriteLine("Change, done.");
             }
 
 
@@ -335,7 +342,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
 
             await repo.UpdateDeviceAsync(deviceRepo, device);
-
+            Console.WriteLine("Updated location.");
 
 
             return InvokeResult.Success;

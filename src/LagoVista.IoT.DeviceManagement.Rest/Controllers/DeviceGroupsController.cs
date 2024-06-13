@@ -72,7 +72,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceGroupSummaries = await _deviceGroupManager.GetDeviceGroupsForOrgAsync(repo, OrgEntityHeader.Id, UserEntityHeader);
             var response = ListResponse<DeviceGroupSummary>.Create(deviceGroupSummaries);
-
+            response.FactoryUrl = response.GetUrl.Replace("{devicerepoid}", devicerepoid);
+            response.GetUrl = response.FactoryUrl.Replace("{devicerepoid}", devicerepoid);
             return response;
         }
 
@@ -131,8 +132,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var deviceGroup = await _deviceGroupManager.GetDeviceGroupAsync(repo, id, OrgEntityHeader, UserEntityHeader);
-
-            return  DetailResponse<DeviceGroup>.Create(deviceGroup);
+            var form = DetailResponse<DeviceGroup>.Create(deviceGroup);
+            form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            form.GetListUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            form.DeleteUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            form.FactoryUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            form.GetUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            
+            return form;
         }
 
         /// <summary>

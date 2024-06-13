@@ -330,6 +330,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceRepoId = DeviceRepository.Id,
                 DeviceRepo = DeviceRepository.Text,
                 LastContact = LastContact,
+                Location = Location,
             };
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
@@ -462,6 +463,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceRepoId { get; set; }
         public string DeviceRepo { get; set; }
         public GeoLocation GeoLocation { get; set; }
+
+        public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }
     }
 }
