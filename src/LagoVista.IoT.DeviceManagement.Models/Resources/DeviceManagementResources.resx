@@ -1122,4 +1122,10 @@
   <data name="Device_Pin_Help" xml:space="preserve">
     <value />
   </data>
+  <data name="Sensor_AboceThreshold" xml:space="preserve">
+    <value>Error - Above Threshold</value>
+  </data>
+  <data name="Sensor_BeloweThreshold" xml:space="preserve">
+    <value>Error - Below Threshold</value>
+  </data>
 </root>

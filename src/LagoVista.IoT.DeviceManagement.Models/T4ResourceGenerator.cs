@@ -1,4 +1,4 @@
-﻿/*5/27/2024 8:15:48 AM*/
+﻿/*6/14/2024 6:47:25 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -720,6 +720,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:RelayState_Unknown
 
 		public static string RelayState_Unknown { get { return GetResourceString("RelayState_Unknown"); } }
+//Resources:DeviceManagementResources:Sensor_AboceThreshold
+
+		public static string Sensor_AboceThreshold { get { return GetResourceString("Sensor_AboceThreshold"); } }
 //Resources:DeviceManagementResources:Sensor_Address
 
 		public static string Sensor_Address { get { return GetResourceString("Sensor_Address"); } }
@@ -732,6 +735,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Sensor_AttributeType_Select
 
 		public static string Sensor_AttributeType_Select { get { return GetResourceString("Sensor_AttributeType_Select"); } }
+//Resources:DeviceManagementResources:Sensor_BeloweThreshold
+
+		public static string Sensor_BeloweThreshold { get { return GetResourceString("Sensor_BeloweThreshold"); } }
 //Resources:DeviceManagementResources:Sensor_Calibration
 
 		public static string Sensor_Calibration { get { return GetResourceString("Sensor_Calibration"); } }
@@ -1284,10 +1290,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string RelayState_Off = "RelayState_Off";
 			public const string RelayState_On = "RelayState_On";
 			public const string RelayState_Unknown = "RelayState_Unknown";
+			public const string Sensor_AboceThreshold = "Sensor_AboceThreshold";
 			public const string Sensor_Address = "Sensor_Address";
 			public const string Sensor_AlertsEnabled = "Sensor_AlertsEnabled";
 			public const string Sensor_AttributeType = "Sensor_AttributeType";
 			public const string Sensor_AttributeType_Select = "Sensor_AttributeType_Select";
+			public const string Sensor_BeloweThreshold = "Sensor_BeloweThreshold";
 			public const string Sensor_Calibration = "Sensor_Calibration";
 			public const string Sensor_Description = "Sensor_Description";
 			public const string Sensor_DeviceScaler = "Sensor_DeviceScaler";

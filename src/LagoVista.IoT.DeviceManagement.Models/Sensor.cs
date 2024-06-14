@@ -36,6 +36,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string Sensor_Error = "error";
         public const string Sensor_Off = "off";
         public const string Sensor_On = "on";
+        public const string Sensor_AboceThreshold = "error_above";
+        public const string Sensor_BeloweThreshold = "error_below";
 
         public Sensor(SensorDefinition definition) : this()
         {

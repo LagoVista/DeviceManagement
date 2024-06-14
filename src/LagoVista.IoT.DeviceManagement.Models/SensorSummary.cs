@@ -24,6 +24,12 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
         [EnumLabel(Sensor.Sensor_On, DeviceManagementResources.Names.SensorState_On, typeof(DeviceManagementResources))]
         On,
+
+        [EnumLabel(Sensor.Sensor_AboceThreshold, DeviceManagementResources.Names.Sensor_AboceThreshold, typeof(DeviceManagementResources))]
+        Error_Above,
+
+        [EnumLabel(Sensor.Sensor_BeloweThreshold, DeviceManagementResources.Names.Sensor_BeloweThreshold, typeof(DeviceManagementResources))]
+        Error_Below,
     }
 
     public class SensorSummary : ModelBase
