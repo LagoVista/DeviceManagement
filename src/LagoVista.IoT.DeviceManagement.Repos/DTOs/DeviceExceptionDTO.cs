@@ -3,6 +3,7 @@ using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using NLog.LayoutRenderers.Wrappers;
 using System;
+using System.Linq;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 {
@@ -19,6 +20,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
             Timestamp = exception.Timestamp;
             ErrorCode = exception.ErrorCode;
             Details = exception.Details;
+            AdditionalDetails = exception.AdditionalDetails == null ? String.Empty : String.Join(',', exception.AdditionalDetails);
             Cleared = cleared;
             Event = cleared ? "Cleared" : "Raised";
         }
@@ -32,6 +34,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
         public string DeviceRepositoryId { get; set; }
         public string ErrorCode { get; set; }
         public string Details { get; set; }
+        public string AdditionalDetails { get; set; }
         public string Timestamp { get; set; }
 
         public bool Cleared { get; set; }
@@ -42,6 +45,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
             return new DeviceException()
             {
                 Details = Details,
+                AdditionalDetails = AdditionalDetails.Split(',').ToList(),
                 ErrorCode = ErrorCode,
                 DeviceId = DeviceId,
                 DeviceUniqueId = DeviceUniqueId,
