@@ -59,6 +59,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             IncrementingDeviceNumber = 1;
             Icon = "icon-ae-device-repository";
             Id = Guid.NewGuid().ToId();
+            DeviceTimeoutSeconds = 5 * 60 * 1000;
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
@@ -152,6 +153,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices, HelpResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public bool SecureUserOwnedDevices { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        public int DeviceTimeoutSeconds { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        public int DeviceTimeoutNotificationIntervalMinutes { get; set; }
+
         private string GetTableName(String suffix)
         {
             var tableName = (Key.Length > 20) ? $"{Key.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
@@ -188,9 +197,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return GetTableName("exceptions");
         }
 
-        public string GetDeviceStatusStorageName()
+        public string GetDeviceCurrentStatusStorageName()
         {
-            return GetTableName("status");
+            return GetTableName("currentdevicestatus");
+        }
+
+        public string GetDeviceStatusHistoryStorageName()
+        {
+            return GetTableName("devicestatushistory");
         }
 
         public string GetDeviceMediaStorageName()
@@ -239,6 +253,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Subscription),
                 nameof(RepositoryType),
                 nameof(ResourceName),
+                nameof(DeviceTimeoutSeconds),
+                nameof(DeviceTimeoutNotificationIntervalMinutes),
                 nameof(AccessKeyName),
                 nameof(AccessKey),
                 nameof(Description),

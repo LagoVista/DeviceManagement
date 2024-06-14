@@ -1128,4 +1128,16 @@
   <data name="Sensor_BeloweThreshold" xml:space="preserve">
     <value>Error - Below Threshold</value>
   </data>
+  <data name="DeviceRepo_DeviceTimeoutNotificationIntervalMinutes" xml:space="preserve">
+    <value>Device Timeout Notification Interval (Minutes)</value>
+  </data>
+  <data name="DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help" xml:space="preserve">
+    <value>The number of minutes between notifications sent to a user when the device is offline.</value>
+  </data>
+  <data name="DeviceRepo_DeviceTimeoutSeconds" xml:space="preserve">
+    <value>Device Timeout (Seconds)</value>
+  </data>
+  <data name="DeviceRepo_DeviceTimeoutSeconds_Help" xml:space="preserve">
+    <value>The number of seconds until a device is considered over due if a message does not arrive.</value>
+  </data>
 </root>

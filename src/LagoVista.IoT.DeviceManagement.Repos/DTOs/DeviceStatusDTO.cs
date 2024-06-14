@@ -13,10 +13,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 
             this.DeviceUniqueId = status.DeviceId;
             PartitionKey = status.DeviceId;
-
-            this.NewStatus = status.NewStatus;
+            this.CurrentStatus = status.CurrentStatus;
             this.PreviouStatus = status.PreviouStatus;
             this.Details = status.Details;
+            this.LastNotified = status.LastNotified;
+            this.LastContact = status.LastContact;
+            this.WatchdogCheckPoint = status.WatchdogCheckPoint;
         }
 
         public DeviceStatusDTO()
@@ -31,8 +33,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
                 DeviceUniqueId = this.DeviceUniqueId,
                 Timestamp = this.Timestamp,
                 PreviouStatus = this.PreviouStatus,
-                NewStatus = this.NewStatus,
-                Details = this.Details
+                CurrentStatus = this.CurrentStatus,                
+                WatchdogCheckPoint = this.WatchdogCheckPoint,
+                LastContact = this.LastContact,
+                LastNotified = this.LastNotified,
+                Details = this.Details,
             };
         }
 
@@ -40,8 +45,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
         public string DeviceId { get; set; }
         public string DeviceRepositoryId { get; set; }
         public string Timestamp { get; set; }
+        public string LastContact { get; set; }
+        public string LastNotified { get; set; }
         public string PreviouStatus { get; set; }
-        public string NewStatus { get; set; }
+        public string CurrentStatus { get; set; }
         public string Details { get; set; }
+        public string WatchdogCheckPoint { get; set; }
     }
 }

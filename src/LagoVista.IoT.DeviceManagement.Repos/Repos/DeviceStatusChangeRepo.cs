@@ -17,7 +17,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task AddStatusChanged(DeviceRepository deviceRepo, DeviceStatus status)
         {
-            SetTableName(deviceRepo.GetDeviceStatusStorageName());
+            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
             return InsertAsync(new DeviceStatusDTO(status));
 

@@ -23,6 +23,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
             }
         }
         public string NextNotification { get; set; }
+        public string ErrorMessage { get; set; }
+        public string ErrorDescription { get; set; }
         public string DeviceErrorCode { get; set; }
         public string LastDetails { get; set; }
     }
