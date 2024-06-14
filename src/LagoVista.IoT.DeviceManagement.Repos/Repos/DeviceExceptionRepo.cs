@@ -22,7 +22,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-            return InsertAsync(new DeviceExceptionDTO(exception));
+            return InsertAsync(new DeviceExceptionDTO(exception, false));
+        }
+
+        public Task AddDeviceExceptionClearedAsync(DeviceRepository deviceRepo, DeviceException exception)
+        {
+            SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            return InsertAsync(new DeviceExceptionDTO(exception, true));
         }
 
         public Task ClearDeviceExceptionsAsync(DeviceRepository deviceRepo, string id)

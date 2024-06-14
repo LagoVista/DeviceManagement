@@ -14,7 +14,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 
         }
 
-        public DeviceConnectionEventDTO(DeviceConnectionEvent connectionEvent)
+        public DeviceConnectionEventDTO(DeviceConnectionEvent connectionEvent, bool cleared)
         {
             RowKey = DateTime.UtcNow.ToInverseTicksRowKey();
             PartitionKey = connectionEvent.DeviceId;
@@ -33,10 +33,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
                 TimeStamp = TimeStamp,
                 FirmwareSKU = FirmwareSKU,
                 FirmwareRevision = FirmwareRevision,
-                RSSI = RSSI
+                RSSI = RSSI,
             };
         }
-
 
         public string DeviceId { get; set; }
         public string TimeStamp { get; set; }
