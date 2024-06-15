@@ -16,6 +16,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string LastContact { get; set; }
         public string LastNotified { get; set; }
         public string WatchdogCheckPoint { get; set; }
+        public int WatchdogTimeoutSeconds { get; set; }
         public string PreviouStatus { get; set; }
         public string CurrentStatus { get; set; }
         public string Details { get; set; }

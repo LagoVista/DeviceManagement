@@ -153,5 +153,9 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult> RemoveDeviceFromLocation(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<string>> GenerateSecureDeviceLinkAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<Device>> HandleDeviceOfflineAsync(Device device, EntityHeader org, EntityHeader user);
     }
 }

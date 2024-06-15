@@ -1218,5 +1218,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var shortened = await _linkShortener.ShortenLinkAsync(link);
             return shortened;
         }
+
+        public Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user)
+        {
+            return Task.FromResult(InvokeResult<Device>.Create(device));
+        }
+
+        public Task<InvokeResult<Device>> HandleDeviceOfflineAsync(Device device, EntityHeader org, EntityHeader user)
+        {
+            return Task.FromResult(InvokeResult<Device>.Create(device));
+        }
     }
 }

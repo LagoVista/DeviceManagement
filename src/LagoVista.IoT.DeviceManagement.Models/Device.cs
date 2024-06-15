@@ -79,6 +79,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader<DeviceStates> Status { get; set; }
 
 
+        public string StatusTimestamp { get; set; }
+
+
+
         /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only, it must however be unique for a device configuration. */
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string DeviceId { get; set; }
