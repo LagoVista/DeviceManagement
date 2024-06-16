@@ -59,7 +59,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             IncrementingDeviceNumber = 1;
             Icon = "icon-ae-device-repository";
             Id = Guid.NewGuid().ToId();
-            DeviceTimeoutSeconds = 5 * 60 * 1000;
+            DeviceTimeoutSeconds = 5 * 60;
         }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevicesInUse, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsRequired: true, IsUserEditable: false)]
