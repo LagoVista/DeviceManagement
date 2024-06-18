@@ -828,7 +828,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
             sw.Stop();
-            var result =  await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true);
+            var result =  await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
 
             result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
             result.Timings.Add(new ResultTiming() { Key = $"Full device load {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });

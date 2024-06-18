@@ -537,7 +537,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (devicePin.Result != enteredPin)
             {
-                return InvokeResult<Device>.FromError("INvalid PIN.");
+                return InvokeResult<Device>.FromError("Invalid PIN.");
             }
 
             deviceRepo.AccessKey = null;
