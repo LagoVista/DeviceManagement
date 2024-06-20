@@ -7,14 +7,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
 {
     public class DeviceStatusDTO : TableStorageEntity
     {
-        public DeviceStatusDTO(DeviceStatus status)
+        public DeviceStatusDTO(DeviceStatus status, string rowKey)
         {
-            RowKey = DateTime.UtcNow.ToInverseTicksRowKey();
+            RowKey = rowKey;
 
             this.DeviceUniqueId = status.DeviceId;
             PartitionKey = status.DeviceId;
+            SilenceAlarm = SilenceAlarm;
             this.CurrentStatus = status.CurrentStatus;
-            this.PreviouStatus = status.PreviouStatus;
+            this.PreviousStatus = status.PreviousStatus;
             this.Details = status.Details;
             this.LastNotified = status.LastNotified;
             this.LastContact = status.LastContact;
@@ -32,12 +33,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
                 DeviceId = this.DeviceUniqueId,
                 DeviceUniqueId = this.DeviceUniqueId,
                 Timestamp = this.Timestamp,
-                PreviouStatus = this.PreviouStatus,
+                PreviousStatus = this.PreviousStatus,
                 CurrentStatus = this.CurrentStatus,                
                 WatchdogCheckPoint = this.WatchdogCheckPoint,
                 LastContact = this.LastContact,
                 LastNotified = this.LastNotified,
                 Details = this.Details,
+                SilenceAlarm = this.SilenceAlarm
             };
         }
 
@@ -47,9 +49,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
         public string Timestamp { get; set; }
         public string LastContact { get; set; }
         public string LastNotified { get; set; }
-        public string PreviouStatus { get; set; }
+        public string PreviousStatus { get; set; }
         public string CurrentStatus { get; set; }
         public string Details { get; set; }
         public string WatchdogCheckPoint { get; set; }
+        public bool SilenceAlarm { get; set; }
     }
 }

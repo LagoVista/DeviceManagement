@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -43,32 +44,5 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceArchiveManager.GetDeviceArchivesAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
-
-        /// <summary>
-        /// Device Archives - Get For Device (Currently returns 100 most recent, will have filtering
-        /// </summary>
-        /// <param name="devicerepoid"></param>
-        /// <param name="deviceid">Device Id</param>
-        /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/errors/{deviceid}")]
-        public async Task<ListResponse<DeviceException>> GetDeviceErrorsAsync(string devicerepoid, String deviceid)
-        {
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceArchiveManager.GetDeviceExceptionAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
-        }
-
-        /// <summary>
-        /// Device Archives - Get For Device (Currently returns 100 most recent, will have filtering
-        /// </summary>
-        /// <param name="devicerepoid"></param>
-        /// <param name="deviceid">Device Id</param>
-        /// <returns></returns>
-        [HttpGet("/api/device/{devicerepoid}/statuschanges/{deviceid}")]
-        public async Task<ListResponse<DeviceStatus>> GetDeviceStatusUpdatesAsync(string devicerepoid, String deviceid)
-        {
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceArchiveManager.GetDeviceStatusChangesAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
-        }
     }
-
 }

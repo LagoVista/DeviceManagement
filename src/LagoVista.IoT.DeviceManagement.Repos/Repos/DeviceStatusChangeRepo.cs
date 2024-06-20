@@ -1,4 +1,5 @@
-﻿using LagoVista.Core.Models.UIMetaData;
+﻿using LagoVista.CloudStorage.Storage;
+using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -9,27 +10,34 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class DeviceStatusChangeRepo : LagoVista.CloudStorage.Storage.TableStorageBase<DeviceStatusDTO>, IDeviceStatusChangeRepo
+    public class DeviceStatusChangeRepo : TableStorageBase<DeviceStatusDTO>, IDeviceStatusChangeRepo
     {
         public DeviceStatusChangeRepo(IAdminLogger logger) : base(logger)
         {
         }
 
-        public Task AddStatusChanged(DeviceRepository deviceRepo, DeviceStatus status)
+        public Task AddDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
         {
             SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-            return InsertAsync(new DeviceStatusDTO(status));
 
+            return InsertAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
+        }
+
+        public Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
+        {
+            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            return UpdateAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
         }
 
         public async Task<ListResponse<DeviceStatus>> GetDeviceStatusHistoryAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
-            SetTableName(deviceRepo.GetDeviceExceptionsStorageName());
+            SetTableName(deviceRepo.GetDeviceStatusHistoryStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             var result = await base.GetPagedResultsAsync(deviceId, request);
-
             return new ListResponse<DeviceStatus>()
             {
                 Model = result.Model.Select(dto => dto.ToDeviceStatus()),
@@ -38,6 +46,26 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 PageIndex = result.PageIndex,
                 PageCount = result.PageCount,
                 PageSize = result.PageSize
+            };
+        }
+
+        public async Task<DeviceStatus> GetDeviceStatusAsync(DeviceRepository deviceRepo, string deviceUniqueId)
+        {
+            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            var dto = await GetAsync(deviceUniqueId);
+            return dto.ToDeviceStatus();
+        }
+
+        public async Task<ListResponse<DeviceStatus>> GetWatchdogDeviceStatusAsync(DeviceRepository deviceRepo, ListRequest request)
+        {
+            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+            var result = await base.GetByFilterAsync();
+            return new ListResponse<DeviceStatus>()
+            {
+                Model = result.Select(dto => dto.ToDeviceStatus()),
             };
         }
     }

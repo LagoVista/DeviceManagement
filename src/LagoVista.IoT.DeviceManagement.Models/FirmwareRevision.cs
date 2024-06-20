@@ -57,7 +57,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Status, EnumType: (typeof(FirmwareRevisionStatus)), FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader<FirmwareRevisionStatus> Status { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_Status, FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_File, FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
         public string File { get; set; }
 
         public List<string> GetFormFields()

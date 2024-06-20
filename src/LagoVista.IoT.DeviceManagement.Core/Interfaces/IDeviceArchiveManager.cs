@@ -16,7 +16,5 @@ namespace LagoVista.IoT.DeviceManagement.Core
     public interface IDeviceArchiveManager : IDeviceArchiveManagerRemote
     {
         Task<ListResponse<List<object>>> GetDeviceArchivesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request, EntityHeader org, EntityHeader user);
-        Task<ListResponse<DeviceStatus>> GetDeviceStatusChangesAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
-        Task<ListResponse<DeviceException>> GetDeviceExceptionAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
     }
 }
