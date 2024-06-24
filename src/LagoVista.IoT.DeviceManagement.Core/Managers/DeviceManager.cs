@@ -259,20 +259,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (EntityHeader.IsNullOrEmpty(device.Location) && !EntityHeader.IsNullOrEmpty(previousDevice.Location))
             {
-                // Device Location Added.
-                var location = await _orgLocationRepo.GetLocationAsync(previousDevice.Location.Id);
-                location.Devices.Add(new LocationDevice()
-                {
-                    Device = device.ToEntityHeader(),
-                    DeviceRepo = device.DeviceRepository
-                });
-
-                await _orgLocationRepo.UpdateLocationAsync(location);
-            }
-            else if (!EntityHeader.IsNullOrEmpty(device.Location) && EntityHeader.IsNullOrEmpty(previousDevice.Location))
-            {
                 Console.WriteLine("Remove device location.");
-                // Device Location Removed
+                // It had a value previously but does not any more.
                 var location = await _orgLocationRepo.GetLocationAsync(previousDevice.Location.Id);
                 var existing = location.Devices.FirstOrDefault(dev => dev.Device.Id == device.Id);
                 if (existing != null)
@@ -280,13 +268,25 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     location.Devices.Remove(existing);
                     await _orgLocationRepo.UpdateLocationAsync(location);
                 }
-                Console.WriteLine("Removed device location.");
+            }
+            else if (!EntityHeader.IsNullOrEmpty(device.Location) && EntityHeader.IsNullOrEmpty(previousDevice.Location))
+            {                
+                // It had a value previously but does not any more.
+                var location = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+                if (!location.Devices.Any(dev => dev.Device.Id == device.Id))
+                {
+                    location.Devices.Add(new LocationDevice()
+                    {
+                        Device = device.ToEntityHeader(),
+                        DeviceRepo = device.DeviceRepository
+                    });
 
+                    await _orgLocationRepo.UpdateLocationAsync(location);
+                }
             }
             else if (!EntityHeader.IsNullOrEmpty(device.Location) && !EntityHeader.IsNullOrEmpty(previousDevice.Location) &&
                  device.Location.Id != previousDevice.Location.Id)
             {
-
                 Console.WriteLine("Changed.");
 
                 // Device Location Changed.
