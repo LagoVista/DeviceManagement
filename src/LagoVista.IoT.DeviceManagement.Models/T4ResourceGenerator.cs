@@ -1,4 +1,4 @@
-﻿/*6/14/2024 7:13:44 PM*/
+﻿/*6/25/2024 7:59:56 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -558,6 +558,18 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceAddress_Address
 
 		public static string DeviceAddress_Address { get { return GetResourceString("DeviceAddress_Address"); } }
+//Resources:DeviceManagementResources:DeviceError_Description
+
+		public static string DeviceError_Description { get { return GetResourceString("DeviceError_Description"); } }
+//Resources:DeviceManagementResources:DeviceError_Title
+
+		public static string DeviceError_Title { get { return GetResourceString("DeviceError_Title"); } }
+//Resources:DeviceManagementResources:DeviceException_Description
+
+		public static string DeviceException_Description { get { return GetResourceString("DeviceException_Description"); } }
+//Resources:DeviceManagementResources:DeviceException_Title
+
+		public static string DeviceException_Title { get { return GetResourceString("DeviceException_Title"); } }
 //Resources:DeviceManagementResources:DeviceGroup_AssignedUser
 
 		public static string DeviceGroup_AssignedUser { get { return GetResourceString("DeviceGroup_AssignedUser"); } }
@@ -1248,6 +1260,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
 			public const string Device_WiFiConnectionProfile = "Device_WiFiConnectionProfile";
 			public const string DeviceAddress_Address = "DeviceAddress_Address";
+			public const string DeviceError_Description = "DeviceError_Description";
+			public const string DeviceError_Title = "DeviceError_Title";
+			public const string DeviceException_Description = "DeviceException_Description";
+			public const string DeviceException_Title = "DeviceException_Title";
 			public const string DeviceGroup_AssignedUser = "DeviceGroup_AssignedUser";
 			public const string DeviceGroup_AssignedUserHelp = "DeviceGroup_AssignedUserHelp";
 			public const string DeviceGroup_Description = "DeviceGroup_Description";

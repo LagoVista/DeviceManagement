@@ -1,10 +1,14 @@
 ﻿using LagoVista.Core;
+using LagoVista.Core.Attributes;
+using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceException_Title, DeviceManagementResources.Names.DeviceException_Description,
+        DeviceManagementResources.Names.DeviceException_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-ae-error-1")]
     public class DeviceException
     {
         public DeviceException()

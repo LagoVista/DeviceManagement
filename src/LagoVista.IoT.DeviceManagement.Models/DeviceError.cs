@@ -1,11 +1,14 @@
 ﻿using LagoVista.Core;
-using LagoVista.Core.Models;
+using LagoVista.Core.Attributes;
+using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
+
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DeviceError_Title, DeviceManagementResources.Names.DeviceError_Description,
+        DeviceManagementResources.Names.DeviceError_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-error-1")]
     public class DeviceError
     {        
         public int Count { get; set; }
