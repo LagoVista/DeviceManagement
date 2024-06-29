@@ -457,6 +457,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 var populateConfig = await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
                 result.Timings.AddRange(populateConfig.Timings);
+
+                var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
+                device.DesiredFirmware = deviceType.Firmware;
+                device.DesiredFirmwareRevision = deviceType.FirmwareRevision;
             }
 
             return result;
@@ -497,6 +501,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 var populateConfig = await _deviceConfigHelper.PopulateDeviceConfigToDeviceAsync(device, deviceRepo.Instance, org, user);
                 result.Timings.AddRange(populateConfig.Timings);
+
+                var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
+                device.DesiredFirmware = deviceType.Firmware;
+                device.DesiredFirmwareRevision = deviceType.FirmwareRevision;
             }
             return result;
         }
