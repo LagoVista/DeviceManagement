@@ -1,4 +1,4 @@
-﻿/*6/25/2024 7:59:56 AM*/
+﻿/*7/16/2024 3:29:28 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -636,6 +636,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_DeviceTimeoutSeconds_Help
 
 		public static string DeviceRepo_DeviceTimeoutSeconds_Help { get { return GetResourceString("DeviceRepo_DeviceTimeoutSeconds_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepo_DistroList
+
+		public static string DeviceRepo_DistroList { get { return GetResourceString("DeviceRepo_DistroList"); } }
+//Resources:DeviceManagementResources:DeviceRepo_DistroList_Help
+
+		public static string DeviceRepo_DistroList_Help { get { return GetResourceString("DeviceRepo_DistroList_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepo_DistroList_Select
+
+		public static string DeviceRepo_DistroList_Select { get { return GetResourceString("DeviceRepo_DistroList_Select"); } }
 //Resources:DeviceManagementResources:DeviceRepo_SecureUserOwnedDevices
 
 		public static string DeviceRepo_SecureUserOwnedDevices { get { return GetResourceString("DeviceRepo_SecureUserOwnedDevices"); } }
@@ -1286,6 +1295,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help = "DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help";
 			public const string DeviceRepo_DeviceTimeoutSeconds = "DeviceRepo_DeviceTimeoutSeconds";
 			public const string DeviceRepo_DeviceTimeoutSeconds_Help = "DeviceRepo_DeviceTimeoutSeconds_Help";
+			public const string DeviceRepo_DistroList = "DeviceRepo_DistroList";
+			public const string DeviceRepo_DistroList_Help = "DeviceRepo_DistroList_Help";
+			public const string DeviceRepo_DistroList_Select = "DeviceRepo_DistroList_Select";
 			public const string DeviceRepo_SecureUserOwnedDevices = "DeviceRepo_SecureUserOwnedDevices";
 			public const string DeviceRepo_SecureUserOwnedDevices_Help = "DeviceRepo_SecureUserOwnedDevices_Help";
 			public const string DeviceRepo_ServiceBoard = "DeviceRepo_ServiceBoard";
