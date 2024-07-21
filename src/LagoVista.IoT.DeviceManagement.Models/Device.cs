@@ -112,8 +112,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader Location { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
+           HelpResource: DeviceManagementResources.Names.Device_DistroList_Help, EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
         public EntityHeader DistributionList { get; set; }
+
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_OfflineDistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
+          HelpResource:DeviceManagementResources.Names.Device_OfflineDistributionList_Help,  EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
+        public EntityHeader OfflineDistributionList { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceURI, HelpResource: DeviceManagementResources.Names.Device_DeviceURI_Help, FieldType: FieldTypes.Text, IsUserEditable: false, ResourceType: typeof(DeviceManagementResources))]
@@ -360,6 +366,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.SecondaryAccessKey),
                 nameof(Device.AssignedUser),
                 nameof(Device.DistributionList),
+                nameof(Device.OfflineDistributionList),
                 nameof(Device.Location),
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),

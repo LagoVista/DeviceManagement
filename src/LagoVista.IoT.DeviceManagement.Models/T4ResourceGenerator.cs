@@ -1,4 +1,4 @@
-﻿/*7/16/2024 3:29:28 PM*/
+﻿/*7/21/2024 8:30:55 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -243,6 +243,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DistributionList_Select
 
 		public static string Device_DistributionList_Select { get { return GetResourceString("Device_DistributionList_Select"); } }
+//Resources:DeviceManagementResources:Device_DistroList_Help
+
+		public static string Device_DistroList_Help { get { return GetResourceString("Device_DistroList_Help"); } }
 //Resources:DeviceManagementResources:Device_GeofenceTrackingMode
 
 		public static string Device_GeofenceTrackingMode { get { return GetResourceString("Device_GeofenceTrackingMode"); } }
@@ -312,6 +315,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Notes
 
 		public static string Device_Notes { get { return GetResourceString("Device_Notes"); } }
+//Resources:DeviceManagementResources:Device_OfflineDistributionList
+
+		public static string Device_OfflineDistributionList { get { return GetResourceString("Device_OfflineDistributionList"); } }
+//Resources:DeviceManagementResources:Device_OfflineDistributionList_Help
+
+		public static string Device_OfflineDistributionList_Help { get { return GetResourceString("Device_OfflineDistributionList_Help"); } }
 //Resources:DeviceManagementResources:Device_Organization
 
 		public static string Device_Organization { get { return GetResourceString("Device_Organization"); } }
@@ -645,6 +654,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_DistroList_Select
 
 		public static string DeviceRepo_DistroList_Select { get { return GetResourceString("DeviceRepo_DistroList_Select"); } }
+//Resources:DeviceManagementResources:DeviceRepo_OfflineDistributionList
+
+		public static string DeviceRepo_OfflineDistributionList { get { return GetResourceString("DeviceRepo_OfflineDistributionList"); } }
+//Resources:DeviceManagementResources:DeviceRepo_OfflineDistributionList_Help
+
+		public static string DeviceRepo_OfflineDistributionList_Help { get { return GetResourceString("DeviceRepo_OfflineDistributionList_Help"); } }
 //Resources:DeviceManagementResources:DeviceRepo_SecureUserOwnedDevices
 
 		public static string DeviceRepo_SecureUserOwnedDevices { get { return GetResourceString("DeviceRepo_SecureUserOwnedDevices"); } }
@@ -1164,6 +1179,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DisableGeofenceDetection_Help = "Device_DisableGeofenceDetection_Help";
 			public const string Device_DistributionList = "Device_DistributionList";
 			public const string Device_DistributionList_Select = "Device_DistributionList_Select";
+			public const string Device_DistroList_Help = "Device_DistroList_Help";
 			public const string Device_GeofenceTrackingMode = "Device_GeofenceTrackingMode";
 			public const string Device_GeofenceTrackingMode_Help = "Device_GeofenceTrackingMode_Help";
 			public const string Device_GeoLocation = "Device_GeoLocation";
@@ -1187,6 +1203,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_MessageValues = "Device_MessageValues";
 			public const string Device_MessageValues_Help = "Device_MessageValues_Help";
 			public const string Device_Notes = "Device_Notes";
+			public const string Device_OfflineDistributionList = "Device_OfflineDistributionList";
+			public const string Device_OfflineDistributionList_Help = "Device_OfflineDistributionList_Help";
 			public const string Device_Organization = "Device_Organization";
 			public const string Device_Organization_Select = "Device_Organization_Select";
 			public const string Device_ParentDevice = "Device_ParentDevice";
@@ -1298,6 +1316,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_DistroList = "DeviceRepo_DistroList";
 			public const string DeviceRepo_DistroList_Help = "DeviceRepo_DistroList_Help";
 			public const string DeviceRepo_DistroList_Select = "DeviceRepo_DistroList_Select";
+			public const string DeviceRepo_OfflineDistributionList = "DeviceRepo_OfflineDistributionList";
+			public const string DeviceRepo_OfflineDistributionList_Help = "DeviceRepo_OfflineDistributionList_Help";
 			public const string DeviceRepo_SecureUserOwnedDevices = "DeviceRepo_SecureUserOwnedDevices";
 			public const string DeviceRepo_SecureUserOwnedDevices_Help = "DeviceRepo_SecureUserOwnedDevices_Help";
 			public const string DeviceRepo_ServiceBoard = "DeviceRepo_ServiceBoard";

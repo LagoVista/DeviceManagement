@@ -95,6 +95,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader DistroList { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_OfflineDistributionList, HelpResource:DeviceManagementResources.Names.DeviceRepo_OfflineDistributionList_Help,
+            FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
+            EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
+        public EntityHeader OfflineDistributionList { get; set; }
+
+
 
         [FKeyProperty(nameof(Subscription), nameof(Subscription) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Subscription, WaterMark: DeviceManagementResources.Names.Device_Repo_SubscriptionSelect, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]

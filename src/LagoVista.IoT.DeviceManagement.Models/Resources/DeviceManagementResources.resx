@@ -1156,9 +1156,24 @@
     <value>Distribution List</value>
   </data>
   <data name="DeviceRepo_DistroList_Help" xml:space="preserve">
-    <value>Contacts that should be notified when events happen to devices that belong to this device repository.</value>
+    <value>Contacts that should be notified when events happen to devices that belong to this device repository.  This does not include devices going online/offline.</value>
   </data>
   <data name="DeviceRepo_DistroList_Select" xml:space="preserve">
     <value>-select distribution list-</value>
+  </data>
+  <data name="DeviceRepo_OfflineDistributionList" xml:space="preserve">
+    <value>Online/Offline Distribution List</value>
+  </data>
+  <data name="DeviceRepo_OfflineDistributionList_Help" xml:space="preserve">
+    <value>Contacts that should be notified when a device in this device repostiory goes online or offline.</value>
+  </data>
+  <data name="Device_DistroList_Help" xml:space="preserve">
+    <value>Contacts that should be notified when events happen on this device, this does not include the device going online and offline.</value>
+  </data>
+  <data name="Device_OfflineDistributionList" xml:space="preserve">
+    <value>Online/Offline Distribution List</value>
+  </data>
+  <data name="Device_OfflineDistributionList_Help" xml:space="preserve">
+    <value>Contacts that should be notified when this device goes online or offline.</value>
   </data>
 </root>
