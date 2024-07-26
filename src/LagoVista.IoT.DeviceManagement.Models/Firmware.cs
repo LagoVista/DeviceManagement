@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Firmware_Title, DeviceManagementResources.Names.Firmware_Help,
-        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-fo-firmware",
+        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-fo-firmware", Cloneable: true,
         CreateUIUrl: "/iotstudio/manage/firmware/add",  EditUIUrl: "/iotstudio/manage/firmware/{id}", ListUIUrl: "/iotstudio/manage/firmware",
         GetListUrl: "/api/firmwares", GetUrl: "/api/firmware/{id}", SaveUrl: "/api/firmware", DeleteUrl: "/api/firmware/{id}", FactoryUrl: "/api/firmware/factory")]
     public class Firmware : LagoVista.IoT.DeviceAdmin.Models.IoTModelBase,  IValidateable, IFormDescriptor, IIconEntity
@@ -67,7 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Firmware_Title, DeviceManagementResources.Names.Firmware_Help,
-        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-fo-firmware",
+        DeviceManagementResources.Names.Firmware_Description, EntityDescriptionAttribute.EntityTypes.Summary, typeof(DeviceManagementResources), Icon: "icon-fo-firmware", Cloneable: true,
         GetListUrl: "/api/firmwares", GetUrl: "/api/firmware/{id}", SaveUrl: "/api/firmware", DeleteUrl: "/api/firmware/{id}", FactoryUrl: "/api/firmware/factory")]
     public class FirmwareSummary : SummaryData
     {
