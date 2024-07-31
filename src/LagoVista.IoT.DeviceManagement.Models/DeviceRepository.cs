@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.UserAdmin.Models.Orgs;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -102,7 +103,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
 
-        [FKeyProperty(nameof(Subscription), nameof(Subscription) + ".Id = {0}", "")]
+        [FKeyProperty(nameof(Subscription), typeof(Subscription), nameof(Subscription) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Subscription, WaterMark: DeviceManagementResources.Names.Device_Repo_SubscriptionSelect, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public EntityHeader Subscription { get; set; }
 
@@ -118,7 +119,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public String SecureAccessKeyId { get; set; }
 
-        [FKeyProperty(nameof(AppUser), nameof(WatchdogNotificationUser) + ".Id = {0}", "")]
+        [FKeyProperty(nameof(AppUser), typeof(AppUser), nameof(WatchdogNotificationUser) + ".Id = {0}", "")]
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact, HelpResource: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Help, FieldType: FieldTypes.UserPicker, WaterMark: DeviceManagementResources.Names.Device_Repo_DevceWatchDog_NotificationContact_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader WatchdogNotificationUser { get; set; }
@@ -129,7 +130,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader ServiceBoard { get; set; }
 
 
-        [FKeyProperty(nameof(AppUser), nameof(AssignedUser) + ".Id = {0}", "")]
+        [FKeyProperty(nameof(AppUser), typeof(AppUser), nameof(AssignedUser) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AssignedUser, HelpResource: DeviceManagementResources.Names.Device_Repo_AssignedUser_Help, FieldType: FieldTypes.UserPicker, 
             WaterMark: DeviceManagementResources.Names.Device_Repo_AssignedUser_Select, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
