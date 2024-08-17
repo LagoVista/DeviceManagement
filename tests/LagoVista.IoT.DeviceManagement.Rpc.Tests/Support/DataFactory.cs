@@ -11,6 +11,7 @@ using LagoVista.IoT.DeviceAdmin.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.UserAdmin.Models.Orgs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
@@ -122,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 OwnerOrganization = EntityHeader.Create(OrganizationId, "test organization"),
-                Location = EntityHeader.Create(LocationId, "test location"),
+                Location = EntityHeader<OrgLocation>.Create(LocationId, "test location", null),
                 DeviceId = deviceId,
                 PrimaryAccessKey = "abc123",
                 SecondaryAccessKey = "def45",

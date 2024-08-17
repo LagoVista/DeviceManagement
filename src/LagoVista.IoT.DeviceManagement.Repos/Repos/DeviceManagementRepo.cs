@@ -75,6 +75,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 await regManager.AddDeviceAsync(iotHubDevice);
             }
 
+            device.Location.Value = null;
+            device.DeviceType = null;
+
             await CreateDocumentAsync(device);
 
             return InvokeResult.Success;
@@ -230,7 +233,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task UpdateDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
-            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
+            if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId.ToLower();
 
             /* Make sure that any data that might be sent along with the device but not required is note saved */
             if (device.SensorCollection != null)
@@ -261,7 +264,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 }
             }
 
+
             device.DeviceType.Value = null;
+
+            if(device.Location != null)
+                device.Location.Value = null;
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             Console.WriteLine($"[DeviceManagementRepo__UpdateDeviceAsync] Upodate Device with Id {device.Id} and Device Id {device.DeviceId}");

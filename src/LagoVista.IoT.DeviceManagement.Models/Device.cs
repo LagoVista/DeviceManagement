@@ -14,6 +14,7 @@ using LagoVista.IoT.DeviceManagement.Models;
 using System;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Models.Users;
+using LagoVista.UserAdmin.Models.Orgs;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -87,11 +88,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string DeviceId { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceImages, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource:  DeviceManagementResources.Names.Device_DeviceImages, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<MediaResource> DeviceImages { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public MediaResource DefaultDeviceImage { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, UploadUrl: "/api/media/resource/public/upload", FieldType: FieldTypes.MediaResourceUpload, ResourceType: typeof(DeviceManagementResources))]
+        public EntityHeader DefaultDeviceImage { get; set; }
 
         [FKeyProperty(nameof(DeviceConfiguration),  WhereClause:"DeviceConfiguration.Id = {0}")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
@@ -109,7 +110,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Location, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl:"/api/org/locations", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Location_Select)]
-        public EntityHeader Location { get; set; }
+        public EntityHeader<OrgLocation> Location { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
@@ -361,6 +362,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DebugMode),
                 nameof(Device.IsBeta),
                 nameof(Device.DeviceType),
+                nameof(Device.DefaultDeviceImage),
                 nameof(Device.DeviceConfiguration),
                 nameof(Device.PrimaryAccessKey),
                 nameof(Device.SecondaryAccessKey),

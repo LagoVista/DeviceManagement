@@ -340,7 +340,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 device.DevicePin = null;
             }
 
-
             await repo.UpdateDeviceAsync(deviceRepo, device);
             Console.WriteLine("Updated location.");
 
@@ -383,6 +382,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 return InvokeResult<Device>.FromError($"Could not find device with mac address {macAddress}");
             }
+
+            if (!EntityHeader.IsNullOrEmpty(device.Location))
+                device.Location.Value = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
 
             await AuthorizeAsync(device, AuthorizeActions.Read, user, org);
             return InvokeResult<Device>.Create(device);
@@ -446,8 +448,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (String.IsNullOrEmpty(device.Key))
             {
-                device.Key = device.Key;
+                device.Key = device.Id.ToLower();
             }
+
+            if (!EntityHeader.IsNullOrEmpty(device.Location))
+                device.Location.Value = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+
             var result = InvokeResult<Device>.Create(device);
             result.Timings.AddRange(timings);
 
@@ -496,6 +502,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             var result = InvokeResult<Device>.Create(device);
             result.Timings.AddRange(timings);
+
+            if (!EntityHeader.IsNullOrEmpty(device.Location))
+                device.Location.Value = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+
 
             if (populateMetaData)
             {
@@ -547,6 +557,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 return InvokeResult<Device>.FromError("Invalid PIN.");
             }
+
+            if (!EntityHeader.IsNullOrEmpty(device.Location))
+                device.Location.Value = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
 
             deviceRepo.AccessKey = null;
 
