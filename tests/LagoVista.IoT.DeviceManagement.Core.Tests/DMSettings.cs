@@ -16,5 +16,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests
         public IConnectionSettings DefaultDeviceTableStorage { get => TestConnections.DevTableStorageDB; set { }  }
 
         public bool ShouldConsolidateCollections { get => true; }
+        public IConnectionSettings DefaultDeviceAccountStorage { get => TestConnections.DefaultDeviceAccountDb; set { } }
     }
 }

@@ -366,6 +366,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
 
+            if(repo.DeviceAccountConnection != null && !String.IsNullOrEmpty(repo.DeviceAccountConnection.Password))
+            {
+                var addSecretResult = await _secureStorage.AddSecretAsync(org, repo.DeviceAccountConnection.Password);
+
+                if (!string.IsNullOrEmpty(repo.DeviceAccountPasswordSecureId))
+                {
+                    await _secureStorage.RemoveSecretAsync(org, repo.DeviceAccountPasswordSecureId);
+                }
+
+                repo.DeviceAccountPasswordSecureId = addSecretResult.Result;
+                repo.DeviceAccountConnection.Password = null;
+            }
+
             if (!string.IsNullOrEmpty(repo.AccessKey))
             {
                 var addSecretResult = await _secureStorage.AddSecretAsync(org, repo.AccessKey);

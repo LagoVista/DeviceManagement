@@ -169,6 +169,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public int DeviceTimeoutSeconds { get; set; }
 
+        public ConnectionSettings DeviceAccountConnection { get; set; }
+
+        public string DeviceAccountPasswordSecureId { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public int DeviceTimeoutNotificationIntervalMinutes { get; set; }
@@ -222,6 +226,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string GetDeviceMediaStorageName()
         {
             return GetTableName("devicemedia").ToLower();
+        }
+
+        public string GetDeviceAccountDatabseeName()
+        {
+            return GetTableName("deviceaccount").ToLower();
         }
 
         public DeviceRepositorySummary CreateSummary()

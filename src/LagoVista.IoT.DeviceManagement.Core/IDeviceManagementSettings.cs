@@ -9,6 +9,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
         IConnectionSettings DefaultDeviceStorage { get; set; }
         IConnectionSettings DefaultDeviceTableStorage { get; set; }
 
+        IConnectionSettings DefaultDeviceAccountStorage { get; set; }
 
         bool ShouldConsolidateCollections { get; }
     }
