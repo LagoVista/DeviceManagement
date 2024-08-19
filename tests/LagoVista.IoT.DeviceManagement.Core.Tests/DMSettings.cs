@@ -1,5 +1,6 @@
 ﻿using LagoVista.CloudStorage.Utils;
 using LagoVista.Core.Interfaces;
+using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceManagement.Repos;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests
         public IConnectionSettings DefaultDeviceTableStorage { get => TestConnections.DevTableStorageDB; set { }  }
 
         public bool ShouldConsolidateCollections { get => true; }
-        public IConnectionSettings DefaultDeviceAccountStorage { get => TestConnections.DefaultDeviceAccountDb; set { } }
+        public ConnectionSettings DefaultDeviceAccountStorage { get => TestConnections.DefaultDeviceAccountDb; set { } }
     }
 }

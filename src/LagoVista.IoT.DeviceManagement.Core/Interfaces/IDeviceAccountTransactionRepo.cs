@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using LagoVista.IoT.DeviceManagement.Models;
+using LagoVista.Core.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Core
 {

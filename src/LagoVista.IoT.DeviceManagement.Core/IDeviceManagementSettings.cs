@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.Interfaces;
+using LagoVista.Core.Models;
 
 namespace LagoVista.IoT.DeviceManagement.Repos
 {
@@ -9,7 +10,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
         IConnectionSettings DefaultDeviceStorage { get; set; }
         IConnectionSettings DefaultDeviceTableStorage { get; set; }
 
-        IConnectionSettings DefaultDeviceAccountStorage { get; set; }
+        ConnectionSettings DefaultDeviceAccountStorage { get; set; }
 
         bool ShouldConsolidateCollections { get; }
     }
