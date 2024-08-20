@@ -1,4 +1,4 @@
-﻿/*7/21/2024 8:30:55 AM*/
+﻿/*8/20/2024 1:09:30 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -564,6 +564,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_WiFiConnectionProfile
 
 		public static string Device_WiFiConnectionProfile { get { return GetResourceString("Device_WiFiConnectionProfile"); } }
+//Resources:DeviceManagementResources:DeviceAccountTransactionRecord_Help
+
+		public static string DeviceAccountTransactionRecord_Help { get { return GetResourceString("DeviceAccountTransactionRecord_Help"); } }
+//Resources:DeviceManagementResources:DeviceAccountTransactionRecord_Title
+
+		public static string DeviceAccountTransactionRecord_Title { get { return GetResourceString("DeviceAccountTransactionRecord_Title"); } }
 //Resources:DeviceManagementResources:DeviceAddress_Address
 
 		public static string DeviceAddress_Address { get { return GetResourceString("DeviceAddress_Address"); } }
@@ -1286,6 +1292,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Watchdog_Seconds_Override = "Device_Watchdog_Seconds_Override";
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
 			public const string Device_WiFiConnectionProfile = "Device_WiFiConnectionProfile";
+			public const string DeviceAccountTransactionRecord_Help = "DeviceAccountTransactionRecord_Help";
+			public const string DeviceAccountTransactionRecord_Title = "DeviceAccountTransactionRecord_Title";
 			public const string DeviceAddress_Address = "DeviceAddress_Address";
 			public const string DeviceError_Description = "DeviceError_Description";
 			public const string DeviceError_Title = "DeviceError_Title";

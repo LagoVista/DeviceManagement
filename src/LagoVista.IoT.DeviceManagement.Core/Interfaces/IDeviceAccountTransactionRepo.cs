@@ -14,7 +14,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult<decimal>> AddTransactionAsync(DeviceTransaction tx);
 
-        Task<ListResponse<DeviceTransaction>> GetDeviceAccountTransactions(string deviceId, string key, ListRequest listRequest);
-
+        Task<ListResponse<DeviceAccountTransactionRecord>> GetDeviceAccountTransactions(string deviceId, string locatoinId, string key, ListRequest listRequest);
     }
 }
