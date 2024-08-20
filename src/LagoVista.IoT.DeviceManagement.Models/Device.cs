@@ -83,6 +83,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string StatusTimestamp { get; set; }
 
 
+        public Dictionary<string, decimal> Balances { get; set; } = new Dictionary<string, decimal>();
+
 
         /* Device ID is the ID associated with the device by the user, it generally will be unique, but can't assume it to be, it's primarily read only, it must however be unique for a device configuration. */
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
@@ -342,6 +344,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceRepo = DeviceRepository.Text,
                 LastContact = LastContact,
                 Location = Location,
+                Balances = Balances,
             };
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
@@ -479,5 +482,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }
+        public Dictionary<string, decimal> Balances { get; set; }
     }
 }
