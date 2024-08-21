@@ -784,6 +784,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.GenerateSecureDeviceLinkAsync(repo, id, pin, OrgEntityHeader, UserEntityHeader);
         }
 
+        [HttpGet("/api/device/{devicerepoid}/{id}/pin")]
+        public async Task<InvokeResult<string>> GetPin(string devicerepoid, string id)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDevicePinAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+        }
+
 
         [HttpGet("/api/device/{devicerepoid}/{deviceid}/location/{locationid}/add")]
         public async Task<InvokeResult> AddDeviceToLocationAsync(string devicerepoid, string deviceid, string locationid)

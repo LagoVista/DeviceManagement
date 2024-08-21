@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
@@ -1216,9 +1217,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<string>.FromError($"Could not find device with id {id}");
             }
 
+            await AuthorizeAsync(device, AuthorizeActions.Update, user, org, "SetDevicePin");
 
             var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
-
 
             if (String.IsNullOrEmpty(pin))
             {
@@ -1248,6 +1249,34 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public Task<InvokeResult<Device>> HandleDeviceOfflineAsync(Device device, EntityHeader org, EntityHeader user)
         {
             return Task.FromResult(InvokeResult<Device>.Create(device));
+        }
+
+        public async Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var repo = GetRepo(deviceRepo);
+            if (repo == null)
+            {
+                throw new NullReferenceException(nameof(repo));
+            }
+
+            var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
+            if (device == null)
+            {
+                return InvokeResult<string>.FromError($"Could not find device with id {id}");
+            }
+
+            if(String.IsNullOrEmpty(device.DevicePinSecureid))
+            {
+                return InvokeResult<string>.FromError("Device does not have a PIN assigned.");
+            }
+
+            await AuthorizeAsync(device, AuthorizeActions.Read, user, org, "GetDevicePin");
+
+            var getSecretResult = await _secureStorage.GetSecretAsync(org, device.DevicePinSecureid, user);
+            if (!getSecretResult.Successful)
+                return InvokeResult<string>.FromInvokeResult(getSecretResult.ToInvokeResult());
+
+            return InvokeResult<string>.Create(getSecretResult.Result);
         }
     }
 }

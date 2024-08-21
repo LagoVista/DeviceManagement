@@ -157,5 +157,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<Device>> HandleDeviceOfflineAsync(Device device, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepository, string id, EntityHeader org, EntityHeader user);
     }
 }
