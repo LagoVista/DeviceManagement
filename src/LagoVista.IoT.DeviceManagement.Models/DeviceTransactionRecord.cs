@@ -10,6 +10,8 @@ namespace LagoVista.IoT.DeviceManagement.Models
     {
         public string TimeStamp { get; set; }
 
+        public string TransactionType { get; set; }
+
         public string DeviceId { get; set; }
         public string DeviceName { get; set; }
         public string LocationId { get; set; }
