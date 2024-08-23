@@ -134,10 +134,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 device.DeviceConfiguration = deviceType.DefaultDeviceConfiguration;
             }
-
-            if (!EntityHeader.IsNullOrEmpty(device.DeviceType))
-                device.DeviceType.Value = null;
-
+            
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             device.OwnerOrganization = org;
             device.CreatedBy = user;

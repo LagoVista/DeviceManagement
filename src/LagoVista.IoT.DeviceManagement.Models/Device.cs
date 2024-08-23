@@ -97,7 +97,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader DefaultDeviceImage { get; set; }
 
         [FKeyProperty(nameof(DeviceConfiguration),  WhereClause:"DeviceConfiguration.Id = {0}")]
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, EntityHeaderPickerUrl: "/api/deviceconfigs", FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
 
 
@@ -335,6 +335,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceType = DeviceType.Text,
                 DeviceTypeId = DeviceType.Id,
                 CustomStatus = CustomStatus,
+                DefaultDeviceImage = DefaultDeviceImage,
                 InternalSummary = InternalSummary,
                 GeoLocation = GeoLocation,
                 iosBLEAddress = iosBLEAddress,
@@ -479,6 +480,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceRepoId { get; set; }
         public string DeviceRepo { get; set; }
         public GeoLocation GeoLocation { get; set; }
+        public EntityHeader DefaultDeviceImage { get; set; }
 
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }

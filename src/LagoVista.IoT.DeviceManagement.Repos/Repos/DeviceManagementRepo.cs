@@ -8,7 +8,6 @@ using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using LagoVista.Core;
 using System.Collections.Generic;
 using LagoVista.Core.Models;
 using LagoVista.CloudStorage;
@@ -75,8 +74,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 await regManager.AddDeviceAsync(iotHubDevice);
             }
 
-            device.Location.Value = null;
-            device.DeviceType = null;
+            if(device.Location != null)
+                device.Location.Value = null;
+
+            if(device.DeviceType != null)
+                device.DeviceType.Value = null;
 
             await CreateDocumentAsync(device);
 
