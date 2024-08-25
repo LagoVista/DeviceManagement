@@ -93,7 +93,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource:  DeviceManagementResources.Names.Device_DeviceImages, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<MediaResource> DeviceImages { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, UploadUrl: "/api/media/resource/public/upload", FieldType: FieldTypes.MediaResourceUpload, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, UploadUrl: "/api/media/resource/public/upload", FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader DefaultDeviceImage { get; set; }
 
         [FKeyProperty(nameof(DeviceConfiguration),  WhereClause:"DeviceConfiguration.Id = {0}")]
