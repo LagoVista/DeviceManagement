@@ -4,9 +4,9 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
-using LagoVista.Core.Models.ML;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Rpc.Client;
+using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceAdmin.Models;
@@ -19,13 +19,15 @@ using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
+using RingCentral;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
 
@@ -99,7 +101,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         }
 
         /* 
-         * In some cases we are using a 3rd party device repo, if so we'll keep the access key in secure storage and make sure it's only used in the manager, the repo will
+         * In some cases we are using a 3rd party result repo, if so we'll keep the access key in secure storage and make sure it's only used in the manager, the repo will
          * be smart enough pull add or update from external repos.
          * 
          * If it's stored in an external repo, we also store a copy of it in our local repo so we can store the rest of the meta data. if we always go through the repo
@@ -242,6 +244,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             return InvokeResult<Device>.Create(device);
+        }
+
+        public async Task AuthenticateDevicePinAsync(DeviceRepository deviceRepo, string deviceId, string pin)
+        {
+
         }
 
         public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
@@ -603,7 +610,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             //We will be comparing against the id, the id will always be lower case
             status = status.ToLower();
 
-            //TODO: Need to extend manager for security on this getting device w/ status
+            //TODO: Need to extend manager for security on this getting result w/ status
 
             var repo = GetRepo(deviceRepo);
             return await repo.GetDevicesInStatusAsync(deviceRepo, status, listRequest);
@@ -620,7 +627,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            //TODO: Need to extend manager for security on this getting device w/ status
+            //TODO: Need to extend manager for security on this getting result w/ status
 
             var repo = GetRepo(deviceRepo);
             return await repo.GetDevicesInCustomStatusAsync(deviceRepo, customStatus, listRequest);
@@ -628,7 +635,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            //TODO: Need to extend manager for security on this getting device w/ configuration
+            //TODO: Need to extend manager for security on this getting result w/ configuration
 
             var repo = GetRepo(deviceRepo);
             return repo.GetDevicesWithConfigurationAsync(deviceRepo, configurationId, listRequest);
@@ -801,7 +808,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromError("Geolocation must not be null.");
             }
 
-            // todo: would really like to add history of device llocations, likely only if it moved.
+            // todo: would really like to add history of result llocations, likely only if it moved.
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (result == null)
             {
@@ -1197,46 +1204,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<Device>.Create(device);
         }
 
-        public async Task<InvokeResult<string>> GenerateSecureDeviceLinkAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
-        {
-            var repo = GetRepo(deviceRepo);
-            if (repo == null)
-            {
-                throw new NullReferenceException(nameof(repo));
-            }
-
-            if (String.IsNullOrEmpty(pin))
-                throw new ArgumentNullException(nameof(pin));
-
-            var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
-            if (device == null)
-            {
-                return InvokeResult<string>.FromError($"Could not find device with id {id}");
-            }
-
-            await AuthorizeAsync(device, AuthorizeActions.Update, user, org, "SetDevicePin");
-
-            var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
-
-            if (String.IsNullOrEmpty(pin))
-            {
-                return InvokeResult<string>.FromError($"Must provide a pin");
-            }
-
-            pin = pin.ToLower();
-            if (!regEx.Match(pin).Success)
-            {
-                return InvokeResult<string>.FromError($"Must provide a pin that is between 4 and 9 characters and must include only letters and numbers.");
-            }
-
-            device.DevicePin = pin;
-
-            await UpdateDeviceAsync(deviceRepo, device, org, user);
-
+        public async Task<InvokeResult<string>> GetShortenedDeviceLinkAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {            
             var link = $"{_appConfig.WebAddress}/devicemgmt/device/{org.Id}/{deviceRepo.Id}/{id}/view";
             var shortened = await _linkShortener.ShortenLinkAsync(link);
             return shortened;
         }
+      
 
         public Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user)
         {
@@ -1247,6 +1221,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return Task.FromResult(InvokeResult<Device>.Create(device));
         }
+       
 
         public async Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
@@ -1274,6 +1249,73 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<string>.FromInvokeResult(getSecretResult.ToInvokeResult());
 
             return InvokeResult<string>.Create(getSecretResult.Result);
+        }
+
+        public async Task<InvokeResult<Device>> SetDevicePinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
+        {
+            var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
+
+            if (String.IsNullOrEmpty(pin))
+            {
+                return InvokeResult<Device>.FromError($"Must provide a pin");
+            }
+
+            pin = pin.ToLower();
+            if (!regEx.Match(pin).Success)
+            {
+                return InvokeResult<Device>.FromError($"Must provide a pin that is between 4 and 9 characters and must include only letters and numbers.");
+            }
+
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            device.Result.DevicePin = pin;
+            await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
+
+            return InvokeResult<Device>.Create(device.Result);
+        }
+
+        public async Task<InvokeResult<Device>> ClearDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            
+            var device = result.Result;
+            if (String.IsNullOrEmpty(device.DevicePinSecureid))
+                return result;
+
+            await _secureStorage.RemoveSecretAsync(org, device.DevicePinSecureid);
+            device.DevicePinSecureid = null;
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            return InvokeResult<Device>.Create(result.Result);
+        }
+
+        public async Task<InvokeResult<Device>> UpdateDevicePinWithPinAsync(DeviceRepository deviceRepo, string id, string pin, string newPin, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
+            if(result.Successful)
+            {
+                result.Result.DevicePin = newPin;
+                await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+                return InvokeResult<Device>.Create(result.Result);
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        public async Task<InvokeResult> SetDeviceOwnerRegistrationWithPinAsync(DeviceRepository deviceRepo, string id, string pin, DeviceOwner owner, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
+            if (result.Successful)
+            {
+                var device = result.Result;
+                device.Owner = owner;
+                return await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+            }
+            else
+            {
+                return result.ToInvokeResult();
+            }
         }
     }
 }

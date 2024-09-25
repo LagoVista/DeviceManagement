@@ -15,6 +15,7 @@ using System;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.UserAdmin.Models.Orgs;
+using LagoVista.UserAdmin.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -119,6 +120,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
            HelpResource: DeviceManagementResources.Names.Device_DistroList_Help, EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
         public EntityHeader DistributionList { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_NotificationContacts, IsRequired: false, ChildListDisplayMember: "firstName", FieldType: FieldTypes.ChildListInline, EntityHeaderPickerUrl: "/api/distro/externalcontact/factory", ResourceType: typeof(DeviceManagementResources))]
+        public List<ExternalContact> NotificationContacts { get; set; } = new List<ExternalContact>();
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_OfflineDistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
           HelpResource:DeviceManagementResources.Names.Device_OfflineDistributionList_Help,  EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
@@ -182,6 +185,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Speed, HelpResource: DeviceManagementResources.Names.Device_Speed_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public double Speed { get; set; }
+
+        [JsonProperty("sim")]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_SIM,  FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public string SIM { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
@@ -287,7 +294,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Pin, FieldType: FieldTypes.Password, ResourceType: typeof(DeviceManagementResources))]
         public string DevicePin { get; set; }
 
-
         public string DevicePinSecureid { get; set; }
 
         public string InternalSummary { get; set; }
@@ -296,6 +302,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceIdLabel { get; set; }
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
+
+        public DeviceOwner Owner { get; set; }
 
         public List<GeoFence> GeoFences { get; set; }
 
@@ -361,6 +369,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.Name),
                 nameof(Device.Icon),
                 nameof(Device.DeviceId),
+                nameof(Device.SIM),
                 nameof(Device.SerialNumber),
                 nameof(Device.Status),
                 nameof(Device.DebugMode),
@@ -373,6 +382,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.AssignedUser),
                 nameof(Device.DistributionList),
                 nameof(Device.OfflineDistributionList),
+                nameof(Device.NotificationContacts),
                 nameof(Device.Location),
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),

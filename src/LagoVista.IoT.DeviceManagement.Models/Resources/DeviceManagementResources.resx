@@ -1182,4 +1182,58 @@
   <data name="DeviceAccountTransactionRecord_Title" xml:space="preserve">
     <value>Device Transactions</value>
   </data>
+  <data name="Device_SIM" xml:space="preserve">
+    <value>SIM Card ID</value>
+  </data>
+  <data name="DeviceOwnersDevices_Description" xml:space="preserve">
+    <value>The devices that this owner is associated with.</value>
+  </data>
+  <data name="DeviceOwnersDevices_Device" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="DeviceOwnersDevices_DeviceId" xml:space="preserve">
+    <value>Device Id</value>
+  </data>
+  <data name="DeviceOwnersDevices_DeviceRepository" xml:space="preserve">
+    <value>Device Repository</value>
+  </data>
+  <data name="DeviceOwnersDevices_Organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="DeviceOwnersDevices_Title" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="DeviceOwners_Title" xml:space="preserve">
+    <value>Device Owners</value>
+  </data>
+  <data name="DeviceOwner_Description" xml:space="preserve">
+    <value>A Device Owner is a user in the system that ones one ore many devices across different organizations.</value>
+  </data>
+  <data name="DeviceOwner_Devices" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="DeviceOwner_EmailAddress" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="DeviceOwner_FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="DeviceOwner_LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="DeviceOwner_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="DeviceOwner_Password_Confirm" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="DeviceOwner_PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="DeviceOwner_Title" xml:space="preserve">
+    <value>Device Owner</value>
+  </data>
+  <data name="Device_NotificationContacts" xml:space="preserve">
+    <value>Notification Contacts</value>
+  </data>
 </root>

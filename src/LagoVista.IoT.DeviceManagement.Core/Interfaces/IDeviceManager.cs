@@ -40,6 +40,29 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <returns></returns>
         Task<InvokeResult<Device>> GetDeviceByIdWithPinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user,  bool populateMetaData = false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="deviceRepo"></param>
+        /// <param name="deviceId"></param>
+        /// <param name="pin"></param>
+        /// <param name="org"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task<InvokeResult<Device>> SetDevicePinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
+
+        /// <summary>
+        /// Update the PIN associate the pin associated with the device if the user has the pin.
+        /// </summary>
+        /// <param name="deviceRepo"></param>
+        /// <param name="id"></param>
+        /// <param name="pin"></param>
+        /// <param name="newPin"></param>
+        /// <param name="org"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task<InvokeResult<Device>> UpdateDevicePinWithPinAsync(DeviceRepository deviceRepo, string id, string pin, string newPin, EntityHeader org, EntityHeader user);
+
 
         /// <summary>
         /// Add a device note for a device
@@ -152,12 +175,14 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult> RemoveDeviceFromLocation(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user);
 
-        Task<InvokeResult<string>> GenerateSecureDeviceLinkAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<string>> GetShortenedDeviceLinkAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<Device>> HandleDeviceOfflineAsync(Device device, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepository, string id, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<Device>> ClearDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> SetDeviceOwnerRegistrationWithPinAsync(DeviceRepository deviceRepo, string id, string pin, DeviceOwner deviceOwner, EntityHeader org, EntityHeader user);
     }
 }
