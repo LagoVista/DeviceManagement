@@ -5,6 +5,7 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.MediaServices.Models;
+using LagoVista.UserAdmin.Models.Users;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -50,19 +51,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <param name="user"></param>
         /// <returns></returns>
         Task<InvokeResult<Device>> SetDevicePinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
-
-        /// <summary>
-        /// Update the PIN associate the pin associated with the device if the user has the pin.
-        /// </summary>
-        /// <param name="deviceRepo"></param>
-        /// <param name="id"></param>
-        /// <param name="pin"></param>
-        /// <param name="newPin"></param>
-        /// <param name="org"></param>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        Task<InvokeResult<Device>> UpdateDevicePinWithPinAsync(DeviceRepository deviceRepo, string id, string pin, string newPin, EntityHeader org, EntityHeader user);
-
 
         /// <summary>
         /// Add a device note for a device
@@ -183,6 +171,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepository, string id, EntityHeader org, EntityHeader user);
         Task<InvokeResult<Device>> ClearDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
-        Task<InvokeResult> SetDeviceOwnerRegistrationWithPinAsync(DeviceRepository deviceRepo, string id, string pin, DeviceOwner deviceOwner, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> SetDeviceOwnerRegistrationAsync(DeviceRepository deviceRepo, string id, DeviceOwnerUser deviceOwner, EntityHeader org, EntityHeader user);
     }
 }

@@ -19,6 +19,7 @@ using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
+using LagoVista.UserAdmin.Models.Users;
 using RingCentral;
 using System;
 using System.Collections.Generic;
@@ -1288,28 +1289,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<Device>.Create(result.Result);
         }
 
-        public async Task<InvokeResult<Device>> UpdateDevicePinWithPinAsync(DeviceRepository deviceRepo, string id, string pin, string newPin, EntityHeader org, EntityHeader user)
+     
+        public async Task<InvokeResult> SetDeviceOwnerRegistrationAsync(DeviceRepository deviceRepo, string id, DeviceOwnerUser owner, EntityHeader org, EntityHeader user)
         {
-            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
-            if(result.Successful)
-            {
-                result.Result.DevicePin = newPin;
-                await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
-                return InvokeResult<Device>.Create(result.Result);
-            }
-            else
-            {
-                return result;
-            }
-        }
-
-        public async Task<InvokeResult> SetDeviceOwnerRegistrationWithPinAsync(DeviceRepository deviceRepo, string id, string pin, DeviceOwner owner, EntityHeader org, EntityHeader user)
-        {
-            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (result.Successful)
             {
                 var device = result.Result;
-                device.Owner = owner;
+               // device.Owner = owner;
                 return await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
             }
             else
