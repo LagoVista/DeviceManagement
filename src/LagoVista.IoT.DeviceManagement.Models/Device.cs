@@ -303,7 +303,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
-        public DeviceOwner Owner { get; set; }
+        public EntityHeader DeviceOwner { get; set; }
 
         public List<GeoFence> GeoFences { get; set; }
 
