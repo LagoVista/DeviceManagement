@@ -1,10 +1,7 @@
 ﻿using LagoVista.AspNetCore.Identity.Interfaces;
-using LagoVista.AspNetCore.Identity.Managers;
 using LagoVista.Core;
-using LagoVista.Core.Exceptions;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
-using LagoVista.Core.Models.ML;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
@@ -16,27 +13,19 @@ using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Managers;
-using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
-using LagoVista.UserAdmin.Managers;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
-using Microsoft.IdentityModel.Tokens;
-using RingCentral;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
-using static LagoVista.Core.Networking.Models.uPnPDevice;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -52,13 +41,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly IDeviceRepositoryManager _repoManager;
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
         private readonly IDistributionManager _distroManager;
-        private readonly IClaimsFactory _claimsFactory;
         private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<DeviceOwnerUser> _signInManager;
-
-
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, SignInManager<DeviceOwnerUser> signInManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr,
-                                         IClaimsFactory claimsFactory, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr,
+                                          IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _orgManager = orgManager ?? throw new ArgumentNullException(nameof(orgManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
@@ -66,8 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _remoteConfigurationManager = remoteConfigMgr ?? throw new ArgumentNullException(nameof(distroManager));
             _distroManager = distroManager ?? throw new ArgumentNullException(nameof(distroManager));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _claimsFactory = claimsFactory ?? throw new ArgumentNullException(nameof(claimsFactory));
+
         }
 
         /// <summary>
@@ -820,43 +805,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.SetDevicePinAsync(repo, id, pin, OrgEntityHeader, UserEntityHeader);
         }
 
-        private bool IsDeviceAuthUser()
-        {
-            return User.Claims.SingleOrDefault(clm => clm.Type == ClaimsFactory.Logintype)?.Value == nameof(DeviceOwnerUser);
-        }
-
-        private EntityHeader Device
-        {
-            get
-            {
-                if (!IsDeviceAuthUser())
-                    throw new NotAuthorizedException("Not a device pin auth user");
-
-                var id = User.Claims.Single(clm => clm.Type == ClaimsFactory.DeviceUniqueId).Value;
-                var name = User.Claims.Single(clm => clm.Type == ClaimsFactory.DeviceName).Value;
-                return EntityHeader.Create(id, name);
-            }
-        }
-
-        private EntityHeader DeviceRepo
-        {
-            get
-            {
-                if (!IsDeviceAuthUser())
-                    throw new NotAuthorizedException("Not a device pin auth user");
-
-                var id = User.Claims.Single(clm => clm.Type == ClaimsFactory.DeviceRepoId).Value;
-                var name = User.Claims.Single(clm => clm.Type == ClaimsFactory.DeviceRepoName).Value;
-                return EntityHeader.Create(id, name);
-            }
-        }
-
-        [HttpGet("/deviceapi/ownerreg/set")]
-        public async Task<InvokeResult> SetOwnerRegistrationAsync([FromBody] DeviceOwnerUser ownerRegistration)
-        {
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(DeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
-            return await _deviceManager.SetDeviceOwnerRegistrationAsync(repo, Device.Id, ownerRegistration, OrgEntityHeader, UserEntityHeader);
-        }
+   
 
         [HttpGet("/api/device/{devicerepoid}/{id}/link/short")]
         public async Task<InvokeResult<string>> GetShortenedDeviceUrl(string devicerepoid, string id)
@@ -905,146 +854,9 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
+       
 
-        [AllowAnonymous]
-        [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/view")]
-        public async Task<InvokeResult<Device>> GetDeviceAsync(string orgId, string devicerepoid, string id, string pin)
-        {
-            var fullSw = Stopwatch.StartNew();
-            var sw = Stopwatch.StartNew();
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
-            sw.Stop();
-            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
-
-            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
-            result.Timings.Add(new ResultTiming() { Key = $"Full device load {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
-
-            var pinUser = new DeviceOwnerUser()
-            {
-                CurrentDevice = result.Result.ToEntityHeader(),
-                CurrentDeviceId = result.Result.DeviceId,
-                OwnerOrganization = org,
-                CurrentRepo = result.Result.DeviceRepository
-            };
-
-            await _signInManager.SignInAsync(pinUser,false);
-            return result;
-        }
-
-
-
-        [HttpGet("/api/device/reset/{newpin}")]
-        public async Task<InvokeResult> SetNewPinAsync(string orgId, string devicerepoid, string id, string pin, string newpin)
-        {
-            var fullSw = Stopwatch.StartNew();
-            var sw = Stopwatch.StartNew();
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
-            sw.Stop();
-            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
-
-            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
-            result.Timings.Add(new ResultTiming() { Key = $"Full device load {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
-
-            return InvokeResult.Success;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/contacts")]
-        public async Task<InvokeResult> SetDeviceNotificationUsers(string orgId, string devicerepoid, string id, string pin, [FromBody] ExternalContact[] contacts)
-        {
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
-            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
-            if (result.Successful)
-            {
-                var device = result.Result;
-                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
-                device.NotificationContacts = new List<ExternalContact>(contacts);
-                return await _deviceManager.UpdateDeviceAsync(repo, device, org, user);
-            }
-            else
-            {
-                return result.ToInvokeResult();
-            }
-        }
-
-        public class SensorSettings
-        {
-            public int PortIndex { get; set; }
-            public EntityHeader Technology { get; set; }
-            public double? HighThreshold { get; set; }
-            public double? LowThreshold { get; set; }
-            public string Name { get; set; }
-        }
-
-        [AllowAnonymous]
-        [HttpPut("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/sensor")]
-        public async Task<InvokeResult> SetDeviceSensorThreshold(string orgId, string devicerepoid, string id, string pin, [FromBody] SensorSettings settings)
-        {
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
-            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
-            if (result.Successful)
-            {
-                var device = result.Result;
-                var sensor = device.SensorCollection.FirstOrDefault(sns => sns.PortIndex == settings.PortIndex && sns.Technology.Id == settings.Technology.Id);
-                sensor.HighThreshold = settings.HighThreshold;
-                sensor.LowThreshold = settings.LowThreshold;
-                if (!String.IsNullOrEmpty(settings.Name))
-                    sensor.Name = settings.Name;
-
-                return result.ToInvokeResult();
-            }
-            else
-            {
-                return result.ToInvokeResult();
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpPut("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/properties")]
-        public async Task<InvokeResult<Device>> UpdatePropertiesWithPinAsync(string orgId, string devicerepoid, string id, string pin, [FromBody] IEnumerable<AttributeValue> values)
-        {
-            var fullSw = Stopwatch.StartNew();
-            var sw = Stopwatch.StartNew();
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user);
-
-            sw.Stop();
-            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user, true);
-            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
-            result.Timings.Add(new ResultTiming() { Key = $"Load Device {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
-            sw.Restart();
-            foreach (var value in values)
-            {
-                var existing = result.Result.Properties.FirstOrDefault(prop => prop.Key == value.Key);
-                if (existing == null)
-                {
-                    value.LastUpdated = DateTime.UtcNow.ToJSONString();
-                    result.Result.Properties.Add(value);
-                }
-                else
-                {
-                    existing.LastUpdated = DateTime.UtcNow.ToJSONString();
-                    existing.Value = value.Value;
-                }
-            }
-
-            await _deviceManager.UpdateDeviceAsync(repo, result.Result, org, user);
-            result.Timings.Add(new ResultTiming() { Key = $"Full device update {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
-
-            await _remoteConfigurationManager.SendAllPropertiesAsync(devicerepoid, id, org, user);
-
-            return result;
-        }
-
+   
         /// <summary>
         /// Device Management - Add Note to Device
         /// </summary>
