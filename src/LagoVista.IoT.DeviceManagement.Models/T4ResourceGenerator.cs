@@ -1,4 +1,4 @@
-﻿/*9/25/2024 5:58:23 PM*/
+﻿/*9/28/2024 9:52:56 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -741,6 +741,24 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_UserOwnedDevices_Help
 
 		public static string DeviceRepo_UserOwnedDevices_Help { get { return GetResourceString("DeviceRepo_UserOwnedDevices_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OfflineNotification
+
+		public static string DeviceRepository_OfflineNotification { get { return GetResourceString("DeviceRepository_OfflineNotification"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OfflineNotification_Help
+
+		public static string DeviceRepository_OfflineNotification_Help { get { return GetResourceString("DeviceRepository_OfflineNotification_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OfflineNotification_Select
+
+		public static string DeviceRepository_OfflineNotification_Select { get { return GetResourceString("DeviceRepository_OfflineNotification_Select"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OnlineNotification
+
+		public static string DeviceRepository_OnlineNotification { get { return GetResourceString("DeviceRepository_OnlineNotification"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OnlineNotification_Help
+
+		public static string DeviceRepository_OnlineNotification_Help { get { return GetResourceString("DeviceRepository_OnlineNotification_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_OnlineNotification_Select
+
+		public static string DeviceRepository_OnlineNotification_Select { get { return GetResourceString("DeviceRepository_OnlineNotification_Select"); } }
 //Resources:DeviceManagementResources:Devices_Title
 
 		public static string Devices_Title { get { return GetResourceString("Devices_Title"); } }
@@ -1405,6 +1423,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 			public const string DeviceRepo_UserOwnedDevices = "DeviceRepo_UserOwnedDevices";
 			public const string DeviceRepo_UserOwnedDevices_Help = "DeviceRepo_UserOwnedDevices_Help";
+			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";
+			public const string DeviceRepository_OfflineNotification_Help = "DeviceRepository_OfflineNotification_Help";
+			public const string DeviceRepository_OfflineNotification_Select = "DeviceRepository_OfflineNotification_Select";
+			public const string DeviceRepository_OnlineNotification = "DeviceRepository_OnlineNotification";
+			public const string DeviceRepository_OnlineNotification_Help = "DeviceRepository_OnlineNotification_Help";
+			public const string DeviceRepository_OnlineNotification_Select = "DeviceRepository_OnlineNotification_Select";
 			public const string Devices_Title = "Devices_Title";
 			public const string Firmware_Default = "Firmware_Default";
 			public const string Firmware_Default_Select = "Firmware_Default_Select";

@@ -1236,4 +1236,22 @@
   <data name="Device_NotificationContacts" xml:space="preserve">
     <value>Notification Contacts</value>
   </data>
+  <data name="DeviceRepository_OfflineNotification" xml:space="preserve">
+    <value>Offline Notification</value>
+  </data>
+  <data name="DeviceRepository_OfflineNotification_Help" xml:space="preserve">
+    <value>Select a notification that will be sent out ot the distribution group when the device goes offline.</value>
+  </data>
+  <data name="DeviceRepository_OfflineNotification_Select" xml:space="preserve">
+    <value>-select offline notification-</value>
+  </data>
+  <data name="DeviceRepository_OnlineNotification" xml:space="preserve">
+    <value>Online Notification</value>
+  </data>
+  <data name="DeviceRepository_OnlineNotification_Help" xml:space="preserve">
+    <value>Select a notification that will be sent out to the distribution group when the device goes online.</value>
+  </data>
+  <data name="DeviceRepository_OnlineNotification_Select" xml:space="preserve">
+    <value>-select online notiifcation-</value>
+  </data>
 </root>
