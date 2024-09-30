@@ -537,6 +537,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (device == null)
             {
+                Logger.Trace($"[DeviceManager__GetDeviceByIdWithPinAsync] Could not load device for id: {id}.");
                 return InvokeResult<Device>.FromError($"Could ont find device with id: {id}");
             }
 
@@ -552,6 +553,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (String.IsNullOrEmpty(device.DevicePinSecureid))
             {
+                Logger.Trace($"[DeviceManager__GetDeviceByIdWithPinAsync] does not have pin: {id}.");
                 return InvokeResult<Device>.FromError("Device does not have a PIN.");
             }
 
@@ -561,6 +563,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (devicePin.Result != enteredPin)
             {
+                Logger.Trace($"[DeviceManager__GetDeviceByIdWithPinAsync] invalid pin: {id}.");
                 return InvokeResult<Device>.FromError("Invalid PIN.");
             }
 

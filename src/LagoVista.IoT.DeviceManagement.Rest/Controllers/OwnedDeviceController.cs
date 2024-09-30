@@ -24,10 +24,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class OwnedDeviceLoginController : Controller
     {
         private readonly IDeviceRepositoryManager _repoManager;
-        private readonly SignInManager<DeviceOwnerUser> _signInManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IDeviceManager _deviceManager;
         private readonly IAdminLogger _adminLogger;
-        public OwnedDeviceLoginController(IDeviceRepositoryManager repoManager, IAdminLogger adminLogger, IDeviceManager deviceManager, SignInManager<DeviceOwnerUser> signInManager) 
+        public OwnedDeviceLoginController(IDeviceRepositoryManager repoManager, IAdminLogger adminLogger, IDeviceManager deviceManager, SignInManager<AppUser> signInManager) 
         {
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
@@ -43,16 +43,26 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var org = EntityHeader.Create(orgId, "PIN Device Access");
             var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
+            
+            _adminLogger.Trace($"[OwnedDeviceLoginController__GetDeviceAsync] Got device repo: {repo.Name}.");
             sw.Stop();
             var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
 
-            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
+            if (!result.Successful)
+                return result;
+
             result.Timings.Add(new ResultTiming() { Key = $"Full device load {result.Result.Name}", Ms = fullSw.Elapsed.TotalMilliseconds });
 
-            var owner = new DeviceOwnerUser()
+            await _signInManager.SignOutAsync();
+
+            var owner = new AppUser()
             {
-                EmailAddress = "ANONYMOUS@ANONYMOUS.NET",
+                Email = "ANONYMOUS@ANONYMOUS.NET",
                 UserName = "ANONYMOUS",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                LoginType = LoginTypes.DeviceOwner,
                 CurrentDevice = EntityHeader.Create(result.Result.Id, result.Result.Key, result.Result.Name),
                 CurrentDeviceId = result.Result.DeviceId,
                 OwnerOrganization = org,
@@ -65,7 +75,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     }
 
 
-
+    // Device Owner Base has attribute for authenticated.
     public class OwnedDeviceController : DeviceOwnerBaseController
     {
         private readonly IDeviceRepositoryManager _repoManager;
