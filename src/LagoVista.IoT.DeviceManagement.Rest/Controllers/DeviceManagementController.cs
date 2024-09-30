@@ -1,5 +1,6 @@
 ﻿using LagoVista.AspNetCore.Identity.Interfaces;
 using LagoVista.Core;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
@@ -41,10 +42,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly IDeviceRepositoryManager _repoManager;
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
         private readonly IDistributionManager _distroManager;
+        private readonly ITimeZoneServices _timeZoneServices;
         private readonly UserManager<AppUser> _userManager;
         
         public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr,
-                                          IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+                                          ITimeZoneServices timeZoneServices, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _orgManager = orgManager ?? throw new ArgumentNullException(nameof(orgManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
@@ -52,6 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _remoteConfigurationManager = remoteConfigMgr ?? throw new ArgumentNullException(nameof(distroManager));
             _distroManager = distroManager ?? throw new ArgumentNullException(nameof(distroManager));
+            _timeZoneServices = timeZoneServices ?? throw new ArgumentNullException(nameof(timeZoneServices));
 
         }
 
@@ -439,6 +442,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
             var device = result.Result;
             var response = DetailResponse<Device>.Create(device);
+            response.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
@@ -616,6 +620,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            response.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 

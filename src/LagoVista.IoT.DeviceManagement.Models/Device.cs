@@ -70,8 +70,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Id = Guid.NewGuid().ToId();
             Icon = "icon-ae-core-2";
             Key = Id.ToLower().Substring(0, 20);
+            TimeZone = new EntityHeader()
+            {
+                Id = "UTC",
+                Text = "(UTC) Coordinated Universal Time",
+            };
         }
         public string LocationLastUpdatedDate { get; set; }
+
+
+        [FormField(LabelResource: UserAdminResources.Names.Common_TimeZome, IsRequired: true, FieldType: FieldTypes.Picker, ResourceType: typeof(UserAdminResources), IsUserEditable: true)]
+        public EntityHeader TimeZone { get; set; }
 
 
         [FKeyProperty(nameof(DeviceRepository), typeof(DeviceRepository), nameof(DeviceRepository) + ".Id = {0}")]
@@ -383,6 +392,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DistributionList),
                 nameof(Device.OfflineDistributionList),
                 nameof(Device.NotificationContacts),
+                nameof(Device.TimeZone),
                 nameof(Device.Location),
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),
