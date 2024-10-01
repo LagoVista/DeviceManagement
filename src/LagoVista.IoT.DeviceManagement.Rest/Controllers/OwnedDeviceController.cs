@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Collections.Generic;
 using LagoVista.UserAdmin.Models.Orgs;
+using LagoVista.UserAdmin.Interfaces.Repos.Users;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -27,12 +28,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IDeviceManager _deviceManager;
         private readonly IAdminLogger _adminLogger;
-        public OwnedDeviceLoginController(IDeviceRepositoryManager repoManager, IAdminLogger adminLogger, IDeviceManager deviceManager, SignInManager<AppUser> signInManager) 
+        private readonly IAppUserRepo _appUserRepo;
+        public OwnedDeviceLoginController(IDeviceRepositoryManager repoManager, IAppUserRepo appUserRepo, IAdminLogger adminLogger, IDeviceManager deviceManager, SignInManager<AppUser> signInManager) 
         {
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
             _adminLogger = adminLogger ?? throw new ArgumentNullException(nameof(adminLogger));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
+            _appUserRepo = appUserRepo ?? throw new ArgumentNullException(nameof(appUserRepo));
         }
 
         [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/view")]
@@ -73,12 +76,16 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return result;
         }
 
-        [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/alarms/silence")]
-        public async Task<InvokeResult> SilenceDeviceAlarmsAsync(string orgId, string devicerepoid, string id, string pin)
+        [HttpGet("/api/device/{orgid}/{userid}/{devicerepoid}/{id}/{pin}/alarms/silence")]
+        public async Task<InvokeResult> SilenceDeviceAlarmsAsync(string orgid, string userid, string devicerepoid, string id, string pin)
         {
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
-            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
+            var org = EntityHeader.Create(orgid, "PIN Device Access");
+            var appUser = await _appUserRepo.FindByIdAsync(userid);
+            var user = appUser.ToEntityHeader();
+
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
+            org = repo.OwnerOrganization;
+
             return await _deviceManager.SilenceAlarmsAsync(repo, id, pin, org, user);
         }
     }
@@ -203,7 +210,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             return result;
         }
-
     }
 
     public class SensorSettings
