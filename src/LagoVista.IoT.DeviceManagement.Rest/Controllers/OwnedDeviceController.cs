@@ -19,6 +19,7 @@ using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Interfaces.Repos.Users;
 using System.Text.RegularExpressions;
 using LagoVista.UserAdmin.Interfaces.Repos.Account;
+using LagoVista.UserAdmin.Interfaces.Managers;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -109,7 +110,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                     CurrentRepo = owner.CurrentRepo
                 };
 
-                await _signInManager.SignInAsync(owner, false);
+                await _signInManager.SignInAsync(owner, true);
 
                 return InvokeResult<DeviceOwnerUser>.Create(deviceUser);
             }
@@ -122,11 +123,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly IDeviceRepositoryManager _repoManager;
         private readonly IDeviceManager _deviceManager;
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
-        public OwnedDeviceController(IDeviceRepositoryManager repoManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigurationManager, IAdminLogger adminLogger) : base(adminLogger)
+        private readonly IDeviceOwnerRepo _deviceOwnerRepo;
+        private readonly ISmsSender _smsSender;
+        private readonly SignInManager<AppUser> _signInManager;
+
+        public OwnedDeviceController(IDeviceRepositoryManager repoManager, ISmsSender smsSender, IDeviceOwnerRepo deviceOwnerRepo, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigurationManager, IAdminLogger adminLogger,
+                                    SignInManager<AppUser> signInManager) : base(adminLogger)
         {
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
             _remoteConfigurationManager = remoteConfigurationManager ?? throw new ArgumentNullException(nameof(remoteConfigurationManager));
+            _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentNullException(nameof(deviceOwnerRepo));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _smsSender = smsSender ?? throw new ArgumentNullException(nameof(smsSender));
         }
 
         [HttpGet("/device/api/ownerreg/set")]
@@ -222,6 +231,129 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return InvokeResult<Device>.Create(result.Result);
         }
 
+        [HttpGet("/api/deviceowner/search/phone/{phoneNumber}")]
+        public async Task<InvokeResult> LookupPhoneNumber(string phoneNumber)
+        {
+            var user = await _deviceOwnerRepo.FindByPhoneNumberAsync(phoneNumber);
+            if (user == null)
+                return InvokeResult.FromError("User not found");
+
+            return InvokeResult.Success;
+        }
+
+        const string CODE_HASH_COOKIE_NAME = "authvalue";
+
+        [HttpGet("/api/deviceowner/phone/{phoneNumber}/sendcode")]
+        public async Task<InvokeResult> SendCode(string phoneNumber)
+        {
+            var code = Random.Shared.Next(100000, 999999);
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                var str = $"{phoneNumber}:{CurrentUserId}:{code}";
+                var buffer = System.Text.ASCIIEncoding.ASCII.GetBytes(str);
+                var hashedBytes = md5.ComputeHash(buffer);
+                var b64 = Convert.ToBase64String(buffer);
+                Response.Cookies.Append(CODE_HASH_COOKIE_NAME, b64, new Microsoft.AspNetCore.Http.CookieOptions()
+                {
+                    Secure = true,
+                    HttpOnly = true,
+                    SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                });
+            }
+
+            return await _smsSender.SendAsync(phoneNumber.CleanPhoneNumber(), $"Please enter the following code {code} to create an account");
+        }
+
+        [HttpGet("/api/deviceowner/account/{phoneNumber}/{code}/login")]
+        public async Task<InvokeResult<DeviceOwnerUser>> LoginExistingAccount(string phoneNumber, string code)
+        {
+            if (!Request.Cookies.ContainsKey(CODE_HASH_COOKIE_NAME))
+            {
+                Console.WriteLine("Cookie not present.");
+                return InvokeResult<DeviceOwnerUser>.FromError("Invalid Code.");
+            }
+
+            var existingHash = Request.Cookies[CODE_HASH_COOKIE_NAME];
+
+            Console.WriteLine($"EXISTING HASH: {existingHash}"); ;
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                var str = $"{phoneNumber}:{CurrentUserId}:{code}";
+                var buffer = System.Text.ASCIIEncoding.ASCII.GetBytes(str);
+                var hashedBytes = md5.ComputeHash(buffer);
+                var newHash = Convert.ToBase64String(buffer);
+
+                Console.WriteLine($"Existing:   {existingHash}");
+                Console.WriteLine($"Calculated: {newHash}");
+
+                if (existingHash != newHash)
+                    return InvokeResult<DeviceOwnerUser>.FromError("Invalid Code.");
+            }
+
+            var deviceUser = await _deviceOwnerRepo.FindByPhoneNumberAsync(phoneNumber);
+            await _deviceOwnerRepo.AddUserAsync(deviceUser);
+
+            return InvokeResult<DeviceOwnerUser>.Create(deviceUser);
+        }
+
+        [HttpGet("/api/deviceowner/account/{phoneNumber}/{code}/create")]
+        public async Task<InvokeResult<DeviceOwnerUser>> CreateAccount(string phoneNumber, string code)
+        {
+            if (!Request.Cookies.ContainsKey(CODE_HASH_COOKIE_NAME))
+            {
+                Console.WriteLine("Cookie not present.");
+                return InvokeResult<DeviceOwnerUser>.FromError("Invalid Code.");
+            }
+
+            var existingHash = Request.Cookies[CODE_HASH_COOKIE_NAME];
+
+            Console.WriteLine($"EXISTING HASH: {existingHash}"); ;
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                var str = $"{phoneNumber}:{CurrentUserId}:{code}";
+                var buffer = System.Text.ASCIIEncoding.ASCII.GetBytes(str);
+                var hashedBytes = md5.ComputeHash(buffer);
+                var newHash = Convert.ToBase64String(buffer);
+
+                Console.WriteLine($"Existing:   {existingHash}");
+                Console.WriteLine($"Calculated: {newHash}");
+
+                if (existingHash != newHash)
+                    return InvokeResult<DeviceOwnerUser>.FromError("Invalid code.");               
+            }
+
+            var timeStamp = DateTime.UtcNow.ToJSONString();
+
+            var deviceUser = new DeviceOwnerUser()
+            {            
+                Key = phoneNumber,
+                UserName = phoneNumber,
+                PhoneNumber = phoneNumber,
+                FirstName = String.Empty,
+                LastName = String.Empty,
+                Name = "TBD",
+                CurrentDevice = CurrentDevice,
+                CurrentDeviceId = CurrentDevice.Key,
+                CurrentRepo = CurrentDeviceRepo,
+                OwnerOrganization = OrgEntityHeader,
+                LastUpdatedDate = timeStamp,
+                CreationDate = timeStamp,
+            };
+
+            deviceUser.CreatedBy = EntityHeader.Create(deviceUser.Id, "REGISTRATION");
+            deviceUser.LastUpdatedBy = deviceUser.CreatedBy;
+
+            await _deviceOwnerRepo.AddUserAsync(deviceUser);
+
+            var appuser = deviceUser.ToAppUser();
+
+            await _signInManager.SignInAsync(appuser, true);
+
+            return InvokeResult<DeviceOwnerUser>.Create(deviceUser);
+        }
+
         [HttpPut("/api/device/properties")]
         public async Task<InvokeResult<Device>> UpdatePropertiesWithPinAsync([FromBody] IEnumerable<AttributeValue> values)
         {
@@ -264,6 +396,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public double? HighThreshold { get; set; }
         public double? LowThreshold { get; set; }
         public string Name { get; set; }
+    }
+
+    public static class PhoneExtensions
+    {
+        public static string CleanPhoneNumber(this string phoneNumber)
+        {
+            if (String.IsNullOrEmpty(phoneNumber))
+                return String.Empty;
+
+            return phoneNumber.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
+        }
     }
 
 
