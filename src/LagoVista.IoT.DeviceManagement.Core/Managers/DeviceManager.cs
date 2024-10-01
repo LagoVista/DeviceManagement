@@ -535,6 +535,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             timings.Add(new ResultTiming() { Key = "Got Repo", Ms = sw.Elapsed.TotalMilliseconds });
             sw.Restart();
+
             var device = await repo.GetDeviceByIdAsync(deviceRepo, id);
             timings.Add(new ResultTiming() { Key = "Loaded Device", Ms = sw.Elapsed.TotalMilliseconds });
 
@@ -1260,14 +1261,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> SetDevicePinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
         {
-            var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
-
             if (String.IsNullOrEmpty(pin))
             {
                 return InvokeResult<Device>.FromError($"Must provide a pin");
             }
 
-            pin = pin.ToLower();
+            var regEx = new Regex(@"^[A-Za-z0-9]{4,8}$");
             if (!regEx.Match(pin).Success)
             {
                 return InvokeResult<Device>.FromError($"Must provide a pin that is between 4 and 9 characters and must include only letters and numbers.");
@@ -1310,13 +1309,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
         }
 
-        public async Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
-            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
-            if (!result.Successful)
-                return result.ToInvokeResult();
-
-            var device = result.Result;
             device.SilenceAlarms = true;
             device.SilencedBy = org;
             device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();

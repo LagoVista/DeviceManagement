@@ -1,4 +1,4 @@
-﻿/*9/30/2024 12:49:56 PM*/
+﻿/*10/1/2024 1:10:36 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -312,6 +312,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_MessageValues_Help
 
 		public static string Device_MessageValues_Help { get { return GetResourceString("Device_MessageValues_Help"); } }
+//Resources:DeviceManagementResources:Device_MustChangePin
+
+		public static string Device_MustChangePin { get { return GetResourceString("Device_MustChangePin"); } }
+//Resources:DeviceManagementResources:Device_MustChangePin_Help
+
+		public static string Device_MustChangePin_Help { get { return GetResourceString("Device_MustChangePin_Help"); } }
 //Resources:DeviceManagementResources:Device_Notes
 
 		public static string Device_Notes { get { return GetResourceString("Device_Notes"); } }
@@ -339,6 +345,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Pin_Help
 
 		public static string Device_Pin_Help { get { return GetResourceString("Device_Pin_Help"); } }
+//Resources:DeviceManagementResources:Device_PinChangeDate
+
+		public static string Device_PinChangeDate { get { return GetResourceString("Device_PinChangeDate"); } }
 //Resources:DeviceManagementResources:Device_PrimaryKey
 
 		public static string Device_PrimaryKey { get { return GetResourceString("Device_PrimaryKey"); } }
@@ -1280,6 +1289,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_MACAddress = "Device_MACAddress";
 			public const string Device_MessageValues = "Device_MessageValues";
 			public const string Device_MessageValues_Help = "Device_MessageValues_Help";
+			public const string Device_MustChangePin = "Device_MustChangePin";
+			public const string Device_MustChangePin_Help = "Device_MustChangePin_Help";
 			public const string Device_Notes = "Device_Notes";
 			public const string Device_NotificationContacts = "Device_NotificationContacts";
 			public const string Device_OfflineDistributionList = "Device_OfflineDistributionList";
@@ -1289,6 +1300,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_ParentDevice = "Device_ParentDevice";
 			public const string Device_Pin = "Device_Pin";
 			public const string Device_Pin_Help = "Device_Pin_Help";
+			public const string Device_PinChangeDate = "Device_PinChangeDate";
 			public const string Device_PrimaryKey = "Device_PrimaryKey";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";

@@ -92,7 +92,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public string StatusTimestamp { get; set; }
 
-
         public Dictionary<string, decimal> Balances { get; set; } = new Dictionary<string, decimal>();
 
 
@@ -306,6 +305,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Pin, FieldType: FieldTypes.Password, ResourceType: typeof(DeviceManagementResources))]
         public string DevicePin { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_MustChangePin, HelpResource:DeviceManagementResources.Names.Device_MustChangePin_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool MustChangePin { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_PinChangeDate, FieldType: FieldTypes.ReadonlyLabel, IsUserEditable:false, ResourceType: typeof(DeviceManagementResources))]
+        public string PinChangeDate { get; set; }
 
         public string DevicePinSecureid { get; set; }
 

@@ -1254,4 +1254,13 @@
   <data name="DeviceRepository_OnlineNotification_Select" xml:space="preserve">
     <value>-select online notiifcation-</value>
   </data>
+  <data name="Device_MustChangePin" xml:space="preserve">
+    <value>Must change pin</value>
+  </data>
+  <data name="Device_MustChangePin_Help" xml:space="preserve">
+    <value>User must change PIN after they use it to login to the device.</value>
+  </data>
+  <data name="Device_PinChangeDate" xml:space="preserve">
+    <value>The time stamp of the last date and time the PIN was changed.</value>
+  </data>
 </root>

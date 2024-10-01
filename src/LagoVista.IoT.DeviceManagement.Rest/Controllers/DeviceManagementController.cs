@@ -860,7 +860,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
 
-        [HttpGet("/api/device/{devicerepoid}/{id}/alarms")]
+        [HttpGet("/api/device/{devicerepoid}/{id}/alarms/silenced")]
         public async Task<ListResponse<SilencedAlarm>> GetSilenceAlarmsAsync(string devicerepoid, string id)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
