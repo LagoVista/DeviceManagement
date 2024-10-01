@@ -35,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<ISecureStorage> _secureStorage = new Mock<ISecureStorage>();
         Mock<ILinkShortener> _linkShortener = new Mock<ILinkShortener>();
         Mock<IDeviceGroupRepo> _deviceGroupRepo = new Mock<IDeviceGroupRepo>();
-
+        Mock<ISilencedAlarmsRepo> _silencedAlarmRepo = new Mock<ISilencedAlarmsRepo>();
         [TestInitialize]
         public void Init()
         {
@@ -56,7 +56,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _proxyFactory.Object,
                 _secureStorage.Object,
                 _linkShortener.Object,
-                _deviceGroupRepo.Object); 
+                _deviceGroupRepo.Object,
+                _silencedAlarmRepo.Object); 
         }
     }
 }

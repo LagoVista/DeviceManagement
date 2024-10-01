@@ -51,6 +51,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ILinkShortener _linkShortener;
         private readonly IAppConfig _appConfig;
         private readonly IDeviceGroupRepo _deviceGroupRepo;
+        private readonly ISilencedAlarmsRepo _silencedAlarmsRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -82,7 +83,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IProxyFactory proxyFactory,
             ISecureStorage secureStorage,
             ILinkShortener linkShortener,
-            IDeviceGroupRepo deviceGroupRepo) :
+            IDeviceGroupRepo deviceGroupRepo,
+            ISilencedAlarmsRepo silencedAlarmsRepo) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -99,7 +101,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _linkShortener = linkShortener ?? throw new ArgumentNullException(nameof(linkShortener));
             _appConfig = appConfig ?? throw new ArgumentNullException(nameof(appConfig));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
-        }
+            _silencedAlarmsRepo = silencedAlarmsRepo;
+        }   
 
         /* 
          * In some cases we are using a 3rd party result repo, if so we'll keep the access key in secure storage and make sure it's only used in the manager, the repo will
@@ -1291,7 +1294,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             return InvokeResult<Device>.Create(result.Result);
         }
-
      
         public async Task<InvokeResult> SetDeviceOwnerRegistrationAsync(DeviceRepository deviceRepo, string id, DeviceOwnerUser owner, EntityHeader org, EntityHeader user)
         {
@@ -1306,6 +1308,80 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 return result.ToInvokeResult();
             }
+        }
+
+        public async Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdWithPinAsync(deviceRepo, id, pin, org, user);
+            if (!result.Successful)
+                return result.ToInvokeResult();
+
+            var device = result.Result;
+            device.SilenceAlarms = true;
+            device.SilencedBy = org;
+            device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
+            {
+                Disabled = true,
+                Device = device.ToEntityHeader(),
+                DeviceRepo = deviceRepo.ToEntityHeader(),
+                User = user,
+                Timestamp = DateTime.UtcNow.ToJSONString(),
+            });
+
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var device = result.Result;
+            device.SilenceAlarms = true;
+            device.SilencedBy = org;
+            device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
+            {
+                Disabled = true,
+                Device = device.ToEntityHeader(),
+                DeviceRepo = deviceRepo.ToEntityHeader(),
+                User = user,
+                Timestamp = DateTime.UtcNow.ToJSONString(),
+            });
+
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> EnableAlarmsAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var device = result.Result;
+            device.SilenceAlarms = false;
+            device.SilencedBy = null;
+            device.SilencedTimeStamp = null;
+
+            await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
+            {
+                Disabled = false,
+                Device = device.ToEntityHeader(),
+                DeviceRepo = deviceRepo.ToEntityHeader(),
+                User = user,
+                Timestamp = DateTime.UtcNow.ToJSONString(),
+            }); ;
+
+            return InvokeResult.Success;
+        }
+
+        public Task<ListResponse<SilencedAlarm>> GetSilenceAlarmsAsync(DeviceRepository deviceRepo, string id, ListRequest listRequest,  EntityHeader org, EntityHeader user)
+        {
+            return _silencedAlarmsRepo.GetSilencedAlarmAsync(deviceRepo, listRequest, id);
         }
     }
 }

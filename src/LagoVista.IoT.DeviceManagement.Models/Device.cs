@@ -239,6 +239,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SilenceAlarms, HelpResource: DeviceManagementResources.Names.Device_SilenceAlarms_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool SilenceAlarms { get; set; }
 
+        public EntityHeader SilencedBy { get; set; }
+
+        public string SilencedTimeStamp { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection, HelpResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DisableGeofenceDetection { get; set; }
 

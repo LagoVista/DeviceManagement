@@ -72,8 +72,16 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             await _signInManager.SignInAsync(owner, false);
             return result;
         }
-    }
 
+        [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/alarms/silence")]
+        public async Task<InvokeResult> SilenceDeviceAlarmsAsync(string orgId, string devicerepoid, string id, string pin)
+        {
+            var org = EntityHeader.Create(orgId, "PIN Device Access");
+            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
+            return await _deviceManager.SilenceAlarmsAsync(repo, id, pin, org, user);
+        }
+    }
 
     // Device Owner Base has attribute for authenticated.
     public class OwnedDeviceController : DeviceOwnerBaseController

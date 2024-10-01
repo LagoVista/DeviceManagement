@@ -215,6 +215,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return GetTableName("connectionevents");
         }
 
+        public string GetSilencedAlarmsStorageName()
+        {
+            return GetTableName("silencedalarms");
+        }
+
         public string GetDeviceExceptionsStorageName()
         {
             return GetTableName("exceptions");
