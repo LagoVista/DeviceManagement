@@ -1263,4 +1263,10 @@
   <data name="Device_PinChangeDate" xml:space="preserve">
     <value>The time stamp of the last date and time the PIN was changed.</value>
   </data>
+  <data name="Device_DeviceOwner" xml:space="preserve">
+    <value>Device Owner</value>
+  </data>
+  <data name="Device_DeviceOwner_Help" xml:space="preserve">
+    <value>The Device Owner is a non system user that owns this device.</value>
+  </data>
 </root>

@@ -321,6 +321,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceNameLabel { get; set; }
         public string DeviceTypeLabel { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceOwner, HelpResource: DeviceManagementResources.Names.Device_DeviceOwner_Help, FieldType: FieldTypes.EntityHeaderPicker, IsUserEditable: false, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader DeviceOwner { get; set; }
 
         public List<GeoFence> GeoFences { get; set; }

@@ -16,5 +16,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
         Task<InvokeResult> PopulateDeviceConfigToDeviceAsync(Device device, EntityHeader instance, EntityHeader org, EntityHeader usr);
 
         Task<EntityHeader<StateSet>> GetCustomDeviceStatesAsync(string deviceConfigId, EntityHeader org, EntityHeader user);
+
+        Task<HomePages> GetHomePagesAsync(string deviceConfigId, EntityHeader org, EntityHeader user);
+    }
+
+    public class HomePages
+    {
+        public string CustomPage { get; set; }
+        public string CustomMobilePage { get; set; }
+        public string CustomPageQuickLink { get; set; }
+
     }
 }

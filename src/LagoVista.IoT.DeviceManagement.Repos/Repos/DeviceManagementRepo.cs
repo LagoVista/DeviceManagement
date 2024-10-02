@@ -217,9 +217,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<Device> GetDeviceByIdAsync(DeviceRepository deviceRepo, string id, bool throwOnRecordNotFound = true)
         {
-            if (deviceRepo == null) throw new NullReferenceException(nameof(deviceRepo));
-            if (String.IsNullOrEmpty(id)) throw new NullReferenceException(nameof(id));
-            if (deviceRepo.DeviceStorageSettings == null) throw new NullReferenceException("StorageSettingsOnRepo");
+            if (deviceRepo == null) throw new ArgumentNullException(nameof(deviceRepo));
+            if (String.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
+            if (deviceRepo.DeviceStorageSettings == null) throw new ArgumentNullException("StorageSettingsOnRepo");
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
