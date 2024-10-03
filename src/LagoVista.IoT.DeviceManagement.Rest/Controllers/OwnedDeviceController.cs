@@ -251,8 +251,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 var device = result.Result;
                 var sensor = device.SensorCollection.FirstOrDefault(sns => sns.PortIndex == settings.PortIndex && sns.Technology.Id == settings.Technology.Id);
-                sensor.HighThreshold = settings.HighThreshold;
-                sensor.LowThreshold = settings.LowThreshold;
+                
+                if(settings.HighThreshold.HasValue)
+                    sensor.HighThreshold = settings.HighThreshold;
+                
+                if(settings.LowThreshold.HasValue)
+                    sensor.LowThreshold = settings.LowThreshold;
+               
                 if (!String.IsNullOrEmpty(settings.Name))
                     sensor.Name = settings.Name;
 
@@ -491,6 +496,16 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             });
 
             return InvokeResult.Success;
+        }
+
+        [HttpPost("/api/device/owner")]
+        public async Task<InvokeResult> SetOwnerInfo([FromBody] DeviceOwnerUserUpdateFields updates)
+        {
+            var owner = await _deviceOwnerRepo.FindByIdAsync(CurrentUserId);
+            owner.FirstName = updates.FirstName;
+            owner.LastName = updates.LastName;
+            owner.EmailAddress = updates.Email;
+            return await _deviceOwnerRepo.UpdateUserAsync(owner);
         }
 
 
