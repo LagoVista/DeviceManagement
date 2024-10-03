@@ -251,8 +251,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             {
                 var device = result.Result;
                 var sensor = device.SensorCollection.FirstOrDefault(sns => sns.PortIndex == settings.PortIndex && sns.Technology.Id == settings.Technology.Id);
-                sensor.HighThreshold = settings.HighThreshold;
-                sensor.LowThreshold = settings.LowThreshold;
+                
+                if(settings.HighThreshold.HasValue)
+                    sensor.HighThreshold = settings.HighThreshold;
+                
+                if(settings.LowThreshold.HasValue)
+                    sensor.LowThreshold = settings.LowThreshold;
+               
                 if (!String.IsNullOrEmpty(settings.Name))
                     sensor.Name = settings.Name;
 
@@ -267,7 +272,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         [HttpPost("/api/device/current/contact")]
-        public async Task<InvokeResult> AddDeviceNotificationUsers([FromBody] ExternalContact contact)
+        public async Task<InvokeResult<ExternalContact[]>> AddDeviceNotificationUsers([FromBody] ExternalContact contact)
         {
             var sw = Stopwatch.StartNew();
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
@@ -278,16 +283,17 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 var device = result.Result;
                 device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
                 device.NotificationContacts.Add(contact);
-                return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+                await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+                return InvokeResult<ExternalContact[]>.Create(device.NotificationContacts.ToArray());
             }
             else
             {
-                return result.ToInvokeResult();
+                return InvokeResult<ExternalContact[]>.FromInvokeResult(result.ToInvokeResult());
             }
         }
 
         [HttpPut("/api/device/current/contact")]
-        public async Task<InvokeResult> UpdateDeviceNotificationUsers([FromBody] ExternalContact contact)
+        public async Task<InvokeResult<ExternalContact[]>> UpdateDeviceNotificationUsers([FromBody] ExternalContact contact)
         {
             var sw = Stopwatch.StartNew();
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
@@ -299,15 +305,41 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
                 var existing = device.NotificationContacts.FirstOrDefault(cnt => cnt.Id == contact.Id);
                 if (existing == null)
-                    return InvokeResult.FromError("Could not find contact to update");
+                    return InvokeResult<ExternalContact[]>.FromError("Could not find contact to update");
 
                 var idx = device.NotificationContacts.IndexOf(existing);
                 device.NotificationContacts[idx] = contact;
-                return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+                await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+                return InvokeResult<ExternalContact[]>.Create(device.NotificationContacts.ToArray());
             }
             else
             {
-                return result.ToInvokeResult();
+                return InvokeResult<ExternalContact[]>.FromInvokeResult(result.ToInvokeResult());
+            }
+        }
+
+        [HttpDelete("/api/device/current/contact/{id}")]
+        public async Task<InvokeResult<ExternalContact[]>> RemoveDeviceNotificationUsers(string id)
+        {
+            var sw = Stopwatch.StartNew();
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
+            result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
+            if (result.Successful)
+            {
+                var device = result.Result;
+                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                var existing = device.NotificationContacts.FirstOrDefault(cnt => cnt.Id == id);
+                if (existing == null)
+                    return InvokeResult<ExternalContact[]>.FromError("Could not find contact to update");
+
+                device.NotificationContacts.Remove(existing);
+                await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+                return InvokeResult<ExternalContact[]>.Create(device.NotificationContacts.ToArray());
+            }
+            else
+            {
+                return InvokeResult<ExternalContact[]>.FromInvokeResult(result.ToInvokeResult());
             }
         }
 
@@ -466,6 +498,16 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             });
 
             return InvokeResult.Success;
+        }
+
+        [HttpPost("/api/device/owner")]
+        public async Task<InvokeResult> SetOwnerInfo([FromBody] DeviceOwnerUserUpdateFields updates)
+        {
+            var owner = await _deviceOwnerRepo.FindByIdAsync(CurrentUserId);
+            owner.FirstName = updates.FirstName;
+            owner.LastName = updates.LastName;
+            owner.EmailAddress = updates.Email;
+            return await _deviceOwnerRepo.UpdateUserAsync(owner);
         }
 
 
