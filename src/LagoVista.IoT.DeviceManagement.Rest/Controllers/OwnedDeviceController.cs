@@ -415,17 +415,19 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             deviceUser.CreatedBy = EntityHeader.Create(deviceUser.Id, "REGISTRATION");
             deviceUser.LastUpdatedBy = deviceUser.CreatedBy;
 
-            
-
             var appuser = deviceUser.ToAppUser();
 
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
             result.Result.DeviceOwner = deviceUser.ToEntityHeader();
 
+            var homePages = await _deviceConfigHelper.GetHomePagesAsync(result.Result.DeviceConfiguration.Id, OrgEntityHeader, UserEntityHeader);
+            deviceUser.HomePage = homePages.CustomPage;
+            deviceUser.MobileHomePage = homePages.CustomMobilePage;
+
             await _deviceManager.UpdateDeviceAsync(repo, result.Result, OrgEntityHeader, UserEntityHeader);
 
-            var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(result.Result.DeviceType.Id);
+            var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(result.Result.DeviceType.Id); 
 
             await _deviceOwnerRepo.AddUserAsync(deviceUser);
             await _deviceOwnerRepo.AddOwnedDeviceAsync(OrgEntityHeader.Id, deviceUser.Id, new DeviceOwnerDevices()
