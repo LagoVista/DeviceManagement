@@ -23,6 +23,7 @@ using LagoVista.UserAdmin.Interfaces.Managers;
 using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
+using System.Security.Cryptography;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -50,8 +51,18 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _deviceConfigHelper = deviceConfigHelper ?? throw new ArgumentNullException(nameof(deviceConfigHelper));
         }
 
+        [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/view")]
+        public async Task<InvokeResult<Device>> GetDeviceWithPineAsync(string orgId, string devicerepoid, string id, string pin)
+        {
+            var org = EntityHeader.Create(orgId, "PIN Device Access");
+            var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
+            var result = await _deviceManager.GetDeviceByIdWithPinAsync(repo, id, pin, org, user);
+            return result;
+        }
+
         [HttpGet("/api/device/{orgid}/{devicerepoid}/{id}/{pin}/signin")]
-        public async Task<InvokeResult<DeviceOwnerUser>> GetDeviceAsync(string orgId, string devicerepoid, string id, string pin)
+        public async Task<InvokeResult<DeviceOwnerUser>> GetDeviceUserAsync(string orgId, string devicerepoid, string id, string pin)
         {
             var fullSw = Stopwatch.StartNew();
             var sw = Stopwatch.StartNew();
