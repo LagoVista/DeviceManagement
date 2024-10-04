@@ -22,6 +22,7 @@ using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Managers;
 using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using LagoVista.Core.Models.UIMetaData;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -275,7 +276,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult<ExternalContact[]>> AddDeviceNotificationUsers([FromBody] ExternalContact contact)
         {
             var sw = Stopwatch.StartNew();
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
             result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
             if (result.Successful)
@@ -292,11 +293,18 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             }
         }
 
+
+        [HttpGet("/api/device/current/contact/factory")]
+        public DetailResponse<ExternalContact> CreateExteranlContact()
+        {
+            return DetailResponse<ExternalContact>.Create();
+        }
+
         [HttpPut("/api/device/current/contact")]
         public async Task<InvokeResult<ExternalContact[]>> UpdateDeviceNotificationUsers([FromBody] ExternalContact contact)
         {
             var sw = Stopwatch.StartNew();
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
             result.Timings.Insert(0, new ResultTiming() { Key = $"Load Repo {repo.Name}", Ms = sw.Elapsed.TotalMilliseconds });
             if (result.Successful)
