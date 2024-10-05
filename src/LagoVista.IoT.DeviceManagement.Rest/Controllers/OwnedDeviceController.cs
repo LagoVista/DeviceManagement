@@ -172,9 +172,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             return await _smsSender.SendAsync(phoneNumber.CleanPhoneNumber(), $"Please enter the following code {code} to create an account");
         }
-
-
-
     }
 
     // Device Owner Base has attribute for authenticated.
