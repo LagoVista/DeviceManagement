@@ -25,6 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         Mock<IAppConfig> _appConfig = new Mock<IAppConfig>();
         Mock<IDependencyManager> _dependencyManager = new Mock<IDependencyManager>();
         Mock<ISecurity> _security = new Mock<ISecurity>();
+        Mock<ICacheProvider> _cacheProvider = new Mock<ICacheProvider>();
         Mock<IOrganizationRepo> _orgRepo = new Mock<IOrganizationRepo>();
         IAdminLogger _adminLogger;
 
@@ -54,7 +55,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         {
             _adminLogger = new AdminLogger(new Utils.LogWriter());
 
-            return new DeviceRepositoryManager(_deviceMgmtSettings.Object, _deviceRepositoryRepo.Object, _adminLogger, _secureStorage.Object, _appConfig.Object, _orgRepo.Object, _dependencyManager.Object, _security.Object);
+            return new DeviceRepositoryManager(_deviceMgmtSettings.Object, _deviceRepositoryRepo.Object, _adminLogger, _cacheProvider.Object, _secureStorage.Object,_appConfig.Object, _orgRepo.Object, _dependencyManager.Object, _security.Object);
         }
 
         

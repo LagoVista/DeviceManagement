@@ -8,6 +8,7 @@ using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
+using LagoVista.UserAdmin.Models.Orgs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private ISecureStorage _secureStorage;
         private IDeviceRepositoryRepo _deviceRepositoryRepo;
         private IAdminLogger _adminLogger;
+        private readonly ICacheProvider _cacheProvider;
         private IOrganizationRepo _orgRepo;
 
         public DeviceRepositoryManager(
             IDeviceManagementSettings deviceMgmtSettings,
             IDeviceRepositoryRepo deviceRepositoryRepo,
             IAdminLogger logger,
+            ICacheProvider cacheProvider,
             ISecureStorage secureStorage,
             IAppConfig appConfig,
             IOrganizationRepo orgRepo,
@@ -40,6 +43,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _secureStorage = secureStorage;
             _adminLogger = logger;
             _orgRepo = orgRepo;
+            _cacheProvider = cacheProvider;
         }
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
@@ -523,6 +527,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
             return deviceRepo;
+        }
+
+        public async Task<InvokeResult<BasicTheme>> GetBasicThemeForRepoAsync(string orgid, string repoid)
+        {
+            var json = await _cacheProvider.GetAsync($"basic_theme_repo_{repoid}");
+            if (string.IsNullOrEmpty(json))
+            {
+                var org = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoid);
+                var basicTheme = new BasicTheme()
+                {
+                    PrimaryTextColor = org.PrimaryTextColor,
+                    PrimryBGColor = org.PrimaryBgColor,
+                    AccentColor = org.AccentColor
+                };
+
+                await _cacheProvider.AddAsync($"basic_theme_repo_{repoid}", JsonConvert.SerializeObject(basicTheme));
+                return InvokeResult<BasicTheme>.Create(basicTheme);
+            }
+            else
+            {
+                var theme = JsonConvert.DeserializeObject<BasicTheme>(json);
+                return InvokeResult<BasicTheme>.Create(theme);
+
+            }
         }
 
         public Task<InvokeResult<string>> GetRepoLogoAsync(string logId)

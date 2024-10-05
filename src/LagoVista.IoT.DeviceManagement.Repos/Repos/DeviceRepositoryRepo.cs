@@ -7,16 +7,20 @@ using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.CloudStorage.Storage;
+using System.Security.Cryptography;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceRepositoryRepo : DocumentDBRepoBase<DeviceRepository>, IDeviceRepositoryRepo
     {
         private bool _shouldConsolidateCollections;
+        private ICacheProvider _cacheProvider;
         public DeviceRepositoryRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger, ICacheProvider cacheProvider) 
             : base(repoSettings.DeviceRepoStorage.Uri, repoSettings.DeviceRepoStorage.AccessKey, repoSettings.DeviceRepoStorage.ResourceName, logger, cacheProvider)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
+            _cacheProvider = cacheProvider;
         }
 
         protected override bool ShouldConsolidateCollections => _shouldConsolidateCollections;
@@ -63,9 +67,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return items.Any();
         }
 
-        public Task UpdateDeviceRepositoryAsync(DeviceRepository deviceRepo)
+        public async Task UpdateDeviceRepositoryAsync(DeviceRepository deviceRepo)
         {
-            return base.UpsertDocumentAsync(deviceRepo);
+            await _cacheProvider.GetAsync($"basic_theme_repo_{deviceRepo.Id}");
+            await base.UpsertDocumentAsync(deviceRepo);
         }
     }
 }

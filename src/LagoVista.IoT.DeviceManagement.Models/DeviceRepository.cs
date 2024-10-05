@@ -9,6 +9,7 @@ using LagoVista.IoT.DeviceManagement.Models.Resources;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.UserAdmin.Models.Orgs;
+using LagoVista.UserAdmin.Models.Resources;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -166,8 +167,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices, HelpResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public bool SecureUserOwnedDevices { get; set; }
 
-        /*[FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_Logo, HelpResource: DeviceManagementResources.Names.DeviceRepository_Logo_Help, FieldType: FieldTypes.WebLink, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
-        public string Logo { get; set; }*/
+        [FormField(LabelResource: UserAdminResources.Names.Organization_Logo_Light, UserAdminResources.Names.Organization_Logo_LightColor_Help, FieldType: FieldTypes.FileUpload, DisplayImageSize: "800x224", GeneratedImageSize: "1024x1024", UploadUrl: "/api/media/resource/public/upload", ResourceType: typeof(UserAdminResources))]
+        public EntityHeader LightLogo { get; set; }
+
+        [FormField(LabelResource: UserAdminResources.Names.Organization_Logo_DarkColor, UserAdminResources.Names.Organization_Logo_DarkColor_Help, FieldType: FieldTypes.FileUpload, DisplayImageSize: "800x224", GeneratedImageSize: "1024x1024", UploadUrl: "/api/media/resource/public/upload", ResourceType: typeof(UserAdminResources))]
+        public EntityHeader DarkLogo { get; set; }
+
+        [FormField(LabelResource: UserAdminResources.Names.Organization_PrimaryBgColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
+        public string PrimaryBgColor { get; set; } = "#1976D2";
+
+        [FormField(LabelResource: UserAdminResources.Names.Organization_AccentColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
+        public string AccentColor { get; set; } = "#D48D17";
+
+        [FormField(LabelResource: UserAdminResources.Names.Organization_PrimaryTextColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
+        public string PrimaryTextColor { get; set; } = "#F4F4F4";
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
@@ -292,6 +305,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(ResourceName),
                 nameof(AccessKeyName),
                 nameof(AccessKey),
+                nameof(DarkLogo),
+                nameof(LightLogo),
+                nameof(PrimaryTextColor),
+                nameof(PrimaryBgColor),
+                nameof(AccentColor),
                 nameof(Description),
             };
         }

@@ -2,6 +2,7 @@
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.UserAdmin.Models.Orgs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,5 +27,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeploymentHostsForOrgAsync(string orgId, ListRequest listRequest, EntityHeader user);
         Task<bool> QueryKeyInUserAsync(string key, EntityHeader org);
         Task<InvokeResult<string>> GetRepoLogoAsync(string logId);
+        Task<InvokeResult<BasicTheme>> GetBasicThemeForRepoAsync(string orgid, string id);
     }
 }
