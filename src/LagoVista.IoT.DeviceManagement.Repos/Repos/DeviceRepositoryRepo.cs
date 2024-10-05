@@ -1,12 +1,10 @@
 ﻿using LagoVista.IoT.DeviceManagement.Core.Repos;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using System.Threading.Tasks;
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.IoT.Logging.Loggers;
-using LagoVista.CloudStorage;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 
