@@ -7,6 +7,7 @@ using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private ISecureStorage _secureStorage;
         private IDeviceRepositoryRepo _deviceRepositoryRepo;
         private IAdminLogger _adminLogger;
+        private IOrganizationRepo _orgRepo;
 
         public DeviceRepositoryManager(
             IDeviceManagementSettings deviceMgmtSettings,
@@ -29,6 +31,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             IAdminLogger logger,
             ISecureStorage secureStorage,
             IAppConfig appConfig,
+            IOrganizationRepo orgRepo,
             IDependencyManager dependencyManager,
             ISecurity security) : base(logger, appConfig, dependencyManager, security)
         {
@@ -36,6 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceMgmtSettings = deviceMgmtSettings;
             _secureStorage = secureStorage;
             _adminLogger = logger;
+            _orgRepo = orgRepo;
         }
 
         public async Task<InvokeResult> AddDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
@@ -519,6 +523,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
             return deviceRepo;
+        }
+
+        public Task<InvokeResult<string>> GetRepoLogoAsync(string logId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

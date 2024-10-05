@@ -1269,4 +1269,10 @@
   <data name="Device_DeviceOwner_Help" xml:space="preserve">
     <value>The Device Owner is a non system user that owns this device.</value>
   </data>
+  <data name="DeviceRepository_Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="DeviceRepository_Logo_Help" xml:space="preserve">
+    <value>Provide a link that will be used to obtain an image for any applications for pages associated with this device repository.  The aspect ratio should be 4x3 and be a minimum of 640x480.</value>
+  </data>
 </root>

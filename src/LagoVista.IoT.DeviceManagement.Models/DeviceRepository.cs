@@ -165,6 +165,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices, HelpResource: DeviceManagementResources.Names.DeviceRepo_SecureUserOwnedDevices_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public bool SecureUserOwnedDevices { get; set; }
 
+        /*[FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_Logo, HelpResource: DeviceManagementResources.Names.DeviceRepository_Logo_Help, FieldType: FieldTypes.WebLink, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        public string Logo { get; set; }*/
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutSeconds_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public int DeviceTimeoutSeconds { get; set; }

@@ -25,5 +25,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         Task<ListResponse<DeviceRepositorySummary>> GetDeploymentHostsForOrgAsync(string orgId, ListRequest listRequest, EntityHeader user);
         Task<ListResponse<DeviceRepositorySummary>> GetAvailableDeploymentHostsForOrgAsync(string orgId, ListRequest listRequest, EntityHeader user);
         Task<bool> QueryKeyInUserAsync(string key, EntityHeader org);
+        Task<InvokeResult<string>> GetRepoLogoAsync(string logId);
     }
 }

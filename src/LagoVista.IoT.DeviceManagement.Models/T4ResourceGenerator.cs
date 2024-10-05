@@ -1,4 +1,4 @@
-﻿/*10/2/2024 2:38:19 PM*/
+﻿/*10/5/2024 9:43:17 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -756,6 +756,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_UserOwnedDevices_Help
 
 		public static string DeviceRepo_UserOwnedDevices_Help { get { return GetResourceString("DeviceRepo_UserOwnedDevices_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_Logo
+
+		public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
+//Resources:DeviceManagementResources:DeviceRepository_Logo_Help
+
+		public static string DeviceRepository_Logo_Help { get { return GetResourceString("DeviceRepository_Logo_Help"); } }
 //Resources:DeviceManagementResources:DeviceRepository_OfflineNotification
 
 		public static string DeviceRepository_OfflineNotification { get { return GetResourceString("DeviceRepository_OfflineNotification"); } }
@@ -1443,6 +1449,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 			public const string DeviceRepo_UserOwnedDevices = "DeviceRepo_UserOwnedDevices";
 			public const string DeviceRepo_UserOwnedDevices_Help = "DeviceRepo_UserOwnedDevices_Help";
+			public const string DeviceRepository_Logo = "DeviceRepository_Logo";
+			public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
 			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";
 			public const string DeviceRepository_OfflineNotification_Help = "DeviceRepository_OfflineNotification_Help";
 			public const string DeviceRepository_OfflineNotification_Select = "DeviceRepository_OfflineNotification_Select";
