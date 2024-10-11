@@ -1377,5 +1377,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return _silencedAlarmsRepo.GetSilencedAlarmAsync(deviceRepo, listRequest, id);
         }
+
+        public async Task<InvokeResult> CommissionDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> DecommissionDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            return InvokeResult.Success;
+        }
     }
 }

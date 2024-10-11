@@ -43,6 +43,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         ClusteredMongoDB
     }
 
+    public enum BillingModel
+    {
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_InClusterMongo, DeviceManagementResources.Names.Device_Repo_RepoType_InClusterMongoDB, typeof(DeviceManagementResources))]
+        PerDevice,
+        [EnumLabel(DeviceRepository.DeviceRepository_Type_InClusterMongo, DeviceManagementResources.Names.Device_Repo_RepoType_InClusterMongoDB, typeof(DeviceManagementResources))]
+        Consumption
+    }
+
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help,
         DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-device-repository",
         CreateUIUrl: "/devicemgmt/repository/new", ListUIUrl: "devicemgmt/repositories", EditUIUrl: "/devicemgmt/repository/{id}",
@@ -54,6 +62,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public const string DeviceRepository_Type_Dedicated = "dedicated";
         public const string DeviceRepository_Type_InClusterMongo = "inclusteredmongo";
         public const string DeviceRepository_Type_AzureITHub = "azureiothub";
+
+        public const string DeviceRepository_BillingModel_PerDevice = "perdevice";
+        public const string DeviceRepository_BillingModel_Batch = "perdevice";
 
         public DeviceRepository()
         {

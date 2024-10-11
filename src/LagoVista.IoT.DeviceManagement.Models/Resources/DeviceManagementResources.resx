@@ -1275,4 +1275,10 @@
   <data name="DeviceRepository_Logo_Help" xml:space="preserve">
     <value>Provide a link that will be used to obtain an image for any applications for pages associated with this device repository.  The aspect ratio should be 4x3 and be a minimum of 640x480.</value>
   </data>
+  <data name="DeviceRepository_BillingModel_Consumption" xml:space="preserve">
+    <value>Consumption</value>
+  </data>
+  <data name="DeviceRepository_BillingModel_PerDevice" xml:space="preserve">
+    <value>Per Device</value>
+  </data>
 </root>
