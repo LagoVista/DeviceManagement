@@ -44,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return await GetDeviceStatusChangeRepo(deviceRepo).GetDeviceStatusHistoryAsync(deviceRepo, deviceId, listRequest);
         }
 
-        public async Task<ListResponse<DeviceStatus>> GetDeviceStatusHistoryAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<DeviceStatus>> GetWatchdogDeviceStatusAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceArchive), Actions.Read);
             return await GetDeviceStatusChangeRepo(deviceRepo).GetWatchdogDeviceStatusAsync(deviceRepo, listRequest);

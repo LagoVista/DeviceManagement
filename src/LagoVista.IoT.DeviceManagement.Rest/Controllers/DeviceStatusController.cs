@@ -35,11 +35,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceStatusManager.GetDeviceStatusHistoryAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
-        [HttpGet("/api/devices/{devicerepoid}/staus/history")]
+
+        [HttpGet("/api/devices/{devicerepoid}/status")]
         public async Task<ListResponse<DeviceStatus>> GetDeviceWatchDogStatusAsync(string devicerepoid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _deviceStatusManager.GetDeviceStatusHistoryAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            return await _deviceStatusManager.GetWatchdogDeviceStatusAsync(repo, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
         [HttpPut("/api/device/{devicerepoid}/status")]
