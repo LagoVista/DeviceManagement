@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using LagoVista.Core.Models;
 using LagoVista.CloudStorage;
+using System.Net.Mail;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -434,6 +435,19 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
 
             return device;
+        }
+
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository deviceRepo, string orgId, string customerId, ListRequest listRequest)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+
+            var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
+                                                       qry.DeviceRepository.Id == deviceRepo.Id &&
+                                                       qry.Customer.Id == customerId);
+
+            return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
+                                                (qry.AssignedUser != null && qry.Customer.Id == customerId) &&
+                                                qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, listRequest);
         }
     }
 }

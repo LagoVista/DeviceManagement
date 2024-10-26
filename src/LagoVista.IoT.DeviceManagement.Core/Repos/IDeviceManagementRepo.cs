@@ -19,6 +19,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
         Task DeleteDeviceByIdAsync(DeviceRepository repo, string deviceId);
 
         Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryAsync(DeviceRepository repo, string orgId, ListRequest listRequest);
+
+        Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository repo, string orgId, string customerId, ListRequest listRequest);
         Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryForUserAsync(DeviceRepository repo, string userId, string orgId, ListRequest listRequest);
 
         Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository repo, string locationId, ListRequest listRequest);
