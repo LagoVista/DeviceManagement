@@ -24,6 +24,7 @@ using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 using System.Security.Cryptography;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -239,6 +240,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             deviceUser.PasswordHash = null;
             deviceUser.PasswordConfirm = null;
             await _signInManager.SignInAsync(deviceUser.ToAppUser(), true);
+
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
+            result.Result.DeviceOwner = deviceUser.ToEntityHeader();
+
+            var homePages = await _deviceConfigHelper.GetHomePagesAsync(result.Result.DeviceConfiguration.Id, OrgEntityHeader, UserEntityHeader);
+            deviceUser.HomePage = homePages.CustomPage;
+            deviceUser.MobileHomePage = homePages.CustomMobilePage;
 
             return InvokeResult<DeviceOwnerUser>.Create(deviceUser);
         }
