@@ -250,6 +250,38 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get devices for a device repository
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// /// <param name="customerid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/customer/{customerid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForCustomer(string devicerepoid, string customerid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesForCustomerAsync(repo, customerid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
+        }
+
+        /// <summary>
+        /// Device Management - Get devices for a device repository
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="customerid"></param>
+        /// <param name="customerlocationid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/customer/{customerid}/location/{customerlocationid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForCustomerLocation(string devicerepoid, string customerid, string customerlocationid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesForCustomerLocationAsync(repo, customerid, customerlocationid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
+        }
+
+
+        /// <summary>
         /// Device Management - Get devices for a device repository that are assigned to a user.
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>

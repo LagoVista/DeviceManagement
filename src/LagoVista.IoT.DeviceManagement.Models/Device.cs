@@ -121,6 +121,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         public EntityHeader Customer { get; set; }
+        public EntityHeader CustomerLocation { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Location, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl:"/api/org/locations", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Location_Select)]

@@ -121,7 +121,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoForUserAsync(DeviceRepository deviceRepo, string userId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
-        Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository deviceRepo, string customerId, ListRequest listRequest, EntityHeader org, EntityHeader user);        
+        Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository deviceRepo, string customerId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+        Task<ListResponse<DeviceSummary>> GetDevicesForCustomerLocationAsync(DeviceRepository deviceRepo, string customerId, string customerLocationId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<InvokeResult<MediaResource>> AddDeviceImageAsync(DeviceRepository deviceRepo, string deviceid, Stream strm, string fileName, string contentType, EntityHeader org, EntityHeader user);
 
