@@ -428,7 +428,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(Device));
             var repo = GetRepo(deviceRepo);
-            var result = await repo.GetDevicesForCustomerAsync(deviceRepo, org.Id, customerId, listRequest);
+            var result = await repo.GetDevicesForCustomerLocationAsync(deviceRepo, org.Id, customerId, customerLocationId, listRequest);
             return result;
         }
 
