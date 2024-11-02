@@ -404,6 +404,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.SecondaryAccessKey),
                 nameof(Device.AssignedUser),
                 nameof(Device.DistributionList),
+                nameof(Device.DeviceOwner),
                 nameof(Device.OfflineDistributionList),
                 nameof(Device.NotificationContacts),
                 nameof(Device.TimeZone),

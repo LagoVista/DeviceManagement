@@ -1316,7 +1316,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (result.Successful)
             {
                 var device = result.Result;
-               // device.Owner = owner;
                 return await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
             }
             else
