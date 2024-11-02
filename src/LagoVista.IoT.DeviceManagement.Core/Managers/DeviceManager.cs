@@ -52,6 +52,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IAppConfig _appConfig;
         private readonly IDeviceGroupRepo _deviceGroupRepo;
         private readonly ISilencedAlarmsRepo _silencedAlarmsRepo;
+        private readonly IDeviceStatusManager _deviceStatusManager;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -84,7 +85,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ISecureStorage secureStorage,
             ILinkShortener linkShortener,
             IDeviceGroupRepo deviceGroupRepo,
-            ISilencedAlarmsRepo silencedAlarmsRepo) :
+            ISilencedAlarmsRepo silencedAlarmsRepo,
+            IDeviceStatusManager devicestatusManager) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -101,7 +103,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _linkShortener = linkShortener ?? throw new ArgumentNullException(nameof(linkShortener));
             _appConfig = appConfig ?? throw new ArgumentNullException(nameof(appConfig));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
-            _silencedAlarmsRepo = silencedAlarmsRepo;
+            _silencedAlarmsRepo = silencedAlarmsRepo ?? throw new ArgumentNullException(nameof(silencedAlarmsRepo));
+            _deviceStatusManager = devicestatusManager ?? throw new ArgumentNullException(nameof(devicestatusManager));
         }   
 
         /* 
@@ -1332,6 +1335,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await UpdateDeviceAsync(deviceRepo, device, org, user);
 
+            await _deviceStatusManager.SetSilenceAlarmAsync(deviceRepo, device.Id, true, org, user);
+
             await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
             {
                 Disabled = true,
@@ -1352,7 +1357,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.SilencedBy = org;
             device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
 
+
             await UpdateDeviceAsync(deviceRepo, device, org, user);
+
+            await _deviceStatusManager.SetSilenceAlarmAsync(deviceRepo, id, true, org, user);
 
             await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
             {
