@@ -7,6 +7,7 @@ using LagoVista.IoT.DeviceManagement.Core.Managers;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
+using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -37,6 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceGroupRepo> _deviceGroupRepo = new Mock<IDeviceGroupRepo>();
         Mock<ISilencedAlarmsRepo> _silencedAlarmRepo = new Mock<ISilencedAlarmsRepo>();
         Mock<IDeviceStatusManager> _deviceStatusManager = new Mock<IDeviceStatusManager>();
+        Mock<IDeviceOwnerRepo> _deviceOwnerRepo = new Mock<IDeviceOwnerRepo>();
         [TestInitialize]
         public void Init()
         {
@@ -59,7 +61,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _linkShortener.Object,
                 _deviceGroupRepo.Object,
                 _silencedAlarmRepo.Object,
-                _deviceStatusManager.Object); 
+                _deviceStatusManager.Object,
+                _deviceOwnerRepo.Object); 
         }
     }
 }

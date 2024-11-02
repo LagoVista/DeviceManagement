@@ -17,6 +17,7 @@ using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
+using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
@@ -53,6 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceGroupRepo _deviceGroupRepo;
         private readonly ISilencedAlarmsRepo _silencedAlarmsRepo;
         private readonly IDeviceStatusManager _deviceStatusManager;
+        private readonly IDeviceOwnerRepo _deviceOwnerRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -86,7 +88,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ILinkShortener linkShortener,
             IDeviceGroupRepo deviceGroupRepo,
             ISilencedAlarmsRepo silencedAlarmsRepo,
-            IDeviceStatusManager devicestatusManager) :
+            IDeviceStatusManager devicestatusManager,
+            IDeviceOwnerRepo deviceOwnerRepo) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -105,6 +108,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
             _silencedAlarmsRepo = silencedAlarmsRepo ?? throw new ArgumentNullException(nameof(silencedAlarmsRepo));
             _deviceStatusManager = devicestatusManager ?? throw new ArgumentNullException(nameof(devicestatusManager));
+            _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentException(nameof(deviceOwnerRepo));
         }   
 
         /* 
@@ -1312,7 +1316,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             return InvokeResult<Device>.Create(result.Result);
         }
-     
+
+        public async Task<ListResponse<DeviceOwnerUser>> GetDeviceOwnersForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            // security check, will throw if not authorized.
+            var result = await GetDeviceByIdAsync(deviceRepo, deviceId, org, user);
+
+            return await _deviceOwnerRepo.GetDeviceOwnersForDeviceAsync(deviceId, listRequest);
+        }
+ 
         public async Task<InvokeResult> SetDeviceOwnerRegistrationAsync(DeviceRepository deviceRepo, string id, DeviceOwnerUser owner, EntityHeader org, EntityHeader user)
         {
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);

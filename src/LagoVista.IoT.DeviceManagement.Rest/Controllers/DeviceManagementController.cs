@@ -250,6 +250,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get owners of the device.
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="deviceid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/device/{deviceid}/owners")]
+        public async Task<ListResponse<DeviceOwnerUser>> GetDevicesOwnersForDeviceRepo(string devicerepoid, string deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceOwnersForDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            return result;
+        }
+
+        /// <summary>
         /// Device Management - Get devices for a device repository
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
@@ -531,6 +545,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
+            form.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
 
             form.Timings.AddRange(result.Timings);
 

@@ -37,12 +37,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         Decommissioned
     }
 
-    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description, 
-        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources),  Icon: "icon-ae-core-2",
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description,
+        EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-core-2",
         GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
         FactoryUrl: "/api/device/{devicerepoid}/factory",
         SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
-    public class Device : EntityBase, IValidateable,  IFormDescriptorAdvanced, IFormDescriptor, ISummaryFactory
+    public class Device : EntityBase, IValidateable, IFormDescriptorAdvanced, IFormDescriptor, IFormDescriptorAdvancedCol2, ISummaryFactory
     {
         public const string New = "new";
         public const string Commissioned = "commissioned";
@@ -99,19 +99,20 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceId, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string DeviceId { get; set; }
 
-        [FormField(LabelResource:  DeviceManagementResources.Names.Device_DeviceImages, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceImages, FieldType: FieldTypes.ChildList, ResourceType: typeof(DeviceManagementResources))]
         public List<MediaResource> DeviceImages { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DefaultImage, UploadUrl: "/api/media/resource/public/upload", FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader DefaultDeviceImage { get; set; }
 
-        [FKeyProperty(nameof(DeviceConfiguration),  WhereClause:"DeviceConfiguration.Id = {0}")]
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, EntityHeaderPickerUrl: "/api/deviceconfigs", FieldType: FieldTypes.EntityHeaderPicker, WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FKeyProperty(nameof(DeviceConfiguration), WhereClause: "DeviceConfiguration.Id = {0}")]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceConfiguration, EntityHeaderPickerUrl: "/api/deviceconfigs", FieldType: FieldTypes.EntityHeaderPicker, EditorPath: "/iotstudio/device/deviceconfiguration/{id}",
+            WaterMark: DeviceManagementResources.Names.Device_DeviceConfiguration_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader DeviceConfiguration { get; set; }
 
 
         [FKeyProperty(nameof(DeviceType), typeof(DeviceType), nameof(DeviceType) + ".Id = {0}", "")]
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, EditorPath: "/iotstudio/device/devicemodel/{id}",
             EntityHeaderPickerUrl: "/api/devicetypes", WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader<DeviceType> DeviceType { get; set; }
 
@@ -124,19 +125,19 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader CustomerLocation { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Location, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl:"/api/org/locations", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Location_Select)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Location, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl: "/api/org/locations", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Location_Select)]
         public EntityHeader<OrgLocation> Location { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_DistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_DistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), EditorPath: "/organization/distrolist/{id}",
            HelpResource: DeviceManagementResources.Names.Device_DistroList_Help, EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
         public EntityHeader DistributionList { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_NotificationContacts, IsRequired: false, ChildListDisplayMember: "firstName", FieldType: FieldTypes.ChildListInline, EntityHeaderPickerUrl: "/api/distro/externalcontact/factory", ResourceType: typeof(DeviceManagementResources))]
         public List<ExternalContact> NotificationContacts { get; set; } = new List<ExternalContact>();
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_OfflineDistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources),
-          HelpResource:DeviceManagementResources.Names.Device_OfflineDistributionList_Help,  EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_OfflineDistributionList, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), EditorPath: "/organization/distrolist/{id}",
+          HelpResource: DeviceManagementResources.Names.Device_OfflineDistributionList_Help, EntityHeaderPickerUrl: "/api/distros", WaterMark: DeviceManagementResources.Names.Device_DistributionList_Select)]
         public EntityHeader OfflineDistributionList { get; set; }
 
 
@@ -146,7 +147,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FKeyProperty(nameof(Device), typeof(Device), nameof(ParentDevice) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ParentDevice, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader<string> ParentDevice { get; set; }
-        
+
         [FKeyProperty(nameof(Firmware), typeof(Firmware), nameof(DesiredFirmware) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DesiredFirmware, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader DesiredFirmware { get; set; }
@@ -188,9 +189,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource: DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public GeoLocation GeoLocation { get; set; }
 
-
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation_HasFix, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public bool HasGeoFix { get; set; }
+        public bool GeoFixTimeStamp { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Heading, HelpResource: DeviceManagementResources.Names.Device_Heading_Help, FieldType: FieldTypes.Decimal, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public double Heading { get; set; }
@@ -199,14 +199,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public double Speed { get; set; }
 
         [JsonProperty("sim")]
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_SIM,  FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_SIM, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public string SIM { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_CustomStatus, HelpResource: DeviceManagementResources.Names.Device_CustomStatus_Help, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader CustomStatus { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.DeviceAddress_Address, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceAddress_Address, FieldType: FieldTypes.ChildItem, ResourceType: typeof(DeviceManagementResources), FactoryUrl:"/api/address/factory", IsUserEditable: true, IsRequired: false)]
         public Address Address { get; set; }
 
 
@@ -310,10 +310,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Pin, FieldType: FieldTypes.Password, ResourceType: typeof(DeviceManagementResources))]
         public string DevicePin { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_MustChangePin, HelpResource:DeviceManagementResources.Names.Device_MustChangePin_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_MustChangePin, HelpResource: DeviceManagementResources.Names.Device_MustChangePin_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool MustChangePin { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_PinChangeDate, FieldType: FieldTypes.ReadonlyLabel, IsUserEditable:false, ResourceType: typeof(DeviceManagementResources))]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_PinChangeDate, FieldType: FieldTypes.ReadonlyLabel, IsUserEditable: false, ResourceType: typeof(DeviceManagementResources))]
         public string PinChangeDate { get; set; }
 
         public string DevicePinSecureid { get; set; }
@@ -330,7 +330,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public List<GeoFence> GeoFences { get; set; }
 
-        public List<Sensor> SensorCollection{ get; set; }
+        public List<Sensor> SensorCollection { get; set; }
 
         public List<DeviceTwinDetails> DeviceTwinDetails { get; set; }
 
@@ -392,19 +392,26 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.Name),
                 nameof(Device.Icon),
                 nameof(Device.DeviceId),
-                nameof(Device.SIM),
-                nameof(Device.SerialNumber),
                 nameof(Device.Status),
-                nameof(Device.DebugMode),
-                nameof(Device.IsBeta),
                 nameof(Device.DeviceType),
-                nameof(Device.DefaultDeviceImage),
                 nameof(Device.DeviceConfiguration),
+                nameof(Device.DefaultDeviceImage),
                 nameof(Device.PrimaryAccessKey),
                 nameof(Device.SecondaryAccessKey),
+                nameof(Device.GeoLocation),
+            };
+        }
+
+        public List<string> GetAdvancedFieldsCol2()
+        {
+            return new List<string>()
+            {
+                nameof(Device.SerialNumber),
+                nameof(Device.DebugMode),
+                nameof(Device.IsBeta),
+                nameof(Device.SIM),
                 nameof(Device.AssignedUser),
                 nameof(Device.DistributionList),
-                nameof(Device.DeviceOwner),
                 nameof(Device.OfflineDistributionList),
                 nameof(Device.NotificationContacts),
                 nameof(Device.TimeZone),
@@ -413,7 +420,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DisableWatchdog),
                 nameof(Device.WatchdogSecondsOverride),
             };
-         }
+        } 
 
         public List<string> GetFormFields()
         {
