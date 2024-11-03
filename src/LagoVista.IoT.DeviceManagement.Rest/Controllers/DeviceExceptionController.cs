@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using LagoVista.Core.Validation;
+using System.Linq;
+using LagoVista.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -20,9 +23,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         IDeviceExceptionManager _exceptionManager;
         IDeviceRepositoryManager _repoManager;
+        LagoVista.IoT.DeviceManagement.Core.IDeviceManager _deviceManager;
 
-        public DeviceExceptionController(IDeviceExceptionManager exceptionManager, IDeviceRepositoryManager repoManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceExceptionController(IDeviceExceptionManager exceptionManager, LagoVista.IoT.DeviceManagement.Core.IDeviceManager deviceManager, IDeviceRepositoryManager repoManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
+            _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
             _exceptionManager = exceptionManager ?? throw new ArgumentNullException(nameof(exceptionManager));
         }
@@ -32,6 +37,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _exceptionManager.GetDeviceExceptionsAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+        }
+
+        [HttpGet("/api/device/{devicerepoid}/errors/{deviceid}/silence/{errorid}")]
+        public async Task<InvokeResult> SilenceErrorAsync(string devicerepoid, String deviceid, string errorid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.SilenceErrorAsync(repo, deviceid, errorid, OrgEntityHeader, UserEntityHeader);
         }
     }
 }

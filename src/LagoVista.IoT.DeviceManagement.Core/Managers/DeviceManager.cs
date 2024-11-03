@@ -5,6 +5,7 @@ using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Rpc.Client;
 using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Validation;
@@ -14,6 +15,7 @@ using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
+using LagoVista.IoT.Logging;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
@@ -1359,6 +1361,31 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             });
 
             return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, Device device, string errorId, EntityHeader org, EntityHeader user)
+        {
+            var error = device.Errors.SingleOrDefault(err => err.Id == errorId);
+            if (error != null)
+            {
+                if (error.Silenced)
+                    return InvokeResult.FromError("error has already been silenced.");
+
+                error.Silenced = true;
+                error.SilencedBy = user.Text;
+                error.SilencedById = user.Id;
+                error.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+                return await UpdateDeviceAsync(deviceRepo, device, org, user);
+            }
+
+            return InvokeResult.FromError("could not find device.");
+
+        }
+
+        public async Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId,  EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            return await SilenceErrorAsync(deviceRepo, device.Result, errorId, org, user);
         }
 
         public async Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)

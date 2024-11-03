@@ -11,6 +11,12 @@ namespace LagoVista.IoT.DeviceManagement.Models
         DeviceManagementResources.Names.DeviceError_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-error-1")]
     public class DeviceError
     {        
+        public DeviceError()
+        {
+            Id = Guid.NewGuid().ToId();
+        }
+
+        public string Id { get; set; }
         public int Count { get; set; }
         public string Timestamp { get; set; }
         public string FirstSeen { get; set; }
@@ -30,5 +36,10 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string ErrorDescription { get; set; }
         public string DeviceErrorCode { get; set; }
         public string LastDetails { get; set; }
+
+        public bool Silenced { get; set; }
+        public string SilencedTimeStamp { get; set; }
+        public string SilencedBy { get; set; }
+        public string SilencedById { get; set; }
     }
 }

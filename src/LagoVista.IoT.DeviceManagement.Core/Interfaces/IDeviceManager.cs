@@ -180,5 +180,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult> SilenceAlarmsAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
         Task<InvokeResult> EnableAlarmsAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
         Task<ListResponse<DeviceOwnerUser>> GetDeviceOwnersForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, Device device, string errorId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId, EntityHeader org, EntityHeader user);
     }
 }
