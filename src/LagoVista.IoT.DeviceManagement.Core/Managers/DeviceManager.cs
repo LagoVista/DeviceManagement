@@ -1378,7 +1378,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return await UpdateDeviceAsync(deviceRepo, device, org, user);
             }
 
-            return InvokeResult.FromError("could not find device.");
+            return InvokeResult.FromError("Sorry, could not find the error on this device to silence, it might have been cleared.");
 
         }
 
