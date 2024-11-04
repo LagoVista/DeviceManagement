@@ -116,7 +116,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
 
-        [FKeyProperty(nameof(Subscription), typeof(Subscription), nameof(Subscription) + ".Id = {0}", "")]
+        [FKeyProperty(nameof(Subscription), typeof(SubscriptionDTO), nameof(Subscription) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Subscription, WaterMark: DeviceManagementResources.Names.Device_Repo_SubscriptionSelect, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public EntityHeader Subscription { get; set; }
 
