@@ -448,6 +448,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         /// <summary>
         /// Device Management - Get Devices In Custom Status
+       /// 
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="id">Unique id of the device</param>

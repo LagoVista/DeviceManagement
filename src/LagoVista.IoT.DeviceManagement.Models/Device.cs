@@ -189,6 +189,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoLocation, HelpResource: DeviceManagementResources.Names.Device_GeoLocation_Help, FieldType: FieldTypes.GeoLocation, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public GeoLocation GeoLocation { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoBoundingBox, HelpResource: DeviceManagementResources.Names.Device_GeoBoundingBox_Help, FieldType: FieldTypes.Custom, CustomFieldType: "boudningpolygon", ResourceType: typeof(DeviceManagementResources))]
+        public string BoundingGeoLocation { get; set; }
+
         public bool HasGeoFix { get; set; }
         public bool GeoFixTimeStamp { get; set; }
 
@@ -399,6 +403,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.PrimaryAccessKey),
                 nameof(Device.SecondaryAccessKey),
                 nameof(Device.GeoLocation),
+                nameof(Device.BoundingGeoLocation),
             };
         }
 

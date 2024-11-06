@@ -160,7 +160,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_UnitCapacity, FieldType: FieldTypes.ProductPicker, EntityHeaderPickerUrl: "/api/productofferings/devicecapacity", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.Device_Repo_UnitCapacity_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader DeviceCapacity { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_AccessKey, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string Uri { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Instance, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
@@ -184,13 +183,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: UserAdminResources.Names.Organization_Logo_DarkColor, UserAdminResources.Names.Organization_Logo_DarkColor_Help, FieldType: FieldTypes.FileUpload, DisplayImageSize: "800x224", GeneratedImageSize: "1024x1024", UploadUrl: "/api/media/resource/public/upload", ResourceType: typeof(UserAdminResources))]
         public EntityHeader DarkLogo { get; set; }
 
-        [FormField(LabelResource: UserAdminResources.Names.Organization_PrimaryBgColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
+        [FormField(LabelResource: UserAdminResources.Names.Common_PrimaryBgColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
         public string PrimaryBgColor { get; set; } = "#1976D2";
 
         [FormField(LabelResource: UserAdminResources.Names.Organization_AccentColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
         public string AccentColor { get; set; } = "#D48D17";
 
-        [FormField(LabelResource: UserAdminResources.Names.Organization_PrimaryTextColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
+        [FormField(LabelResource: UserAdminResources.Names.Common_PrimaryTextColor, FieldType: FieldTypes.Color, ResourceType: typeof(UserAdminResources))]
         public string PrimaryTextColor { get; set; } = "#F4F4F4";
 
 

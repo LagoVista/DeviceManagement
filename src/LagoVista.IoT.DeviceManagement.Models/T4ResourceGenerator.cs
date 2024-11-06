@@ -1,4 +1,4 @@
-﻿/*11/5/2024 11:50:50 AM*/
+﻿/*11/6/2024 5:03:34 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -252,6 +252,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_DistroList_Help
 
 		public static string Device_DistroList_Help { get { return GetResourceString("Device_DistroList_Help"); } }
+//Resources:DeviceManagementResources:Device_GeoBoundingBox
+
+		public static string Device_GeoBoundingBox { get { return GetResourceString("Device_GeoBoundingBox"); } }
+//Resources:DeviceManagementResources:Device_GeoBoundingBox_Help
+
+		public static string Device_GeoBoundingBox_Help { get { return GetResourceString("Device_GeoBoundingBox_Help"); } }
 //Resources:DeviceManagementResources:Device_GeofenceTrackingMode
 
 		public static string Device_GeofenceTrackingMode { get { return GetResourceString("Device_GeofenceTrackingMode"); } }
@@ -1293,6 +1299,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_DistributionList = "Device_DistributionList";
 			public const string Device_DistributionList_Select = "Device_DistributionList_Select";
 			public const string Device_DistroList_Help = "Device_DistroList_Help";
+			public const string Device_GeoBoundingBox = "Device_GeoBoundingBox";
+			public const string Device_GeoBoundingBox_Help = "Device_GeoBoundingBox_Help";
 			public const string Device_GeofenceTrackingMode = "Device_GeofenceTrackingMode";
 			public const string Device_GeofenceTrackingMode_Help = "Device_GeofenceTrackingMode_Help";
 			public const string Device_GeoLocation = "Device_GeoLocation";
