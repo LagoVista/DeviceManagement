@@ -1,9 +1,14 @@
-﻿using System;
+﻿using LagoVista.Core.Attributes;
+using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.DeviceManagement.Models.Resources;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
+    [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.DevicesStatus_Title, DeviceManagementResources.Names.DevicesStatus_Description,
+        DeviceManagementResources.Names.DevicesStatus_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-pz-stamp-1")]
     public class DeviceStatus
     {
         public const string DeviceStatus_New = "New";

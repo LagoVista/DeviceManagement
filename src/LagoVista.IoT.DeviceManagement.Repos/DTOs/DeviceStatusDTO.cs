@@ -11,8 +11,8 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
         {
             RowKey = rowKey;
 
-            this.DeviceUniqueId = status.DeviceId;
-            PartitionKey = status.DeviceId;
+            this.DeviceId = status.DeviceId;
+            PartitionKey = status.DeviceUniqueId;
             SilenceAlarm = SilenceAlarm;
             this.CurrentStatus = status.CurrentStatus;
             this.PreviousStatus = status.PreviousStatus;
@@ -30,7 +30,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.DTOs
         {
             return new DeviceStatus()
             {
-                DeviceId = this.DeviceUniqueId,
+                DeviceId = this.DeviceId,
                 DeviceUniqueId = this.DeviceUniqueId,
                 Timestamp = this.Timestamp,
                 PreviousStatus = this.PreviousStatus,

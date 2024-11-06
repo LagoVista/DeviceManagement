@@ -1,4 +1,4 @@
-﻿/*10/5/2024 9:43:17 AM*/
+﻿/*11/5/2024 11:50:50 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -756,6 +756,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_UserOwnedDevices_Help
 
 		public static string DeviceRepo_UserOwnedDevices_Help { get { return GetResourceString("DeviceRepo_UserOwnedDevices_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_BillingModel_Consumption
+
+		public static string DeviceRepository_BillingModel_Consumption { get { return GetResourceString("DeviceRepository_BillingModel_Consumption"); } }
+//Resources:DeviceManagementResources:DeviceRepository_BillingModel_PerDevice
+
+		public static string DeviceRepository_BillingModel_PerDevice { get { return GetResourceString("DeviceRepository_BillingModel_PerDevice"); } }
 //Resources:DeviceManagementResources:DeviceRepository_Logo
 
 		public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
@@ -783,6 +789,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Devices_Title
 
 		public static string Devices_Title { get { return GetResourceString("Devices_Title"); } }
+//Resources:DeviceManagementResources:DevicesStatus_Description
+
+		public static string DevicesStatus_Description { get { return GetResourceString("DevicesStatus_Description"); } }
+//Resources:DeviceManagementResources:DevicesStatus_Title
+
+		public static string DevicesStatus_Title { get { return GetResourceString("DevicesStatus_Title"); } }
 //Resources:DeviceManagementResources:Firmware_Default
 
 		public static string Firmware_Default { get { return GetResourceString("Firmware_Default"); } }
@@ -1449,6 +1461,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 			public const string DeviceRepo_UserOwnedDevices = "DeviceRepo_UserOwnedDevices";
 			public const string DeviceRepo_UserOwnedDevices_Help = "DeviceRepo_UserOwnedDevices_Help";
+			public const string DeviceRepository_BillingModel_Consumption = "DeviceRepository_BillingModel_Consumption";
+			public const string DeviceRepository_BillingModel_PerDevice = "DeviceRepository_BillingModel_PerDevice";
 			public const string DeviceRepository_Logo = "DeviceRepository_Logo";
 			public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
 			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";
@@ -1458,6 +1472,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepository_OnlineNotification_Help = "DeviceRepository_OnlineNotification_Help";
 			public const string DeviceRepository_OnlineNotification_Select = "DeviceRepository_OnlineNotification_Select";
 			public const string Devices_Title = "Devices_Title";
+			public const string DevicesStatus_Description = "DevicesStatus_Description";
+			public const string DevicesStatus_Title = "DevicesStatus_Title";
 			public const string Firmware_Default = "Firmware_Default";
 			public const string Firmware_Default_Select = "Firmware_Default_Select";
 			public const string Firmware_Description = "Firmware_Description";

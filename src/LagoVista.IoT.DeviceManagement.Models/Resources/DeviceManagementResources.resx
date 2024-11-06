@@ -1281,4 +1281,10 @@
   <data name="DeviceRepository_BillingModel_PerDevice" xml:space="preserve">
     <value>Per Device</value>
   </data>
+  <data name="DevicesStatus_Description" xml:space="preserve">
+    <value>The devices status table is used to keep track of which devices for a repository are onlne and which ones are late communicating as well as which devices are silenced.</value>
+  </data>
+  <data name="DevicesStatus_Title" xml:space="preserve">
+    <value>Devices Status</value>
+  </data>
 </root>
