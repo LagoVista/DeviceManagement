@@ -5,9 +5,7 @@ using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.Models.UIMetaData;
-using LagoVista.Core.PlatformSupport;
 using LagoVista.Core.Rpc.Client;
-using LagoVista.Core.Rpc.Messages;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceAdmin.Models;
@@ -15,7 +13,6 @@ using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
-using LagoVista.IoT.Logging;
 using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.MediaServices.Models;
@@ -23,15 +20,13 @@ using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
-using RingCentral;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
 
@@ -51,6 +46,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceTypeRepo _deviceTypeRepo;
         private readonly IOrgLocationRepo _orgLocationRepo;
         private readonly ISecureStorage _secureStorage;
+        private readonly ILocationDiagramRepo _diagramRepo;
         private readonly ILinkShortener _linkShortener;
         private readonly IAppConfig _appConfig;
         private readonly IDeviceGroupRepo _deviceGroupRepo;
@@ -90,6 +86,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ILinkShortener linkShortener,
             IDeviceGroupRepo deviceGroupRepo,
             ISilencedAlarmsRepo silencedAlarmsRepo,
+            ILocationDiagramRepo locationDiagramRepo,
             IDeviceStatusManager devicestatusManager,
             IDeviceOwnerRepo deviceOwnerRepo) :
             base(logger, appConfig, depmanager, security)
@@ -111,7 +108,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _silencedAlarmsRepo = silencedAlarmsRepo ?? throw new ArgumentNullException(nameof(silencedAlarmsRepo));
             _deviceStatusManager = devicestatusManager ?? throw new ArgumentNullException(nameof(devicestatusManager));
             _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentException(nameof(deviceOwnerRepo));
-        }   
+            _diagramRepo = locationDiagramRepo ?? throw new ArgumentNullException(nameof(locationDiagramRepo));
+        }
 
         /* 
          * In some cases we are using a 3rd party result repo, if so we'll keep the access key in secure storage and make sure it's only used in the manager, the repo will
@@ -149,7 +147,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 device.DeviceConfiguration = deviceType.DefaultDeviceConfiguration;
             }
-            
+
             await AuthorizeAsync(device, AuthorizeActions.Create, user, org);
             device.OwnerOrganization = org;
             device.CreatedBy = user;
@@ -288,7 +286,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
             else if (!EntityHeader.IsNullOrEmpty(device.Location) && EntityHeader.IsNullOrEmpty(previousDevice.Location))
-            {                
+            {
                 // It had a value previously but does not any more.
                 var location = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
                 if (!location.Devices.Any(dev => dev.Device.Id == device.Id))
@@ -1238,12 +1236,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         }
 
         public async Task<InvokeResult<string>> GetShortenedDeviceLinkAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
-        {            
+        {
             var link = $"{_appConfig.WebAddress}/devicemgmt/device/{org.Id}/{deviceRepo.Id}/{id}/view";
             var shortened = await _linkShortener.ShortenLinkAsync(link);
             return shortened;
         }
-      
+
 
         public Task<InvokeResult<Device>> HandleDeviceOnlineAsync(Device device, EntityHeader org, EntityHeader user)
         {
@@ -1254,7 +1252,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             return Task.FromResult(InvokeResult<Device>.Create(device));
         }
-       
+
 
         public async Task<InvokeResult<string>> GetDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
@@ -1270,7 +1268,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<string>.FromError($"Could not find device with id {id}");
             }
 
-            if(String.IsNullOrEmpty(device.DevicePinSecureid))
+            if (String.IsNullOrEmpty(device.DevicePinSecureid))
             {
                 return InvokeResult<string>.FromError("Device does not have a PIN assigned.");
             }
@@ -1307,7 +1305,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult<Device>> ClearDevicePinAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
-            
+
             var device = result.Result;
             if (String.IsNullOrEmpty(device.DevicePinSecureid))
                 return result;
@@ -1326,7 +1324,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             return await _deviceOwnerRepo.GetDeviceOwnersForDeviceAsync(deviceId, listRequest);
         }
- 
+
         public async Task<InvokeResult> SetDeviceOwnerRegistrationAsync(DeviceRepository deviceRepo, string id, DeviceOwnerUser owner, EntityHeader org, EntityHeader user)
         {
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
@@ -1382,7 +1380,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         }
 
-        public async Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId,  EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId, EntityHeader org, EntityHeader user)
         {
             var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             return await SilenceErrorAsync(deviceRepo, device.Result, errorId, org, user);
@@ -1435,7 +1433,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult.Success;
         }
 
-        public Task<ListResponse<SilencedAlarm>> GetSilenceAlarmsAsync(DeviceRepository deviceRepo, string id, ListRequest listRequest,  EntityHeader org, EntityHeader user)
+        public Task<ListResponse<SilencedAlarm>> GetSilenceAlarmsAsync(DeviceRepository deviceRepo, string id, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
             return _silencedAlarmsRepo.GetSilencedAlarmAsync(deviceRepo, listRequest, id);
         }
@@ -1448,6 +1446,92 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> DecommissionDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             return InvokeResult.Success;
+        }
+
+        public async Task<InvokeResult<List<GeoLocation>>> GetDeviceBoundingBoxAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var device = result.Result;
+            if (device.GeoPointsBoundingBox.Any())
+            {
+                return InvokeResult<List<GeoLocation>>.Create(device.GeoPointsBoundingBox);
+            }
+
+            if (EntityHeader.IsNullOrEmpty(device.Location))
+            {
+                return InvokeResult<List<GeoLocation>>.FromError("Device does not have a location set.");
+            }
+
+            var location = await _orgLocationRepo.GetLocationAsync(device.Location.Id);
+            if (location.GeoPointsBoundingBox.Any())
+            {
+                return InvokeResult<List<GeoLocation>>.Create(location.GeoPointsBoundingBox);
+            }
+
+            var firstReference = location.DiagramReferences.FirstOrDefault();
+            if (firstReference == null)
+            {
+                return InvokeResult<List<GeoLocation>>.FromError("Location does not have any diagram references.");
+            }
+
+            var diagarm = await _diagramRepo.GetLocationDiagramAsync(firstReference.LocationDiagram.Id);
+            var layer = diagarm.Layers.FirstOrDefault(lyr => lyr.Id == firstReference.LocationDiagramLayer.Id);
+            var shape = layer.Shapes.FirstOrDefault(shp => shp.Id == firstReference.LocationDiagramShape.Id);
+
+            if (shape.GeoPoints.Any())
+                return InvokeResult<List<GeoLocation>>.Create(shape.GeoPoints);
+
+            return InvokeResult<List<GeoLocation>>.FromError("Diagram shape does not have any geo points.");
+        }
+
+        public async Task<InvokeResult<Device>> AttachToDiagramAsync(DeviceRepository deviceRepo, string id, OrgLocationDiagramReference diagramReference, EntityHeader org, EntityHeader user)
+        {
+            ValidationCheck(diagramReference, Actions.Create);
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+
+            if (null != result.Result.DiagramReference)
+                return InvokeResult<Device>.FromError($"Device is already associated with: {result.Result.DiagramReference.LocationDiagram.Text}/{result.Result.DiagramReference.LocationDiagramLayer.Text}/{result.Result.DiagramReference.LocationDiagramShape.Text}");
+
+            var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
+            if (diagram.OwnerOrganization.Id != org.Id)
+                throw new NotAuthorizedException("Org mismatch between diagram and current user.");
+
+            var layer = diagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
+            var shape = layer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
+            var deviceReference = new DeviceReference()
+            {
+                DeviceRepository = deviceRepo.ToEntityHeader(),
+                Device = result.Result.ToEntityHeader()
+            };
+            
+            shape.Devices.Add(deviceReference);
+
+            result.Result.DiagramReference = diagramReference;
+            await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+            await _diagramRepo.UpdateLocationDiagramAsync(diagram);
+
+            return InvokeResult<Device>.Create(result.Result);
+        }
+
+        public async Task<InvokeResult<Device>> RemoveFromDiagramAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            var diagramReference = result.Result.DiagramReference;
+            if (result.Result.DiagramReference == null)
+                return InvokeResult<Device>.FromError("Device is not attached to a diagram");
+
+            var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
+            var layer = diagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
+            var shape = layer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
+            var existing = shape.Devices.FirstOrDefault(dvc => dvc.Device.Id == id);
+            shape.Devices.Remove(existing);
+            result.Result.DiagramReference = null;
+            
+            await _diagramRepo.UpdateLocationDiagramAsync(diagram);
+            await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+
+            return InvokeResult<Device>.Create(result.Result);
         }
     }
 }

@@ -908,6 +908,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
         }
 
+        [HttpGet("/api/device/{devicerepoid}/{id}/boundingbox")]
+        public async Task<InvokeResult<List<GeoLocation>>> GetDeviceBoundingBox(string devicerepoid, string id)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.GetDeviceBoundingBoxAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+        }
+
+
         [HttpGet("/api/device/{devicerepoid}/{id}/alarms/silenced")]
         public async Task<ListResponse<SilencedAlarm>> GetSilenceAlarmsAsync(string devicerepoid, string id)
         {
@@ -927,6 +935,20 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.EnableAlarmsAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+        }
+
+        [HttpPost("/api/device/{devicerepoid}/{id}/diagram")]
+        public async Task<InvokeResult<Device>> AttachToDiagramAsync(string devicerepoid, string id, [FromBody] OrgLocationDiagramReference reference)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.AttachToDiagramAsync(repo, id, reference, OrgEntityHeader, UserEntityHeader);
+        }
+
+        [HttpDelete("/api/device/{devicerepoid}/{id}/diagram")]
+        public async Task<InvokeResult<Device>> RemoveFromiagramAsync(string devicerepoid, string id)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.RemoveFromDiagramAsync(repo, id, OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>

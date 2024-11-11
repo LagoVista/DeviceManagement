@@ -191,7 +191,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoBoundingBox, HelpResource: DeviceManagementResources.Names.Device_GeoBoundingBox_Help, FieldType: FieldTypes.Custom, CustomFieldType: "boudningpolygon", ResourceType: typeof(DeviceManagementResources))]
-        public string BoundingGeoLocation { get; set; }
+        public List<GeoLocation> GeoPointsBoundingBox { get; set; } = new List<GeoLocation>();
 
         public bool HasGeoFix { get; set; }
         public bool GeoFixTimeStamp { get; set; }
@@ -249,6 +249,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader SilencedBy { get; set; }
 
         public string SilencedTimeStamp { get; set; }
+
+        public OrgLocationDiagramReference DiagramReference { get; set; }
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection, HelpResource: DeviceManagementResources.Names.Device_DisableGeofenceDetection_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool DisableGeofenceDetection { get; set; }
@@ -381,6 +384,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 LastContact = LastContact,
                 Location = Location,
                 Balances = Balances,
+                DiagramReference = DiagramReference,
             };
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
@@ -403,7 +407,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.PrimaryAccessKey),
                 nameof(Device.SecondaryAccessKey),
                 nameof(Device.GeoLocation),
-                nameof(Device.BoundingGeoLocation),
+                nameof(Device.GeoPointsBoundingBox),
             };
         }
 
@@ -532,5 +536,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }
         public Dictionary<string, decimal> Balances { get; set; }
+        public OrgLocationDiagramReference DiagramReference { get; set; }
     }
 }

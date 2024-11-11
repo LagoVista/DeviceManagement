@@ -5,7 +5,9 @@ using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.MediaServices.Models;
+using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -183,5 +185,10 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, Device device, string errorId, EntityHeader org, EntityHeader user);
         Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<List<GeoLocation>>> GetDeviceBoundingBoxAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<Device>> AttachToDiagramAsync(DeviceRepository deviceRepo, string id, OrgLocationDiagramReference diagramReference, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<Device>> RemoveFromDiagramAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
     }
 }
