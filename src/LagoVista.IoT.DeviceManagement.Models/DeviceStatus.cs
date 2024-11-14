@@ -13,6 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
     {
         public const string DeviceStatus_New = "New";
         public const string DeviceStatus_Online = "Online";
+        public const string DeviceStatus_DeviceNotFound = "DeviceNotFound";
         public const string DeviceStatus_TimeedOut = "Timed Out";
 
         public string DeviceId { get; set; }

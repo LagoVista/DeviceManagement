@@ -1,4 +1,5 @@
-﻿using LagoVista.Core.Interfaces;
+﻿using LagoVista.Core;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
@@ -17,13 +18,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IDeviceStatusChangeRepo _deviceStatusChangeRepo;
         private readonly IProxyFactory _proxyFactory;
+        private readonly ISilencedAlarmsRepo _silencedAlarmsRepo;
 
         public DeviceStatusManager(IDeviceArchiveRepo archiveRepo, IDeviceStatusChangeRepo deviceStatusChangeRepo, IDeviceStatusChangeRepo statusChangeRepo,
-            IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security,
+            IAdminLogger logger, IAppConfig appConfig, IDependencyManager depmanager, ISecurity security, ISilencedAlarmsRepo silencedAlarmsRepo,
             IProxyFactory proxyFactory) : base(logger, appConfig, depmanager, security)
         {
             _deviceStatusChangeRepo = deviceStatusChangeRepo ?? throw new ArgumentNullException(nameof(deviceStatusChangeRepo));
             _proxyFactory = proxyFactory ?? throw new ArgumentNullException(nameof(proxyFactory));
+            _silencedAlarmsRepo = silencedAlarmsRepo ?? throw new ArgumentNullException(nameof(silencedAlarmsRepo));
         }
 
         public IDeviceStatusChangeRepo GetDeviceStatusChangeRepo(DeviceRepository deviceRepo)
@@ -53,9 +56,21 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         public async Task<InvokeResult> SetSilenceAlarmAsync(DeviceRepository deviceRepo, string id, bool silenced, EntityHeader org, EntityHeader user)
         {
             await AuthorizeOrgAccessAsync(user, org, typeof(DeviceStatus), Actions.Read);
-            var deviceStatus = await GetDeviceStatusChangeRepo(deviceRepo).GetDeviceStatusAsync(deviceRepo, id);
+            var changeRepo = GetDeviceStatusChangeRepo(deviceRepo);
+            var deviceStatus = await changeRepo.GetDeviceStatusAsync(deviceRepo, id);
             deviceStatus.SilenceAlarm = silenced;
-            await GetDeviceStatusChangeRepo(deviceRepo).UpdateDeviceStatusAsync(deviceRepo, deviceStatus);
+            await changeRepo.UpdateDeviceStatusAsync(deviceRepo, deviceStatus);
+
+            await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
+            {
+                 DeviceRepo = deviceRepo.ToEntityHeader(),
+                 Timestamp = DateTime.UtcNow.ToJSONString(),
+                 Device = EntityHeader.Create(deviceStatus.DeviceId, id, deviceStatus.DeviceId),
+                 User = user,                
+                 Disabled = true,                 
+                 Details = "Device Status - Set Silenced Alarm",
+            });
+
             return InvokeResult.Success;
         }
 

@@ -14,6 +14,7 @@ using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
 using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Interfaces.Managers;
+using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -248,6 +249,21 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
             return result;
         }
+
+        // TODO: Need to secure
+        //[AllowAnonymous]
+        //[HttpGet("/device/org/{orgid}/repo/{repoid}")]
+        //public async Task<IEnumerable<DeviceSummary>> GetLocationDiagram(string orgid, string repoid)
+        //{
+        //    var orgEH = EntityHeader.Create(orgid, "PUBLIC");
+        //    var userEH = EntityHeader.Create(Guid.Empty.ToId(), "PULBIC");
+
+        //    var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, orgEH, userEH);
+
+        //    var result = await _deviceManager.GetDevicesForDeviceRepoAsync(repo, GetListRequestFromHeader(), orgEH, userEH);
+
+        //    return result.Model;
+        //}
 
         /// <summary>
         /// Device Management - Get owners of the device.

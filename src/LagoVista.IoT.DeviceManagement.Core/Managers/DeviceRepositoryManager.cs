@@ -207,7 +207,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var deviceRepo = await _deviceRepositoryRepo.GetDeviceRepositoryAsync(repoId);
 
             // If we are passing in a PIN, we are not expecting to have info in the claims so we can use this authorize method.
-            if (pin == null)
+            if (pin == null) // TODO: Need to secure && false)
                 await AuthorizeAsync(deviceRepo, AuthorizeResult.AuthorizeActions.Read, user, org);
             else
                 if (deviceRepo.OwnerOrganization.Id != org.Id)

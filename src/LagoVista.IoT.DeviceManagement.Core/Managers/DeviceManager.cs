@@ -417,7 +417,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoAsync(DeviceRepository deviceRepo, ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            await AuthorizeOrgAccessAsync(user, org, typeof(Device));
+            //await AuthorizeOrgAccessAsync(user, org, typeof(Device));
             var repo = GetRepo(deviceRepo);
             var result = await repo.GetDevicesForRepositoryAsync(deviceRepo, org.Id, listRequest);
             return result;
