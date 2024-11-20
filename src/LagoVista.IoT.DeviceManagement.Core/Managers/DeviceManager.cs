@@ -21,6 +21,7 @@ using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Users;
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
@@ -795,13 +796,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> UpdateDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, string customstatus, EntityHeader org, EntityHeader user)
         {
+            var sw = Stopwatch.StartNew();
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (result == null)
             {
-
                 return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
             }
 
+            result.Timings.Add(new ResultTiming() { Key = "getdevice", Ms = sw.ElapsedMilliseconds });
+            sw.Restart();
             if (!result.Successful)
             {
                 return result.ToInvokeResult();
@@ -816,6 +819,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromError("Could not load device states for device configuration.");
             }
 
+            result.Timings.Add(new ResultTiming() { Key = "getcustomstatus", Ms = sw.ElapsedMilliseconds });
+            sw.Restart();
+
             var newDeviceState = deviceStates.Value.States.Where(st => st.Key.ToLower() == customstatus.ToLower()).FirstOrDefault();
             if (newDeviceState == null)
             {
@@ -829,7 +835,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
 
-            return InvokeResult.Success;
+            result.Timings.Add(new ResultTiming() { Key = "udpatedevice", Ms = sw.ElapsedMilliseconds });
+            
+            return result.ToInvokeResult();
         }
 
         public async Task<InvokeResult> UpdateGeoLocationAsync(DeviceRepository deviceRepo, string id, GeoLocation geoLocation, EntityHeader org, EntityHeader user)
