@@ -1,4 +1,4 @@
-﻿/*11/6/2024 5:03:34 PM*/
+﻿/*11/22/2024 7:22:32 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -591,6 +591,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_WiFiConnectionProfile
 
 		public static string Device_WiFiConnectionProfile { get { return GetResourceString("Device_WiFiConnectionProfile"); } }
+//Resources:DeviceManagementResources:Device_WiFiConnectionProfileAtl
+
+		public static string Device_WiFiConnectionProfileAtl { get { return GetResourceString("Device_WiFiConnectionProfileAtl"); } }
 //Resources:DeviceManagementResources:DeviceAccountTransactionRecord_Help
 
 		public static string DeviceAccountTransactionRecord_Help { get { return GetResourceString("DeviceAccountTransactionRecord_Help"); } }
@@ -1412,6 +1415,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Watchdog_Seconds_Override = "Device_Watchdog_Seconds_Override";
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
 			public const string Device_WiFiConnectionProfile = "Device_WiFiConnectionProfile";
+			public const string Device_WiFiConnectionProfileAtl = "Device_WiFiConnectionProfileAtl";
 			public const string DeviceAccountTransactionRecord_Help = "DeviceAccountTransactionRecord_Help";
 			public const string DeviceAccountTransactionRecord_Title = "DeviceAccountTransactionRecord_Title";
 			public const string DeviceAddress_Address = "DeviceAddress_Address";

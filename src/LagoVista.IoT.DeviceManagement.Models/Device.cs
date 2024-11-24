@@ -16,6 +16,8 @@ using LagoVista.MediaServices.Models;
 using LagoVista.UserAdmin.Models.Users;
 using LagoVista.UserAdmin.Models.Orgs;
 using LagoVista.UserAdmin.Models.Resources;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Models
 {
@@ -267,6 +269,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_WiFiConnectionProfile, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader WiFiConnectionProfile { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_WiFiConnectionProfileAtl, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources))]
+        public EntityHeader WiFiConnectionProfileAlt { get; set; }
+
         /// <summary>
         /// Properties are design time/values added with device configuration
         /// </summary>
@@ -350,6 +356,29 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IPAddress, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string IPAddress { get; set; }
+
+        public int ConfigurationRevisionLevel { get; set; }
+
+        public string ConfigurationHash { get; set; }
+
+        public string GetConfigurationHash()
+        {
+            var bldr = new StringBuilder();
+            bldr.Append(JsonConvert.SerializeObject(Properties));
+            bldr.Append(JsonConvert.SerializeObject(PropertyBag));
+            if(!EntityHeader.IsNullOrEmpty(WiFiConnectionProfile))
+                bldr.Append(JsonConvert.SerializeObject(WiFiConnectionProfile));
+ 
+            if (!EntityHeader.IsNullOrEmpty(WiFiConnectionProfileAlt))
+                bldr.Append(JsonConvert.SerializeObject(WiFiConnectionProfileAlt));
+
+            using (var md5 = MD5.Create())
+            {
+                var buffer = System.Text.ASCIIEncoding.ASCII.GetBytes(bldr.ToString());
+                var hash = md5.ComputeHash(buffer);
+                return Convert.ToBase64String(hash);
+            }
+        }
 
         LagoVista.Core.Interfaces.ISummaryData ISummaryFactory.CreateSummary()
         {
