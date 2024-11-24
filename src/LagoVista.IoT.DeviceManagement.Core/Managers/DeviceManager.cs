@@ -679,6 +679,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return repo.GetDevicesWithDeviceTypeAsync(deviceRepo, deviceTypeId, listRequest);
         }
 
+        public Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, ListRequest listRequest, EntityHeader org, EntityHeader user)
+        {
+            var repo = GetRepo(deviceRepo);
+            return repo.GetDevicesWithDeviceTypeKeyAsync(deviceRepo, deviceTypeKey, listRequest);
+        }
+
         public async Task<DependentObjectCheckResult> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
             var repo = GetRepo(deviceRepo);

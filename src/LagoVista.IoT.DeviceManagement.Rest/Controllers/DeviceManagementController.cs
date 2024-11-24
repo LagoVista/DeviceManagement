@@ -387,6 +387,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return result;
         }
 
+
+        /// <summary>
+        /// Device Management - Get Devices by Type Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="devicetypeid">Device Type Id</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/devicetype/key/{devicetypeid}")]
+        public async Task<ListResponse<DeviceSummary>> GetDevicesForDeviceTypeKeyAsync(string devicerepoid, string devicetypeid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDevicesWithDeviceTypeKeyAsync(repo, devicetypeid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
+            result.DeleteUrl = result.DeleteUrl.Replace("{devicerepoid}", devicerepoid);
+            return result;
+        }
+
         /// <summary>
         /// Device Management - Search for devices by device id
         /// </summary>

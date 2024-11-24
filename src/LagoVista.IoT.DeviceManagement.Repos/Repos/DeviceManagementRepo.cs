@@ -336,7 +336,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceType.Id == deviceTypeId && qry.DeviceRepository.Id == deviceRepo.Id, dev=>dev.Name, request);
- }
+        }
+
+        public async Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, ListRequest request)
+        {
+            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
+            return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceType.Key == deviceTypeKey && qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, request);
+        }
 
         public async Task<ListResponse<Device>> GetFullDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest)
         {
