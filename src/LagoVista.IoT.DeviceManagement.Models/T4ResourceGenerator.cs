@@ -1,4 +1,4 @@
-﻿/*11/22/2024 7:22:32 AM*/
+﻿/*12/4/2024 1:20:38 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -180,6 +180,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_ConnectionEstablishedTimeStamp
 
 		public static string Device_ConnectionEstablishedTimeStamp { get { return GetResourceString("Device_ConnectionEstablishedTimeStamp"); } }
+//Resources:DeviceManagementResources:Device_Customer
+
+		public static string Device_Customer { get { return GetResourceString("Device_Customer"); } }
 //Resources:DeviceManagementResources:Device_CustomStatus
 
 		public static string Device_CustomStatus { get { return GetResourceString("Device_CustomStatus"); } }
@@ -1278,6 +1281,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Capacity_500000_Units = "Device_Capacity_500000_Units";
 			public const string Device_Capacity_Custom = "Device_Capacity_Custom";
 			public const string Device_ConnectionEstablishedTimeStamp = "Device_ConnectionEstablishedTimeStamp";
+			public const string Device_Customer = "Device_Customer";
 			public const string Device_CustomStatus = "Device_CustomStatus";
 			public const string Device_CustomStatus_Help = "Device_CustomStatus_Help";
 			public const string Device_DateProvisioned = "Device_DateProvisioned";

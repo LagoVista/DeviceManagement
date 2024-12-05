@@ -1296,4 +1296,7 @@
   <data name="Device_WiFiConnectionProfileAtl" xml:space="preserve">
     <value>WiFi Connection Profile (Alternate)</value>
   </data>
+  <data name="Device_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
 </root>

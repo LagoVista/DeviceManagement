@@ -123,7 +123,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Icon { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Customer, FieldType: FieldTypes.CustomerPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader Customer { get; set; }
+
+
         public EntityHeader CustomerLocation { get; set; }
 
 
@@ -414,6 +417,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Location = Location,
                 Balances = Balances,
                 DiagramReference = DiagramReference,
+                Customer = Customer
             };
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
@@ -448,6 +452,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.DebugMode),
                 nameof(Device.IsBeta),
                 nameof(Device.SIM),
+                nameof(Device.Customer),
                 nameof(Device.AssignedUser),
                 nameof(Device.DistributionList),
                 nameof(Device.OfflineDistributionList),
@@ -564,6 +569,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }
+        public EntityHeader Customer { get; set; }
         public Dictionary<string, decimal> Balances { get; set; }
         public OrgLocationDiagramReference DiagramReference { get; set; }
     }
