@@ -56,7 +56,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _remoteConfigurationManager = remoteConfigMgr ?? throw new ArgumentNullException(nameof(distroManager));
             _distroManager = distroManager ?? throw new ArgumentNullException(nameof(distroManager));
             _timeZoneServices = timeZoneServices ?? throw new ArgumentNullException(nameof(timeZoneServices));
-
         }
 
         /// <summary>
@@ -250,21 +249,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return result;
         }
 
-        // TODO: Need to secure
-        //[AllowAnonymous]
-        //[HttpGet("/device/org/{orgid}/repo/{repoid}")]
-        //public async Task<IEnumerable<DeviceSummary>> GetLocationDiagram(string orgid, string repoid)
-        //{
-        //    var orgEH = EntityHeader.Create(orgid, "PUBLIC");
-        //    var userEH = EntityHeader.Create(Guid.Empty.ToId(), "PULBIC");
-
-        //    var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, orgEH, userEH);
-
-        //    var result = await _deviceManager.GetDevicesForDeviceRepoAsync(repo, GetListRequestFromHeader(), orgEH, userEH);
-
-        //    return result.Model;
-        //}
-
+       
         /// <summary>
         /// Device Management - Get owners of the device.
         /// </summary>

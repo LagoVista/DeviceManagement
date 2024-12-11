@@ -123,7 +123,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Icon { get; set; }
 
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Customer, FieldType: FieldTypes.CustomerPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_Customer, FieldType: FieldTypes.CustomerPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader Customer { get; set; }
 
 
