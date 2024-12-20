@@ -1299,4 +1299,10 @@
   <data name="Device_Customer" xml:space="preserve">
     <value>Customer</value>
   </data>
+  <data name="Device_WatchdogDisable" xml:space="preserve">
+    <value>Disable Watchdog</value>
+  </data>
+  <data name="Device_ShortendedViewLink" xml:space="preserve">
+    <value>Shortened View Link</value>
+  </data>
 </root>

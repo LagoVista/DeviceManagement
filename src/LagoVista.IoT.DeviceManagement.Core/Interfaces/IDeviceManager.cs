@@ -54,6 +54,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <returns></returns>
         Task<InvokeResult<Device>> SetDevicePinAsync(DeviceRepository deviceRepo, string id, string pin, EntityHeader org, EntityHeader user);
 
+        Task<InvokeResult> GenerateDeviceLabelAsync(DeviceRepository deviceRepo, string id, Stream stream, EntityHeader org, EntityHeader user);
+
         /// <summary>
         /// Add a device note for a device
         /// </summary>

@@ -1,4 +1,4 @@
-﻿/*12/4/2024 1:20:38 PM*/
+﻿/*12/20/2024 4:38:59 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -474,6 +474,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_SerialNumber
 
 		public static string Device_SerialNumber { get { return GetResourceString("Device_SerialNumber"); } }
+//Resources:DeviceManagementResources:Device_ShortendedViewLink
+
+		public static string Device_ShortendedViewLink { get { return GetResourceString("Device_ShortendedViewLink"); } }
 //Resources:DeviceManagementResources:Device_ShowDiagnostics
 
 		public static string Device_ShowDiagnostics { get { return GetResourceString("Device_ShowDiagnostics"); } }
@@ -591,6 +594,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Watchdog_Seconds_Override_Help
 
 		public static string Device_Watchdog_Seconds_Override_Help { get { return GetResourceString("Device_Watchdog_Seconds_Override_Help"); } }
+//Resources:DeviceManagementResources:Device_WatchdogDisable
+
+		public static string Device_WatchdogDisable { get { return GetResourceString("Device_WatchdogDisable"); } }
 //Resources:DeviceManagementResources:Device_WiFiConnectionProfile
 
 		public static string Device_WiFiConnectionProfile { get { return GetResourceString("Device_WiFiConnectionProfile"); } }
@@ -1379,6 +1385,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_RepoTitle = "Device_RepoTitle";
 			public const string Device_SecondaryKey = "Device_SecondaryKey";
 			public const string Device_SerialNumber = "Device_SerialNumber";
+			public const string Device_ShortendedViewLink = "Device_ShortendedViewLink";
 			public const string Device_ShowDiagnostics = "Device_ShowDiagnostics";
 			public const string Device_ShowDiagnostics_Help = "Device_ShowDiagnostics_Help";
 			public const string Device_SilenceAlarms = "Device_SilenceAlarms";
@@ -1418,6 +1425,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Watchdog_Notification_User_Select = "Device_Watchdog_Notification_User_Select";
 			public const string Device_Watchdog_Seconds_Override = "Device_Watchdog_Seconds_Override";
 			public const string Device_Watchdog_Seconds_Override_Help = "Device_Watchdog_Seconds_Override_Help";
+			public const string Device_WatchdogDisable = "Device_WatchdogDisable";
 			public const string Device_WiFiConnectionProfile = "Device_WiFiConnectionProfile";
 			public const string Device_WiFiConnectionProfileAtl = "Device_WiFiConnectionProfileAtl";
 			public const string DeviceAccountTransactionRecord_Help = "DeviceAccountTransactionRecord_Help";

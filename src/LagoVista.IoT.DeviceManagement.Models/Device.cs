@@ -172,6 +172,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShowDiagnostics, HelpResource: DeviceManagementResources.Names.Device_ShowDiagnostics_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public string ShowDiagnostics { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_ShortendedViewLink, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
+        public string ShortendedViewLink { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string SerialNumber { get; set; }
 
@@ -225,7 +230,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_iOS_BLE_Address, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public string iosBLEAddress { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_WatchdogDisable, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public bool DisableWatchdog { get; set; }
 
 
@@ -459,6 +464,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.NotificationContacts),
                 nameof(Device.TimeZone),
                 nameof(Device.Location),
+                nameof(Device.ShortendedViewLink),
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),
                 nameof(Device.WatchdogSecondsOverride),

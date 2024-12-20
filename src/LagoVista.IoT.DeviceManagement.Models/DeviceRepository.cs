@@ -92,6 +92,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public ConnectionSettings DeviceWatchdogStorageSettings { get; set; }
         public String DeviceWatchdogStorageSecureId { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_WatchdogDisable, HelpResource: DeviceManagementResources.Names.Device_Watchdog_Disable_Override_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public bool DisableWatchdog { get; set; }
+
 
         public ConnectionSettings DeviceArchiveStorageSettings { get; set; }
         public String DeviceArchiveStorageSettingsSecureId { get; set; }
@@ -333,6 +336,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(StorageCapacity),
                 nameof(DistroList),
                 nameof(AssignedUser),
+                nameof(DisableWatchdog),
                 nameof(WatchdogNotificationUser),
                 nameof(DeviceTimeoutSeconds),
                 nameof(DeviceTimeoutNotificationIntervalMinutes),

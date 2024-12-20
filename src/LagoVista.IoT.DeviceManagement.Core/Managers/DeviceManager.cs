@@ -30,6 +30,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
+using LagoVista.PDFServices;
+using PdfSharpCore.Drawing;
+using QRCoder;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -256,6 +259,46 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             return InvokeResult<Device>.Create(device);
+        }
+
+        public async Task<InvokeResult> GenerateDeviceLabelAsync(DeviceRepository deviceRepo, string id, Stream stream, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+
+            using (var generator = new PDFGenerator())
+            {
+                if (String.IsNullOrEmpty(device.Result.ShortendedViewLink))
+                {
+                    var result = await _linkShortener.ShortenLinkAsync($"https://www.nuviot.com/devicemgmt/{org.Id}/{device.Result.DeviceRepository.Id}/{device.Result.Id}/view");
+                    if (result.Successful)
+                    {
+                        device.Result.ShortendedViewLink = result.Result;
+                        await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
+                    }
+                    else
+                        return result.ToInvokeResult();
+                }
+
+                generator.Margin = new Margin(0.2, 0.2, 0.2, 0.2);
+                generator.ShowPageNumbers = false;
+                generator.StartDocument(false, false, 1.96, 1.18);
+                generator.AddText(0.1, 0.1, device.Result.DeviceType.Text, Style.Body);
+                generator.AddText(0.1, 0.4, device.Result.DeviceId, Style.Body);
+                if (!String.IsNullOrEmpty(device.Result.SerialNumber))
+                    generator.AddText(0.1, 0.40, device.Result.SerialNumber, Style.Body);
+
+                generator.AddLogo(80, 50, 50, 0);
+
+                using (var qrGenerator = new QRCodeGenerator())
+                using (var qrCodeData = qrGenerator.CreateQrCode(device.Result.ShortendedViewLink, QRCodeGenerator.ECCLevel.Q))
+                using (var qrCode = new PngByteQRCode(qrCodeData))
+                using (var qrMS = new MemoryStream(qrCode.GetGraphic(20)))
+                    generator.AddImage(0.90, 0.25, 1.25, 1.25, qrMS);
+
+                generator.Write(stream);
+
+                return InvokeResult.Success;
+            }
         }
 
         public async Task AuthenticateDevicePinAsync(DeviceRepository deviceRepo, string deviceId, string pin)
@@ -842,7 +885,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await repo.UpdateDeviceAsync(deviceRepo, device);
 
             result.Timings.Add(new ResultTiming() { Key = "udpatedevice", Ms = sw.ElapsedMilliseconds });
-            
+
             return result.ToInvokeResult();
         }
 
@@ -1517,7 +1560,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 DeviceRepository = deviceRepo.ToEntityHeader(),
                 Device = result.Result.ToEntityHeader()
             };
-            
+
             shape.Devices.Add(deviceReference);
 
             result.Result.DiagramReference = diagramReference;
@@ -1541,7 +1584,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var existing = shape.Devices.FirstOrDefault(dvc => dvc.Device.Id == id);
             shape.Devices.Remove(existing);
             result.Result.DiagramReference = null;
-            
+
             await _diagramRepo.UpdateLocationDiagramAsync(diagram);
             await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
 

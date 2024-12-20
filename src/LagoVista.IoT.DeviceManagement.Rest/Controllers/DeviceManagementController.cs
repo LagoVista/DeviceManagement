@@ -515,6 +515,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
+        /// Device Management - Get By Id
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/api/device/{devicerepoid}/{id}/label")]
+        public async Task<IActionResult> PrintDeviceLabelAsync(string devicerepoid, string id)
+        {
+            var ms = new MemoryStream();
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GenerateDeviceLabelAsync(repo, id, ms, OrgEntityHeader, UserEntityHeader);
+            return new FileStreamResult(ms, "application/pdf");
+        }
+
+
+        /// <summary>
         /// Device Management - Update Status (primary status of device)
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
