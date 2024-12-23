@@ -267,12 +267,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             using (var generator = new PDFGenerator())
             {
-                if (String.IsNullOrEmpty(device.Result.ShortendedViewLink))
+                if (String.IsNullOrEmpty(device.Result.ShortLinkAddress))
                 {
-                    var result = await _linkShortener.ShortenLinkAsync($"https://www.nuviot.com/devicemgmt/{org.Id}/{device.Result.DeviceRepository.Id}/{device.Result.Id}/view");
+                    var result = await _linkShortener.ShortenLinkAsync($"https://www.nuviot.com/devicemgmt/device/{org.Id}/{device.Result.DeviceRepository.Id}/{device.Result.Id}/view");
                     if (result.Successful)
                     {
-                        device.Result.ShortendedViewLink = result.Result;
+                        device.Result.ShortLinkAddress = result.Result;
                         await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
                     }
                     else
@@ -290,7 +290,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 generator.AddLogo(80, 50, 50, 0);
 
                 using (var qrGenerator = new QRCodeGenerator())
-                using (var qrCodeData = qrGenerator.CreateQrCode(device.Result.ShortendedViewLink, QRCodeGenerator.ECCLevel.Q))
+                using (var qrCodeData = qrGenerator.CreateQrCode(device.Result.ShortLinkAddress, QRCodeGenerator.ECCLevel.Q))
                 using (var qrCode = new PngByteQRCode(qrCodeData))
                 using (var qrMS = new MemoryStream(qrCode.GetGraphic(20)))
                     generator.AddImage(0.90, 0.25, 1.25, 1.25, qrMS);

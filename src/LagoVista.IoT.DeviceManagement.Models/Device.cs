@@ -174,7 +174,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_ShortendedViewLink, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
-        public string ShortendedViewLink { get; set; }
+        public string ShortLinkAddress { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_SerialNumber, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
@@ -464,7 +464,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.NotificationContacts),
                 nameof(Device.TimeZone),
                 nameof(Device.Location),
-                nameof(Device.ShortendedViewLink),
+                nameof(Device.ShortLinkAddress),
                 nameof(Device.WatchdogNotificationUser),
                 nameof(Device.DisableWatchdog),
                 nameof(Device.WatchdogSecondsOverride),
