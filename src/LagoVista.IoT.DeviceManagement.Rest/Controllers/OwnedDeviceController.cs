@@ -141,7 +141,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                     CurrentDeviceConfig = owner.CurrentDeviceConfig,
                     CurrentRepo = owner.CurrentRepo,
                     HomePage = homePages.CustomPage,
-                    MobileHomePage = homePages.CustomMobilePage
+                    MobileHomePage = homePages.CustomMobilePage,
+                    OwnerOrganization = org,
             };
 
                 await _signInManager.SignInAsync(owner, true);
