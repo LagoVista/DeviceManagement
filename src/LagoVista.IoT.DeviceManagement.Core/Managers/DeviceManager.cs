@@ -296,6 +296,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     generator.AddImage(0.90, 0.25, 1.25, 1.25, qrMS);
 
                 generator.Write(stream);
+                stream.Seek(0, SeekOrigin.Begin);
 
                 return InvokeResult.Success;
             }
