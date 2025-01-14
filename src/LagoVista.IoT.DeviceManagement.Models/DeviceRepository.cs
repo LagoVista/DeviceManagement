@@ -220,9 +220,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
         }
 
+        private string GetMonthTableName(String suffix)
+        {
+            var prefix = $"m{DateTime.UtcNow.ToString("yyyyMM")}";
+            var tableName = (Key.Length > 20) ? $"{prefix}{Key.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
+            return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
+        }
+
         public string GetPEMStorageName()
         {
-            return GetTableName("pems");
+            return GetMonthTableName("pems");
         }
 
         public string GetDeviceLocationStorageName()
@@ -237,7 +244,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public string GetDeviceArchiveStorageName()
         {
-            return GetTableName("devicearchives");
+            return GetMonthTableName("devicearchives");
         }
 
         public string GetDeviceConnectionEventStorageName()
