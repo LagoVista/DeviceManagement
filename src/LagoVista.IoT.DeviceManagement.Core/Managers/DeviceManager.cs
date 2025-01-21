@@ -33,6 +33,9 @@ using static LagoVista.Core.Models.AuthorizeResult;
 using LagoVista.PDFServices;
 using PdfSharpCore.Drawing;
 using QRCoder;
+using RingCentral;
+using LagoVista.Core.Rpc.Messages;
+using Newtonsoft.Json;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -57,6 +60,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly ISilencedAlarmsRepo _silencedAlarmsRepo;
         private readonly IDeviceStatusManager _deviceStatusManager;
         private readonly IDeviceOwnerRepo _deviceOwnerRepo;
+        private readonly INotificationPublisher _notificationPublisher;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -92,7 +96,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ISilencedAlarmsRepo silencedAlarmsRepo,
             ILocationDiagramRepo locationDiagramRepo,
             IDeviceStatusManager devicestatusManager,
-            IDeviceOwnerRepo deviceOwnerRepo) :
+            IDeviceOwnerRepo deviceOwnerRepo,
+            INotificationPublisher notificationPublisher) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -113,6 +118,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceStatusManager = devicestatusManager ?? throw new ArgumentNullException(nameof(devicestatusManager));
             _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentException(nameof(deviceOwnerRepo));
             _diagramRepo = locationDiagramRepo ?? throw new ArgumentNullException(nameof(locationDiagramRepo));
+            _notificationPublisher = notificationPublisher ?? throw new ArgumentNullException(nameof(notificationPublisher)); 
+
+
         }
 
         /* 
@@ -986,7 +994,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var repo = GetRepo(deviceRepo);
             var device = await repo.GetDeviceByIdAsync(deviceRepo, deviceId);
 
-            var errorToRemove = device.Errors.Where(err => err.DeviceErrorCode == errorCode).FirstOrDefault();
+            var errorToRemove = device.Errors.Where(err => err.DeviceErrorCode == errorCode || err.Id == errorCode).FirstOrDefault();
             if (errorToRemove != null)
             {
                 device.Errors.Remove(errorToRemove);
@@ -1435,7 +1443,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             return InvokeResult.FromError("Sorry, could not find the error on this device to silence, it might have been cleared.");
-
         }
 
         public async Task<InvokeResult> SilenceErrorAsync(DeviceRepository deviceRepo, string id, string errorId, EntityHeader org, EntityHeader user)

@@ -384,6 +384,14 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return await _deviceManager.SilenceErrorAsync(repo, CurrentDevice.Id, errorid, OrgEntityHeader, UserEntityHeader);
         }
 
+
+        [HttpGet("/api/device/error/{errorid}/clear")]
+        public async Task<InvokeResult> ClearErrorAsync(string errorid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
+            return await _deviceManager.ClearDeviceErrorAsync(repo, CurrentDevice.Id, errorid, OrgEntityHeader, UserEntityHeader);
+        }
+
         [HttpGet("/api/device/reset/{newpin}")]
         public async Task<InvokeResult<Device>> SetNewPinAsync(string newpin)
         {

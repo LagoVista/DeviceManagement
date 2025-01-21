@@ -26,6 +26,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public string Event { get; set; }
         public bool Cleared { get; set; }
         public string Details { get; set; }
+        public int FollowUpAttempt { get; set; }
         public List<string> AdditionalDetails { get; set; }
     }
 }

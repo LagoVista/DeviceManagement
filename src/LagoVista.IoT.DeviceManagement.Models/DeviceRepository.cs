@@ -223,7 +223,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         private string GetMonthTableName(String suffix)
         {
             var prefix = $"m{DateTime.UtcNow.ToString("yyyyMM")}";
-            var tableName = (Key.Length > 20) ? $"{prefix}{Key.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
+            var tableName = (Key.Length > 14) ? $"{prefix}{Key.Substring(0, 14)}{Id}{suffix}" : $"{prefix}{Key}{Id}{suffix}";
             return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
         }
 

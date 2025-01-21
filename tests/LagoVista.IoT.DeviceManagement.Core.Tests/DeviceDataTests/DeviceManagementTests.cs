@@ -40,6 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceStatusManager> _deviceStatusManager = new Mock<IDeviceStatusManager>();
         Mock<IDeviceOwnerRepo> _deviceOwnerRepo = new Mock<IDeviceOwnerRepo>();
         Mock<ILocationDiagramRepo> _diagramRepo = new Mock<ILocationDiagramRepo>();
+        Mock<INotificationPublisher> _notificationPublisher = new Mock<INotificationPublisher>();
         [TestInitialize]
         public void Init()
         {
@@ -64,7 +65,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _silencedAlarmRepo.Object,
                 _diagramRepo.Object,
                 _deviceStatusManager.Object,
-                _deviceOwnerRepo.Object); 
+                _deviceOwnerRepo.Object,
+                _notificationPublisher.Object); 
         }
     }
 }
