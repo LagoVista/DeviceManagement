@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using LagoVista.Core.Models;
 using LagoVista.CloudStorage;
 using System.Net.Mail;
+using LagoVista.Core;
+using LagoVista.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -22,12 +26,18 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private bool _shouldConsolidateCollections;
         private readonly IAdminLogger _logger;
         private readonly IDeviceGroupRepo _deviceGroupRepo;
+        private readonly IBackgroundServiceTaskQueue _backgroundServiceTaskQueue;
+        private readonly IRemoteConfigurationManager _remoteConfigNamanager;
 
-        public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger) : base(logger)
+
+        public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IBackgroundServiceTaskQueue backgroundServiceTaskQueue,
+            IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger) : base(logger)
         {
             _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
+            _backgroundServiceTaskQueue = backgroundServiceTaskQueue ?? throw new ArgumentNullException(nameof(backgroundServiceTaskQueue));
+            _remoteConfigNamanager = remotePropertyManager ?? throw new ArgumentNullException(nameof(remotePropertyManager));
         }
 
         public DeviceManagementRepo(IAdminLogger logger) : base(logger)
@@ -250,6 +260,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 }
             }
 
+            var currentConfigLevel = device.DesiredConfigurationRevisionLevel;
+
+            var hash = device.GetConfigurationHash();
+            if (device.ConfigurationHash != hash)
+            {
+                device.ConfigurationHash = hash;
+                device.DesiredConfigurationRevisionLevel++;
+                device.DesiredConfigurationTimeStamp = DateTime.UtcNow.ToJSONString();
+
+            }
+
             device.AttributeMetaData = null;
             if (device.Attributes != null)
             {
@@ -267,15 +288,21 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 }
             }
 
-
             device.DeviceType.Value = null;
 
             if(device.Location != null)
                 device.Location.Value = null;
 
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-            Console.WriteLine($"[DeviceManagementRepo__UpdateDeviceAsync] Upodate Device with Id {device.Id} and Device Id {device.DeviceId}");
             await UpsertDocumentAsync(device);
+
+            if (currentConfigLevel != device.DesiredConfigurationRevisionLevel)
+            {
+                _backgroundServiceTaskQueue.TryQueueBackgroundWorkItem(async (ct) =>
+                {
+                    await _remoteConfigNamanager.SetDesiredConfigurationRevisionAsync(deviceRepo.Id, device.Id, device.DesiredConfigurationRevisionLevel, device.OwnerOrganization, device.LastUpdatedBy);
+                });
+            }
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {

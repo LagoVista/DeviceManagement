@@ -365,7 +365,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IPAddress, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public string IPAddress { get; set; }
 
-        public int ConfigurationRevisionLevel { get; set; }
+        public int DesiredConfigurationRevisionLevel { get; set; }
+        public string DesiredConfigurationTimeStamp { get; set; }
+        public int ActualConfigurationRevisionLevel { get; set; }
+        public string ActualConfigurationTimeStamp { get; set; }
 
         public string ConfigurationHash { get; set; }
 

@@ -13,5 +13,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Interfaces
         Task<InvokeResult> QueryRemoteConfigurationAsync(string deviceUniqueId);
         Task<InvokeResult> RestartDeviceAsync(string deviceUniqueId);
         Task<InvokeResult> SetFirmwareVersionAsync(string deviceUniqueId, string requestId);
+        Task<InvokeResult> SetDesiredConfigurationRevisionAsync(string deviceUniqueId, int revisionLevel);
     }
 }

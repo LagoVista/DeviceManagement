@@ -10,6 +10,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
 {
     public interface IRemoteConfigurationManager
     {
+        Task<InvokeResult> SetDesiredConfigurationRevisionAsync(string deviceRepoId, string deviceUniqueId, int configurationRevision, EntityHeader org, EntityHeader user);
         Task<InvokeResult> SendPropertyAsync(string deviceRepoId, string deviceUniqueId, int propertyIndex, EntityHeader org, EntityHeader user);
         Task<InvokeResult> SendAllPropertiesAsync(string deviceRepoId, string deviceUniqueId, EntityHeader org, EntityHeader user);
         Task<InvokeResult> QueryRemoteConfigurationAsync(string deviceRepoId, string deviceUniqueId, EntityHeader org, EntityHeader user);
