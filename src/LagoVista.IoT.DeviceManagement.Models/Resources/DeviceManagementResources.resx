@@ -1320,4 +1320,13 @@
   <data name="DeviceRepository_DefaultTextingDevice" xml:space="preserve">
     <value>Default Testing Device</value>
   </data>
+  <data name="Device_QAChecksCompleted" xml:space="preserve">
+    <value>QA Checks Completed</value>
+  </data>
+  <data name="Device_QAChecksCompleted_ByUser" xml:space="preserve">
+    <value>QA Checks Completed By</value>
+  </data>
+  <data name="Device_QAChecksCompleted_Timestamp" xml:space="preserve">
+    <value>QA Checks Completed Timestamp</value>
+  </data>
 </root>

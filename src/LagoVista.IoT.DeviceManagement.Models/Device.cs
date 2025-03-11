@@ -203,6 +203,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_GeoBoundingBox, HelpResource: DeviceManagementResources.Names.Device_GeoBoundingBox_Help, FieldType: FieldTypes.Custom, CustomFieldType: "boudningpolygon", ResourceType: typeof(DeviceManagementResources))]
         public List<GeoLocation> GeoPointsBoundingBox { get; set; } = new List<GeoLocation>();
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_QAChecksCompleted, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false, IsRequired: false)]
+        public bool QaCheckCompleted { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_QAChecksCompleted_ByUser, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false, IsRequired: false)]
+        public EntityHeader QaCheckCompletedBy { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_QAChecksCompleted_Timestamp, FieldType: FieldTypes.Bool, ResourceType: typeof(DeviceManagementResources), IsUserEditable: false, IsRequired: false)]
+        public string QaCheckCompletedTimeeStamp { get; set; }
+
+
         public bool HasGeoFix { get; set; }
         public bool GeoFixTimeStamp { get; set; }
 

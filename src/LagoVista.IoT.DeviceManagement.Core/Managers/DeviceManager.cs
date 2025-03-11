@@ -1598,5 +1598,51 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             return InvokeResult<Device>.Create(result.Result);
         }
+
+        public async Task<InvokeResult<Device>> CompleteQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            device.Result.QaCheckCompleted = true;
+            device.Result.QaCheckCompletedBy = user;
+            device.Result.QaCheckCompletedTimeeStamp = DateTime.UtcNow.ToJSONString();
+            var result = await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
+            device.Result.AuditHistory.Add(new EntityChangeSet()
+            {
+                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangedBy = user,
+                Changes = { new EntityChange() { Field = nameof(Device.QaCheckCompleted), NewValue = "true", OldValue = "false", Notes = $"Changed by: {user.Text}" } }
+            });
+
+            if (result.Successful)
+                return InvokeResult<Device>.Create(device.Result);
+
+            // TODO:YUCK!
+            return InvokeResult<Device>.FromInvokeResult(result.ToInvokeResult());
+        }
+
+        public async Task<InvokeResult<Device>> RemoveQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+            var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if(device.Result.QaCheckCompleted == false)
+            {
+                return InvokeResult<Device>.Create(device.Result);
+            }
+
+            device.Result.QaCheckCompleted = false;
+            device.Result.QaCheckCompletedBy = null;
+            device.Result.QaCheckCompletedTimeeStamp = null;
+            device.Result.AuditHistory.Add(new EntityChangeSet()
+            {
+                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangedBy = user,
+                Changes = { new EntityChange() { Field = nameof(Device.QaCheckCompleted), NewValue = "false", OldValue = "true", Notes = $"Changed by: {user.Text}" } }
+            });
+            var result = await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
+            if (result.Successful)
+                return InvokeResult<Device>.Create(device.Result);
+
+            // TODO:YUCK!
+            return InvokeResult<Device>.FromInvokeResult(result.ToInvokeResult());
+        }
     }
 }

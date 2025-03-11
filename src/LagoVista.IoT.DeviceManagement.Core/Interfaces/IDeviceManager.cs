@@ -193,5 +193,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult<Device>> AttachToDiagramAsync(DeviceRepository deviceRepo, string id, OrgLocationDiagramReference diagramReference, EntityHeader org, EntityHeader user);
         Task<InvokeResult<Device>> RemoveFromDiagramAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+
+        Task<InvokeResult<Device>> CompleteQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<Device>> RemoveQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
     }
 }

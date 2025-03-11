@@ -1,4 +1,4 @@
-﻿/*3/10/2025 5:31:59 PM*/
+﻿/*3/11/2025 10:53:39 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -372,6 +372,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Properties_Help
 
 		public static string Device_Properties_Help { get { return GetResourceString("Device_Properties_Help"); } }
+//Resources:DeviceManagementResources:Device_QAChecksCompleted
+
+		public static string Device_QAChecksCompleted { get { return GetResourceString("Device_QAChecksCompleted"); } }
+//Resources:DeviceManagementResources:Device_QAChecksCompleted_ByUser
+
+		public static string Device_QAChecksCompleted_ByUser { get { return GetResourceString("Device_QAChecksCompleted_ByUser"); } }
+//Resources:DeviceManagementResources:Device_QAChecksCompleted_Timestamp
+
+		public static string Device_QAChecksCompleted_Timestamp { get { return GetResourceString("Device_QAChecksCompleted_Timestamp"); } }
 //Resources:DeviceManagementResources:Device_Repo_AccessKey
 
 		public static string Device_Repo_AccessKey { get { return GetResourceString("Device_Repo_AccessKey"); } }
@@ -1366,6 +1375,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_PrimaryKey = "Device_PrimaryKey";
 			public const string Device_Properties = "Device_Properties";
 			public const string Device_Properties_Help = "Device_Properties_Help";
+			public const string Device_QAChecksCompleted = "Device_QAChecksCompleted";
+			public const string Device_QAChecksCompleted_ByUser = "Device_QAChecksCompleted_ByUser";
+			public const string Device_QAChecksCompleted_Timestamp = "Device_QAChecksCompleted_Timestamp";
 			public const string Device_Repo_AccessKey = "Device_Repo_AccessKey";
 			public const string Device_Repo_AccessKeyName = "Device_Repo_AccessKeyName";
 			public const string Device_Repo_AssignedUser = "Device_Repo_AssignedUser";
