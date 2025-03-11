@@ -1,4 +1,4 @@
-﻿/*12/20/2024 4:38:59 PM*/
+﻿/*3/10/2025 5:31:59 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -774,12 +774,27 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepo_UserOwnedDevices_Help
 
 		public static string DeviceRepo_UserOwnedDevices_Help { get { return GetResourceString("DeviceRepo_UserOwnedDevices_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_AutoIncrementDeviceIdFormat
+
+		public static string DeviceRepository_AutoIncrementDeviceIdFormat { get { return GetResourceString("DeviceRepository_AutoIncrementDeviceIdFormat"); } }
+//Resources:DeviceManagementResources:DeviceRepository_AutoIncrementDeviceIdFormat_Help
+
+		public static string DeviceRepository_AutoIncrementDeviceIdFormat_Help { get { return GetResourceString("DeviceRepository_AutoIncrementDeviceIdFormat_Help"); } }
 //Resources:DeviceManagementResources:DeviceRepository_BillingModel_Consumption
 
 		public static string DeviceRepository_BillingModel_Consumption { get { return GetResourceString("DeviceRepository_BillingModel_Consumption"); } }
 //Resources:DeviceManagementResources:DeviceRepository_BillingModel_PerDevice
 
 		public static string DeviceRepository_BillingModel_PerDevice { get { return GetResourceString("DeviceRepository_BillingModel_PerDevice"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultDeviceModel
+
+		public static string DeviceRepository_DefaultDeviceModel { get { return GetResourceString("DeviceRepository_DefaultDeviceModel"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultDeviceModel_Select
+
+		public static string DeviceRepository_DefaultDeviceModel_Select { get { return GetResourceString("DeviceRepository_DefaultDeviceModel_Select"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTextingDevice
+
+		public static string DeviceRepository_DefaultTextingDevice { get { return GetResourceString("DeviceRepository_DefaultTextingDevice"); } }
 //Resources:DeviceManagementResources:DeviceRepository_Logo
 
 		public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
@@ -1485,8 +1500,13 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepo_ServiceBoard_Select = "DeviceRepo_ServiceBoard_Select";
 			public const string DeviceRepo_UserOwnedDevices = "DeviceRepo_UserOwnedDevices";
 			public const string DeviceRepo_UserOwnedDevices_Help = "DeviceRepo_UserOwnedDevices_Help";
+			public const string DeviceRepository_AutoIncrementDeviceIdFormat = "DeviceRepository_AutoIncrementDeviceIdFormat";
+			public const string DeviceRepository_AutoIncrementDeviceIdFormat_Help = "DeviceRepository_AutoIncrementDeviceIdFormat_Help";
 			public const string DeviceRepository_BillingModel_Consumption = "DeviceRepository_BillingModel_Consumption";
 			public const string DeviceRepository_BillingModel_PerDevice = "DeviceRepository_BillingModel_PerDevice";
+			public const string DeviceRepository_DefaultDeviceModel = "DeviceRepository_DefaultDeviceModel";
+			public const string DeviceRepository_DefaultDeviceModel_Select = "DeviceRepository_DefaultDeviceModel_Select";
+			public const string DeviceRepository_DefaultTextingDevice = "DeviceRepository_DefaultTextingDevice";
 			public const string DeviceRepository_Logo = "DeviceRepository_Logo";
 			public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
 			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";

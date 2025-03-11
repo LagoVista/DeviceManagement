@@ -1305,4 +1305,19 @@
   <data name="Device_ShortendedViewLink" xml:space="preserve">
     <value>Shortened View Link</value>
   </data>
+  <data name="DeviceRepository_DefaultDeviceModel" xml:space="preserve">
+    <value>Default Device Model</value>
+  </data>
+  <data name="DeviceRepository_AutoIncrementDeviceIdFormat" xml:space="preserve">
+    <value>Auto Increment Device Id Format</value>
+  </data>
+  <data name="DeviceRepository_AutoIncrementDeviceIdFormat_Help" xml:space="preserve">
+    <value>Provide a template to auto generate device ids for this repostiory.  The format will include the following tags that will be replaced \{MM\} - Current Month (two digit) \{YYYY\} - Current Year (four digit) - \{autoincrement\} - Auto incrementing number.  An example of this format might be POWERDEVICE-\{YYYY\}-\{MM\}-\{autoincrement\} which would generate a device id similar to POWERDEVICE-2025-03-00032</value>
+  </data>
+  <data name="DeviceRepository_DefaultDeviceModel_Select" xml:space="preserve">
+    <value>-select default device model-</value>
+  </data>
+  <data name="DeviceRepository_DefaultTextingDevice" xml:space="preserve">
+    <value>Default Testing Device</value>
+  </data>
 </root>
