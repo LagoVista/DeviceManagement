@@ -1320,4 +1320,10 @@
   <data name="DeviceRepository_DefaultTextingDevice" xml:space="preserve">
     <value>Default Testing Device</value>
   </data>
+  <data name="DeviceRepository_DefaultTextingDevice_Help" xml:space="preserve">
+    <value>Select a device that can be used for testing when provisioning devices in this repository.</value>
+  </data>
+  <data name="DeviceRepository_DefaultTextingDevice_Select" xml:space="preserve">
+    <value>-select default testing device-</value>
+  </data>
 </root>

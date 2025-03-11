@@ -1,4 +1,4 @@
-﻿/*3/10/2025 5:31:59 PM*/
+﻿/*3/11/2025 6:47:47 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -795,6 +795,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepository_DefaultTextingDevice
 
 		public static string DeviceRepository_DefaultTextingDevice { get { return GetResourceString("DeviceRepository_DefaultTextingDevice"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTextingDevice_Help
+
+		public static string DeviceRepository_DefaultTextingDevice_Help { get { return GetResourceString("DeviceRepository_DefaultTextingDevice_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTextingDevice_Select
+
+		public static string DeviceRepository_DefaultTextingDevice_Select { get { return GetResourceString("DeviceRepository_DefaultTextingDevice_Select"); } }
 //Resources:DeviceManagementResources:DeviceRepository_Logo
 
 		public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
@@ -1507,6 +1513,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepository_DefaultDeviceModel = "DeviceRepository_DefaultDeviceModel";
 			public const string DeviceRepository_DefaultDeviceModel_Select = "DeviceRepository_DefaultDeviceModel_Select";
 			public const string DeviceRepository_DefaultTextingDevice = "DeviceRepository_DefaultTextingDevice";
+			public const string DeviceRepository_DefaultTextingDevice_Help = "DeviceRepository_DefaultTextingDevice_Help";
+			public const string DeviceRepository_DefaultTextingDevice_Select = "DeviceRepository_DefaultTextingDevice_Select";
 			public const string DeviceRepository_Logo = "DeviceRepository_Logo";
 			public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
 			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";
