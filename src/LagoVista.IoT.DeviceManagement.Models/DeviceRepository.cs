@@ -131,8 +131,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_AutoIncrementDeviceIdFormat, HelpResource: DeviceManagementResources.Names.DeviceRepository_AutoIncrementDeviceIdFormat_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public EntityHeader AutoIncrementDeviceIdMask { get; set; }
        
-        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_DefaultTextingDevice, FieldType: FieldTypes.DevicePicker, ResourceType: typeof(DeviceManagementResources))]
-        public string DefaultDeviceId { get; set; }
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_DefaultTestingDevice, FieldType: FieldTypes.DevicePicker,
+              WaterMark: DeviceManagementResources.Names.DeviceRepository_DefaultTestingDevice_Select,  HelpResource: DeviceManagementResources.Names.DeviceRepository_DefaultTestingDevice_Help,  
+            ResourceType: typeof(DeviceManagementResources))]
+        public EntityHeader DefaultTestingDevice { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_ResourceName, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources))]
         public String ResourceName { get; set; }
@@ -359,7 +361,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(DisableWatchdog),
                 nameof(WatchdogNotificationUser),
                 nameof(DeviceTimeoutSeconds),
-                nameof(DefaultDeviceId),
+                nameof(DefaultTestingDevice),
                 nameof(DeviceTimeoutNotificationIntervalMinutes),
                 nameof(OfflineDistributionList),
                 nameof(DeviceOnlinNotification),

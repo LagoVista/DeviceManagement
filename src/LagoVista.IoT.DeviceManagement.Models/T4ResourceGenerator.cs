@@ -1,4 +1,4 @@
-﻿/*3/11/2025 10:53:39 AM*/
+﻿/*3/11/2025 11:44:51 AM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -801,9 +801,15 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:DeviceRepository_DefaultDeviceModel_Select
 
 		public static string DeviceRepository_DefaultDeviceModel_Select { get { return GetResourceString("DeviceRepository_DefaultDeviceModel_Select"); } }
-//Resources:DeviceManagementResources:DeviceRepository_DefaultTextingDevice
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTestingDevice
 
-		public static string DeviceRepository_DefaultTextingDevice { get { return GetResourceString("DeviceRepository_DefaultTextingDevice"); } }
+		public static string DeviceRepository_DefaultTestingDevice { get { return GetResourceString("DeviceRepository_DefaultTestingDevice"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTestingDevice_Help
+
+		public static string DeviceRepository_DefaultTestingDevice_Help { get { return GetResourceString("DeviceRepository_DefaultTestingDevice_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_DefaultTestingDevice_Select
+
+		public static string DeviceRepository_DefaultTestingDevice_Select { get { return GetResourceString("DeviceRepository_DefaultTestingDevice_Select"); } }
 //Resources:DeviceManagementResources:DeviceRepository_Logo
 
 		public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
@@ -1518,7 +1524,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string DeviceRepository_BillingModel_PerDevice = "DeviceRepository_BillingModel_PerDevice";
 			public const string DeviceRepository_DefaultDeviceModel = "DeviceRepository_DefaultDeviceModel";
 			public const string DeviceRepository_DefaultDeviceModel_Select = "DeviceRepository_DefaultDeviceModel_Select";
-			public const string DeviceRepository_DefaultTextingDevice = "DeviceRepository_DefaultTextingDevice";
+			public const string DeviceRepository_DefaultTestingDevice = "DeviceRepository_DefaultTestingDevice";
+			public const string DeviceRepository_DefaultTestingDevice_Help = "DeviceRepository_DefaultTestingDevice_Help";
+			public const string DeviceRepository_DefaultTestingDevice_Select = "DeviceRepository_DefaultTestingDevice_Select";
 			public const string DeviceRepository_Logo = "DeviceRepository_Logo";
 			public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
 			public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";

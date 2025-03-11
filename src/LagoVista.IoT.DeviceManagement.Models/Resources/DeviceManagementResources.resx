@@ -1317,7 +1317,7 @@
   <data name="DeviceRepository_DefaultDeviceModel_Select" xml:space="preserve">
     <value>-select default device model-</value>
   </data>
-  <data name="DeviceRepository_DefaultTextingDevice" xml:space="preserve">
+  <data name="DeviceRepository_DefaultTestingDevice" xml:space="preserve">
     <value>Default Testing Device</value>
   </data>
   <data name="Device_QAChecksCompleted" xml:space="preserve">
@@ -1328,5 +1328,11 @@
   </data>
   <data name="Device_QAChecksCompleted_Timestamp" xml:space="preserve">
     <value>QA Checks Completed Timestamp</value>
+  </data>
+  <data name="DeviceRepository_DefaultTestingDevice_Select" xml:space="preserve">
+    <value>-select default testing device-</value>
+  </data>
+  <data name="DeviceRepository_DefaultTestingDevice_Help" xml:space="preserve">
+    <value>This device will be used to test devices before they are provisioned with the actual device.  This device will typically only exist in the testing instance.</value>
   </data>
 </root>
