@@ -23,19 +23,13 @@ using LagoVista.UserAdmin.Models.Users;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
 using LagoVista.PDFServices;
-using PdfSharpCore.Drawing;
 using QRCoder;
-using RingCentral;
-using LagoVista.Core.Rpc.Messages;
-using Newtonsoft.Json;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -315,7 +309,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         }
 
-        public async Task<InvokeResult> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<Device>> UpdateDeviceAsync(DeviceRepository deviceRepo, Device device, EntityHeader org, EntityHeader user)
         {
             if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId.ToLower();
             var repo = GetRepo(deviceRepo);
@@ -413,7 +407,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             Console.WriteLine("Updated location.");
 
 
-            return InvokeResult.Success;
+            return InvokeResult<Device>.Create(device);
         }
 
         private IDeviceConnectionEventRepo GetConnectionEventRepo(DeviceRepository deviceRepo)
@@ -1179,7 +1173,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedDate = timeStamp;
             device.LastUpdatedBy = user;
 
-            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+            return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
 
 
@@ -1214,7 +1208,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = timeStamp;
 
-            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+            return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
 
         public async Task<InvokeResult<Device>> CreateDeviceForDeviceKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, EntityHeader org, EntityHeader user)
@@ -1250,7 +1244,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = result.Result; device.MacAddress = macAddress;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
             device.LastUpdatedBy = user;
-            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+            return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
 
         public async Task<InvokeResult> UpdateDeviceiOSBleAddressAsync(DeviceRepository deviceRepo, string id, string iosBLEAddress, EntityHeader org, EntityHeader user)
@@ -1270,7 +1264,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = result.Result; device.iosBLEAddress = iosBLEAddress;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
             device.LastUpdatedBy = user;
-            return await UpdateDeviceAsync(deviceRepo, device, org, user);
+            return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
 
         public async Task<InvokeResult<Device>> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress, EntityHeader org, EntityHeader user)
@@ -1397,7 +1391,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (result.Successful)
             {
                 var device = result.Result;
-                return await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+                return (await UpdateDeviceAsync(deviceRepo, result.Result, org, user)).ToInvokeResult();
             }
             else
             {
@@ -1439,7 +1433,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 error.SilencedBy = user.Text;
                 error.SilencedById = user.Id;
                 error.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
-                return await UpdateDeviceAsync(deviceRepo, device, org, user);
+                return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
             }
 
             return InvokeResult.FromError("Sorry, could not find the error on this device to silence, it might have been cleared.");

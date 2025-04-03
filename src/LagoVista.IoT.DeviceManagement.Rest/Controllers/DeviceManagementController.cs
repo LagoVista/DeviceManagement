@@ -120,7 +120,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (updateResult.Successful)
                 return InvokeResult<List<Sensor>>.Create(device.SensorCollection);
             else
-                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult);
+                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult.ToInvokeResult());
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (updateResult.Successful)
                 return InvokeResult<List<Sensor>>.Create(device.SensorCollection);
             else
-                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult);
+                return InvokeResult<List<Sensor>>.FromInvokeResult(updateResult.ToInvokeResult());
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="device"></param>
         /// <returns></returns>
         [HttpPut("/api/device/{devicerepoid}")]
-        public async Task<InvokeResult> UpdateDeviceAsync(string devicerepoid, [FromBody] Device device)
+        public async Task<InvokeResult<Device>> UpdateDeviceAsync(string devicerepoid, [FromBody] Device device)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             SetUpdatedProperties(device);
@@ -874,7 +874,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 attrValue.LastUpdatedBy = UserEntityHeader.Text;
             }
 
-            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return (await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader)).ToInvokeResult();
         }
 
         [HttpDelete("/api/device/{devicerepoid}/{id}/pin")]
@@ -938,7 +938,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             device.SensorCollection.Add(sensor);
 
-            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return (await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader)).ToInvokeResult();
         }
 
         [HttpGet("/api/device/{devicerepoid}/{id}/boundingbox")]

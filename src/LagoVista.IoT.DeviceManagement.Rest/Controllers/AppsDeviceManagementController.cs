@@ -63,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await GetDeviceRepositoryWithSecretsAsync();
             SetUpdatedProperties(device);
-            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+            return (await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader)).ToInvokeResult();
         }
 
         /// <summary>
