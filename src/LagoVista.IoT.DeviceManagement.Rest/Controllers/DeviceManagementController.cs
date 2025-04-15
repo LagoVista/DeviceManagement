@@ -80,7 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}/device/{deviceid}/image")]
-        public async Task<InvokeResult<MediaResource>> AddDeviceImage(string devicerepoid, string deviceid, [FromForm] IFormFile file)
+        public async Task<InvokeResult<MediaResource>> AddDeviceImage(string devicerepoid, string deviceid, IFormFile file)
         {
             using (var strm = file.OpenReadStream())
             {

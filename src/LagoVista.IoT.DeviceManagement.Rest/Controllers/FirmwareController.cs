@@ -119,7 +119,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/firmware/{firmwareid}/{versioncode}")]
-        public async Task<InvokeResult<FirmwareRevision>> AddFirmwareRevisionAsync(string firmwareid, string versioncode, [FromForm] IFormFile file)
+        public async Task<InvokeResult<FirmwareRevision>> AddFirmwareRevisionAsync(string firmwareid, string versioncode, IFormFile file)
         {
             using (var strm = file.OpenReadStream())
             {

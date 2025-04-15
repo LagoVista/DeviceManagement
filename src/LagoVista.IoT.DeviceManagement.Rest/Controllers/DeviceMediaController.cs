@@ -67,7 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/{repoid}/devices/{id}/media")]
-        public async Task<InvokeResult> UploadMediaAsync(string repoid, string id, [FromBody] IFormFile file)
+        public async Task<InvokeResult> UploadMediaAsync(string repoid, string id, IFormFile file)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(repoid, OrgEntityHeader, UserEntityHeader);
 
