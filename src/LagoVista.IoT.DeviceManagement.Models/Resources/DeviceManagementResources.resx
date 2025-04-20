@@ -1335,4 +1335,7 @@
   <data name="DeviceRepository_DefaultTestingDevice_Help" xml:space="preserve">
     <value>This device will be used to test devices before they are provisioned with the actual device.  This device will typically only exist in the testing instance.</value>
   </data>
+  <data name="Device_TestingMode" xml:space="preserve">
+    <value>Testing Mode</value>
+  </data>
 </root>

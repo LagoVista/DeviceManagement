@@ -261,6 +261,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public bool DebugMode { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_TestingMode,  FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
+        public bool TestingMode { get; set; }
+
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_IsBeta, HelpResource: DeviceManagementResources.Names.Device_IsBeta_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources))]
         public bool IsBeta { get; set; }
 
@@ -469,6 +473,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             {
                 nameof(Device.SerialNumber),
                 nameof(Device.DebugMode),
+                nameof(Device.TestingMode),
                 nameof(Device.IsBeta),
                 nameof(Device.SIM),
                 nameof(Device.Customer),
