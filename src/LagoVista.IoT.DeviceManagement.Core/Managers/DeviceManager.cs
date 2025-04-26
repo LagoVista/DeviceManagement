@@ -285,7 +285,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 generator.ShowPageNumbers = false;
                 generator.StartDocument(false, false, 1.96, 1.18);
                 generator.AddText(0.1, 0.1, device.Result.DeviceType.Text, Style.Body);
-                generator.AddText(0.1, 0.4, device.Result.DeviceId, Style.Body);
+                generator.AddText(0.1, 0.4, device.Result.Name, Style.Body);
                 if (!String.IsNullOrEmpty(device.Result.SerialNumber))
                     generator.AddText(0.1, 0.40, device.Result.SerialNumber, Style.Body);
 
