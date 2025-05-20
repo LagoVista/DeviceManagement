@@ -13,7 +13,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         Task<DeviceRepository> GetDeviceRepositoryAsync(string repoId, EntityHeader org, EntityHeader user);
 
-        Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user, string pin = null);
+        Task<DeviceRepository> GetDeviceRepositoryWithSecretsAsync(string repoId, EntityHeader org, EntityHeader user, string pin = null, bool anonymous = false);
     }
 
     public interface IDeviceRepositoryManager : IDeviceRepositoryManagerRemote

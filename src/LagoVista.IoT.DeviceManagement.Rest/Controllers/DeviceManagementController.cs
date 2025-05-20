@@ -1073,5 +1073,15 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 throw;
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet("/api/public/device/{orgid}/{devicerepoid}/{deviceid}")]
+        public async Task<PublicDeviceInfo> GetPublicDeviceInfo(string orgid, string devicerepoid, string deviceid)
+        {
+            var orgEh = EntityHeader.Create(orgid, "publicaccess");
+            var userEh = EntityHeader.Create(Guid.Empty.ToId(), "publicaccess");
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, orgEh, userEh, anonymous: true);
+            return await _deviceManager.GetPublicDeviceInfo(repo, deviceid);
+        }
     }
 }

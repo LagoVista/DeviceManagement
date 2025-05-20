@@ -30,6 +30,8 @@ using System.Threading.Tasks;
 using static LagoVista.Core.Models.AuthorizeResult;
 using LagoVista.PDFServices;
 using QRCoder;
+using RingCentral;
+using LagoVista.UserAdmin.Interfaces.Repos.Users;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -55,6 +57,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         private readonly IDeviceStatusManager _deviceStatusManager;
         private readonly IDeviceOwnerRepo _deviceOwnerRepo;
         private readonly INotificationPublisher _notificationPublisher;
+        private readonly IFirmwareRepo _firmwareRepo;
+        private readonly IAppUserRepo _appUserRepo;
 
         public IDeviceManagementRepo GetRepo(DeviceRepository deviceRepo)
         {
@@ -91,7 +95,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             ILocationDiagramRepo locationDiagramRepo,
             IDeviceStatusManager devicestatusManager,
             IDeviceOwnerRepo deviceOwnerRepo,
-            INotificationPublisher notificationPublisher) :
+            INotificationPublisher notificationPublisher,
+            IAppUserRepo appUserRepo,
+            IFirmwareRepo firmwareRepo) :
             base(logger, appConfig, depmanager, security)
         {
             _defaultRepo = deviceRepo ?? throw new ArgumentNullException(nameof(deviceRepo));
@@ -112,9 +118,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             _deviceStatusManager = devicestatusManager ?? throw new ArgumentNullException(nameof(devicestatusManager));
             _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentException(nameof(deviceOwnerRepo));
             _diagramRepo = locationDiagramRepo ?? throw new ArgumentNullException(nameof(locationDiagramRepo));
-            _notificationPublisher = notificationPublisher ?? throw new ArgumentNullException(nameof(notificationPublisher)); 
-
-
+            _notificationPublisher = notificationPublisher ?? throw new ArgumentNullException(nameof(notificationPublisher));
+            _firmwareRepo = firmwareRepo ?? throw new ArgumentNullException(nameof(firmwareRepo));
+            _appUserRepo = appUserRepo ?? throw new ArgumentNullException(nameof(appUserRepo));
         }
 
         /* 
@@ -1637,6 +1643,57 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             // TODO:YUCK!
             return InvokeResult<Device>.FromInvokeResult(result.ToInvokeResult());
+        }
+
+        public async Task<PublicDeviceInfo> GetPublicDeviceInfo(DeviceRepository deviceRepo, string deviceId)
+        {
+            var repo = GetRepo(deviceRepo);
+            var device = await repo.GetDeviceByIdAsync(deviceRepo, deviceId);
+            var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(device.DeviceType.Id);
+
+            var deviceInfo = new PublicDeviceInfo()
+            {
+                Customer = device.Customer,
+             
+                OwnerOrganziation = device.OwnerOrganization,
+                DeviceType = device.DeviceType,
+                DeviceName = device.Name,
+                DeviceRepository = device.DeviceRepository,
+                DeviceId = device.DeviceId,
+                DeviceNameLabel = device.DeviceNameLabel,
+                DeviceTypeLabel = device.DeviceTypeLabel,
+            };
+
+            if(!EntityHeader.IsNullOrEmpty(deviceType.Firmware))
+            {
+                deviceInfo.DeviceFirmware = deviceType.Firmware;
+                if (EntityHeader.IsNullOrEmpty(deviceType.FirmwareRevision))
+                {
+                    var firmware = await _firmwareRepo.GetFirmwareAsync(deviceType.Firmware.Id);
+                    deviceInfo.DeviceFirmwareRevision = firmware.DefaultRevision;
+                }
+                else
+                {
+                    deviceInfo.DeviceFirmwareRevision = deviceType.FirmwareRevision;
+                }
+            }
+
+            if(!EntityHeader.IsNullOrEmpty(device.AssignedUser))
+            {
+                var user = await _appUserRepo.FindByIdAsync(device.AssignedUser.Id);
+                deviceInfo.ContactName = user.Name;
+                deviceInfo.ContactEmail = user.Email;
+                deviceInfo.ContactPhone = user.PhoneNumber;
+            }
+            else if(!EntityHeader.IsNullOrEmpty(deviceRepo.AssignedUser))
+            {
+                var user = await _appUserRepo.FindByIdAsync(deviceRepo.AssignedUser.Id);
+                deviceInfo.ContactName = user.Name;
+                deviceInfo.ContactEmail = user.Email;
+                deviceInfo.ContactPhone = user.PhoneNumber;
+            }
+
+            return deviceInfo;
         }
     }
 }

@@ -9,6 +9,7 @@ using LagoVista.IoT.Logging.Loggers;
 using LagoVista.MediaServices.Interfaces;
 using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
+using LagoVista.UserAdmin.Interfaces.Repos.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -41,6 +42,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         Mock<IDeviceOwnerRepo> _deviceOwnerRepo = new Mock<IDeviceOwnerRepo>();
         Mock<ILocationDiagramRepo> _diagramRepo = new Mock<ILocationDiagramRepo>();
         Mock<INotificationPublisher> _notificationPublisher = new Mock<INotificationPublisher>();
+        Mock<IFirmwareRepo> _firmwarerepo = new Mock<IFirmwareRepo>();
+        Mock<IAppUserRepo> _appuserRepo = new Mock<IAppUserRepo>();
+
         [TestInitialize]
         public void Init()
         {
@@ -66,7 +70,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 _diagramRepo.Object,
                 _deviceStatusManager.Object,
                 _deviceOwnerRepo.Object,
-                _notificationPublisher.Object); 
+                _notificationPublisher.Object,
+                _appuserRepo.Object,
+                _firmwarerepo.Object); 
         }
     }
 }
