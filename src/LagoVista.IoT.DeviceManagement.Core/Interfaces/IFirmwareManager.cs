@@ -10,7 +10,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
 {
     public interface IFirmwareDownloadManager
     {
-        Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string downloadId, int? startIndex = null, int? length = null);
+        Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string type, string downloadId, int? startIndex = null, int? length = null);
         Task<InvokeResult<int>> GetFirmwareLengthAsync(string downloadId);
         Task<InvokeResult> MarkAsCompleteAsync(string downloadId);
         Task<InvokeResult> MarkAsFailedAsync(string downloadId, string err);
@@ -25,9 +25,10 @@ namespace LagoVista.IoT.DeviceManagement.Core
         Task<InvokeResult> UpdateFirmwareAsync(Firmware firmware, EntityHeader org, EntityHeader user);
         Task<InvokeResult> DeleteFirmwareAsync(string id, EntityHeader org, EntityHeader user);
         Task<bool> QueryKeyInUse(string key, EntityHeader org);
-        Task<InvokeResult<FirmwareRevision>> UploadRevision(string firmwareId, string versionCode, Stream stream, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<EntityHeader>> UploadMainRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<EntityHeader>> UploadOtaRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user);
         Task<InvokeResult<FirmwareDownloadRequest>> RequestDownloadLinkAsync(string repoId, string deviceId, string firmwareId, string revisionId, EntityHeader org, EntityHeader user);
-        Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string firmwareId, string revisionId, EntityHeader org, EntityHeader user);
+        Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string type, string firmwareId, string revisionId, EntityHeader org, EntityHeader user);
         
        
     }

@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core;
+using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
@@ -105,7 +106,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpGet("/api/firmware/download/{firmwareid}/{revisionid}")]
         public async Task<IActionResult> DownloadFirmwareAsync(string firmwareid, string revisionid)
         {
-            var firmware = await _firmwareManager.DownloadFirmwareAsync(firmwareid, revisionid, OrgEntityHeader, UserEntityHeader);
+            var firmware = await _firmwareManager.DownloadFirmwareAsync("main", firmwareid, revisionid, OrgEntityHeader, UserEntityHeader);
+
+            var ms = new MemoryStream(firmware.Result);
+            return new FileStreamResult(ms, "application/octet-stream");
+        }
+
+        /// <summary>
+        /// Download a firmware revision.
+        /// </summary>
+        /// <param name="firmwareid"></param>
+        /// <param name="revisionid"></param>
+        /// <returns></returns>
+        [HttpGet("/api/firmware/{type}/download/{firmwareid}/{revisionid}")]
+        public async Task<IActionResult> DownloadFirmwareAsync(string type, string firmwareid, string revisionid)
+        {
+            var firmware = await _firmwareManager.DownloadFirmwareAsync(type, firmwareid, revisionid, OrgEntityHeader, UserEntityHeader);
 
             var ms = new MemoryStream(firmware.Result);
             return new FileStreamResult(ms, "application/octet-stream");
@@ -118,12 +134,28 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="versioncode"></param>
         /// <param name="file"></param>
         /// <returns></returns>
-        [HttpPost("/api/firmware/{firmwareid}/{versioncode}")]
-        public async Task<InvokeResult<FirmwareRevision>> AddFirmwareRevisionAsync(string firmwareid, string versioncode, IFormFile file)
+        [HttpPost("/api/firmware/{firmwareid}/{revisionid}")]
+        public async Task<InvokeResult<EntityHeader>> AddFirmwareRevisionAsync(string firmwareid, string revisionid, IFormFile file)
         {
             using (var strm = file.OpenReadStream())
             {
-                return await _firmwareManager.UploadRevision(firmwareid, versioncode, strm, OrgEntityHeader, UserEntityHeader);
+                return await _firmwareManager.UploadMainRevision(firmwareid, revisionid, strm, OrgEntityHeader, UserEntityHeader);
+            }
+        }
+
+        /// <summary>
+        /// Firmware upload a new revision.
+        /// </summary>
+        /// <param name="firmwareid"></param>
+        /// <param name="versioncode"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost("/api/firmware/ota/{firmwareid}/{revisionid}")]
+        public async Task<InvokeResult<EntityHeader>> AddOtaFirmwareRevisionAsync(string firmwareid, string revisionid, IFormFile file)
+        {
+            using (var strm = file.OpenReadStream())
+            {
+                return await _firmwareManager.UploadOtaRevision(firmwareid, revisionid, strm, OrgEntityHeader, UserEntityHeader);
             }
         }
 
@@ -150,7 +182,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public DetailResponse<FirmwareRevision> RevisionFactory()
         {
             var response = DetailResponse<FirmwareRevision>.Create();
-            response.Model.Id = Guid.NewGuid().ToString();
+            response.Model.Id = Guid.NewGuid().ToId();
 
             return response;
         }

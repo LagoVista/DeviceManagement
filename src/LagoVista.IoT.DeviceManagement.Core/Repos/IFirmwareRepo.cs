@@ -23,8 +23,8 @@ namespace LagoVista.IoT.DeviceManagement
         Task AddDownloadRequestAsync(FirmwareDownloadRequest request);
         Task UpdateDownloadRequestAsync(FirmwareDownloadRequest request);
 
-        Task AddFirmwareRevisionAsync(string firmwareId, string revisionId, byte[] buffer);
+        Task<string> AddFirmwareRevisionAsync(string type, string firmwareId, string revisionId, byte[] buffer);
 
-        Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string firmwareId, string revisionId);
+        Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string type, string firmwareId, string revisionId);
     }
 }

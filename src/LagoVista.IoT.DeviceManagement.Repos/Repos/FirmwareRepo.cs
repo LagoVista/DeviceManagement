@@ -35,15 +35,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return CreateDocumentAsync(firmware);
         }
 
-        private string GetFileName(string firmwareId, string revisionId)
+        private string GetFileName(string type, string firmwareId, string revisionId)
         {
-            return $"{firmwareId}.{revisionId}.bin";
+            return $"{type}.{firmwareId}.{revisionId}.bin";
         }
 
-        public Task AddFirmwareRevisionAsync(string firmwareId, string revisionId, byte[] buffer)
+        public async Task<string> AddFirmwareRevisionAsync(string type, string firmwareId, string revisionId, byte[] buffer)
         {
+            var fileName = GetFileName(type, firmwareId, revisionId);
             var binRepo = new FirmwareBinRepo(_adminLogger, _repoSettings.FirmwareBinSettings);
-            return binRepo.AddBinAsync(buffer, GetFileName(firmwareId, revisionId));
+            await binRepo.AddBinAsync(buffer, fileName);
+            return fileName;
         }
 
         public Task DeleteFirmwareAsync(string id)
@@ -57,10 +59,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return downloadRequestRepo.GetRequestAsync(id);
         }
 
-        public Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string firmwareId, string revisionId)
+        public Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string type, string firmwareId, string revisionId)
         {
             var binRepo = new FirmwareBinRepo(_adminLogger, _repoSettings.FirmwareBinSettings);
-            return binRepo.GetFirmwareBinaryAsync(GetFileName(firmwareId, revisionId));
+            return binRepo.GetFirmwareBinaryAsync(GetFileName(type, firmwareId, revisionId));
         }
 
         public Task<Firmware> GetFirmwareAsync(string firmwareId)

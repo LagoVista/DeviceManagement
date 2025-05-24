@@ -19,12 +19,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
     {
         private readonly IFirmwareRepo _repo;
 
+        public const string MainFirmware = "main";
+        public const string OtaFirmware = "ota";
+
         public FirmwareDownloadManager(IFirmwareRepo repo)
         {
             _repo = repo ?? throw new ArgumentNullException();
         }
 
-        public async Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string downloadId, int? start = null, int? length = null)
+        public async Task<InvokeResult<FirmwareDownload>> DownloadFirmwareAsync(string type, string downloadId, int? start = null, int? length = null)
         {
             var request = await _repo.GetDownloadRequestAsync(downloadId);
             if (request == null)
@@ -48,7 +51,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             await _repo.UpdateDownloadRequestAsync(request);
 
-            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            var result = await _repo.GetFirmareBinaryAsync(type, request.FirmwareId, request.FirmwareRevisionId);
             if (result.Successful)
             {
                 if (start.HasValue && length.HasValue)
@@ -95,7 +98,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 throw new RecordNotFoundException(nameof(FirmwareDownloadRequest), downloadId);
             }
 
-            var result = await _repo.GetFirmareBinaryAsync(request.FirmwareId, request.FirmwareRevisionId);
+            var result = await _repo.GetFirmareBinaryAsync(OtaFirmware, request.FirmwareId, request.FirmwareRevisionId);
             if (result.Successful)
             {
                 return InvokeResult<int>.Create(result.Result.Length);
@@ -211,23 +214,32 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _repo.QueryKeyInUseAsync(key, org.Id);
         }
 
-        public async Task<InvokeResult<FirmwareRevision>> UploadRevision(string firmwareId, string versionCode, Stream stream, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<EntityHeader>> UploadMainRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user)
         {
-            var revision = new FirmwareRevision()
-            {
-                VersionCode = versionCode
-            };
-
             var bytes = new byte[stream.Length];
             stream.Position = 0;
             stream.Read(bytes, 0, (int)stream.Length);
 
-            await AuthorizeAsync(user.Id, org.Id, "UploadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revision.Id}");
+            await AuthorizeAsync(user.Id, org.Id, "UploadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionid}");
 
-            await _repo.AddFirmwareRevisionAsync(firmwareId, revision.Id, bytes);
+            var fileName = await _repo.AddFirmwareRevisionAsync(FirmwareDownloadManager.MainFirmware,firmwareId, revisionid, bytes);
 
-            return InvokeResult<FirmwareRevision>.Create(revision);
+            return InvokeResult<EntityHeader>.Create(EntityHeader.Create(Guid.NewGuid().ToId(), fileName));
         }
+
+        public async Task<InvokeResult<EntityHeader>> UploadOtaRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user)
+        {
+            var bytes = new byte[stream.Length];
+            stream.Position = 0;
+            stream.Read(bytes, 0, (int)stream.Length);
+
+            await AuthorizeAsync(user.Id, org.Id, "UploadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionid}");
+
+            var fileName = await _repo.AddFirmwareRevisionAsync(FirmwareDownloadManager.OtaFirmware, firmwareId, revisionid, bytes);
+
+            return InvokeResult<EntityHeader>.Create(EntityHeader.Create(Guid.NewGuid().ToId(), fileName));
+        }
+
 
         public async Task<InvokeResult<FirmwareDownloadRequest>> RequestDownloadLinkAsync(string deviceRepoId, string deviceId, string firmwareId, string revisionId, EntityHeader org, EntityHeader user)
         {
@@ -263,12 +275,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<FirmwareDownloadRequest>.Create(request);
         }
 
-        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string firmwareId, string revisionId, EntityHeader org, EntityHeader user)
+        public async Task<InvokeResult<byte[]>> DownloadFirmwareAsync(string type, string firmwareId, string revisionId, EntityHeader org, EntityHeader user)
         {
             var firmware = await _repo.GetFirmwareAsync(firmwareId);
             await AuthorizeAsync(user.Id, org.Id, "DownloadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionId}");
 
-            return await _repo.GetFirmareBinaryAsync(firmwareId, revisionId);
+            return await _repo.GetFirmareBinaryAsync(type,firmwareId, revisionId);
         }
     }
 }
