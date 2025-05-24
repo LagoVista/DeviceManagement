@@ -62,6 +62,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_File, FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
         public EntityHeader BinaryFile { get; set; }
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.FirmwareRevision_OtaFile, FieldType: FieldTypes.FileUpload, ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.FirmwareRevision_Status_Select, IsRequired: true, IsUserEditable: true)]
+        public EntityHeader OtaBinaryFile { get; set; }
+
         public List<string> GetFormFields()
         {
             return new List<string>()
@@ -70,6 +74,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Notes),
                 nameof(Status),
                 nameof(BinaryFile),
+                nameof(OtaBinaryFile)
             };
         }
 
