@@ -1045,7 +1045,7 @@
     <value>WiFi Connection Profile</value>
   </data>
   <data name="FirmwareRevision_File" xml:space="preserve">
-    <value>File</value>
+    <value>Main Firmware File</value>
   </data>
   <data name="Firmware_Revisions" xml:space="preserve">
     <value>Revisions</value>
@@ -1337,5 +1337,11 @@
   </data>
   <data name="Device_TestingMode" xml:space="preserve">
     <value>Testing Mode</value>
+  </data>
+  <data name="FirmwareRevision_OtaFile" xml:space="preserve">
+    <value>OTA File</value>
+  </data>
+  <data name="FirmwareRevision_OtaFile_Help" xml:space="preserve">
+    <value>The OTA (Over the Air) firmware should only include the software that runs the application on the MCU.  It should not include the bootloader. </value>
   </data>
 </root>

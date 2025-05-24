@@ -196,6 +196,6 @@ namespace LagoVista.IoT.DeviceManagement.Core
 
         Task<InvokeResult<Device>> CompleteQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
         Task<InvokeResult<Device>> RemoveQaCheckAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
-        Task<PublicDeviceInfo> GetPublicDeviceInfo(DeviceRepository deviceRepo, string deviceId);
+        Task<InvokeResult<PublicDeviceInfo>> GetPublicDeviceInfo(DeviceRepository deviceRepo, string deviceId);
     }
 }

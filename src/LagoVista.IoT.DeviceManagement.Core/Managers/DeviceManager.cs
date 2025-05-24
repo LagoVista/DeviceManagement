@@ -1645,7 +1645,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return InvokeResult<Device>.FromInvokeResult(result.ToInvokeResult());
         }
 
-        public async Task<PublicDeviceInfo> GetPublicDeviceInfo(DeviceRepository deviceRepo, string deviceId)
+        public async Task<InvokeResult<PublicDeviceInfo>> GetPublicDeviceInfo(DeviceRepository deviceRepo, string deviceId)
         {
             var repo = GetRepo(deviceRepo);
             var device = await repo.GetDeviceByIdAsync(deviceRepo, deviceId);
@@ -1693,7 +1693,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 deviceInfo.ContactPhone = user.PhoneNumber;
             }
 
-            return deviceInfo;
+            return InvokeResult<PublicDeviceInfo>.Create(deviceInfo);
         }
     }
 }

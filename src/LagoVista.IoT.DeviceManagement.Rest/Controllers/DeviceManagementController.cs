@@ -1076,12 +1076,27 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         [AllowAnonymous]
         [HttpGet("/api/public/device/{orgid}/{devicerepoid}/{deviceid}")]
-        public async Task<PublicDeviceInfo> GetPublicDeviceInfo(string orgid, string devicerepoid, string deviceid)
+        public async Task<InvokeResult<PublicDeviceInfo>> GetPublicDeviceInfo(string orgid, string devicerepoid, string deviceid)
         {
-            var orgEh = EntityHeader.Create(orgid, "publicaccess");
-            var userEh = EntityHeader.Create(Guid.Empty.ToId(), "publicaccess");
-            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, orgEh, userEh, anonymous: true);
-            return await _deviceManager.GetPublicDeviceInfo(repo, deviceid);
+            var whereAt = "1";
+            try
+            {
+                var orgEh = EntityHeader.Create(orgid, "publicaccess");
+                var userEh = EntityHeader.Create(Guid.Empty.ToId(), "publicaccess");
+                whereAt = "2";
+                var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, orgEh, userEh, anonymous: true);
+                whereAt = "3";
+                return await _deviceManager.GetPublicDeviceInfo(repo, deviceid);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("--------------------------------------------");
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Where At: {whereAt}");
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine("--------------------------------------------");
+                return InvokeResult<PublicDeviceInfo>.FromError(ex.Message, ex.StackTrace);
+            }
         }
     }
 }

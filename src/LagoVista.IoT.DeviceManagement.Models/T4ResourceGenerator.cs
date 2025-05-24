@@ -1,4 +1,4 @@
-﻿/*4/20/2025 7:02:26 AM*/
+﻿/*5/23/2025 7:02:41 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -885,6 +885,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:FirmwareRevision_Notes
 
 		public static string FirmwareRevision_Notes { get { return GetResourceString("FirmwareRevision_Notes"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_OtaFile
+
+		public static string FirmwareRevision_OtaFile { get { return GetResourceString("FirmwareRevision_OtaFile"); } }
+//Resources:DeviceManagementResources:FirmwareRevision_OtaFile_Help
+
+		public static string FirmwareRevision_OtaFile_Help { get { return GetResourceString("FirmwareRevision_OtaFile_Help"); } }
 //Resources:DeviceManagementResources:FirmwareRevision_Status
 
 		public static string FirmwareRevision_Status { get { return GetResourceString("FirmwareRevision_Status"); } }
@@ -1555,6 +1561,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string FirmwareRevision_File = "FirmwareRevision_File";
 			public const string FirmwareRevision_Help = "FirmwareRevision_Help";
 			public const string FirmwareRevision_Notes = "FirmwareRevision_Notes";
+			public const string FirmwareRevision_OtaFile = "FirmwareRevision_OtaFile";
+			public const string FirmwareRevision_OtaFile_Help = "FirmwareRevision_OtaFile_Help";
 			public const string FirmwareRevision_Status = "FirmwareRevision_Status";
 			public const string FirmwareRevision_Status_Alpha = "FirmwareRevision_Status_Alpha";
 			public const string FirmwareRevision_Status_Beta = "FirmwareRevision_Status_Beta";
