@@ -117,6 +117,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="firmwareid"></param>
         /// <param name="revisionid"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
         [HttpGet("/api/firmware/{type}/download/{firmwareid}/{revisionid}")]
         public async Task<IActionResult> DownloadFirmwareAsync(string type, string firmwareid, string revisionid)
@@ -131,7 +132,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Firmware upload a new revision.
         /// </summary>
         /// <param name="firmwareid"></param>
-        /// <param name="versioncode"></param>
+        /// <param name="revisionid"></param>
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/firmware/{firmwareid}/{revisionid}")]
@@ -147,7 +148,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Firmware upload a new revision.
         /// </summary>
         /// <param name="firmwareid"></param>
-        /// <param name="versioncode"></param>
+        /// <param name="revisionid"></param>
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost("/api/firmware/ota/{firmwareid}/{revisionid}")]
