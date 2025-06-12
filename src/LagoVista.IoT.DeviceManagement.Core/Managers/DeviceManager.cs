@@ -291,9 +291,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 generator.ShowPageNumbers = false;
                 generator.StartDocument(false, false, 1.96, 1.18);
                // generator.AddText(0.1, 0.1, device.Result.DeviceType.Text, Style.Body);
-                generator.AddText(0.1, 0.1, device.Result.Name, Style.Body);
+                generator.AddText(0.05, 0.1, device.Result.Name, Style.Body);
+                generator.AddText(0.05, 0.3, device.Result.DeviceId, Style.Body);
                 if (!String.IsNullOrEmpty(device.Result.SerialNumber))
-                    generator.AddText(0.1, 0.40, device.Result.SerialNumber, Style.Body);
+                    generator.AddText(0.1, 0.5, device.Result.SerialNumber, Style.Body);
 
                 generator.AddLogo(80, 50, 50, 0);
 
@@ -301,7 +302,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 using (var qrCodeData = qrGenerator.CreateQrCode(device.Result.ShortLinkAddress, QRCodeGenerator.ECCLevel.Q))
                 using (var qrCode = new PngByteQRCode(qrCodeData))
                 using (var qrMS = new MemoryStream(qrCode.GetGraphic(20)))
-                    generator.AddImage(0.90, 0.25, 1.25, 1.25, qrMS);
+                    generator.AddImage(1.15, 0.25, 1.1, 1.1, qrMS);
 
                 generator.Write(stream);
                 stream.Seek(0, SeekOrigin.Begin);
