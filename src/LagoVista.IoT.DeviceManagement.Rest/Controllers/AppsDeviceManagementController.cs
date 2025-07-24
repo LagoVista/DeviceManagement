@@ -420,7 +420,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 PrimaryDevice = EntityHeader.Create(newuser.Device.Id, newuser.Device.DeviceId),
                 DeviceConfiguration = EntityHeader.Create(newuser.Device.DeviceConfiguration.Id, newuser.Device.DeviceConfiguration.Text),
                 DeviceRepo = EntityHeader.Create(newuser.Device.DeviceRepository.Id, newuser.Device.DeviceRepository.Text),
-                ProfileImageUrl = new ImageDetails()
+                ProfileImage = new ImageDetails()
                 {
                     Width = 128,
                     Height = 128,
