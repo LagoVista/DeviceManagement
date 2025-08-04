@@ -440,8 +440,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Location = Location,
                 Balances = Balances,
                 DiagramReference = DiagramReference,
-                Customer = Customer
-            };
+                Customer = Customer,
+                TestingMode = TestingMode,
+                DebugMode = DebugMode,
+            }; 
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
                 summary.Firmware = $"{ActualFirmware} {ActualFirmwareRevision}";
@@ -591,6 +593,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string DeviceRepo { get; set; }
         public GeoLocation GeoLocation { get; set; }
         public EntityHeader DefaultDeviceImage { get; set; }
+
+        public bool TestingMode { get; set; }
+        public bool DebugMode { get; set; }
 
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }

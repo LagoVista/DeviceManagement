@@ -73,7 +73,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Add an image to device.
+        /// Device Management - Add an image to result.
         /// </summary>
         /// <param name="deviceid"></param>
         /// <param name="devicerepoid"></param>
@@ -90,7 +90,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Add an image to device.
+        /// Device Management - Add an image to result.
         /// </summary>
         /// <param name="deviceid"></param>
         /// <param name="devicerepoid"></param>
@@ -124,7 +124,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Add an image to device.
+        /// Device Management - Add an image to result.
         /// </summary>
         /// <param name="deviceid"></param>
         /// <param name="devicerepoid"></param>
@@ -236,7 +236,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get devices for a device repository
+        /// Device Management - Get devices for a result repository
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <returns></returns>
@@ -251,7 +251,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
        
         /// <summary>
-        /// Device Management - Get owners of the device.
+        /// Device Management - Get owners of the result.
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="deviceid"></param>
@@ -265,7 +265,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get devices for a device repository
+        /// Device Management - Get devices for a result repository
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// /// <param name="customerid"></param>
@@ -280,7 +280,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get devices for a device repository
+        /// Device Management - Get devices for a result repository
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="customerid"></param>
@@ -297,7 +297,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
 
         /// <summary>
-        /// Device Management - Get devices for a device repository that are assigned to a user.
+        /// Device Management - Get devices for a result repository that are assigned to a user.
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="userid">User Id to filter devices</param>
@@ -389,7 +389,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Search for devices by device id
+        /// Device Management - Search for devices by result id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="search">Configuration Id</param>
@@ -468,7 +468,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
        /// 
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="id">Unique id of the device</param>
+        /// <param name="id">Unique id of the result</param>
         /// <returns></returns>
         [HttpGet("/api/devices/{devicerepoid}/{id}/reset")]
         public async Task<InvokeResult> ResetDeviceDataAsync(string devicerepoid, string id)
@@ -531,11 +531,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
 
         /// <summary>
-        /// Device Management - Update Status (primary status of device)
+        /// Device Management - Update Status (primary status of result)
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="id">Unique id of device</param>
-        /// <param name="status">Status of device, (not case sensitive) see StatusTypes for device object.</param>
+        /// <param name="id">Unique id of result</param>
+        /// <param name="status">Status of result, (not case sensitive) see StatusTypes for result object.</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/{id}/status/{status}")]
         public async Task<InvokeResult> UpdateDeviceStatusAsync(string devicerepoid, string id, string status)
@@ -545,11 +545,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Update Status (custom status of device)
+        /// Device Management - Update Status (custom status of result)
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="id">Unique id of device</param>
-        /// <param name="status">Status of device, (not case sensitive) see StatusTypes for device object.</param>
+        /// <param name="id">Unique id of result</param>
+        /// <param name="status">Status of result, (not case sensitive) see StatusTypes for result object.</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/{id}/customstatus/{status}")]
         public async Task<InvokeResult> UpdateDeviceCustomStatusAsync(string devicerepoid, string id, string status)
@@ -650,7 +650,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Get device connection log
+        /// Device Management - Get result connection log
         /// </summary>
         /// <param name="devicerepoid">Device Repo Id</param>
         /// <param name="deviceid">Device Id</param>
@@ -713,7 +713,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// </summary>
         /// <param name="devicerepoid"></param>
         /// <param name="id">id</param>
-        /// <param name="newdeviceid">new device id</param>
+        /// <param name="newdeviceid">new result id</param>
         /// <returns></returns>
         [HttpGet("/api/device/{devicerepoid}/{id}/set/deviceid/{newdeviceid}")]
         public async Task<InvokeResult<Device>> ChangeDeviceIdAsync(string devicerepoid, string id, string newdeviceid)
@@ -774,7 +774,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Add Note to Device
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="deviceid">Unique id of device</param>
+        /// <param name="deviceid">Unique id of result</param>
         /// <param name="deviceNote"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/note")]
@@ -788,7 +788,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Set 
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="id">Unique id of device</param>
+        /// <param name="id">Unique id of result</param>
         /// <param name="geolocation"></param>
         /// <returns></returns>
         [HttpPost("/api/device/{devicerepoid}/{deviceid}/geolocation")]
@@ -799,10 +799,10 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Clear device error code
+        /// Device Management - Clear result error code
         /// </summary>  
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="deviceid">Unique id of device</param>
+        /// <param name="deviceid">Unique id of result</param>
         /// <param name="errorcode">Error code to clear</param>
         /// <returns></returns>
         [HttpDelete("/api/device/{devicerepoid}/{deviceid}/error/{errorcode}")]
@@ -833,7 +833,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         /// <summary>
-        /// Device Management - Create a new empty sensor that can be attached to a device.
+        /// Device Management - Create a new empty sensor that can be attached to a result.
         /// </summary>
         /// <returns></returns>
         [HttpGet("/api/device/sensor/factory")]
@@ -844,7 +844,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
 
         /// <summary>
-        /// Device Management - Create a new empty sensor that can be attached to a device.
+        /// Device Management - Create a new empty sensor that can be attached to a result.
         /// </summary>
         /// <returns></returns>
         [HttpGet("/api/device/sensordefinition/factory")]
@@ -905,6 +905,42 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             return await _deviceManager.GetDevicePinAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+        }
+
+        [HttpGet("/api/device/{devicerepoid}/{id}/testmode/{testmode}")]
+        public async Task<InvokeResult<Device>> GetPin(string devicerepoid, string id, bool testmode)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
+
+            var oldTestMode = device.TestingMode;
+            device.TestingMode = testmode;
+            device.AuditHistory.Add(new EntityChangeSet()
+            {
+                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangedBy = UserEntityHeader,
+                Changes = new List<EntityChange>()
+                {
+                    new EntityChange()
+                    {
+                         Field = nameof(Device.TestingMode),
+                         OldValue = oldTestMode.ToString(),
+                         NewValue = testmode.ToString(),
+                    }
+                }
+            });
+            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+        }
+
+
+        [HttpGet("/api/device/{devicerepoid}/{id}/debugmode/{debugmode}")]
+        public async Task<InvokeResult<Device>> DebugMode(string devicerepoid, string id, bool debugmode)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var device = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            device.Result.DebugMode = debugmode;
+            return await _deviceManager.UpdateDeviceAsync(repo, device.Result, OrgEntityHeader, UserEntityHeader);
         }
 
 
@@ -988,7 +1024,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// Device Management - Add Note to Device
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
-        /// <param name="newuser">A new user to be added as a device</param>
+        /// <param name="newuser">A new user to be added as a result</param>
         /// <param name="overwrite"></param>
         /// <returns>App User</returns>
         [OrgAdmin]

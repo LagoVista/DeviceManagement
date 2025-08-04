@@ -399,7 +399,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.DeviceIdLabel = null;
             device.DeviceNameLabel = null;
             device.DeviceTypeLabel = null;
-
             device.LastUpdatedBy = user;
             device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
 
