@@ -2,24 +2,24 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Repos</id>
-    <version>3.0.2049.0919</version>
+    <version>3.0.3043.1850</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://www.nuviot.com</projectUrl>
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
     <description>Provides Cloud Based Repositories for creating, reading, updating and managing Devices in the the LagoVista Devices, IoT and Home Automation Frameworks</description>
-    <copyright>Copyright Software Logistics - 2022</copyright>
+    <copyright>Copyright Software Logistics - 2025</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 12/26/2022 2:19:13 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 9/15/2025 10:50:39 PM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.CloudStorage" version="3.0.2049.0919" />
+        <dependency id="LagoVista.CloudStorage" version="3.0.3043.1850" />
         <dependency id="Microsoft.Azure.Devices" version="1.38.1" />
         <dependency id="WindowsAzure.Storage" version="9.3.3" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.2049.0919" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.3043.1850" />
       </group>
     </dependencies>
   </metadata>
