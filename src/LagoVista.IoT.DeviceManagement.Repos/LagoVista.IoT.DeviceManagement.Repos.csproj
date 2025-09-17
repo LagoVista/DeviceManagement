@@ -3,9 +3,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3043.1850" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3045.1352" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.38.1" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />

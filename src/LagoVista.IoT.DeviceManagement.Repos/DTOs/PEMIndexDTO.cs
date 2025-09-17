@@ -1,13 +1,13 @@
-﻿using LagoVista.Core.Validation;
+﻿using LagoVista.Core.Models;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class PEMIndexDTO : TableEntity
+    public class PEMIndexDTO : TableStorageEntity
     {
         public string MessageId { get; set; }
         public string DeviceId { get; set; }

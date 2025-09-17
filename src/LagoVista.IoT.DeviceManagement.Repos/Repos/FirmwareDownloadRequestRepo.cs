@@ -2,12 +2,8 @@
 using LagoVista.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
-using Microsoft.WindowsAzure.Storage.Blob.Protocol;
-using Microsoft.WindowsAzure.Storage.Table;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos

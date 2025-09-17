@@ -1,12 +1,15 @@
-﻿using LagoVista.Core;
-using LagoVista.Core.Models;
+﻿// If you want to test auto create of the container, uncomment this line, however once it removes the old one, you can't create a new one for
+// an underterminant amount of time.
+//#define SHOULD_TEST_CREATE_BLOB_CONTAINER
+
+
+using Azure.Storage.Blobs;
+using LagoVista.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Tests;
 using LagoVista.IoT.DeviceManagement.Repos.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Threading.Tasks;
 
@@ -19,38 +22,17 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
          * NOte if this fails run again, it will delete the test contianer after initial run, and sometimes we get a delete conflict, should never happen in production,
          * this is really an integration test, not sure how much time should be put in to fixing. */
 
+
         private static DeviceRepository GetTestDeviceRepo()
         {
             var deviceRepo = new DeviceRepository()
             {
-                DeviceArchiveStorageSettings = new ConnectionSettings()
-                {
-                    AccountId = System.Environment.GetEnvironmentVariable("AZUREACCOUNTID"),
-                    AccessKey = System.Environment.GetEnvironmentVariable("AZUREACCESSKEY"),
-                },
+                DeviceArchiveStorageSettings = CloudStorage.Utils.TestConnections.DevTableStorageDB,
                 Key = "testrepo",
                 Id = "890C3F4F480C4FF283F7C9B16CB5F368"
             };
 
             return deviceRepo;
-        }
-
-        private static async Task RemoveTestContainerAsync()
-        {
-            var settings = new ConnectionSettings()
-            {
-                AccountId = System.Environment.GetEnvironmentVariable("AZUREACCOUNTID"),
-                AccessKey = System.Environment.GetEnvironmentVariable("AZUREACCESSKEY"),
-            };
-
-            var baseuri = $"https://{settings.AccountId}.blob.core.windows.net";
-
-            var uri = new Uri(baseuri);
-            var client = new CloudBlobClient(uri, new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(settings.AccountId, settings.AccessKey));
-
-            var container = client.GetContainerReference(GetTestDeviceRepo().GetDeviceMediaStorageName());
-            var opContext = new OperationContext();
-            await container.DeleteIfExistsAsync();
         }
 
         [TestMethod]
@@ -109,10 +91,35 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
             AssertSuccessful(result);
         }
 
+#if SHOULD_TEST_CREATE_BLOB_CONTAINER
+
+        private static async Task RemoveTestContainerAsync()
+        {
+            var mediaRepo = new DeviceMediaRepo(new AdminLogger(new Utils.LogWriter()));
+
+            var accountId = CloudStorage.Utils.TestConnections.DevTableStorageDB.AccountId;
+            var accessKey = CloudStorage.Utils.TestConnections.DevTableStorageDB.AccessKey;
+            var containerName = GetTestDeviceRepo().GetDeviceMediaStorageName();
+
+            var connectionString = $"DefaultEndpointsProtocol=https;AccountName={accountId};AccountKey={accessKey}";
+            var blobClient = new BlobServiceClient(connectionString);
+            try
+            {
+                var blobContainerClient = blobClient.GetBlobContainerClient(containerName);
+                await blobContainerClient.DeleteAsync();
+            }
+            catch (Exception)
+            { 
+                /* NOP */
+            }
+
+        }
+
         [ClassCleanup]
         public static async Task TestCleanup()
         {
-            await RemoveTestContainerAsync();
+                   await RemoveTestContainerAsync();
         }
+#endif
     }
 }
