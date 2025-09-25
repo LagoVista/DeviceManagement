@@ -34,5 +34,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Title { get; set; }
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceNotes_Notes, FieldType: FieldTypes.MultiLineText, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public string Notes { get; set; }
+
+        public bool IsDraft { get; set; }
     }
 }
