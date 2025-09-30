@@ -81,6 +81,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string LocationLastUpdatedDate { get; set; }
 
 
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Language, IsRequired: true, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        public EntityHeader Language { get; set; }
+
+
         [FormField(LabelResource: UserAdminResources.Names.Common_TimeZome, IsRequired: true, FieldType: FieldTypes.Picker, ResourceType: typeof(UserAdminResources), IsUserEditable: true)]
         public EntityHeader TimeZone { get; set; }
 

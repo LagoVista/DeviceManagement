@@ -1344,4 +1344,13 @@
   <data name="FirmwareRevision_OtaFile_Help" xml:space="preserve">
     <value>The OTA (Over the Air) firmware should only include the software that runs the application on the MCU.  It should not include the bootloader. </value>
   </data>
+  <data name="Common_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Common_SelectTimeZone" xml:space="preserve">
+    <value>-select timezone-</value>
+  </data>
+  <data name="Common_SelectLanguage" xml:space="preserve">
+    <value>-select language-</value>
+  </data>
 </root>

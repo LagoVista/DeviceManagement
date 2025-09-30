@@ -1,4 +1,4 @@
-﻿/*5/23/2025 7:02:41 PM*/
+﻿/*9/30/2025 2:20:09 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -105,12 +105,21 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Common_Key_Validation
 
 		public static string Common_Key_Validation { get { return GetResourceString("Common_Key_Validation"); } }
+//Resources:DeviceManagementResources:Common_Language
+
+		public static string Common_Language { get { return GetResourceString("Common_Language"); } }
 //Resources:DeviceManagementResources:Common_Name
 
 		public static string Common_Name { get { return GetResourceString("Common_Name"); } }
 //Resources:DeviceManagementResources:Common_Notes
 
 		public static string Common_Notes { get { return GetResourceString("Common_Notes"); } }
+//Resources:DeviceManagementResources:Common_SelectLanguage
+
+		public static string Common_SelectLanguage { get { return GetResourceString("Common_SelectLanguage"); } }
+//Resources:DeviceManagementResources:Common_SelectTimeZone
+
+		public static string Common_SelectTimeZone { get { return GetResourceString("Common_SelectTimeZone"); } }
 //Resources:DeviceManagementResources:DeivceNotes_Description
 
 		public static string DeivceNotes_Description { get { return GetResourceString("DeivceNotes_Description"); } }
@@ -1301,8 +1310,11 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Common_Key = "Common_Key";
 			public const string Common_Key_Help = "Common_Key_Help";
 			public const string Common_Key_Validation = "Common_Key_Validation";
+			public const string Common_Language = "Common_Language";
 			public const string Common_Name = "Common_Name";
 			public const string Common_Notes = "Common_Notes";
+			public const string Common_SelectLanguage = "Common_SelectLanguage";
+			public const string Common_SelectTimeZone = "Common_SelectTimeZone";
 			public const string DeivceNotes_Description = "DeivceNotes_Description";
 			public const string Device_ActualFirmware = "Device_ActualFirmware";
 			public const string Device_ActualFirmware_Date = "Device_ActualFirmware_Date";
