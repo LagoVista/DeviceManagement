@@ -80,9 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
         public string LocationLastUpdatedDate { get; set; }
 
-
-
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Language, IsRequired: true, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
+        [FormField(LabelResource: DeviceManagementResources.Names.Common_Language, IsRequired: false, FieldType: FieldTypes.Picker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public EntityHeader Language { get; set; }
 
 
@@ -489,6 +487,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(Device.OfflineDistributionList),
                 nameof(Device.NotificationContacts),
                 nameof(Device.TimeZone),
+                nameof(Device.Language),
                 nameof(Device.Location),
                 nameof(Device.ShortLinkAddress),
                 nameof(Device.WatchdogNotificationUser),

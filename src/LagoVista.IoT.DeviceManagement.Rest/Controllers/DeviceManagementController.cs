@@ -44,10 +44,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
         private readonly IDistributionManager _distroManager;
         private readonly ITimeZoneServices _timeZoneServices;
+        private readonly ILocalizationService _localizationService;
         private readonly UserManager<AppUser> _userManager;
         
         public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr,
-                                          ITimeZoneServices timeZoneServices, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+                                          ILocalizationService localizationService, ITimeZoneServices timeZoneServices, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _orgManager = orgManager ?? throw new ArgumentNullException(nameof(orgManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
@@ -55,6 +56,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _remoteConfigurationManager = remoteConfigMgr ?? throw new ArgumentNullException(nameof(distroManager));
             _distroManager = distroManager ?? throw new ArgumentNullException(nameof(distroManager));
+            _localizationService = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
             _timeZoneServices = timeZoneServices ?? throw new ArgumentNullException(nameof(timeZoneServices));
         }
 
@@ -506,7 +508,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
             var device = result.Result;
             var response = DetailResponse<Device>.Create(device);
-            response.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
+            response.View[nameof(Device.TimeZone).CamelCase()].Options = _timeZoneServices.GetTimeZoneEnumOptions();
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
@@ -579,7 +581,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             form.SaveUrl = form.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             form.InsertUrl = form.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             form.UpdateUrl = form.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
-            form.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
+            form.View[nameof(Device.TimeZone).CamelCase()].Options = _timeZoneServices.GetTimeZoneEnumOptions();
 
             form.Timings.AddRange(result.Timings);
 
@@ -701,7 +703,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             response.SaveUrl = response.SaveUrl.Replace("{devicerepoid}", devicerepoid);
             response.InsertUrl = response.InsertUrl.Replace("{devicerepoid}", devicerepoid);
             response.UpdateUrl = response.UpdateUrl.Replace("{devicerepoid}", devicerepoid);
-            response.View["timeZone"].Options = _timeZoneServices.GetTimeZones().Select(tz => new EnumDescription() { Key = tz.Id, Label = tz.DisplayName, Name = tz.DisplayName }).ToList();
+            response.View[nameof(Device.TimeZone).CamelCase()].Options = _timeZoneServices.GetTimeZoneEnumOptions();
             SetAuditProperties(response.Model);
             SetOwnedProperties(response.Model);
 
