@@ -297,6 +297,23 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Device Management - Set customer location for a device
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="deviceid"></param>
+        /// <param name="customerLocation"></param>
+        /// <returns></returns>
+        [HttpPost("/api/device/{devicerepoid}/{deviceid}/location")]
+        public async Task<InvokeResult<Device>> SetDevicesForCustomerLocation([FromBody] EntityHeader customerLocation, string devicerepoid, string deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
+            result.Result.CustomerLocation = customerLocation;
+            result.Result.LastUpdatedBy = UserEntityHeader;
+            result.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            return await _deviceManager.UpdateDeviceAsync(repo, result.Result, OrgEntityHeader, UserEntityHeader);
+        }
 
         /// <summary>
         /// Device Management - Get devices for a result repository that are assigned to a user.
