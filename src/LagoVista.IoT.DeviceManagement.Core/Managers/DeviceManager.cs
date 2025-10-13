@@ -898,6 +898,55 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return result.ToInvokeResult();
         }
 
+        public async Task<InvokeResult> ResetDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
+        {
+
+            var sw = Stopwatch.StartNew();
+            var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (result == null)
+            {
+                return InvokeResult.FromErrors(Resources.ErrorCodes.CouldNotFindDeviceWithId.ToErrorMessage());
+            }
+
+            result.Timings.Add(new ResultTiming() { Key = "getdevice", Ms = sw.ElapsedMilliseconds });
+            sw.Restart();
+            if (!result.Successful)
+            {
+                return result.ToInvokeResult();
+            }
+
+            var device = result.Result;
+            await AuthorizeAsync(device, AuthorizeActions.Update, user, org);
+
+            var deviceStates = await _deviceConfigHelper.GetCustomDeviceStatesAsync(device.DeviceConfiguration.Id, org, user);
+            if (deviceStates == null)
+            {
+                return InvokeResult.FromError("Could not load device states for device configuration.");
+            }
+
+            result.Timings.Add(new ResultTiming() { Key = "getcustomstatus", Ms = sw.ElapsedMilliseconds });
+            sw.Restart();
+
+            var newDeviceState = deviceStates.Value.States.Where(st => st.IsInitialState).FirstOrDefault();
+            if (newDeviceState == null)
+            {
+                return InvokeResult.FromError("Invalid status.");
+            }
+
+            device.CustomStatus = EntityHeader.Create(newDeviceState.Key, newDeviceState.Name);
+            device.LastUpdatedBy = user;
+            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+
+            var repo = GetRepo(deviceRepo);
+            await repo.UpdateDeviceAsync(deviceRepo, device);
+
+            result.Timings.Add(new ResultTiming() { Key = "udpatedevice", Ms = sw.ElapsedMilliseconds });
+
+            return result.ToInvokeResult();
+
+        }
+
+
         public async Task<InvokeResult> UpdateGeoLocationAsync(DeviceRepository deviceRepo, string id, GeoLocation geoLocation, EntityHeader org, EntityHeader user)
         {
             if (geoLocation == null)

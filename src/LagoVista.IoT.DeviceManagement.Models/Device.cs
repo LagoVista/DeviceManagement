@@ -446,6 +446,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Customer = Customer,
                 TestingMode = TestingMode,
                 DebugMode = DebugMode,
+                CustomerLocation = CustomerLocation,
             }; 
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
@@ -600,6 +601,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public bool TestingMode { get; set; }
         public bool DebugMode { get; set; }
+        public EntityHeader CustomerLocation { get; set; }
 
         public EntityHeader Location { get; set; }
         public EntityHeader CustomStatus { get; set; }
@@ -637,6 +639,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public OrgLocationDiagramReference DiagramReference { get; set; }
 
+        public EntityHeader CustomerLocation { get; set; }
+
         public static DeviceForNotification FromDevice(LagoVista.IoT.DeviceManagement.Core.Models.Device device)
         {
             return new DeviceForNotification()
@@ -645,6 +649,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 Name = device.Name,
                 Id = device.Id,
                 GeoLocation = device.GeoLocation,
+                CustomerLocation = device.CustomerLocation,
                 Heading = device.Heading,
                 Attributes = device.Attributes,
                 Properties = device.Properties,

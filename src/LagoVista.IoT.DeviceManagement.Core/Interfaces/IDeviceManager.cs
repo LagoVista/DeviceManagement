@@ -89,6 +89,19 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <returns></returns>
         Task<InvokeResult> UpdateDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, string customstatus, EntityHeader org, EntityHeader user);
 
+
+        /// <summary>
+        /// Get the Device by the unique identifier that was generated for the device (not device id)
+        /// </summary>
+        /// <param name="deviceRepo">Repository connection data</param>
+        /// <param name="id">Unique id for the device</param>
+        /// <param name="org">User Org</param>
+        /// <param name="user">User</param>
+        /// <returns></returns>
+        Task<InvokeResult> ResetDeviceCustomStatusAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
+
+        /// <summary
+
         /// <summary>
         /// Get the Device by the unique identifier that was generated for the device (not device id)
         /// </summary>

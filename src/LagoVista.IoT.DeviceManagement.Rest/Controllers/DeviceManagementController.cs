@@ -513,6 +513,22 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
 
         /// <summary>
+        /// Device Management - Set the device back the normal status flow.
+        /// </summary>
+        /// <param name="devicerepoid">Device Repository Id</param>
+        /// <param name="deviceid">Custom Status for Device</param>
+        /// <returns></returns>
+        [HttpGet("/api/devices/{devicerepoid}/{deviceid}/customstatus/reset")]
+        public async Task<InvokeResult> ResetDeviceCustomStatus(string devicerepoid, string deviceid)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.ResetDeviceCustomStatusAsync(repo, deviceid,  OrgEntityHeader, UserEntityHeader);
+            return result;
+        }
+
+
+
+        /// <summary>
         /// Device Management - Get By Id
         /// </summary>
         /// <param name="devicerepoid">Device Repository Id</param>
@@ -927,7 +943,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
         [HttpGet("/api/device/{devicerepoid}/{id}/testmode/{testmode}")]
-        public async Task<InvokeResult<Device>> GetPin(string devicerepoid, string id, bool testmode)
+        public async Task<InvokeResult<Device>> SetDeviceTestMode(string devicerepoid, string id, bool testmode)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
@@ -946,6 +962,33 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                          Field = nameof(Device.TestingMode),
                          OldValue = oldTestMode.ToString(),
                          NewValue = testmode.ToString(),
+                    }
+                }
+            });
+            return await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
+        }
+
+
+        [HttpGet("/api/device/{devicerepoid}/{id}/name")]
+        public async Task<InvokeResult<Device>> SetDeviceName(string devicerepoid, string id, string devicename)
+        {
+            var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+            var result = await _deviceManager.GetDeviceByIdAsync(repo, id, OrgEntityHeader, UserEntityHeader);
+            var device = result.Result;
+            var oldDeviceName = device.Name;
+            device.Name = devicename;
+
+            device.AuditHistory.Add(new EntityChangeSet()
+            {
+                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangedBy = UserEntityHeader,
+                Changes = new List<EntityChange>()
+                {
+                    new EntityChange()
+                    {
+                         Field = nameof(Device.Name),
+                         OldValue = oldDeviceName,
+                         NewValue = device.Name,
                     }
                 }
             });
