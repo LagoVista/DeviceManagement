@@ -1,4 +1,5 @@
-﻿using LagoVista.Core.Interfaces;
+﻿using LagoVista.Core;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.Managers;
 using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
@@ -53,68 +54,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult.FromErrors(new ErrorMessage("Respository Type is a Required Field."));
             }
 
-            //TODO: When we create a stand-along repo for a user, we will allocate it here.
-            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
-                repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
-            {
-                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
-                {
-                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
-                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
-                };
+            SetDeviceRepositoryConnectionSettings(repo);
 
-                repo.PEMStorageSettings = new ConnectionSettings()
-                {
-                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
-                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
-                };
-
-                repo.DeviceStorageSettings = new ConnectionSettings()
-                {
-                    Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
-                    AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
-                    ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
-                };
-
-                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
-                {
-                    Uri = _deviceMgmtSettings.DefaultDeviceTableStorage.Uri,
-                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey,
-                    ResourceName = $"Watchdlog{repo.Id}{repo.Key}"
-                };
-            }
-            else if (repo.RepositoryType.Value == RepositoryTypes.Local)
-            {
-
-                //TODO: when we update this for remote server access, we need to figure out what if anything needs to be secured.
-                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
-                {
-                    Uri = "mysql",
-                    ResourceName = "nuviot",
-                    Port = "3306"
-                };
-
-                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
-                {
-                    Uri = "mysql",
-                    ResourceName = "nuviot",
-                    Port = "3306"
-                };
-
-                repo.PEMStorageSettings = new ConnectionSettings()
-                {
-                    Uri = "mongodb",
-                    Port = "27017",
-                    ResourceName = "nuviot"
-                };
-
-                repo.DeviceStorageSettings = new ConnectionSettings()
-                {
-                    Uri = "mongodb",
-                    ResourceName = "nuviot",
-                    Port = "27017"
-                };
-            }
             /* If repository type == dedicated, values must be provided when inserting the record, this is confirmed on the validation in the next step */
 
             ValidationCheck(repo, Actions.Create);
@@ -283,6 +224,95 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return _deviceRepositoryRepo.QueryRepoKeyInUseAsync(key, org.Id);
         }
 
+        public async Task<InvokeResult<DeviceRepository>> ResetConnectionSettingsAsync(string repoId, EntityHeader org, EntityHeader user)
+        {
+            var repo = await GetDeviceRepositoryAsync(repoId, org, user);
+            repo.LastUpdatedBy = user;
+            repo.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+
+            SetDeviceRepositoryConnectionSettings(repo);
+            repo.AuditHistory.Add(new EntityChangeSet()
+            {
+                 ChangeDate =repo.LastUpdatedDate,
+                 ChangedBy = user,
+                 Changes = new List<EntityChange>()
+                 {
+                    new EntityChange()
+                    {
+                        Field = "ConnectionSettings",
+                        OldValue= "Invalid",
+                        NewValue = "Valid",
+                        Notes = "System reset connection settings to default values."
+                    }
+                 }
+            });
+            await UpdateDeviceRepositoryAsync(repo, org, user);
+        
+        
+            return InvokeResult<DeviceRepository>.Create(repo);  
+        }
+
+        private void SetDeviceRepositoryConnectionSettings(DeviceRepository repo)
+        {
+            if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
+             repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
+            {
+                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                {
+                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                };
+
+                repo.PEMStorageSettings = new ConnectionSettings()
+                {
+                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                };
+
+                repo.DeviceStorageSettings = new ConnectionSettings()
+                {
+                    Uri = _deviceMgmtSettings.DefaultDeviceStorage.Uri,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
+                    ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
+                };
+
+                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
+                {
+                    Uri = _deviceMgmtSettings.DefaultDeviceTableStorage.Uri,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey,
+                    ResourceName = $"Watchdlog{repo.Id}{repo.Key}"
+                };
+            }
+            else if (repo.RepositoryType.Value == RepositoryTypes.Local)
+            {
+                repo.DeviceArchiveStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mysql",
+                    ResourceName = "nuviot",
+                    Port = "3306"
+                };
+
+                repo.DeviceWatchdogStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mysql",
+                    ResourceName = "nuviot",
+                    Port = "3306"
+                };
+                repo.PEMStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mongodb",
+                    Port = "27017",
+                    ResourceName = "nuviot"
+                };
+                repo.DeviceStorageSettings = new ConnectionSettings()
+                {
+                    Uri = "mongodb",
+                    ResourceName = "nuviot",
+                    Port = "27017"
+                };
+            }
+        }
+
         public async Task<InvokeResult> UpdateDeviceRepositoryAsync(DeviceRepository repo, EntityHeader org, EntityHeader user)
         {
             ValidationCheck(repo, Actions.Update);
@@ -298,6 +328,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
                         AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
                     };
+
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Table Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.PEMStorageSettingsSecureId))
@@ -307,6 +339,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
                         AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
                     };
+
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Pem Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.DeviceStorageSecureSettingsId))
@@ -317,6 +351,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         AccessKey = _deviceMgmtSettings.DefaultDeviceStorage.AccessKey,
                         ResourceName = _deviceMgmtSettings.DefaultDeviceStorage.ResourceName
                     };
+
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Device Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSecureId))
@@ -327,6 +363,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey,
                         ResourceName = $"Watchdlog{repo.Id}{repo.Key}"
                     };
+
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Device Watchdog Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
             }
             else if (repo.RepositoryType.Value == RepositoryTypes.Local)
@@ -341,6 +379,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         ResourceName = "nuviot",
                         Port = "3306"
                     };
+
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Table Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.DeviceWatchdogStorageSecureId))
@@ -351,6 +391,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         ResourceName = "nuviot",
                         Port = "3306"
                     };
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Device Watchdog Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.PEMStorageSettingsSecureId))
@@ -361,6 +402,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         Port = "27017",
                         ResourceName = "nuviot"
                     };
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Pem Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
 
                 if (String.IsNullOrEmpty(repo.DeviceStorageSecureSettingsId))
@@ -371,10 +413,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         ResourceName = "nuviot",
                         Port = "27017"
                     };
+                    _adminLogger.Trace($"[DeviceRepositoryManager__UpdateDeviceRepositoryAsync] - Missing Pem Storage Settings for repo {repo.Name}, created defaults", repo.Id.ToKVP("repoId"), org.Text.ToKVP("org"), repo.RepositoryType.Text.ToKVP("repoType"));
                 }
             }
 
-            if(repo.DeviceAccountConnection != null && !String.IsNullOrEmpty(repo.DeviceAccountConnection.Password))
+            var changes = new List<EntityChange>();
+
+            if (repo.DeviceAccountConnection != null && !String.IsNullOrEmpty(repo.DeviceAccountConnection.Password))
             {
                 var addSecretResult = await _secureStorage.AddSecretAsync(org, repo.DeviceAccountConnection.Password);
 
@@ -382,6 +427,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 {
                     await _secureStorage.RemoveSecretAsync(org, repo.DeviceAccountPasswordSecureId);
                 }
+
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.DeviceAccountPasswordSecureId),
+                    OldValue = repo.DeviceAccountPasswordSecureId,
+                    NewValue = addSecretResult.Result
+                });
 
                 repo.DeviceAccountPasswordSecureId = addSecretResult.Result;
                 repo.DeviceAccountConnection.Password = null;
@@ -400,6 +452,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     await _secureStorage.RemoveSecretAsync(org, repo.SecureAccessKeyId);
                 }
 
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.SecureAccessKeyId),
+                    OldValue = repo.SecureAccessKeyId,
+                    NewValue = addSecretResult.Result
+                });
+
                 repo.SecureAccessKeyId = addSecretResult.Result;
                 repo.AccessKey = null;
             }
@@ -417,6 +476,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     await _secureStorage.RemoveSecretAsync(org, repo.DeviceArchiveStorageSettingsSecureId);
                 }
 
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.DeviceArchiveStorageSettingsSecureId),
+                    OldValue = repo.DeviceArchiveStorageSettingsSecureId,
+                    NewValue = addKeyResult.Result
+                });
+
                 repo.DeviceArchiveStorageSettingsSecureId = addKeyResult.Result;
                 repo.DeviceArchiveStorageSettings = null;
             }
@@ -433,6 +499,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 {
                     await _secureStorage.RemoveSecretAsync(org, repo.DeviceStorageSecureSettingsId);
                 }
+
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.DeviceStorageSecureSettingsId),
+                    OldValue = repo.DeviceStorageSecureSettingsId,
+                    NewValue = addKeyResult.Result
+                });
 
                 repo.DeviceStorageSecureSettingsId = addKeyResult.Result;
                 repo.DeviceStorageSettings = null;
@@ -453,6 +526,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 repo.PEMStorageSettingsSecureId = addKeyResult.Result;
                 repo.PEMStorageSettings = null;
+
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.PEMStorageSettingsSecureId),
+                    OldValue = repo.PEMStorageSettingsSecureId,
+                    NewValue = addKeyResult.Result
+                });
             }
 
             if (repo.DeviceWatchdogStorageSettings != null)
@@ -470,7 +550,24 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 repo.DeviceWatchdogStorageSecureId = addKeyResult.Result;
                 repo.DeviceWatchdogStorageSettings = null;
-            }   
+
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.DeviceWatchdogStorageSecureId),
+                    OldValue = repo.DeviceWatchdogStorageSecureId,
+                    NewValue = addKeyResult.Result
+                });
+            }
+
+            if(changes.Count > 0)
+            {
+                repo.AuditHistory.Add(new EntityChangeSet()
+                {
+                    ChangeDate = DateTime.UtcNow.ToJSONString(),
+                    ChangedBy = user,
+                    Changes = changes
+                });
+            }
 
             await _deviceRepositoryRepo.UpdateDeviceRepositoryAsync(repo);
             return InvokeResult.Success;

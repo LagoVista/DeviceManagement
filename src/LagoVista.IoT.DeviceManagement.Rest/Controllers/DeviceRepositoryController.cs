@@ -114,6 +114,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         }
 
 
+        [HttpGet("/api/device/{devicerepoid}/connectionsettings/reset")]
+        public async Task<InvokeResult<DeviceRepository>> ResetConnectionSettings(string devicerepoid)
+        {
+            return await _deviceRepositoryManager.ResetConnectionSettingsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
+        }
+
+
         /// <summary>
         /// Device Repositories - Key In Use
         /// </summary>
