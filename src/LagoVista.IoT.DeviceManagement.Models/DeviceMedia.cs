@@ -1,4 +1,8 @@
-﻿using LagoVista.Core.Models.Geo;
+// --- BEGIN CODE INDEX META (do not edit) ---
+// ContentHash: 9f3093119cd3625d11421037affbedae58293e23de0e0266b4a7076a041d2a26
+// IndexVersion: 0
+// --- END CODE INDEX META ---
+using LagoVista.Core.Models.Geo;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {

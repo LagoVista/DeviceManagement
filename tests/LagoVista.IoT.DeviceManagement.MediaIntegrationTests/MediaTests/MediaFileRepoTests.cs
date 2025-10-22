@@ -1,4 +1,8 @@
-﻿// If you want to test auto create of the container, uncomment this line, however once it removes the old one, you can't create a new one for
+// --- BEGIN CODE INDEX META (do not edit) ---
+// ContentHash: be3598b05688bc20f37277eb2ddb8a15b68b0f76bb516041f9cd1f53e6ccb1a5
+// IndexVersion: 0
+// --- END CODE INDEX META ---
+// If you want to test auto create of the container, uncomment this line, however once it removes the old one, you can't create a new one for
 // an underterminant amount of time.
 //#define SHOULD_TEST_CREATE_BLOB_CONTAINER
 

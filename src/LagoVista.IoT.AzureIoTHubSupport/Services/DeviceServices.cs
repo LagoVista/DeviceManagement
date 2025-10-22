@@ -1,4 +1,8 @@
-﻿using LagoVista.IoT.AzureIoTHubSupport.Models;
+// --- BEGIN CODE INDEX META (do not edit) ---
+// ContentHash: 42392e79f5b3c9ba247987d26a5c2292d9f2efbf766ec4f1b5d48709165db509
+// IndexVersion: 0
+// --- END CODE INDEX META ---
+using LagoVista.IoT.AzureIoTHubSupport.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
