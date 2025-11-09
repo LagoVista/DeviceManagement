@@ -7,7 +7,7 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3043.1850" />
+    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3097.0925" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />

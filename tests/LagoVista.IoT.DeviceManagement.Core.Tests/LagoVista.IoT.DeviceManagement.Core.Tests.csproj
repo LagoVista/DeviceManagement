@@ -7,10 +7,10 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3043.1850" />
+    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3097.0925" />
 
   </ItemGroup>
   <ItemGroup>

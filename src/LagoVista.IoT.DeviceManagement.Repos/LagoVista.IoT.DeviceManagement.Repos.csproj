@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3045.1352" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3097.0925" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.38.1" />
   </ItemGroup>
   <ItemGroup>

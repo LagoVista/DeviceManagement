@@ -9,14 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Retry" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="3.0.3043.1850" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="3.0.3043.1850" />
+    <PackageReference Include="LagoVista.Core.Retry" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="3.0.3097.0925" />
+    <PackageReference Include="LagoVista.IoT.Logging" Version="3.0.3097.0925" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
 
-    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3043.1850" />
+    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3097.0925" />
   </ItemGroup>
 
   <ItemGroup>
