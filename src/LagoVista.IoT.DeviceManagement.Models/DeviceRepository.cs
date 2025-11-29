@@ -104,6 +104,10 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public String DeviceArchiveStorageSettingsSecureId { get; set; }
 
 
+        public ConnectionSettings SensorArchiveStorageSettings { get; set; }
+        public String SensorArchiveStorageSettingsSecureId { get; set; }
+
+
         public ConnectionSettings PEMStorageSettings { get; set; }
         public String PEMStorageSettingsSecureId { get; set; }
 
@@ -259,6 +263,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         }
 
         public string GetDeviceArchiveStorageName()
+        {
+            return GetMonthTableName("devicearchives");
+        }
+
+        public string GetSensorDataStorageName()
         {
             return GetMonthTableName("devicearchives");
         }

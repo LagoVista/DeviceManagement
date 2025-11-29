@@ -27,6 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
             services.AddTransient<IDeviceRepositoryManagerRemote, DeviceRepositoryManager>();
             services.AddTransient<IFirmwareManager, FirmwareManager>();
             services.AddTransient<IDeviceExceptionManager, DeviceExceptionManager>();
+            services.AddTransient<ISensorDataArchiveManager, SensorDataArchiveManager>();
             services.AddTransient<IDeviceStatusManager, DeviceStatusManager>();
         }
 

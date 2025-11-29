@@ -74,6 +74,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             repo.DeviceArchiveStorageSettingsSecureId = addKeyResult.Result;
             repo.DeviceArchiveStorageSettings = null;
 
+            addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.SensorArchiveStorageSettings));
+            if (!addKeyResult.Successful)
+            {
+                return addKeyResult.ToInvokeResult();
+            }
+
+            repo.SensorArchiveStorageSettingsSecureId = addKeyResult.Result;
+            repo.SensorArchiveStorageSettings = null;
+
             addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.DeviceStorageSettings));
             if (!addKeyResult.Successful)
             {
@@ -261,6 +270,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
              repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
+                repo.SensorArchiveStorageSettings = new ConnectionSettings()
+                {
+                    AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                    AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                };
+
                 repo.DeviceArchiveStorageSettings = new ConnectionSettings()
                 {
                     AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
@@ -325,6 +340,16 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             if (repo.RepositoryType.Value == RepositoryTypes.NuvIoT ||
                repo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
             {
+                if (String.IsNullOrEmpty(repo.SensorArchiveStorageSettingsSecureId))
+                {
+
+                    repo.SensorArchiveStorageSettings = new ConnectionSettings()
+                    {
+                        AccountId = _deviceMgmtSettings.DefaultDeviceTableStorage.AccountId,
+                        AccessKey = _deviceMgmtSettings.DefaultDeviceTableStorage.AccessKey
+                    };
+                }
+
                 if (String.IsNullOrEmpty(repo.DeviceArchiveStorageSettingsSecureId))
                 {
                     repo.DeviceArchiveStorageSettings = new ConnectionSettings()
@@ -467,6 +492,31 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 repo.AccessKey = null;
             }
 
+            if (repo.SensorArchiveStorageSettings != null)
+            {
+                var addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.SensorArchiveStorageSettings));
+                if (!addKeyResult.Successful)
+                {
+                    return addKeyResult.ToInvokeResult();
+                }
+
+                if (!string.IsNullOrEmpty(repo.SensorArchiveStorageSettingsSecureId))
+                {
+                    await _secureStorage.RemoveSecretAsync(org, repo.SensorArchiveStorageSettingsSecureId);
+                }
+
+                changes.Add(new EntityChange()
+                {
+                    Field = nameof(DeviceRepository.SensorArchiveStorageSettingsSecureId),
+                    OldValue = repo.SensorArchiveStorageSettingsSecureId,
+                    NewValue = addKeyResult.Result
+                });
+
+                repo.SensorArchiveStorageSettingsSecureId = addKeyResult.Result;
+                repo.SensorArchiveStorageSettings = null;
+            }
+
+
             if (repo.DeviceArchiveStorageSettings != null)
             {
                 var addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(repo.DeviceArchiveStorageSettings));
@@ -584,6 +634,41 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             if (deviceRepo.RepositoryType.Value != RepositoryTypes.Local)
             {
+                if (!string.IsNullOrEmpty(deviceRepo.SensorArchiveStorageSettingsSecureId))
+                {
+                    var sensorSecretRsult = await _secureStorage.GetSecretAsync(org, deviceRepo.SensorArchiveStorageSettingsSecureId, user);
+                    if (!sensorSecretRsult.Successful)
+                    {
+                        throw new Exception($"Could not restore secret for sensor secret connection settings {deviceRepo.SensorArchiveStorageSettingsSecureId} ");
+                    }
+
+                    deviceRepo.SensorArchiveStorageSettings = JsonConvert.DeserializeObject<ConnectionSettings>(sensorSecretRsult.Result);
+                }
+                else
+                {
+                    var repoSettings = _deviceMgmtSettings.DefaultDeviceTableStorage;
+
+                    var defaultSettings = new ConnectionSettings()
+                    {
+                        AccountId = repoSettings.AccountId,
+                        AccessKey = repoSettings.AccessKey
+                    };
+
+                    deviceRepo.SensorArchiveStorageSettings = defaultSettings;
+
+                    var addKeyResult = await _secureStorage.AddSecretAsync(org, JsonConvert.SerializeObject(deviceRepo.SensorArchiveStorageSettings));
+                    if (!addKeyResult.Successful)
+                    {
+                        throw new Exception($"Could not store secret for sensor storage  Connection Settings");
+                    }
+                    deviceRepo.SensorArchiveStorageSettingsSecureId = addKeyResult.Result;
+                    await UpdateDeviceRepositoryAsync(deviceRepo, org, user);
+                    // Updating will save the value if it's there and then clear it, so we need to set it back here.
+                    // this is an issue if we change the settings on existing repos that didn't initially have those values set
+                    // sorta hacky.
+                    deviceRepo.SensorArchiveStorageSettings = defaultSettings; 
+                }
+
                 var getSettingsResult = await _secureStorage.GetSecretAsync(org, deviceRepo.PEMStorageSettingsSecureId, user);
                 if (!getSettingsResult.Successful)
                 {
@@ -626,6 +711,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                     deviceRepo.AccessKey = getSettingsResult.Result;
                 }
+
+                
             }
             return deviceRepo;
         }
