@@ -269,7 +269,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public string GetSensorDataStorageName()
         {
-            return GetMonthTableName("devicearchives");
+            return GetTableName("sensordataarchive");
         }
 
         public string GetDeviceConnectionEventStorageName()
