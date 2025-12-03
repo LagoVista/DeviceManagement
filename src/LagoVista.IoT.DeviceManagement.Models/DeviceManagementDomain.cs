@@ -10,9 +10,8 @@ namespace LagoVista.IoT.DeviceManagement.Core
 {
     [DomainDescriptor]
     public class DeviceManagementDomain
-    {        
+    {
         public const string DeviceManagement = "Device Managent";
-
         [DomainDescription(DeviceManagement)]
         public static DomainDescription DeploymentAdminDescription
         {
@@ -20,7 +19,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
             {
                 return new DomainDescription()
                 {
-                    Description = "Models, Managers and Business Logics for the Management of Devices.",
+                    Description = "Manage devices, their data, status, firmware, and related configurations.",
                     DomainType = DomainDescription.DomainTypes.BusinessObject,
                     Name = "Device Management",
                     CurrentVersion = new LagoVista.Core.Models.VersionInfo()

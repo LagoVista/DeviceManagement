@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AttributeValue_Description" xml:space="preserve">
-    <value>An Attribute Value is a value that comes from the device or is derived from a device workflow</value>
+    <value>Represents a single data point that is either reported by a device or derived from a device workflow.</value>
   </data>
   <data name="AttributeValue_Help" xml:space="preserve">
-    <value>An Attribute Value is a value that comes from the device or is derived from a device workflow</value>
+    <value>A data value reported by a device or derived from a device workflow.</value>
   </data>
   <data name="AttributeValue_Key" xml:space="preserve">
     <value>Key</value>
@@ -139,7 +139,7 @@
     <value>State</value>
   </data>
   <data name="AttributeValue_Title" xml:space="preserve">
-    <value>Attriubte Value</value>
+    <value>Attribute Value</value>
   </data>
   <data name="AttributeValue_Type" xml:space="preserve">
     <value>Type</value>
@@ -163,10 +163,10 @@
     <value>User Entered Note on a Device</value>
   </data>
   <data name="DeviceGroup_Description" xml:space="preserve">
-    <value>A group of devices is a user created list of devices that can be queried together and be used for different purposes.</value>
+    <value>Create and manage custom device groups so you can query and work with multiple devices together for different purposes.</value>
   </data>
   <data name="DeviceGroup_Help" xml:space="preserve">
-    <value>A group of devices is a user created list of devices that can be queried together and be used for different purposes.</value>
+    <value>User-defined collections of devices that can be queried and used together for various purposes.</value>
   </data>
   <data name="DeviceGroup_Repository" xml:space="preserve">
     <value>Device Repository</value>
@@ -178,10 +178,10 @@
     <value>Device Group</value>
   </data>
   <data name="DeviceNotes_Description" xml:space="preserve">
-    <value>User Entered Note on a Device</value>
+    <value>Create and view notes that users have added for this device.</value>
   </data>
   <data name="DeviceNotes_Help" xml:space="preserve">
-    <value>User Entered Note on a Device</value>
+    <value>User-entered notes associated with a specific device.</value>
   </data>
   <data name="DeviceNotes_Notes" xml:space="preserve">
     <value>Notes</value>
@@ -256,7 +256,7 @@
     <value>Actual firmware revision</value>
   </data>
   <data name="Device_Help" xml:space="preserve">
-    <value>Devices are what NuvIoT is all about, once you have configured a Device Type, you can create devices that represent pyhsical devices that have been installed in the field that send data to the cloud.</value>
+    <value>Physical equipment deployed in the field that sends data to the cloud. After you configure a Device Type, you can create individual devices based on that type.</value>
   </data>
   <data name="Device_inputCommandEndPoints" xml:space="preserve">
     <value>Input Command Endpoints</value>
@@ -310,10 +310,10 @@
     <value>Authorization Key 2</value>
   </data>
   <data name="Device_Repo_Description" xml:space="preserve">
-    <value>You use the Device Repository to allocate storage for your devices and device data.</value>
+    <value>Use a device repository to define where devices and their data are stored, how device IDs are generated, and how notifications and responsibilities are managed for the devices in this repository.</value>
   </data>
   <data name="Device_Repo_Help" xml:space="preserve">
-    <value>You use the Device Repository to allocate storage for your devices and device data.</value>
+    <value>Configure how devices and their data are stored, organized, and managed.</value>
   </data>
   <data name="Device_Repo_RepoType" xml:space="preserve">
     <value>Repository Type</value>
@@ -583,10 +583,10 @@
     <value>Time Stamp</value>
   </data>
   <data name="FirmwareRevision_Description" xml:space="preserve">
-    <value>Specific versions of firmware that can be downloaded.</value>
+    <value>View, select, and manage individual firmware versions that are available for download.</value>
   </data>
   <data name="FirmwareRevision_Help" xml:space="preserve">
-    <value>Specific versions of firmware that can be downloaded.</value>
+    <value>Represents a specific firmware version that can be made available for download and distribution.</value>
   </data>
   <data name="FirmwareRevision_Notes" xml:space="preserve">
     <value>Notes</value>
@@ -622,7 +622,7 @@
     <value>Version codes must be three digits as in 1.2.3</value>
   </data>
   <data name="Firmware_Description" xml:space="preserve">
-    <value>Firmware are revisions of applications that are intended to be ran on remote devices.</value>
+    <value>View and manage the firmware installed on remote devices.</value>
   </data>
   <data name="Firmware_DeviceType" xml:space="preserve">
     <value>Device Type</value>
@@ -631,7 +631,7 @@
     <value>Firmware SKU</value>
   </data>
   <data name="Firmware_Help" xml:space="preserve">
-    <value>Firmware are revisions of applications that are intended to be ran on remote devices.</value>
+    <value>Software revisions that run on remote devices.</value>
   </data>
   <data name="Firmware_Title" xml:space="preserve">
     <value>Firmware</value>
@@ -763,7 +763,7 @@
     <value>Default Low Threshold</value>
   </data>
   <data name="SensorDefinition_Description" xml:space="preserve">
-    <value>A sensor definition will describe attributes of a sensor that potentially can be attached to a device with this device configuration</value>
+    <value>Configure how this sensor connects to the control hardware, how its output values are interpreted and scaled, and how it behaves when attached to a device in this configuration.</value>
   </data>
   <data name="SensorDefinition_HasConfigurableThreshold_HighValue" xml:space="preserve">
     <value>Has High Value Threshold Detection</value>
@@ -778,7 +778,7 @@
     <value>Provide a user interface mechanism to generate an error condition when a value is below a threshold.</value>
   </data>
   <data name="SensorDefinition_Help" xml:space="preserve">
-    <value>A sensor definition will describe attributes of a sensor that potentially can be attached to a device with this device configuration</value>
+    <value>Defines the properties and behavior of a sensor that can be associated with a device in this configuration.</value>
   </data>
   <data name="SensorDefinition_IconKey_Help" xml:space="preserve">
     <value>Enter a value that can be used to look up a font icon to be displayed for this value.  This will generally be used in custom applications.</value>
@@ -943,13 +943,13 @@
     <value>Calibration</value>
   </data>
   <data name="Sensor_Description" xml:space="preserve">
-    <value>A sensor is an electrical or mechanical device that collects data for an IoT device.</value>
+    <value>A sensor is an electrical or mechanical device that measures physical conditions (such as temperature, pressure, or motion) and sends the resulting data to an IoT system or device for processing or monitoring.</value>
   </data>
   <data name="Sensor_DeviceScaler" xml:space="preserve">
     <value>Device Scaler</value>
   </data>
   <data name="Sensor_Help" xml:space="preserve">
-    <value>A sensor is an electrical or mechanical device that collects data for an IoT device.</value>
+    <value>Device that measures physical conditions and sends the resulting data to an IoT system or device.</value>
   </data>
   <data name="Sensor_HighThreshold" xml:space="preserve">
     <value>High Threshold</value>
@@ -1102,7 +1102,7 @@
     <value>Devices</value>
   </data>
   <data name="PEMIndex_Description" xml:space="preserve">
-    <value>Pipeline Execution Messages as Processed by Runtime Engine</value>
+    <value>Use this page to view messages generated as the pipeline runs through the runtime engine.</value>
   </data>
   <data name="PEMIndex_Title" xml:space="preserve">
     <value>Messages</value>
@@ -1141,13 +1141,13 @@
     <value>The number of seconds until a device is considered over due if a message does not arrive.</value>
   </data>
   <data name="DeviceError_Description" xml:space="preserve">
-    <value>A device error is a error that is generated by the device that indicates an exception condition.</value>
+    <value>An error reported by the device to indicate an exceptional condition.</value>
   </data>
   <data name="DeviceError_Title" xml:space="preserve">
     <value>Device Error</value>
   </data>
   <data name="DeviceException_Description" xml:space="preserve">
-    <value>A device exception is a historical record of a device error.</value>
+    <value>A previously recorded error that occurred on a device.</value>
   </data>
   <data name="DeviceException_Title" xml:space="preserve">
     <value>Device Exception</value>
@@ -1177,7 +1177,7 @@
     <value>Contacts that should be notified when this device goes online or offline.</value>
   </data>
   <data name="DeviceAccountTransactionRecord_Help" xml:space="preserve">
-    <value>Device Transactions are values that are accumulated and tracked in a journal.</value>
+    <value>Record and track values that accumulate over time in a device journal.</value>
   </data>
   <data name="DeviceAccountTransactionRecord_Title" xml:space="preserve">
     <value>Device Transactions</value>
@@ -1207,7 +1207,7 @@
     <value>Device Owners</value>
   </data>
   <data name="DeviceOwner_Description" xml:space="preserve">
-    <value>A Device Owner is a user in the system that ones one ore many devices across different organizations.</value>
+    <value>Identifies a user who owns one or more devices, potentially across multiple organizations.</value>
   </data>
   <data name="DeviceOwner_Devices" xml:space="preserve">
     <value>Devices</value>
@@ -1282,10 +1282,10 @@
     <value>Per Device</value>
   </data>
   <data name="DevicesStatus_Description" xml:space="preserve">
-    <value>The devices status table is used to keep track of which devices for a repository are onlne and which ones are late communicating as well as which devices are silenced.</value>
+    <value>Use this table to see which devices in the repository are online, delayed in communication, or silenced.</value>
   </data>
   <data name="DevicesStatus_Title" xml:space="preserve">
-    <value>Devices Status</value>
+    <value>Device Status</value>
   </data>
   <data name="Device_GeoBoundingBox" xml:space="preserve">
     <value>Bounding Box (geo)</value>
