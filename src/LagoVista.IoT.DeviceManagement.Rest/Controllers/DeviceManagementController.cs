@@ -506,7 +506,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <param name="devicerepoid">Device Repository Id</param>
         /// <param name="customerid">Customer Id</param>
         /// <returns></returns>
-        [HttpGet("/api/devices/{devicerepoid}/customer/{id}/reset")]
+        [HttpGet("/api/devices/{devicerepoid}/customer/{customerid}/reset")]
         public async Task<InvokeResult> ResetDeviceStatusForCustomerAsync(string devicerepoid, string customerid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
