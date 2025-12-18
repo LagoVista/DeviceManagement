@@ -36,6 +36,7 @@ using LagoVista.PDFServices;
 using QRCoder;
 using RingCentral;
 using LagoVista.UserAdmin.Interfaces.Repos.Users;
+using static LagoVista.Core.Networking.Models.uPnPDevice;
 
 namespace LagoVista.IoT.DeviceManagement.Core.Managers
 {
@@ -947,7 +948,54 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             result.Timings.Add(new ResultTiming() { Key = "udpatedevice", Ms = sw.ElapsedMilliseconds });
 
             return result.ToInvokeResult();
+        }
 
+        public async Task<ListResponse<DeviceSummary>> ResetCustomStatusForCustomerAsync(DeviceRepository deviceRepo, string customerId,  EntityHeader org, EntityHeader user)
+        {
+            var customerDevices = await GetDevicesForCustomerAsync(deviceRepo, customerId, ListRequest.CreateForAll(), org, user);
+            var defaultStates = new Dictionary<string, State>();
+
+            foreach(var device in customerDevices.Model)
+            {
+                if (defaultStates.ContainsKey(device.DeviceConfigurationId))
+                {
+                    var defaultState = defaultStates[device.DeviceConfigurationId];
+                    if (defaultState.Key != device.CustomStatus?.Key)
+                    {
+                        var fullDevice = await GetDeviceByIdAsync(deviceRepo, device.Id, org, user);
+                        fullDevice.Result.CustomStatus = EntityHeader.Create(defaultState.Key, defaultState.Name);
+                        fullDevice.Result.LastUpdatedBy = user;
+                        fullDevice.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                        device.CustomStatus = fullDevice.Result.CustomStatus;
+                        var repo = GetRepo(deviceRepo);
+                        await repo.UpdateDeviceAsync(deviceRepo, fullDevice.Result);
+                    }
+                }
+                else
+                {
+                    var deviceStates = await _deviceConfigHelper.GetCustomDeviceStatesAsync(device.DeviceConfigurationId, org, user);
+                    if (deviceStates != null)
+                    {
+                        var defaultState = deviceStates.Value.States.Where(st => st.IsInitialState).FirstOrDefault();
+                        if (defaultState != null)
+                        {
+                            defaultStates.Add(device.DeviceConfigurationId, defaultState);
+                            if (defaultState.Key != device.CustomStatus?.Key)
+                            {
+                                var fullDevice = await GetDeviceByIdAsync(deviceRepo, device.Id, org, user);
+                                fullDevice.Result.CustomStatus = EntityHeader.Create(defaultState.Key, defaultState.Name);
+                                fullDevice.Result.LastUpdatedBy = user;
+                                fullDevice.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                                device.CustomStatus = fullDevice.Result.CustomStatus;
+                                var repo = GetRepo(deviceRepo);
+                                await repo.UpdateDeviceAsync(deviceRepo, fullDevice.Result);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return customerDevices; 
         }
 
 

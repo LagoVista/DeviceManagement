@@ -140,6 +140,9 @@ namespace LagoVista.IoT.DeviceManagement.Core
         /// <returns></returns>
         Task<InvokeResult> DeleteDeviceAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user);
 
+
+        Task<ListResponse<DeviceSummary>> ResetCustomStatusForCustomerAsync(DeviceRepository deviceRepo, string customerId, EntityHeader org, EntityHeader user);
+
         Task<ListResponse<DeviceSummary>> GetDevicesForDeviceRepoForUserAsync(DeviceRepository deviceRepo, string userId, ListRequest listRequest, EntityHeader org, EntityHeader user);
 
         Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository deviceRepo, string customerId, ListRequest listRequest, EntityHeader org, EntityHeader user);
