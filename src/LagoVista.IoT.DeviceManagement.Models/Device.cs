@@ -451,7 +451,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 TestingMode = TestingMode,
                 DebugMode = DebugMode,
                 CustomerLocation = CustomerLocation,
-            }; 
+            };
+
+            summary.Populate(this);
 
             if (!String.IsNullOrEmpty(ActualFirmware) && !String.IsNullOrEmpty(ActualFirmwareRevision))
                 summary.Firmware = $"{ActualFirmware} {ActualFirmwareRevision}";
@@ -624,6 +626,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public double Heading { get; set; }
         public string SerialNumber { get; set; }
         public string LastContact { get; set; }
+        public string Icon { get; set; }
         public EntityHeader Status { get; set; }
         public EntityHeader CustomStatus { get; set; }
         public string ActualFirmware { get; set; }
@@ -667,6 +670,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 States = device.States,
                 Notes = device.Notes,
                 Errors = device.Errors,
+                Icon = device.Icon,
                 LastContact = device.LastContact,
                 HasGeoFix = device.HasGeoFix,
                 Relays = device.Relays,
