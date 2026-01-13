@@ -40,5 +40,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string Notes { get; set; }
 
         public bool IsDraft { get; set; }
+
+        [JsonProperty("_etag")]
+        public string ETag { get; set; }
     }
 }
