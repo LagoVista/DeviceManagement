@@ -74,11 +74,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return GetDocumentAsync(firmwareId);
         }
 
-        public async Task<ListResponse<FirmwareSummary>> GetFirmwareForOrgAsync(string orgId, ListRequest listRequest)
+        public Task<ListResponse<FirmwareSummary>> GetFirmwareForOrgAsync(string orgId, ListRequest listRequest)
         {
-            var items = (await base.QueryAsync(attr => (attr.OwnerOrganization.Id == orgId), listRequest)).Model;
-            return ListResponse<FirmwareSummary>.Create(items.Select(itm => itm.CreateSummary()));
-
+            return QuerySummaryAsync<FirmwareSummary, Firmware>(attr => (attr.OwnerOrganization.Id == orgId), attr => attr.Name, listRequest);
         }
 
         public async Task<bool> QueryKeyInUseAsync(string key, string org)
