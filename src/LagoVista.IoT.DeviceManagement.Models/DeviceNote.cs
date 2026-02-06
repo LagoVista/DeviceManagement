@@ -43,5 +43,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         [JsonProperty("_etag")]
         public string ETag { get; set; }
+        public string Sha256Hex { get; set; }
+        public EntityHeader ClonedFromId { get; set; }
+        public EntityHeader ClonedFromOrg { get; set; }
+        public EntityHeader ClonedRevision { get; set; }
     }
 }
