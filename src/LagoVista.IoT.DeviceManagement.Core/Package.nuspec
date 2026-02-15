@@ -2,27 +2,27 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Core</id>
-    <version>3.0.3097.0925</version>
+    <version>3.0.3196.1537</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://www.nuviot.com</projectUrl>
     <iconUrl>http://bytemaster.blob.core.windows.net/icons/LagoVistaIcon.png</iconUrl>
     <description>Provides Models, Mangers and Business Rules for Managing Device Registration and Manipulation for the LagoVista Devices, IoT  and Home Automation Frameworks.</description>
-    <copyright>Copyright Software Logistics - 2025</copyright>
+    <copyright>Copyright Software Logistics - 2026</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 11/8/2025 2:25:53 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 2/15/2026 8:37:58 PM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.Core.Networking" version="3.0.3097.0925" />
-        <dependency id="LagoVista.Core.Rpc" version="3.0.3097.0925" />
-        <dependency id="LagoVista.MediaServices" version="3.0.3097.0925" />
-        <dependency id="LagoVista.PDFServices" version="3.0.3097.0925" />
-        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.3097.0925" />
+        <dependency id="LagoVista.Core.Networking" version="3.0.3196.1537" />
+        <dependency id="LagoVista.Core.Rpc" version="3.0.3196.1537" />
+        <dependency id="LagoVista.MediaServices" version="3.0.3196.1537" />
+        <dependency id="LagoVista.PDFServices" version="3.0.3196.1537" />
+        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.3196.1537" />
         <dependency id="QRCoder" version="1.6.0" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3097.0925" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3196.1537" />
       </group>
     </dependencies>
   </metadata>

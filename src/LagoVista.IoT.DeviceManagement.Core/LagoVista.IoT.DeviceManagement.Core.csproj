@@ -8,12 +8,12 @@
     <None Remove="Models\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.3097.0925" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3097.0925" />
-    <PackageReference Include="LagoVista.MediaServices" Version="3.0.3097.0925" />
-    <PackageReference Include="LagoVista.PDFServices" Version="3.0.3097.0925" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="3.0.3097.0925" />
-    <PackageReference Include="QRCoder" Version="1.6.0" />
+    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.3196.1537" />
+    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3196.1537" />
+    <PackageReference Include="LagoVista.MediaServices" Version="3.0.3196.1537" />
+    <PackageReference Include="LagoVista.PDFServices" Version="3.0.3196.1537" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin" Version="3.0.3196.1537" />
+    <PackageReference Include="QRCoder" Version="1.7.0" />
    </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
