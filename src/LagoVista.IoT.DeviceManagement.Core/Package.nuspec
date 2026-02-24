@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Core</id>
-    <version>3.0.3196.1537</version>
+    <version>3.0.3205.1803</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,17 +12,17 @@
     <copyright>Copyright Software Logistics - 2026</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 2/15/2026 8:37:58 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 2/24/2026 11:03:18 PM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.Core.Networking" version="3.0.3196.1537" />
-        <dependency id="LagoVista.Core.Rpc" version="3.0.3196.1537" />
-        <dependency id="LagoVista.MediaServices" version="3.0.3196.1537" />
-        <dependency id="LagoVista.PDFServices" version="3.0.3196.1537" />
-        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.3196.1537" />
-        <dependency id="QRCoder" version="1.6.0" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3196.1537" />
+        <dependency id="LagoVista.Core.Networking" version="3.0.3205.1803" />
+        <dependency id="LagoVista.Core.Rpc" version="3.0.3205.1803" />
+        <dependency id="LagoVista.MediaServices" version="3.0.3205.1803" />
+        <dependency id="LagoVista.PDFServices" version="3.0.3205.1803" />
+        <dependency id="LagoVista.IoT.DeviceAdmin" version="3.0.3205.1803" />
+        <dependency id="QRCoder" version="1.7.0" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3205.1803" />
       </group>
     </dependencies>
   </metadata>

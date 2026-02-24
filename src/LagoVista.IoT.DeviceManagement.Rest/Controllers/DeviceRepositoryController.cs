@@ -2,30 +2,30 @@
 // ContentHash: 7f0b4b38325914e02a2248feef440e64df98b8037b6d29c8dbf8bd0bb754687d
 // IndexVersion: 2
 // --- END CODE INDEX META ---
+using LagoVista.Core;
+using LagoVista.Core.Models;
+using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Product;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Managers;
+using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.DeviceManagement.Models;
+using LagoVista.IoT.Logging.Loggers;
+using LagoVista.IoT.Web.Common.Attributes;
 using LagoVista.IoT.Web.Common.Controllers;
+using LagoVista.MediaServices.Interfaces;
+using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
+using LagoVista.UserAdmin.Models.Orgs;
+using LagoVista.UserAdmin.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.Core.Models.UIMetaData;
-using System.Threading.Tasks;
-using LagoVista.Core.Validation;
-using LagoVista.Core;
-using LagoVista.Core.Models;
-using LagoVista.IoT.Logging.Loggers;
-using LagoVista.UserAdmin.Models.Users;
-using LagoVista.IoT.ProductStore;
-using LagoVista.IoT.Web.Common.Attributes;
-using LagoVista.IoT.DeviceManagement.Core.Repos;
-using LagoVista.UserAdmin.Interfaces.Repos.Orgs;
-using System.Globalization;
 using Microsoft.Net.Http.Headers;
-using LagoVista.IoT.DeviceManagement.Models;
+using System;
+using System.Globalization;
 using System.IO;
-using LagoVista.MediaServices.Interfaces;
-using LagoVista.UserAdmin.Models.Orgs;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -38,11 +38,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         private readonly IMediaServicesManager _mediaServicesManager;
         private readonly IDeviceRepositoryManager _deviceRepositoryManager;
-        private readonly IProductStore _productStore;
+        private readonly IPublicProductStore _productStore;
         private readonly IDeviceRepositoryRepo _deviceRepoRepo;
         private readonly IOrganizationRepo _orgRepo;
 
-        public DeviceRepositoryController(IDeviceRepositoryManager deviceReposistoryManager, IMediaServicesManager mediaServicesManager, IOrganizationRepo orgRepo, IDeviceRepositoryRepo deviceRepoRepo, IProductStore productStore, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
+        public DeviceRepositoryController(IDeviceRepositoryManager deviceReposistoryManager, IMediaServicesManager mediaServicesManager, IOrganizationRepo orgRepo, IDeviceRepositoryRepo deviceRepoRepo, IPublicProductStore productStore, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _deviceRepositoryManager = deviceReposistoryManager ?? throw new ArgumentNullException(nameof(deviceReposistoryManager));
             _productStore = productStore ?? throw new ArgumentNullException(nameof(productStore));
