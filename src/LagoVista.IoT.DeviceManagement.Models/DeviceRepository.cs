@@ -111,9 +111,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public ConnectionSettings PEMStorageSettings { get; set; }
         public String PEMStorageSettingsSecureId { get; set; }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Icon { get; set; }
-
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DistroList, HelpResource: DeviceManagementResources.Names.DeviceRepo_DistroList_Help,
             WaterMark: DeviceManagementResources.Names.DeviceRepo_DistroList_Select, FieldType: FieldTypes.EntityHeaderPicker,
             EntityHeaderPickerUrl: "/api/distros",
@@ -126,8 +123,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader OfflineDistributionList { get; set; }
 
 
-
-        [FKeyProperty(nameof(Subscription), typeof(SubscriptionDTO), nameof(Subscription) + ".Id = {0}", "")]
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Repo_Subscription, WaterMark: DeviceManagementResources.Names.Device_Repo_SubscriptionSelect, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: true)]
         public EntityHeader Subscription { get; set; }
 
@@ -236,14 +231,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         private string GetTableName(String suffix)
         {
-            var tableName = (Key.Length > 20) ? $"{Key.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
+            var tableName = (Key.Value.Length > 20) ? $"{Key.Value.Substring(0, 20)}{Id}{suffix}" : $"{Key}{Id}{suffix}";
             return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
         }
 
         private string GetMonthTableName(String suffix)
         {
             var prefix = $"m{DateTime.UtcNow.ToString("yyyyMM")}";
-            var tableName = (Key.Length > 14) ? $"{prefix}{Key.Substring(0, 14)}{Id}{suffix}" : $"{prefix}{Key}{Id}{suffix}";
+            var tableName = (Key.Value.Length > 14) ? $"{prefix}{Key.Value.Substring(0, 14)}{Id}{suffix}" : $"{prefix}{Key}{Id}{suffix}";
             return tableName.Length > 63 ? tableName.Substring(0, 63) : tableName;
         }
 

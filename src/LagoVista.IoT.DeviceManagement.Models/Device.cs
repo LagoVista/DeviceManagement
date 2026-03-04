@@ -75,7 +75,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             GeoFences = new List<GeoFence>();
             Id = Guid.NewGuid().ToId();
             Icon = "icon-ae-core-2";
-            Key = Id.ToLower().Substring(0, 20);
+            Key = Id.Value.ToLower().Substring(0, 20);
             TimeZone = new EntityHeader()
             {
                 Id = "UTC",
@@ -124,10 +124,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.Device_DeviceType, FieldType: FieldTypes.EntityHeaderPicker, EditorPath: "/iotstudio/device/devicemodel/{id}",
             EntityHeaderPickerUrl: "/api/devicetypes", WaterMark: DeviceManagementResources.Names.Device_DeviceType_Select, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public EntityHeader<DeviceType> DeviceType { get; set; }
-
-
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Icon { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Customer, FieldType: FieldTypes.CustomerPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]

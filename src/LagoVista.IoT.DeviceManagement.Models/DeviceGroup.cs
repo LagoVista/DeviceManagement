@@ -23,9 +23,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Icon = "icon-ae-device-groups";
         }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Icon { get; set; }
-
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceGroup_AssignedUser, HelpResource: DeviceManagementResources.Names.DeviceGroup_AssignedUserHelp, FieldType: FieldTypes.EntityHeaderPicker, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
         public EntityHeader AssignedUser { get; set; }
 

@@ -138,7 +138,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         {
             var groupId = Guid.NewGuid().ToId();
             var createdBy = EntityHeader.Create("userid", "username");
-            var key= Guid.NewGuid().ToId();
+            var key= Guid.NewGuid().ToId().Value;
             var orgId = Guid.NewGuid().ToId();
             var deviceGroup = new DeviceGroup
             {

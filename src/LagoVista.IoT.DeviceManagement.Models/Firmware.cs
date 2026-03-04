@@ -24,9 +24,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             Icon = "icon-fo-firmware";
         }
 
-        [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Icon { get; set; }
-
         [FormField(LabelResource: DeviceManagementResources.Names.Firmware_DeviceType, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
         public String DeviceType { get; set; }
 

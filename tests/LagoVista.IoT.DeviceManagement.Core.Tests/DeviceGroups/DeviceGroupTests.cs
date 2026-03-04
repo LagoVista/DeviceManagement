@@ -120,7 +120,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
             Assert.AreEqual(1, _deviceGroup.Devices.Count);
             Assert.AreEqual(_user, item.AddedBy);
             Assert.AreEqual(_device.Name, item.Name);
-            Assert.AreEqual(_device.Id, item.DeviceUniqueId);
+            Assert.AreEqual(_device.Id.Value, item.DeviceUniqueId);
             Assert.AreEqual(_device.DeviceId, item.DeviceId);
             Assert.AreEqual(_device.DeviceType, item.DeviceType);
             Assert.AreEqual(_device.DeviceConfiguration, item.DeviceConfiguration);
@@ -144,7 +144,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
             var item = DeviceGroupEntry.FromDevice(_device, _user);
             Assert.AreEqual(_user, item.AddedBy);
             Assert.AreEqual(_device.Name, item.Name);
-            Assert.AreEqual(_device.Id, item.DeviceUniqueId);
+            Assert.AreEqual(_device.Id.Value, item.DeviceUniqueId);
             Assert.AreEqual(_device.DeviceId, item.DeviceId);
             Assert.AreEqual(_device.DeviceType, item.DeviceType);
             Assert.AreEqual(_device.DeviceConfiguration, item.DeviceConfiguration);

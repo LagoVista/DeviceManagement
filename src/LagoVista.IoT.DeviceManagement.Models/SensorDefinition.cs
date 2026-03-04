@@ -185,7 +185,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
         public const string SensorDefinition_Port8 = "8";
 
 
-        public string Id { get; set; }
+        public NormalizedId32 Id { get; set; }
 
         public SensorDefinition()
         {
@@ -213,7 +213,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, HelpResource: DeviceManagementResources.Names.SensorDefinition_IconKey_Help, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
-        public string Icon { get; set; }
+        public LagoVistaIcon Icon { get; set; }
 
         [FormField(LabelResource: DeviceManagementResources.Names.SensorDefinition_QRCode, HelpResource: DeviceManagementResources.Names.SensorDefinition_QRCode_Help, FieldType: FieldTypes.Text, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public string QrCode { get; set; }

@@ -203,7 +203,7 @@ namespace LagoVista.IoT.DeviceManagement.Models
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Common_Icon, HelpResource: DeviceManagementResources.Names.SensorDefinition_UnitsLabel_Help, FieldType: FieldTypes.Icon, ResourceType: typeof(DeviceManagementResources), IsRequired: true)]
-        public string Icon { get; set; }
+        public LagoVistaIcon Icon { get; set; }
 
 
         [FormField(LabelResource: DeviceManagementResources.Names.Sensor_Units, FieldType: FieldTypes.EntityHeaderPicker, IsUserEditable: true, EnumType: typeof(SensorStates), ResourceType: typeof(DeviceManagementResources), IsRequired: false, WaterMark: DeviceManagementResources.Names.Sensor_Units_Select)]

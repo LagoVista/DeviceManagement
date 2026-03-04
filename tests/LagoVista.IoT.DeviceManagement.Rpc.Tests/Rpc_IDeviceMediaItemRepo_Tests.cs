@@ -63,7 +63,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
             Assert.IsTrue(response.Successful);
 
             var getResponse = await DataFactory.DeviceMediaItemRepo.GetMediaItemAsync(DataFactory.DeviceRepo, deviceId, itemId);
-            Assert.AreEqual(itemId, media.ItemId);
+            Assert.AreEqual(itemId.Value, media.ItemId);
         }
 
         [TestMethod]
