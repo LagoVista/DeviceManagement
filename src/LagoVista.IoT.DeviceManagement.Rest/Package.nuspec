@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Rest</id>
-    <version>3.0.3205.1803</version>
+    <version>3.0.3228.2035</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,15 +12,14 @@
     <copyright>Copyright Software Logistics - 2026</copyright>
     <tags>HomeAutomation IoT Cloud LagoVista</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 2/24/2026 11:03:18 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 3/20/2026 12:35:45 AM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="net9.0">
-        <dependency id="LagoVista.AspNetCore.Identity" version="3.0.3205.1803" />
-        <dependency id="LagoVista.IoT.ProductStore" version="3.0.3205.1803" />
-        <dependency id="LagoVista.IoT.Web.Common" version="3.0.3205.1803" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.3205.1803" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3205.1803" />
+        <dependency id="LagoVista.AspNetCore.Identity" version="3.0.3228.2035" />
+        <dependency id="LagoVista.IoT.Web.Common" version="3.0.3228.2035" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="3.0.3228.2035" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="3.0.3228.2035" />
       </group>
     </dependencies>
   </metadata>

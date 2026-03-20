@@ -27,7 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
             return new DeviceGroupEntry()
             {
                 Id = Guid.NewGuid().ToId(),
-                DateAdded = DateTime.UtcNow.ToJSONString(),
+                DateAdded = UtcTimestamp.Now,
                 AddedBy = addedBy,
                 DeviceUniqueId = device.Id,
                 DeviceId = device.DeviceId,

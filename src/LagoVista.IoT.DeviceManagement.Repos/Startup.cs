@@ -3,7 +3,11 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.Logging.Loggers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace LagoVista.IoT.DeviceManagement.Repos
@@ -26,6 +30,19 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<IFirmwareRepo, Repos.FirmwareRepo>();
             services.AddTransient<ISensorDataArchiveRepo, Repos.SensorDataArchiveRepo>();
             services.AddTransient<ISilencedAlarmsRepo, Repos.SilencedAlarmsRepo>();
+        }
+    }
+}
+
+namespace LagoVista.DependencyInjection
+{
+    public static class DeviceManagementModule
+    {
+        public static void AddDeviceManagementModule(this IServiceCollection services, IConfigurationRoot configRoot, IAdminLogger logger)
+        {
+            LagoVista.IoT.DeviceManagement.Repos.Startup.ConfigureServices(services);
+            LagoVista.IoT.DeviceManagement.Core.Startup.ConfigureServices(services);
+            services.AddMetaDataHelper<DeviceGroup>();
         }
     }
 }

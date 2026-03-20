@@ -40,7 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccountId);
 
-            var result = await GetByParitionIdAsync(deviceId, request.PageSize, request.PageIndex * request.PageSize);
+            var result = await GetByPartitionIdAsync(deviceId, request.PageSize, request.PageIndex * request.PageSize);
             return ListResponse<PEMIndex>.Create(result.Select(pem => pem.ToPEMIndex()).ToList(), request);
         }
 

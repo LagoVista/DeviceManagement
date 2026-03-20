@@ -146,7 +146,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 ContentType = contentType,
                 DeviceId = deviceId,
                 FileName = fileName,
-                TimeStamp = DateTime.UtcNow.ToJSONString()
+                TimeStamp = UtcTimestamp.Now
             });
 
             var bytes = new byte[stream.Length];

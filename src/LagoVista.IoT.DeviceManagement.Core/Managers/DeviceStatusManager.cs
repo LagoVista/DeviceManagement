@@ -68,7 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             await _silencedAlarmsRepo.AddSilencedAlarmAsync(deviceRepo, new SilencedAlarm()
             {
                  DeviceRepo = deviceRepo.ToEntityHeader(),
-                 Timestamp = DateTime.UtcNow.ToJSONString(),
+                 Timestamp = UtcTimestamp.Now,
                  Device = EntityHeader.Create(deviceStatus.DeviceId, id, deviceStatus.DeviceId),
                  User = user,                
                  Disabled = true,                 

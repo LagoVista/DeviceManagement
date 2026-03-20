@@ -31,8 +31,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             return new Device()
             {
                 Id = Guid.NewGuid().ToId(),
-                CreationDate = DateTime.UtcNow.ToJSONString(),
-                LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
+                CreationDate = UtcTimestamp.Now,
+                LastUpdatedDate = UtcTimestamp.Now,
                 CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 OwnerOrganization = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
@@ -46,9 +46,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                     Id = Guid.NewGuid().ToId(),
                     Name = "abc",
                     CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "somesuer"),
-                    CreationDate = DateTime.UtcNow.ToJSONString(),
+                    CreationDate = UtcTimestamp.Now,
                     LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "somesuer"),
-                    LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
+                    LastUpdatedDate = UtcTimestamp.Now,
                     Key = "devicetype"
                 })
             };

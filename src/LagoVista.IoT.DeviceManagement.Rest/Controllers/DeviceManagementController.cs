@@ -315,7 +315,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             var result = await _deviceManager.GetDeviceByIdAsync(repo, deviceid, OrgEntityHeader, UserEntityHeader);
             result.Result.CustomerLocation = customerLocation;
             result.Result.LastUpdatedBy = UserEntityHeader;
-            result.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            result.Result.LastUpdatedDate = UtcTimestamp.Now;
             return await _deviceManager.UpdateDeviceAsync(repo, result.Result, OrgEntityHeader, UserEntityHeader);
         }
 
@@ -743,7 +743,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 response.Model.DeviceId = $"{repo.Key}{repo.IncrementingDeviceNumber:0000000}";
                 repo.IncrementingDeviceNumber++;
                 repo.LastUpdatedBy = UserEntityHeader;
-                repo.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                repo.LastUpdatedDate = UtcTimestamp.Now;
                 await _repoManager.UpdateDeviceRepositoryAsync(repo, OrgEntityHeader, UserEntityHeader);
             }
 
@@ -916,13 +916,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (attrValue == null)
             {
                 value.Value = value.Value;
-                value.LastUpdated = DateTime.UtcNow.ToJSONString();
+                value.LastUpdated = UtcTimestamp.Now;
                 device.Properties.Add(value);
             }
             else
             {
                 attrValue.Value = value.Value;
-                attrValue.LastUpdated = DateTime.UtcNow.ToJSONString();
+                attrValue.LastUpdated = UtcTimestamp.Now;
                 attrValue.LastUpdatedBy = UserEntityHeader.Text;
             }
 
@@ -970,7 +970,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             device.TestingMode = testmode;
             device.AuditHistory.Add(new EntityChangeSet()
             {
-                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangeDate = UtcTimestamp.Now,
                 ChangedBy = UserEntityHeader,
                 Changes = new List<EntityChange>()
                 {
@@ -997,7 +997,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             device.AuditHistory.Add(new EntityChangeSet()
             {
-                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangeDate = UtcTimestamp.Now,
                 ChangedBy = UserEntityHeader,
                 Changes = new List<EntityChange>()
                 {

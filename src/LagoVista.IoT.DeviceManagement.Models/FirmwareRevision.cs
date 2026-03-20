@@ -38,7 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public FirmwareRevision()
         {
             Status = EntityHeader<FirmwareRevisionStatus>.Create(FirmwareRevisionStatus.Prototype);
-            TimeStamp = DateTime.UtcNow.ToJSONString();
+            TimeStamp = UtcTimestamp.Now;
             Id = Guid.NewGuid().ToId();
         }
 
@@ -84,3 +84,4 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
     }
 }
+

@@ -20,9 +20,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             {
                 Id = "6C67B1522AF441F39238A85A80B94D39",
                 CreatedBy = _user,
-                CreationDate = DateTime.UtcNow.ToJSONString(),
+                CreationDate = UtcTimestamp.Now,
                 LastUpdatedBy = _user,
-                LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
+                LastUpdatedDate = UtcTimestamp.Now,
                 OwnerOrganization = _org,
                 Name = "My Good Repo",
                 Key = "mygoodrepo",

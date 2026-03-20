@@ -152,7 +152,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> AddDeviceAsync(DeviceRepository deviceRepo, Device device, bool reassign, EntityHeader org, EntityHeader user)
         {
-            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var timeStamp = UtcTimestamp.Now;
 
             if (EntityHeader.IsNullOrEmpty(device.DeviceConfiguration) && !EntityHeader.IsNullOrEmpty(device.DeviceType))
             {
@@ -405,7 +405,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.DeviceNameLabel = null;
             device.DeviceTypeLabel = null;
             device.LastUpdatedBy = user;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
 
             if (!String.IsNullOrEmpty(device.DevicePin))
             {
@@ -782,7 +782,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
                 device.Status = EntityHeader<DeviceStates>.Create(newState);
                 device.LastUpdatedBy = user;
-                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                device.LastUpdatedDate = UtcTimestamp.Now;
                 device.Notes.Add(new DeviceNote()
                 {
                     Title = "State Changed",
@@ -893,7 +893,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             device.CustomStatus = EntityHeader.Create(newDeviceState.Key, newDeviceState.Name);
             device.LastUpdatedBy = user;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
 
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
@@ -940,7 +940,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             device.CustomStatus = EntityHeader.Create(newDeviceState.Key, newDeviceState.Name);
             device.LastUpdatedBy = user;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
 
             var repo = GetRepo(deviceRepo);
             await repo.UpdateDeviceAsync(deviceRepo, device);
@@ -965,7 +965,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                         var fullDevice = await GetDeviceByIdAsync(deviceRepo, device.Id, org, user);
                         fullDevice.Result.CustomStatus = EntityHeader.Create(defaultState.Key, defaultState.Name);
                         fullDevice.Result.LastUpdatedBy = user;
-                        fullDevice.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                        fullDevice.Result.LastUpdatedDate = UtcTimestamp.Now;
                         device.CustomStatus = fullDevice.Result.CustomStatus;
                         var repo = GetRepo(deviceRepo);
                         await repo.UpdateDeviceAsync(deviceRepo, fullDevice.Result);
@@ -985,7 +985,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                                 var fullDevice = await GetDeviceByIdAsync(deviceRepo, device.Id, org, user);
                                 fullDevice.Result.CustomStatus = EntityHeader.Create(defaultState.Key, defaultState.Name);
                                 fullDevice.Result.LastUpdatedBy = user;
-                                fullDevice.Result.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                                fullDevice.Result.LastUpdatedDate = UtcTimestamp.Now;
                                 device.CustomStatus = fullDevice.Result.CustomStatus;
                                 var repo = GetRepo(deviceRepo);
                                 await repo.UpdateDeviceAsync(deviceRepo, fullDevice.Result);
@@ -1025,7 +1025,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
             device.GeoLocation = geoLocation;
             device.LastUpdatedBy = user;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
             device.LocationLastUpdatedDate = device.LastUpdatedDate;
 
             var repo = GetRepo(deviceRepo);
@@ -1108,7 +1108,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     DeviceRepositoryId = deviceRepo.Id,
                     Details = $"Error cleared by {user.Text}",
                     ErrorCode = errorCode,
-                    Timestamp = DateTime.UtcNow.ToJSONString()
+                    Timestamp = UtcTimestamp.Now
                 });
                 return InvokeResult.Success;
             }
@@ -1176,7 +1176,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 return InvokeResult<Device>.FromError("Can only create a device without a device id and name with a repository that is configure to auto generate device ids.");
             }
 
-            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var timeStamp = UtcTimestamp.Now;
 
             var device = new Device();
             /* Note we just create it here for now then the record gets inserted we go ahead assign the name */
@@ -1241,7 +1241,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> AddDeviceToLocationAsync(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user)
         {
-            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var timeStamp = UtcTimestamp.Now;
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (result == null)
             {
@@ -1286,7 +1286,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult> RemoveDeviceFromLocation(DeviceRepository deviceRepo, string id, string locationId, EntityHeader org, EntityHeader user)
         {
-            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var timeStamp = UtcTimestamp.Now;
 
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             if (result == null)
@@ -1349,7 +1349,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             var device = result.Result; device.MacAddress = macAddress;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
             device.LastUpdatedBy = user;
             return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
@@ -1369,7 +1369,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             }
 
             var device = result.Result; device.iosBLEAddress = iosBLEAddress;
-            device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            device.LastUpdatedDate = UtcTimestamp.Now;
             device.LastUpdatedBy = user;
             return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
         }
@@ -1510,7 +1510,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             device.SilenceAlarms = true;
             device.SilencedBy = org;
-            device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+            device.SilencedTimeStamp = UtcTimestamp.Now;
 
             await UpdateDeviceAsync(deviceRepo, device, org, user);
 
@@ -1522,7 +1522,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 Device = device.ToEntityHeader(),
                 DeviceRepo = deviceRepo.ToEntityHeader(),
                 User = user,
-                Timestamp = DateTime.UtcNow.ToJSONString(),
+                Timestamp = UtcTimestamp.Now,
             });
 
             return InvokeResult.Success;
@@ -1539,7 +1539,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 error.Silenced = true;
                 error.SilencedBy = user.Text;
                 error.SilencedById = user.Id;
-                error.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+                error.SilencedTimeStamp = UtcTimestamp.Now;
                 return (await UpdateDeviceAsync(deviceRepo, device, org, user)).ToInvokeResult();
             }
 
@@ -1558,7 +1558,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = result.Result;
             device.SilenceAlarms = true;
             device.SilencedBy = org;
-            device.SilencedTimeStamp = DateTime.UtcNow.ToJSONString();
+            device.SilencedTimeStamp = UtcTimestamp.Now;
 
 
             await UpdateDeviceAsync(deviceRepo, device, org, user);
@@ -1571,7 +1571,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 Device = device.ToEntityHeader(),
                 DeviceRepo = deviceRepo.ToEntityHeader(),
                 User = user,
-                Timestamp = DateTime.UtcNow.ToJSONString(),
+                Timestamp = UtcTimestamp.Now,
             });
 
             return InvokeResult.Success;
@@ -1593,7 +1593,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 Device = device.ToEntityHeader(),
                 DeviceRepo = deviceRepo.ToEntityHeader(),
                 User = user,
-                Timestamp = DateTime.UtcNow.ToJSONString(),
+                Timestamp = UtcTimestamp.Now,
             }); ;
 
             return InvokeResult.Success;
@@ -1705,11 +1705,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var device = await GetDeviceByIdAsync(deviceRepo, id, org, user);
             device.Result.QaCheckCompleted = true;
             device.Result.QaCheckCompletedBy = user;
-            device.Result.QaCheckCompletedTimeeStamp = DateTime.UtcNow.ToJSONString();
+            device.Result.QaCheckCompletedTimeeStamp = UtcTimestamp.Now;
             var result = await UpdateDeviceAsync(deviceRepo, device.Result, org, user);
             device.Result.AuditHistory.Add(new EntityChangeSet()
             {
-                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangeDate = UtcTimestamp.Now,
                 ChangedBy = user,
                 Changes = { new EntityChange() { Field = nameof(Device.QaCheckCompleted), NewValue = "true", OldValue = "false", Notes = $"Changed by: {user.Text}" } }
             });
@@ -1734,7 +1734,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             device.Result.QaCheckCompletedTimeeStamp = null;
             device.Result.AuditHistory.Add(new EntityChangeSet()
             {
-                ChangeDate = DateTime.UtcNow.ToJSONString(),
+                ChangeDate = UtcTimestamp.Now,
                 ChangedBy = user,
                 Changes = { new EntityChange() { Field = nameof(Device.QaCheckCompleted), NewValue = "false", OldValue = "true", Notes = $"Changed by: {user.Text}" } }
             });

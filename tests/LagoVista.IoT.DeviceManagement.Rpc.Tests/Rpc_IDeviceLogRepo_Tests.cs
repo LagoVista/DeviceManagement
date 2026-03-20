@@ -27,7 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
         {
             var logEntry = new DeviceLog
             {
-                DateStamp = DateTime.UtcNow.ToJSONString(),
+                DateStamp = UtcTimestamp.Now,
                 DeviceId = Guid.NewGuid().ToId(),
                 Entry = "entry",
                 EntryType = "entrytype",
@@ -44,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
             var timeStamp = new DateTime(2018, 10, 1, 1, 0, 0);
             var logEntry = new DeviceLog
             {
-                DateStamp = DateTime.UtcNow.ToJSONString(),
+                DateStamp = UtcTimestamp.Now,
                 DeviceId = Guid.NewGuid().ToId(),
                 Entry = "entry",
                 EntryType = "entrytype",

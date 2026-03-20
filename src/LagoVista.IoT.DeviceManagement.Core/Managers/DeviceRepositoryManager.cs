@@ -241,7 +241,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var repo = await GetDeviceRepositoryAsync(repoId, org, user);
             repo.LastUpdatedBy = user;
-            repo.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+            repo.LastUpdatedDate = UtcTimestamp.Now;
 
             SetDeviceRepositoryConnectionSettings(repo);
             repo.AuditHistory.Add(new EntityChangeSet()
@@ -617,7 +617,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 repo.AuditHistory.Add(new EntityChangeSet()
                 {
-                    ChangeDate = DateTime.UtcNow.ToJSONString(),
+                    ChangeDate = UtcTimestamp.Now,
                     ChangedBy = user,
                     Changes = changes
                 });

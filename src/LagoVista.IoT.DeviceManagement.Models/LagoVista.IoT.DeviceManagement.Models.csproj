@@ -11,9 +11,9 @@
     <AssemblyOriginatorKeyFile>LagoVista.IoT.DeviceManagement.Models.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="3.0.3205.1803" />
-    <PackageReference Include="LagoVista.MediaServices.Models" Version="3.0.3205.1803" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="3.0.3205.1803" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="3.0.3228.2035" />
+    <PackageReference Include="LagoVista.MediaServices.Models" Version="3.0.3228.2035" />
+    <PackageReference Include="LagoVista.UserAdmin" Version="3.0.3228.2035" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\DeviceManagementResources.resx">

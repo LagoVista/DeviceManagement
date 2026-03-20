@@ -271,7 +271,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             {
                 device.ConfigurationHash = hash;
                 device.DesiredConfigurationRevisionLevel++;
-                device.DesiredConfigurationTimeStamp = DateTime.UtcNow.ToJSONString();
+                device.DesiredConfigurationTimeStamp = UtcTimestamp.Now;
 
             }
 

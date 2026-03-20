@@ -544,7 +544,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                                 Key = propertyMetaData.Key,
                                 Name = propertyMetaData.Name,
                                 Value = String.IsNullOrEmpty(propertyMetaData.DefaultValue) ? null : propertyMetaData.DefaultValue,
-                                LastUpdated = DateTime.UtcNow.ToJSONString(),
+                                LastUpdated = UtcTimestamp.Now,
                                 LastUpdatedBy = LastUpdatedBy.Text
                             };
 

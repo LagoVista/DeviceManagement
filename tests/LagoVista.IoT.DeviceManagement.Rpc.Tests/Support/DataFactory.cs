@@ -122,8 +122,8 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             return new Device()
             {
                 Id = Guid.NewGuid().ToId(),
-                CreationDate = DateTime.UtcNow.ToJSONString(),
-                LastUpdatedDate = DateTime.UtcNow.ToJSONString(),
+                CreationDate = UtcTimestamp.Now,
+                LastUpdatedDate = UtcTimestamp.Now,
                 CreatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "abc123"),
                 OwnerOrganization = EntityHeader.Create(OrganizationId, "test organization"),

@@ -35,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests
                 PartitionKey = Guid.NewGuid().ToId(),
                 RowKey = Guid.NewGuid().ToId(),
                 PEMMessageId = Guid.NewGuid().ToId(),
-                Timestamp = DateTime.UtcNow.ToJSONString()
+                Timestamp = UtcTimestamp.Now
             };
             await DataFactory.DeviceArchiveRepoProxy.AddArchiveAsync(DataFactory.DeviceRepo, archiveEntry);
         }

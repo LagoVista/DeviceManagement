@@ -20,15 +20,12 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Collections.Generic;
 using LagoVista.UserAdmin.Models.Orgs;
-using LagoVista.UserAdmin.Interfaces.Repos.Users;
 using System.Text.RegularExpressions;
 using LagoVista.UserAdmin.Interfaces.Repos.Account;
 using LagoVista.UserAdmin.Interfaces.Managers;
 using LagoVista.IoT.DeviceAdmin.Interfaces.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
-using System.Security.Cryptography;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 {
@@ -40,7 +37,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IDeviceManager _deviceManager;
         private readonly IAdminLogger _adminLogger;
-        private readonly IAppUserRepo _appUserRepo;
         private readonly IDeviceOwnerRepo _deviceOwnerRepo;
         private readonly ISmsSender _smsSender;
         private readonly IDeviceConfigHelper _deviceConfigHelper;
@@ -304,7 +300,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (result.Successful)
             {
                 var device = result.Result;
-                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                device.LastUpdatedDate = UtcTimestamp.Now;
                 device.NotificationContacts.Add(contact);
                 await _deviceManager.UpdateDeviceAsync(repo, device, OrgEntityHeader, UserEntityHeader);
                 return InvokeResult<ExternalContact[]>.Create(device.NotificationContacts.ToArray());
@@ -332,7 +328,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (result.Successful)
             {
                 var device = result.Result;
-                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                device.LastUpdatedDate = UtcTimestamp.Now;
                 var existing = device.NotificationContacts.FirstOrDefault(cnt => cnt.Id == contact.Id);
                 if (existing == null)
                     return InvokeResult<ExternalContact[]>.FromError("Could not find contact to update");
@@ -358,7 +354,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             if (result.Successful)
             {
                 var device = result.Result;
-                device.LastUpdatedDate = DateTime.UtcNow.ToJSONString();
+                device.LastUpdatedDate = UtcTimestamp.Now;
                 var existing = device.NotificationContacts.FirstOrDefault(cnt => cnt.Id == id);
                 if (existing == null)
                     return InvokeResult<ExternalContact[]>.FromError("Could not find contact to update");
@@ -423,7 +419,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             result.Result.DevicePin = newpin;
             result.Result.MustChangePin = false;
-            result.Result.PinChangeDate = DateTime.UtcNow.ToJSONString();
+            result.Result.PinChangeDate = UtcTimestamp.Now;
 
             sw.Restart();
             await _deviceManager.UpdateDeviceAsync(repo, result.Result, OrgEntityHeader, UserEntityHeader);
@@ -471,7 +467,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                     return InvokeResult<DeviceOwnerUser>.FromError("Invalid code.");               
             }
 
-            var timeStamp = DateTime.UtcNow.ToJSONString();
+            var timeStamp = UtcTimestamp.Now;
 
             var deviceUser = new DeviceOwnerUser()
             {            
@@ -580,12 +576,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                 var existing = result.Result.Properties.FirstOrDefault(prop => prop.Key == value.Key);
                 if (existing == null)
                 {
-                    value.LastUpdated = DateTime.UtcNow.ToJSONString();
+                    value.LastUpdated = UtcTimestamp.Now;
                     result.Result.Properties.Add(value);
                 }
                 else
                 {
-                    existing.LastUpdated = DateTime.UtcNow.ToJSONString();
+                    existing.LastUpdated = UtcTimestamp.Now;
                     existing.Value = value.Value;
                 }
             }

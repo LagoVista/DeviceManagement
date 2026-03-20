@@ -85,7 +85,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
 
         public void Reset(string previousEndTime = null)
         {
-            StartTimeStamp = previousEndTime ?? DateTime.UtcNow.ToJSONString();
+            StartTimeStamp = previousEndTime ?? UtcTimestamp.Now;
             EndTimeStamp = string.Empty;
 
             ElapsedMS = 0.0;
