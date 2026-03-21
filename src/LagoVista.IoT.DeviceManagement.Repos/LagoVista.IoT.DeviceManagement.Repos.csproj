@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3228.2035" />
+    <PackageReference Include="LagoVista.Core.Configuration" Version="3.0.3230.1347" />
+    <PackageReference Include="LagoVista.CloudStorage" Version="3.0.3230.1347" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.41.0" />
   </ItemGroup>
   <ItemGroup>

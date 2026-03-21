@@ -18,17 +18,12 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceRepositoryRepo : DocumentDBRepoBase<DeviceRepository>, IDeviceRepositoryRepo
     {
-        private bool _shouldConsolidateCollections;
         private ICacheProvider _cacheProvider;
         public DeviceRepositoryRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger, ICacheProvider cacheProvider) 
             : base(repoSettings.DeviceRepoStorage.Uri, repoSettings.DeviceRepoStorage.AccessKey, repoSettings.DeviceRepoStorage.ResourceName, logger, cacheProvider)
         {
-            _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
             _cacheProvider = cacheProvider;
         }
-
-        protected override bool ShouldConsolidateCollections => _shouldConsolidateCollections;
-
 
         public Task AddDeviceRepositoryAsync(DeviceRepository deviceRepo)
         {

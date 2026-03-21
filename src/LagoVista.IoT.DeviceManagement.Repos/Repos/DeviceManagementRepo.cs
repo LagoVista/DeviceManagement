@@ -27,17 +27,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     {
         private const string AZURE_DEVICE_CLIENT_STR = "HostName={0}.azure-devices.net;SharedAccessKeyName={1};SharedAccessKey={2}";
 
-        private bool _shouldConsolidateCollections;
         private readonly IAdminLogger _logger;
         private readonly IDeviceGroupRepo _deviceGroupRepo;
         private readonly IBackgroundServiceTaskQueue _backgroundServiceTaskQueue;
         private readonly IRemoteConfigurationManager _remoteConfigNamanager;
 
-
         public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IBackgroundServiceTaskQueue backgroundServiceTaskQueue,
             IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger) : base(logger)
         {
-            _shouldConsolidateCollections = repoSettings.ShouldConsolidateCollections;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
             _backgroundServiceTaskQueue = backgroundServiceTaskQueue ?? throw new ArgumentNullException(nameof(backgroundServiceTaskQueue));
@@ -46,7 +43,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public DeviceManagementRepo(IAdminLogger logger) : base(logger)
         {
-            _shouldConsolidateCollections = true;
         }
 
         public override string GetPartitionKey()
