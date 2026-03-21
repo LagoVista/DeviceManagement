@@ -3,6 +3,7 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.Core.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
@@ -31,6 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<ISensorDataArchiveRepo, Repos.SensorDataArchiveRepo>();
             services.AddTransient<ISilencedAlarmsRepo, Repos.SilencedAlarmsRepo>();
             services.AddTransient<IDeviceManagementSettings, DeviceManagementSettings>();
+            services.AddTransient<IFirmwareRepoSettings, FirmwareRepoSettings>();
         }
     }
 }
