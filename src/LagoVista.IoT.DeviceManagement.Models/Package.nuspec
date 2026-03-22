@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Models</id>
-    <version>3.0.3230.1347</version>
+    <version>3.0.3231.0410</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,13 +12,13 @@
     <copyright>Copyright Software Logistics - 2026</copyright>
     <tags>HomeAutomation IoT Cloud</tags>
     <icon>LagoVistaIcon.png</icon>
-    <releaseNotes>Build Date: 3/21/2026 5:47:28 PM UTC</releaseNotes>
+    <releaseNotes>Build Date: 3/22/2026 8:10:12 AM UTC</releaseNotes>
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="3.0.3230.1347" />
-        <dependency id="LagoVista.MediaServices.Models" version="3.0.3230.1347" />
-        <dependency id="LagoVista.UserAdmin" version="3.0.3230.1347" />
+        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="3.0.3231.0410" />
+        <dependency id="LagoVista.MediaServices.Models" version="3.0.3231.0410" />
+        <dependency id="LagoVista.UserAdmin" version="3.0.3231.0410" />
       </group>
     </dependencies>
   </metadata>
