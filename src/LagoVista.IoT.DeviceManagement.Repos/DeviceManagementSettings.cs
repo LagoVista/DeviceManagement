@@ -21,7 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             DeviceRepoStorage = configuration.CreateDefaultDBStorageSettings();
             DefaultDeviceStorage = configuration.CreateDefaultDBStorageSettings();
             DefaultDeviceTableStorage = configuration.CreateDefaultTableStorageSettings();
-            var section = configuration.GetRequiredSection("DeviceAccountStorage");
+            var section = configuration.GetSection("DeviceAccountStorage");
 
             DefaultDeviceAccountStorage = new ConnectionSettings()
             {
