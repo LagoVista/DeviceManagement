@@ -440,6 +440,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 DeviceRepoId = DeviceRepository.Id,
                 DeviceRepo = DeviceRepository.Text,
                 LastContact = LastContact,
+                DisableWatchdog = DisableWatchdog,
                 Location = Location,
                 Balances = Balances,
                 DiagramReference = DiagramReference,
@@ -598,6 +599,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public string iosBLEAddress { get; set; }
         public string DeviceRepoId { get; set; }
         public string DeviceRepo { get; set; }
+        public bool DisableWatchdog { get; set; }
         public GeoLocation GeoLocation { get; set; }
         public EntityHeader DefaultDeviceImage { get; set; }
 

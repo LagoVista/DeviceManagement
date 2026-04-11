@@ -1656,7 +1656,14 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
 
             if (null != result.Result.DiagramReference)
-                return InvokeResult<Device>.FromError($"Device is already associated with: {result.Result.DiagramReference.LocationDiagram.Text}/{result.Result.DiagramReference.LocationDiagramLayer.Text}/{result.Result.DiagramReference.LocationDiagramShape.Text}");
+            {
+                var previousDiagram = await _diagramRepo.GetLocationDiagramAsync(result.Result.DiagramReference.LocationDiagram.Id);
+                var previousLayer = previousDiagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
+                var previousShape = previousLayer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
+                var existing = previousShape.Devices.FirstOrDefault(dvc => dvc.Device.Id == id);
+                previousShape.Devices.Remove(existing); await _diagramRepo.UpdateLocationDiagramAsync(previousDiagram);
+                await _diagramRepo.UpdateLocationDiagramAsync(previousDiagram);
+            }
 
             var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
             if (diagram.OwnerOrganization.Id != org.Id)
