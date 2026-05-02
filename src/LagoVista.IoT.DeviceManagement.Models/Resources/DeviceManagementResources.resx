@@ -1353,4 +1353,13 @@
   <data name="Common_SelectLanguage" xml:space="preserve">
     <value>-select language-</value>
   </data>
+  <data name="Device_BatteryLevel" xml:space="preserve">
+    <value>Battery Level</value>
+  </data>
+  <data name="Device_BatteryVoltage" xml:space="preserve">
+    <value>Battery Voltage</value>
+  </data>
+  <data name="Device_RunningOnBattery" xml:space="preserve">
+    <value>Is Running on Battery</value>
+  </data>
 </root>

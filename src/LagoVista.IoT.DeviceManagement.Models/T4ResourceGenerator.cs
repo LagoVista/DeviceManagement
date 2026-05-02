@@ -1,8 +1,4 @@
-// --- BEGIN CODE INDEX META (do not edit) ---
-// ContentHash: 722d33c85a6d870a941df532e69db6f002f25bcb4e073dd3292dac7f6e3d4caa
-// IndexVersion: 2
-// --- END CODE INDEX META ---
-/*9/30/2025 2:20:09 PM*/
+﻿/*5/2/2026 3:37:43 PM*/
 using System.Globalization;
 using System.Reflection;
 
@@ -157,6 +153,12 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_Attributes_Help
 
 		public static string Device_Attributes_Help { get { return GetResourceString("Device_Attributes_Help"); } }
+//Resources:DeviceManagementResources:Device_BatteryLevel
+
+		public static string Device_BatteryLevel { get { return GetResourceString("Device_BatteryLevel"); } }
+//Resources:DeviceManagementResources:Device_BatteryVoltage
+
+		public static string Device_BatteryVoltage { get { return GetResourceString("Device_BatteryVoltage"); } }
 //Resources:DeviceManagementResources:Device_Capacity_100_Units
 
 		public static string Device_Capacity_100_Units { get { return GetResourceString("Device_Capacity_100_Units"); } }
@@ -490,6 +492,9 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 //Resources:DeviceManagementResources:Device_RepoTitle
 
 		public static string Device_RepoTitle { get { return GetResourceString("Device_RepoTitle"); } }
+//Resources:DeviceManagementResources:Device_RunningOnBattery
+
+		public static string Device_RunningOnBattery { get { return GetResourceString("Device_RunningOnBattery"); } }
 //Resources:DeviceManagementResources:Device_SecondaryKey
 
 		public static string Device_SecondaryKey { get { return GetResourceString("Device_SecondaryKey"); } }
@@ -1330,6 +1335,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_AttributeMetaData = "Device_AttributeMetaData";
 			public const string Device_Attributes = "Device_Attributes";
 			public const string Device_Attributes_Help = "Device_Attributes_Help";
+			public const string Device_BatteryLevel = "Device_BatteryLevel";
+			public const string Device_BatteryVoltage = "Device_BatteryVoltage";
 			public const string Device_Capacity_100_Units = "Device_Capacity_100_Units";
 			public const string Device_Capacity_1000_Units = "Device_Capacity_1000_Units";
 			public const string Device_Capacity_10000_Units = "Device_Capacity_10000_Units";
@@ -1441,6 +1448,7 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
 			public const string Device_Repo_UnitCapacity_Select = "Device_Repo_UnitCapacity_Select";
 			public const string Device_ReposTitle = "Device_ReposTitle";
 			public const string Device_RepoTitle = "Device_RepoTitle";
+			public const string Device_RunningOnBattery = "Device_RunningOnBattery";
 			public const string Device_SecondaryKey = "Device_SecondaryKey";
 			public const string Device_SerialNumber = "Device_SerialNumber";
 			public const string Device_ShortendedViewLink = "Device_ShortendedViewLink";

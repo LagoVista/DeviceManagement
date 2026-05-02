@@ -126,6 +126,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader<DeviceType> DeviceType { get; set; }
 
 
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_RunningOnBattery, FieldType: FieldTypes.ReadonlyLabel, ResourceType: typeof(DeviceManagementResources))]
+        public bool RunningOnBattery { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_BatteryLevel, FieldType: FieldTypes.ReadonlyLabel, ResourceType: typeof(DeviceManagementResources))]
+        public decimal? BatteryLevel { get; set; }
+
+        [FormField(LabelResource: DeviceManagementResources.Names.Device_BatteryVoltage, FieldType: FieldTypes.ReadonlyLabel, ResourceType: typeof(DeviceManagementResources))]
+        public decimal? BatteryVoltage { get; set; }
+
         [FormField(LabelResource: DeviceManagementResources.Names.Device_Customer, FieldType: FieldTypes.CustomerPicker, ResourceType: typeof(DeviceManagementResources), IsRequired: false)]
         public EntityHeader Customer { get; set; }
 
@@ -448,6 +457,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 TestingMode = TestingMode,
                 DebugMode = DebugMode,
                 CustomerLocation = CustomerLocation,
+                RunningOnBattery = RunningOnBattery,
+                BatteryVoltage = BatteryVoltage,
+                BatteryLevel = BatteryLevel,
             };
 
             summary.Populate(this);
@@ -612,6 +624,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader Customer { get; set; }
         public Dictionary<string, decimal> Balances { get; set; }
         public OrgLocationDiagramReference DiagramReference { get; set; }
+
+
+        public decimal? BatteryVoltage { get; set; }
+        public decimal? BatteryLevel { get; set; }
+
+        public bool RunningOnBattery { get; set; }
     }
 
     public class DeviceForNotification
@@ -646,6 +664,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
 
         public EntityHeader CustomerLocation { get; set; }
 
+        public decimal? BatteryVoltage { get; set; }
+        public decimal? BatteryLevel { get; set; }
+
+        public bool RunningOnBattery { get; set; }    
+
         public static DeviceForNotification FromDevice(LagoVista.IoT.DeviceManagement.Core.Models.Device device)
         {
             return new DeviceForNotification()
@@ -668,6 +691,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 States = device.States,
                 Notes = device.Notes,
                 Errors = device.Errors,
+                BatteryLevel = device.BatteryLevel,
+                BatteryVoltage = device.BatteryVoltage,
+                RunningOnBattery = device.RunningOnBattery,
                 Icon = device.Icon,
                 LastContact = device.LastContact,
                 HasGeoFix = device.HasGeoFix,
