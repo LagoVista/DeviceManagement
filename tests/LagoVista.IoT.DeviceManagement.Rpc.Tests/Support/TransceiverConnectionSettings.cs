@@ -18,7 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
             RpcServerReceiver = new ConnectionSettings();
         }
 
-        public IConnectionSettings RpcAdmin { get; }        
+        public IConnectionSettings RpcAdmin { get; }
 
         public IConnectionSettings RpcClientTransmitter { get; }
 
@@ -27,5 +27,7 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
         public IConnectionSettings RpcServerTransmitter { get; }
 
         public IConnectionSettings RpcServerReceiver { get; }
+
+        public RcgServerKeys RpgServerKeys { get; }
     }
 }
