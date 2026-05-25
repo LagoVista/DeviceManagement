@@ -103,18 +103,18 @@ namespace LagoVista.IoT.DeviceManagement.Rpc.Tests.Support
                 InstanceId = InstanceId
             };
 
-            ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
+            //ProxyFactory = new ProxyFactory(TransceiverSettings, RpcTransceiver, AsyncCoupler, Logger);
 
-            DeviceManagementRepoProxy = ProxyFactory.Create<IDeviceManagementRepo>(ProxySettings);
-            DeviceArchiveRepoProxy = ProxyFactory.Create<IDeviceArchiveRepo>(ProxySettings);
-            DeviceLogRepo = ProxyFactory.Create<IDeviceLogRepo>(ProxySettings);
-            DevicePEMRepo = ProxyFactory.Create<IDevicePEMRepo>(ProxySettings);
+            //DeviceManagementRepoProxy = ProxyFactory.Create<IDeviceManagementRepo>(ProxySettings);
+            //DeviceArchiveRepoProxy = ProxyFactory.Create<IDeviceArchiveRepo>(ProxySettings);
+            //DeviceLogRepo = ProxyFactory.Create<IDeviceLogRepo>(ProxySettings);
+            //DevicePEMRepo = ProxyFactory.Create<IDevicePEMRepo>(ProxySettings);
 
-            DeviceGroupRepo = ProxyFactory.Create<IDeviceGroupRepo>(ProxySettings);
-            DeviceMediaRepo = ProxyFactory.Create<IDeviceMediaRepo>(ProxySettings);
-            DeviceMediaItemRepo = ProxyFactory.Create<IDeviceMediaItemRepo>(ProxySettings);
-            DeviceMediaRepoRemote = ProxyFactory.Create<IDeviceMediaRepoRemote>(ProxySettings);
-            DeviceMediaItemRepoRemote = ProxyFactory.Create<IDeviceMediaItemRepoRemote>(ProxySettings);
+            //DeviceGroupRepo = ProxyFactory.Create<IDeviceGroupRepo>(ProxySettings);
+            //DeviceMediaRepo = ProxyFactory.Create<IDeviceMediaRepo>(ProxySettings);
+            //DeviceMediaItemRepo = ProxyFactory.Create<IDeviceMediaItemRepo>(ProxySettings);
+            //DeviceMediaRepoRemote = ProxyFactory.Create<IDeviceMediaRepoRemote>(ProxySettings);
+            //DeviceMediaItemRepoRemote = ProxyFactory.Create<IDeviceMediaItemRepoRemote>(ProxySettings);
         }
 
         public static Device CreateDevice(string deviceId = "dev1234")
