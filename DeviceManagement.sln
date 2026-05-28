@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29383AD3-C5DF-45D3-8D5A-A6F74EA7F438}"
 EndProject
@@ -18,8 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.Models", "src\LagoVista.IoT.DeviceManagement.Models\LagoVista.IoT.DeviceManagement.Models.csproj", "{EE54EB55-667C-47C9-9B9E-A9B29E646C45}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.MediaIntegrationTests", "tests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests\LagoVista.IoT.DeviceManagement.MediaIntegrationTests.csproj", "{1940D07B-25E2-46C3-8B64-1E5D9757581D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LagoVista.IoT.DeviceManagement.Rpc.Tests", "tests\LagoVista.IoT.DeviceManagement.Rpc.Tests\LagoVista.IoT.DeviceManagement.Rpc.Tests.csproj", "{C2087475-1190-4641-AC34-A035D1DDDB7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +49,6 @@ Global
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2087475-1190-4641-AC34-A035D1DDDB7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +60,6 @@ Global
 		{4F1E6D12-9976-4E66-BEBE-67C431E7B849} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
 		{EE54EB55-667C-47C9-9B9E-A9B29E646C45} = {29383AD3-C5DF-45D3-8D5A-A6F74EA7F438}
 		{1940D07B-25E2-46C3-8B64-1E5D9757581D} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
-		{C2087475-1190-4641-AC34-A035D1DDDB7F} = {47C11A4F-CB96-41A7-B590-54A77E209CA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D668ED7B-81DC-4922-B64B-32E92439E71E}
