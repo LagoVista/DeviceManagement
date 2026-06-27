@@ -48,5 +48,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         public EntityHeader ClonedFromId { get; set; }
         public EntityHeader ClonedFromOrg { get; set; }
         public EntityHeader ClonedRevision { get; set; }
+        public string LastVectorIndexSha256Hex { get; set; }
     }
 }
