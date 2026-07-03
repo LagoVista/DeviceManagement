@@ -220,9 +220,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<EntityHeader>> UploadMainRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user)
         {
-            var bytes = new byte[stream.Length];
+            if (stream.Length > int.MaxValue)
+                throw new InvalidOperationException("Stream is too large to load into a byte array.");
+
+            var bytes = new byte[(int)stream.Length];
+
             stream.Position = 0;
-            stream.Read(bytes, 0, (int)stream.Length);
+            stream.ReadExactly(bytes);
 
             await AuthorizeAsync(user.Id, org.Id, "UploadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionid}");
 
@@ -233,9 +237,13 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<EntityHeader>> UploadOtaRevision(string firmwareId, string revisionid, Stream stream, EntityHeader org, EntityHeader user)
         {
-            var bytes = new byte[stream.Length];
+            if (stream.Length > int.MaxValue)
+                throw new InvalidOperationException("Stream is too large to load into a byte array.");
+
+            var bytes = new byte[(int)stream.Length];
+
             stream.Position = 0;
-            stream.Read(bytes, 0, (int)stream.Length);
+            stream.ReadExactly(bytes);
 
             await AuthorizeAsync(user.Id, org.Id, "UploadFirmwareBinary", $"Firmware Id: {firmwareId} RevisionId: {revisionid}");
 
