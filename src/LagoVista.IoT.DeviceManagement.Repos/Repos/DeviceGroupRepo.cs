@@ -2,21 +2,22 @@
 // ContentHash: c8af81aba4e3daf540605c8f1fa8ba62d11fab6d02a66ed62e087979ba644b42
 // IndexVersion: 2
 // --- END CODE INDEX META ---
-using LagoVista.IoT.DeviceManagement.Core.Repos;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using LagoVista.IoT.DeviceManagement.Core.Models;
-using System.Threading.Tasks;
 using LagoVista.CloudStorage.DocumentDB;
+using LagoVista.CloudStorage.Interfaces;
+using LagoVista.IoT.DeviceManagement.Core.Models;
+using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.Logging.Loggers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceGroupRepo : DocumentDBRepoBase<DeviceGroup>, IDeviceGroupRepo
     {
-        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger) 
-            : base(logger)
+        public DeviceGroupRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger, ICosmosClientProvider cosmosClientProvider) 
+            : base(logger, cosmosClientProvider)
         {
 
         }

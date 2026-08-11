@@ -39,7 +39,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
 
             _uri = $"https://{_accountId}.documents.azure.com:443";
 
-            _devMgtRepo = new DeviceManagementRepo(new AdminLogger(new Utils.LogWriter()));
+            _devMgtRepo = new DeviceManagementRepo(new AdminLogger(new Utils.LogWriter()), null);
         }
 
         [TestMethod]

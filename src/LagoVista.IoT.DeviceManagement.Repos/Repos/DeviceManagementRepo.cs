@@ -2,24 +2,26 @@
 // ContentHash: 144a749c99c8140896a56eff168134be37737d6f95da6f0cfb8771c0e1d2f792
 // IndexVersion: 2
 // --- END CODE INDEX META ---
+using LagoVista.CloudStorage;
 using LagoVista.CloudStorage.DocumentDB;
+using LagoVista.CloudStorage.Interfaces;
+using LagoVista.CloudStorage.Storage;
+using LagoVista.Core;
+using LagoVista.Core.Interfaces;
+using LagoVista.Core.Models;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
+using LagoVista.IoT.DeviceManagement.Core;
+using LagoVista.IoT.DeviceManagement.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Core.Resources;
 using LagoVista.IoT.Logging.Loggers;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using LagoVista.Core.Models;
-using LagoVista.CloudStorage;
+using System.Linq;
 using System.Net.Mail;
-using LagoVista.Core;
-using LagoVista.Core.Interfaces;
-using LagoVista.IoT.DeviceManagement.Core.Interfaces;
-using LagoVista.IoT.DeviceManagement.Core;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -33,7 +35,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private readonly IRemoteConfigurationManager _remoteConfigNamanager;
 
         public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IBackgroundServiceTaskQueue backgroundServiceTaskQueue,
-            IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger) : base(logger)
+            IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger, ICosmosClientProvider cosmosClientProvider) : base(logger, cosmosClientProvider)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
@@ -41,7 +43,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             _remoteConfigNamanager = remotePropertyManager ?? throw new ArgumentNullException(nameof(remotePropertyManager));
         }
 
-        public DeviceManagementRepo(IAdminLogger logger) : base(logger)
+        public DeviceManagementRepo(IAdminLogger logger, ICosmosClientProvider cosmosClientProvider) : base(logger, cosmosClientProvider)
         {
         }
 
