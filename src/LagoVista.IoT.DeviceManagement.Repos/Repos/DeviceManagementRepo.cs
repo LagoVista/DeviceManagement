@@ -395,27 +395,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
             SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
-            var query = @"SELECT c.id, c.Status, c.Speed, c.Heading, c.Name, c.DeviceType, c.DeviceConfiguration, c.DeviceRepository,
-   c.DeviceId, c.Attributes, c.States, c.Properties, c.GeoLocation FROM c 
-  join d in c.DeviceGroups 
-  where c.EntityType = 'Device' 
-   and c.DeviceRepository.Id = @repodid
-   and d.Id = @groupid";
+            var devices = await QueryAsync(device => device.DeviceRepository != null && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceGroups != null && device.DeviceGroups.Any(group => group.Id == groupId));
 
-            var queryParams = new List<QueryParameter>();
-            queryParams.Add(new QueryParameter("@repodid", deviceRepo.Id));
-            queryParams.Add(new QueryParameter("@groupid", groupId));
-
-            var devices = await QueryAsync(query, queryParams.ToArray());
-
-            var items = devices.Select(dvc => DeviceSummaryData.FromDevice(dvc));
+            var items = devices.Select(device => DeviceSummaryData.FromDevice(device)).ToList();
             var listResponse = ListResponse<DeviceSummaryData>.Create(items);
-            listResponse.PageSize = items.Count();
+            listResponse.PageSize = items.Count;
             listResponse.HasMoreRecords = false;
-            listResponse.GetListUrl = listRequest.Url; 
+            listResponse.GetListUrl = listRequest.Url;
 
             return listResponse;
         }
+
 
         public Task<string> Echo(string value)
         {
