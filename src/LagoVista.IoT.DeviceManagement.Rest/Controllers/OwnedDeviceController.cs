@@ -67,7 +67,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         {
             var fullSw = Stopwatch.StartNew();
             var sw = Stopwatch.StartNew();
-            var org = EntityHeader.Create(orgId, "PIN Device Access");
+            var org = EntityHeader.Create(orgId,"pinorg", "PIN Device Access");
             var user = EntityHeader.Create(Guid.Empty.ToId(), "PIN Device Access");
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, org, user, pin);
             org = repo.OwnerOrganization;
@@ -106,6 +106,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                     CurrentRepo = owner.CurrentRepo,
                     CurrentDevice = owner.CurrentDevice,
                     CurrentDeviceId = owner.CurrentDeviceId,
+                    CurrentOrganization = new OrganizationSummary() { Name = org.Text, Id = org.Id, Namespace = "deviceownerorg"},
                     CurrentDeviceConfig = owner.CurrentDeviceConfig,
                     OwnerOrganization = org,
                 };
