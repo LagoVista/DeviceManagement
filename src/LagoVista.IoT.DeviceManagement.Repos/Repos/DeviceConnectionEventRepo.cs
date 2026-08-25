@@ -19,10 +19,21 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
         }
 
-        public async Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest)
+        private void Configure(DeviceRepository deviceRepo)
         {
             SetTableName(deviceRepo.GetDeviceConnectionEventStorageName());
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+        }
+
+        public Task AddConnectionEventAsync(DeviceRepository deviceRepo, DeviceConnectionEvent connectionEvent)
+        {
+            Configure(deviceRepo);
+            return InsertAsync(new DeviceConnectionEventDTO(connectionEvent, false));
+        }
+
+        public async Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest)
+        {
+            Configure(deviceRepo);
 
             var result = await base.GetPagedResultsAsync(deviceId, listRequest);
             return result.Create(result.Model.Select(dto => dto.ToDeviceConnectionEvent()));
