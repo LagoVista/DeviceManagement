@@ -1,16 +1,15 @@
-// --- BEGIN CODE INDEX META (do not edit) ---
-// ContentHash: b9f4b0ddd82cbbf6f282af55a99e2e8465819646d7ba4f2929e25ca223b6ac20
-// IndexVersion: 2
-// --- END CODE INDEX META ---
-using LagoVista.Core.Models;
+using LagoVista.Core.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LagoVista.IoT.DeviceManagement.Models
 {
-    public class DeviceConnectionEvent
+    public class DeviceConnectionEvent : IActivityRecord
     {
+        public string Id { get; set; }
+        public string OrganizationId { get; set; }
+        public string Organization { get; set; }
+        public DateTime CreationDate { get; set; }
+
         public string DeviceId { get; set; }
         public string TimeStamp { get; set; }
         public string FirmwareSKU { get; set; }
