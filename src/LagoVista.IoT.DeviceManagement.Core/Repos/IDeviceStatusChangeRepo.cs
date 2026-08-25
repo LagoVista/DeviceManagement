@@ -12,6 +12,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     public interface IDeviceStatusChangeRepo
     {
         Task AddDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status);
+        Task AddDeviceStatusHistoryAsync(DeviceRepository deviceRepo, DeviceStatus status);
         Task<DeviceStatus> GetDeviceStatusAsync(DeviceRepository deviceRepo, string deviceUniqueId);
         Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status);
         Task<ListResponse<DeviceStatus>> GetDeviceStatusHistoryAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request);
