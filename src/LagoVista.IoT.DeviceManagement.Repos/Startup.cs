@@ -2,10 +2,12 @@
 // ContentHash: 97419ef16c99c06646cab7c81f7e5a2d25472d18cfffbea3e78d2d881940f0d1
 // IndexVersion: 2
 // --- END CODE INDEX META ---
+using LagoVista.CloudStorage.Storage;
 using LagoVista.Core.Interfaces;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
+using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<IDeviceManagementRepo, Repos.DeviceManagementRepo>();
             services.AddTransient<IDeviceArchiveRepo, Repos.DeviceArchiveRepo>();
             services.AddTransient<IDeviceExceptionRepo, Repos.DeviceExceptionRepo>();
+            services.AddActivityRecordStore<DeviceConnectionEvent, CassandraActivityRecordStore<DeviceConnectionEvent>>(Repos.DeviceConnectionEventRepo.ConfigureStorage);
             services.AddTransient<IDeviceConnectionEventRepo, Repos.DeviceConnectionEventRepo>();
             services.AddTransient<IDeviceStatusChangeRepo, Repos.DeviceStatusChangeRepo>();
             services.AddTransient<IDeviceGroupRepo, Repos.DeviceGroupRepo>();
