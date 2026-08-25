@@ -3,12 +3,14 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.CloudStorage.Storage;
+using LagoVista.Core;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
 using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +28,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             return InsertAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
+        }
+
+        public Task AddDeviceStatusHistoryAsync(DeviceRepository deviceRepo, DeviceStatus status)
+        {
+            SetTableName(deviceRepo.GetDeviceStatusHistoryStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            return InsertAsync(new DeviceStatusDTO(status, DateTime.UtcNow.ToInverseTicksRowKey()));
         }
 
         public Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
@@ -59,7 +69,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             var dto = await GetAsync(deviceUniqueId);
-            return dto.ToDeviceStatus();
+            return dto?.ToDeviceStatus();
         }
 
         public async Task<ListResponse<DeviceStatus>> GetWatchdogDeviceStatusAsync(DeviceRepository deviceRepo, ListRequest request)

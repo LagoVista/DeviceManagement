@@ -12,6 +12,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
 {
     public interface IDeviceConnectionEventRepo
     {
+        Task AddConnectionEventAsync(DeviceRepository deviceRepo, DeviceConnectionEvent connectionEvent);
         Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, String deviceId, ListRequest request);
     }
 }

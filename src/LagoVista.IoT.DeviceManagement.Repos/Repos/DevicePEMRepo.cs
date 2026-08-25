@@ -25,7 +25,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<string> GetPEMAsync(DeviceRepository deviceRepo, string partitionKey, string rowKey)
         {
-            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccountId);
+            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey);
 
             var result = await GetAsync(partitionKey, rowKey);
             var pemResult = result.ToPEM();
@@ -38,7 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<PEMIndex>> GetPEMIndexForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
-            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccountId);
+            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey);
 
             var result = await GetByPartitionIdAsync(deviceId, request.PageSize, request.PageIndex * request.PageSize);
             return ListResponse<PEMIndex>.Create(result.Select(pem => pem.ToPEMIndex()).ToList(), request);
@@ -46,7 +46,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<PEMIndex>> GetPEMIndexForErrorReasonAsync(DeviceRepository deviceRepo, string errorReason, ListRequest request)
         {
-            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccountId);
+            SetConnection(deviceRepo.PEMStorageSettings.AccountId, deviceRepo.PEMStorageSettings.AccessKey);
             var result = await GetPagedResultsAsync(errorReason, request);
             var records = result.Model.Select(result => result.ToPEMIndex()).ToList();
             return ListResponse<PEMIndex>.Create(records, result); 
