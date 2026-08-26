@@ -34,16 +34,16 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private readonly IBackgroundServiceTaskQueue _backgroundServiceTaskQueue;
         private readonly IRemoteConfigurationManager _remoteConfigNamanager;
 
-        public DeviceManagementRepo(IDeviceManagementSettings repoSettings, IBackgroundServiceTaskQueue backgroundServiceTaskQueue,
-            IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IAdminLogger logger, ICosmosClientProvider cosmosClientProvider) : base(logger, cosmosClientProvider)
+        public DeviceManagementRepo(IBackgroundServiceTaskQueue backgroundServiceTaskQueue,
+            IRemoteConfigurationManager remotePropertyManager, IDeviceGroupRepo deviceGroupRepo, IDocumentCloudCachedServices services) : base(services)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = services.AdminLogger ?? throw new ArgumentNullException(nameof(services.AdminLogger));
             _deviceGroupRepo = deviceGroupRepo ?? throw new ArgumentNullException(nameof(deviceGroupRepo));
             _backgroundServiceTaskQueue = backgroundServiceTaskQueue ?? throw new ArgumentNullException(nameof(backgroundServiceTaskQueue));
             _remoteConfigNamanager = remotePropertyManager ?? throw new ArgumentNullException(nameof(remotePropertyManager));
         }
 
-        public DeviceManagementRepo(IAdminLogger logger, ICosmosClientProvider cosmosClientProvider) : base(logger, cosmosClientProvider)
+        public DeviceManagementRepo(IDocumentCloudCachedServices services) : base(services)
         {
         }
 
@@ -59,7 +59,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
@@ -101,9 +100,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task DeleteDeviceAsync(DeviceRepository deviceRepo, string id)
         {
             var device = await GetDeviceByIdAsync(deviceRepo, id);
-
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             await DeleteDocumentAsync(id, deviceRepo.Id);
 
             if (deviceRepo.RepositoryType.Value == RepositoryTypes.AzureIoTHub)
@@ -145,8 +141,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             {
                 throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.ResourceName));
             }
-
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             var device = await this.GetDeviceByDeviceIdAsync(deviceRepo, deviceId);
             await DeleteDeviceAsync(deviceRepo, device.Id);
@@ -209,8 +203,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 throw new ArgumentNullException(nameof(deviceRepo.DeviceStorageSettings.ResourceName));
             }
 
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             var device = (await base.QueryAsync(device => device.DeviceId == deviceId && device.DeviceRepository.Id == deviceRepo.Id)).FirstOrDefault();
             if (device != null)
             {
@@ -223,8 +215,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<bool> CheckIfDeviceIdInUse(DeviceRepository deviceRepo, string id, string orgid)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             return (await base.QueryAsync(device => device.OwnerOrganization.Id == id && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceId == id)).Any();
         }
 
@@ -233,8 +223,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             if (deviceRepo == null) throw new ArgumentNullException(nameof(deviceRepo));
             if (String.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
             if (deviceRepo.DeviceStorageSettings == null) throw new ArgumentNullException("StorageSettingsOnRepo");
-
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
 
             var device = await GetDocumentAsync(id, deviceRepo.Id, throwOnRecordNotFound);
             if (device != null)
@@ -295,7 +283,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             if(device.Location != null)
                 device.Location.Value = null;
 
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             await UpsertDocumentAsync(device);
 
             if (currentConfigLevel != device.DesiredConfigurationRevisionLevel)
@@ -328,20 +315,17 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForLocationIdAsync(DeviceRepository deviceRepo, string locationId, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.Location.Id == locationId, qry=>qry.Name, request);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryAsync(DeviceRepository deviceRepo, string orgId, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
                                                qry.DeviceRepository.Id == deviceRepo.Id,dev=>dev.Name, request);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryAsync(DeviceRepository deviceRepo, string deviceTypeId, string orgId, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
                                                qry.DeviceRepository.Id == deviceRepo.Id && 
                                                qry.DeviceType.Id == deviceTypeId, dev => dev.Name, request);
@@ -349,52 +333,42 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInStatusAsync(DeviceRepository deviceRepo, string status, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.Status.Id == status, dev=>dev.Name, request);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceConfiguration.Id == configurationId && qry.DeviceRepository.Id == deviceRepo.Id,
                                               qry => qry.Name, request);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeAsync(DeviceRepository deviceRepo, string deviceTypeId, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceType.Id == deviceTypeId && qry.DeviceRepository.Id == deviceRepo.Id, dev=>dev.Name, request);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesWithDeviceTypeKeyAsync(DeviceRepository deviceRepo, string deviceTypeKey, ListRequest request)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceType.Key == deviceTypeKey && qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, request);
         }
 
         public async Task<ListResponse<Device>> GetFullDevicesWithConfigurationAsync(DeviceRepository deviceRepo, string configurationId, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QueryAsync(qry => qry.DeviceConfiguration.Id == configurationId && qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesInCustomStatusAsync(DeviceRepository deviceRepo, string customStatus, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceRepository.Id == deviceRepo.Id && qry.CustomStatus != null && qry.CustomStatus.Id == customStatus, dev => dev.Name, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummary>> SearchByDeviceIdAsync(DeviceRepository deviceRepo, string search, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.DeviceRepository.Id == deviceRepo.Id && qry.DeviceId.Contains(search), dev => dev.Name, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummaryData>> GetDeviceGroupSummaryDataAsync(DeviceRepository deviceRepo, string groupId, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             var devices = await QueryAsync(device => device.DeviceRepository != null && device.DeviceRepository.Id == deviceRepo.Id && device.DeviceGroups != null && device.DeviceGroups.Any(group => group.Id == groupId));
 
             var items = devices.Select(device => DeviceSummaryData.FromDevice(device)).ToList();
@@ -414,15 +388,11 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetChildDevicesAsync(DeviceRepository repo, string parentDeviceId, ListRequest listRequest)
         {
-            SetConnection(repo.DeviceStorageSettings.Uri, repo.DeviceStorageSettings.AccessKey, repo.DeviceStorageSettings.ResourceName);
-
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.ParentDevice != null && qry.ParentDevice.Id == parentDeviceId && qry.DeviceRepository.Id == repo.Id, dev=>dev.Name, listRequest);
         }
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForRepositoryForUserAsync(DeviceRepository deviceRepo, string userId, string orgId, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
                                                (qry.AssignedUser != null && qry.AssignedUser.Id == userId) &&
                                                qry.DeviceRepository.Id == deviceRepo.Id, dev=>dev.Name, listRequest);
@@ -430,8 +400,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<Device> GetDeviceByMacAddressAsync(DeviceRepository deviceRepo, string macAddress)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
                                                        qry.DeviceRepository.Id == deviceRepo.Id &&
                                                        qry.MacAddress == macAddress);
@@ -447,8 +415,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<Device> GetDeviceByiOSBLEAddressAsync(DeviceRepository deviceRepo, string iosBLEAddress)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             var devices = await base.QueryAsync(qry => qry.OwnerOrganization.Id == deviceRepo.OwnerOrganization.Id &&
                                                        qry.DeviceRepository.Id == deviceRepo.Id &&
                                                        qry.iosBLEAddress == iosBLEAddress);
@@ -464,8 +430,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForCustomerAsync(DeviceRepository deviceRepo, string orgId, string customerId, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
-
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
                                                 qry.Customer.Id == customerId &&
                                                 qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, listRequest);
@@ -473,7 +437,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public async Task<ListResponse<DeviceSummary>> GetDevicesForCustomerLocationAsync(DeviceRepository deviceRepo, string orgId, string customerId, string customerLocationId, ListRequest listRequest)
         {
-            SetConnection(deviceRepo.DeviceStorageSettings.Uri, deviceRepo.DeviceStorageSettings.AccessKey, deviceRepo.DeviceStorageSettings.ResourceName);
             return await base.QuerySummaryAsync<DeviceSummary, Device>(qry => qry.OwnerOrganization.Id == orgId &&
                                                 qry.Customer.Id == customerId && qry.CustomerLocation.Id == customerLocationId &&
                                                 qry.DeviceRepository.Id == deviceRepo.Id, dev => dev.Name, listRequest);

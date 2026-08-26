@@ -2,15 +2,16 @@
 // ContentHash: 191901470745292a9f90a91dfeb9169cc687f78041d096ac7321e14e59d607e9
 // IndexVersion: 2
 // --- END CODE INDEX META ---
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using LagoVista.CloudStorage.DocumentDB;
+using LagoVista.CloudStorage.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.Logging.Loggers;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
@@ -19,11 +20,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         private readonly IFirmwareRepoSettings _repoSettings;
         private readonly IAdminLogger _adminLogger;
 
-        public FirmwareRepo(IFirmwareRepoSettings repoSettings, IAdminLogger logger)
-            : base(repoSettings.FirmwareDocDBSettings.Uri, repoSettings.FirmwareDocDBSettings.AccessKey, repoSettings.FirmwareDocDBSettings.ResourceName, logger)
+        public FirmwareRepo(IFirmwareRepoSettings repoSettings, IDocumentCloudCachedServices services) : base(services)
         {
             _repoSettings = repoSettings ?? throw new ArgumentNullException(nameof(repoSettings));
-            _adminLogger = logger ?? throw new ArgumentNullException(nameof(repoSettings));
+            _adminLogger = services.AdminLogger ?? throw new ArgumentNullException(nameof(services.AdminLogger));
         }
 
         public Task AddDownloadRequestAsync(FirmwareDownloadRequest request)

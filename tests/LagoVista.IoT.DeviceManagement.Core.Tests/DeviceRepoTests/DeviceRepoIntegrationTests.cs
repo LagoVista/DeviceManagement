@@ -28,35 +28,35 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
         const string ORG_ID = "C8AD4589F26842E7A1AEFBAEFC979C9B";
         const string REPO_ID = "5CF12598069C400B8B91A3AE8604EA4A";
 
-        [TestInitialize]
-        public void TestInit()
-        {
-            _accountId = Environment.GetEnvironmentVariable("TEST_DOCDB_ACCOUNTID");
-            _accountKey = Environment.GetEnvironmentVariable("TEST_DOCDB_ACCOUTKEY");
+        //[TestInitialize]
+        //public void TestInit()
+        //{
+        //    _accountId = Environment.GetEnvironmentVariable("TEST_DOCDB_ACCOUNTID");
+        //    _accountKey = Environment.GetEnvironmentVariable("TEST_DOCDB_ACCOUTKEY");
 
-            if (String.IsNullOrEmpty(_accountId)) throw new ArgumentNullException("Please add TEST_AZURESTORAGE_ACCOUNTID as an environnment variable");
-            if (String.IsNullOrEmpty(_accountKey)) throw new ArgumentNullException("Please add TEST_AZURESTORAGE_ACCESSKEY as an environnment variable");
+        //    if (String.IsNullOrEmpty(_accountId)) throw new ArgumentNullException("Please add TEST_AZURESTORAGE_ACCOUNTID as an environnment variable");
+        //    if (String.IsNullOrEmpty(_accountKey)) throw new ArgumentNullException("Please add TEST_AZURESTORAGE_ACCESSKEY as an environnment variable");
 
-            _uri = $"https://{_accountId}.documents.azure.com:443";
+        //    _uri = $"https://{_accountId}.documents.azure.com:443";
 
-            _devMgtRepo = new DeviceManagementRepo(new AdminLogger(new Utils.LogWriter()), null);
-        }
+        //    _devMgtRepo = new DeviceManagementRepo(new AdminLogger(new Utils.LogWriter()), null);
+        //}
 
-        [TestMethod]
-        public async Task GetDevices()
-        {
-            var repo = new DeviceRepository();
-            repo.DeviceStorageSettings = new LagoVista.Core.Models.ConnectionSettings();
-            repo.DeviceStorageSettings.Uri = _uri;
-            repo.DeviceStorageSettings.ResourceName = "dev";
-            repo.DeviceStorageSettings.AccessKey = _accountKey;
-            repo.Id = REPO_ID;
-            var devices = await _devMgtRepo.GetDevicesForRepositoryAsync(repo, ORG_ID, new LagoVista.Core.Models.UIMetaData.ListRequest() { PageIndex = 1, PageSize = 100 });
-            foreach (var device in devices.Model)
-            {
-                Console.WriteLine(device.DeviceName);
-            }
-        }
+        //[TestMethod]
+        //public async Task GetDevices()
+        //{
+        //    var repo = new DeviceRepository();
+        //    repo.DeviceStorageSettings = new LagoVista.Core.Models.ConnectionSettings();
+        //    repo.DeviceStorageSettings.Uri = _uri;
+        //    repo.DeviceStorageSettings.ResourceName = "dev";
+        //    repo.DeviceStorageSettings.AccessKey = _accountKey;
+        //    repo.Id = REPO_ID;
+        //    var devices = await _devMgtRepo.GetDevicesForRepositoryAsync(repo, ORG_ID, new LagoVista.Core.Models.UIMetaData.ListRequest() { PageIndex = 1, PageSize = 100 });
+        //    foreach (var device in devices.Model)
+        //    {
+        //        Console.WriteLine(device.DeviceName);
+        //    }
+        //}
 
     }
 }

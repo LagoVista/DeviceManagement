@@ -13,16 +13,16 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.CloudStorage.Storage;
 using System.Security.Cryptography;
+using LagoVista.CloudStorage.Interfaces;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class DeviceRepositoryRepo : DocumentDBRepoBase<DeviceRepository>, IDeviceRepositoryRepo
     {
         private ICacheProvider _cacheProvider;
-        public DeviceRepositoryRepo(IDeviceManagementSettings repoSettings, IAdminLogger logger, ICacheProvider cacheProvider) 
-            : base(repoSettings.DeviceRepoStorage.Uri, repoSettings.DeviceRepoStorage.AccessKey, repoSettings.DeviceRepoStorage.ResourceName, logger, cacheProvider)
+        public DeviceRepositoryRepo(IDocumentCloudCachedServices services) : base(services)
         {
-            _cacheProvider = cacheProvider;
+            _cacheProvider = services.CacheProvider;
         }
 
         public Task AddDeviceRepositoryAsync(DeviceRepository deviceRepo)
