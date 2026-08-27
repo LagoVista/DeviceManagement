@@ -47,16 +47,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         {
         }
 
-        public override string GetPartitionKey()
-        {
-            return "/DeviceRepository/Id";
-        }
-
-        public override String GetCollectionName()
-        {
-            return "Devices";
-        }
-
         public async Task<InvokeResult> AddDeviceAsync(DeviceRepository deviceRepo, Device device)
         {
             if (String.IsNullOrEmpty(device.Key)) device.Key = device.DeviceId;

@@ -21,15 +21,6 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         }
 
-        public override String GetCollectionName()
-        {
-            return "Devices";
-        }
-
-        public override string GetPartitionKey()
-        {
-            return "/DeviceRepository/Id";
-        }
 
         public Task AddDeviceGroupAsync(DeviceRepository deviceRepo, DeviceGroup deviceGroup)
         {

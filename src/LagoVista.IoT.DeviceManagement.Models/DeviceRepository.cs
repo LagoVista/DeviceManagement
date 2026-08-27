@@ -55,6 +55,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         Consumption
     }
 
+    [CosmosPartitionKey("/DeviceRepository/Id")]
+    [CollectionName("Devices")]
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_RepoTitle, DeviceManagementResources.Names.Device_Repo_Help,
         DeviceManagementResources.Names.Device_Repo_Description, EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-device-repository", SaveDraft:false,
         CreateUIUrl: "/devicemgmt/repository/new", ListUIUrl: "devicemgmt/repositories", EditUIUrl: "/devicemgmt/repository/{id}",

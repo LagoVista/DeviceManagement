@@ -42,7 +42,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [EnumLabel(Device.Decommissioned, DeviceManagementResources.Names.Device_Status_Decommissioned, typeof(DeviceManagementResources))]
         Decommissioned
     }
-
+    [CosmosPartitionKey("/DeviceRepository/Id")]
+    [CollectionName("Devices")]
     [EntityDescription(DeviceManagementDomain.DeviceManagement, DeviceManagementResources.Names.Device_Title, DeviceManagementResources.Names.Device_Help, DeviceManagementResources.Names.Device_Description,
         EntityDescriptionAttribute.EntityTypes.SimpleModel, typeof(DeviceManagementResources), Icon: "icon-ae-core-2", SaveDraft:false,
         GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
