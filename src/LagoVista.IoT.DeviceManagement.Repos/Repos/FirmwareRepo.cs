@@ -19,11 +19,13 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     {
         private readonly IFirmwareRepoSettings _repoSettings;
         private readonly IAdminLogger _adminLogger;
+        private readonly ICloudFileStorageClient _cloudFileStorageClient;
 
-        public FirmwareRepo(IFirmwareRepoSettings repoSettings, IDocumentCloudCachedServices services) : base(services)
+        public FirmwareRepo(IFirmwareRepoSettings repoSettings, ICloudFileStorageClient cloudFileStorageClient, IDocumentCloudCachedServices services) : base(services)
         {
             _repoSettings = repoSettings ?? throw new ArgumentNullException(nameof(repoSettings));
             _adminLogger = services.AdminLogger ?? throw new ArgumentNullException(nameof(services.AdminLogger));
+            _cloudFileStorageClient = cloudFileStorageClient ?? throw new ArgumentNullException(nameof(cloudFileStorageClient));
         }
 
         public Task AddDownloadRequestAsync(FirmwareDownloadRequest request)
@@ -45,7 +47,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
         public async Task<string> AddFirmwareRevisionAsync(string type, string firmwareId, string revisionId, byte[] buffer)
         {
             var fileName = GetFileName(type, firmwareId, revisionId);
-            var binRepo = new FirmwareBinRepo(_adminLogger, _repoSettings.FirmwareBinSettings);
+            var binRepo = new FirmwareBinRepo(_cloudFileStorageClient);
             await binRepo.AddBinAsync(buffer, fileName);
             return fileName;
         }
@@ -63,7 +65,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string type, string firmwareId, string revisionId)
         {
-            var binRepo = new FirmwareBinRepo(_adminLogger, _repoSettings.FirmwareBinSettings);
+            var binRepo = new FirmwareBinRepo(_cloudFileStorageClient);
             return binRepo.GetFirmwareBinaryAsync(GetFileName(type, firmwareId, revisionId));
         }
 

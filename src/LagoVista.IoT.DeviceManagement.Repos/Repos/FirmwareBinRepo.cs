@@ -2,6 +2,7 @@
 // ContentHash: 231334d1392927bbfd04588d8faae2d87ae4afb2479f374815672eae7c7fb6c8
 // IndexVersion: 2
 // --- END CODE INDEX META ---
+using LagoVista.CloudStorage.Interfaces;
 using LagoVista.CloudStorage.Storage;
 using LagoVista.Core;
 using LagoVista.Core.Interfaces;
@@ -13,24 +14,26 @@ using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class FirmwareBinRepo : CloudFileStorage
+    public class FirmwareBinRepo 
     {
-        public FirmwareBinRepo(IAdminLogger adminLogger, IConnectionSettings connectionSettings) : base(connectionSettings.AccountId, connectionSettings.AccessKey, adminLogger)
+        ICloudFileStorageClient _storageClient;
+        public FirmwareBinRepo(ICloudFileStorageClient storageClient) 
         {
+            _storageClient = storageClient;
         }
 
         public async Task<InvokeResult> AddBinAsync(byte[] data, string fileName)
         {
 
             var containerName = "firmware";
-            var result = await AddFileAsync(containerName, fileName, data, "application/octet-stream");
+            var result = await _storageClient.AddFileAsync(containerName, fileName, data, "application/octet-stream");
             return result.ToInvokeResult();    
         }
 
         public async Task<InvokeResult<byte[]>> GetFirmwareBinaryAsync(string fileName)
         {
             var containerName = "firmware";
-            return await GetFileAsync(containerName, fileName);
+            return await _storageClient.GetFileAsync(containerName, fileName);
         }
     }
 }

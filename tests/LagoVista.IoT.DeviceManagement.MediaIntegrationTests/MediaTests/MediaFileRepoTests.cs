@@ -8,12 +8,14 @@
 
 
 using Azure.Storage.Blobs;
+using LagoVista.CloudStorage.Interfaces;
 using LagoVista.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Tests;
 using LagoVista.IoT.DeviceManagement.Repos.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Threading.Tasks;
 
@@ -42,7 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
         [TestMethod]
         public async Task Media_Blob_DownloadTest()
         {
-            var mediaRepo = new DeviceMediaRepo(new AdminLogger(new Utils.LogWriter()));
+            var mediaRepo = new DeviceMediaRepo(new Logging.ConsoleLogger(), Mock.Of<ICloudFileStorageClient>());
             var fileName = $"{Guid.NewGuid().ToId()}.bin";
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
@@ -66,7 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
         [TestMethod]
         public async Task Media_Blob_DeleteBlobTest()
         {
-            var mediaRepo = new DeviceMediaRepo(new AdminLogger(new Utils.LogWriter()));
+            var mediaRepo = new DeviceMediaRepo(new Logging.ConsoleLogger(), Mock.Of<ICloudFileStorageClient>());
             var fileName = $"{Guid.NewGuid().ToId()}.bin";
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
@@ -86,7 +88,7 @@ namespace LagoVista.IoT.DeviceManagement.MediaIntegrationTests.MediaTests
         [TestMethod]
         public async Task Media_Blob_UploadTest()
         {
-            var mediaRepo = new DeviceMediaRepo(new AdminLogger(new Utils.LogWriter()));
+            var mediaRepo = new DeviceMediaRepo(new Logging.ConsoleLogger(), Mock.Of<ICloudFileStorageClient>());
             var fileName = $"{Guid.NewGuid().ToId()}.bin";
             var imageBytes = new byte[4096];
             new Random().NextBytes(imageBytes);
