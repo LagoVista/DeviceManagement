@@ -7,11 +7,10 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Networking" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3387.2032" />
-
+    <PackageReference Include="LagoVista.Core.Networking" />
+    <PackageReference Include="LagoVista.Core.Rpc" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" />
+    <PackageReference Include="LagoVista.Core.TestBase" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />

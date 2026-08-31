@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <DebugType>portable</DebugType>
@@ -7,24 +6,20 @@
     <PackageId>LagoVista.IoT.DeviceManagement.Core.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core.Retry" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.Rpc" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="3.0.3231.0410" />
-    <PackageReference Include="LagoVista.IoT.Logging" Version="3.0.3387.2032" />
-    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
-
-    <PackageReference Include="LagoVista.Core.TestBase" Version="3.0.3387.2032" />
+    <PackageReference Include="LagoVista.Core.Retry" />
+    <PackageReference Include="LagoVista.Core.Rpc" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client" />
+    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" />
+    <PackageReference Include="LagoVista.IoT.Logging" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" />
+    <PackageReference Include="LagoVista.Core.TestBase" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Models\LagoVista.IoT.DeviceManagement.Models.csproj" />
     <ProjectReference Include="..\..\src\LagoVista.IoT.DeviceManagement.Repos\LagoVista.IoT.DeviceManagement.Repos.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -32,12 +27,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>

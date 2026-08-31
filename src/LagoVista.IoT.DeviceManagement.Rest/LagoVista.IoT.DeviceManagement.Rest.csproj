@@ -3,11 +3,11 @@
     <TargetFramework>net9.0</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn> 
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.AspNetCore.Identity" Version="3.0.3387.2032" />
-    <PackageReference Include="LagoVista.IoT.Web.Common" Version="3.0.3387.2032" />
+    <PackageReference Include="LagoVista.AspNetCore.Identity" />
+    <PackageReference Include="LagoVista.IoT.Web.Common" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LagoVista.IoT.DeviceManagement.Core\LagoVista.IoT.DeviceManagement.Core.csproj" />

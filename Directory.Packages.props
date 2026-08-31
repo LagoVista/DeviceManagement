@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="6.0.1" />
+    <PackageVersion Include="LagoVista.CloudStorage" Version="6.0.2" />
+    <PackageVersion Include="LagoVista.Core.Configuration" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.Core.Networking" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.Core.Retry" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.Core.Rpc" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.Core.Rpc.Client" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="3.0.3231.410" />
+    <PackageVersion Include="LagoVista.Core.TestBase" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.IoT.DeviceAdmin" Version="6.0.0" />
+    <PackageVersion Include="LagoVista.IoT.DeviceAdmin.Models" Version="6.0.0" />
+    <PackageVersion Include="LagoVista.IoT.Logging" Version="6.0.3" />
+    <PackageVersion Include="LagoVista.IoT.Web.Common" Version="6.0.1" />
+    <PackageVersion Include="LagoVista.MediaServices" Version="6.0.0" />
+    <PackageVersion Include="LagoVista.MediaServices.Models" Version="6.0.0" />
+    <PackageVersion Include="LagoVista.PDFServices" Version="6.0.10" />
+    <PackageVersion Include="LagoVista.UserAdmin" Version="6.0.1" />
+    <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
+    <PackageVersion Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
+    <PackageVersion Include="QRCoder" Version="1.7.0" />
+  </ItemGroup>
+</Project>
