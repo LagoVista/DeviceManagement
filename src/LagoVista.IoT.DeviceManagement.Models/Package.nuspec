@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Models</id>
-    <version>7.0.1</version>
+    <version>7.0.2</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,9 +16,9 @@
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="7.0.1" />
-        <dependency id="LagoVista.MediaServices.Models" version="7.0.2" />
-        <dependency id="LagoVista.UserAdmin" version="7.0.2" />
+        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="7.0.2" />
+        <dependency id="LagoVista.MediaServices.Models" version="7.0.3" />
+        <dependency id="LagoVista.UserAdmin" version="7.0.3" />
       </group>
     </dependencies>
   </metadata>
