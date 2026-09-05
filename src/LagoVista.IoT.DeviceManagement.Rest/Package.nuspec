@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Rest</id>
-    <version>7.0.2</version>
+    <version>7.0.3</version>
     <authors>Software Logistics, LLC</authors>
     <owners>Software Logistics, LLC</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,10 +16,10 @@
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="net9.0">
-        <dependency id="LagoVista.AspNetCore.Identity" version="7.0.3" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="7.0.2" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.2" />
-        <dependency id="LagoVista.IoT.Web.Common" version="7.0.2" />
+        <dependency id="LagoVista.AspNetCore.Identity" version="7.0.4" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="7.0.3" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.3" />
+        <dependency id="LagoVista.IoT.Web.Common" version="7.0.3" />
       </group>
     </dependencies>
   </metadata>
