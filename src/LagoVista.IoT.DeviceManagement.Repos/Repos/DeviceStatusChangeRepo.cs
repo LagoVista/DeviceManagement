@@ -1,85 +1,48 @@
-// --- BEGIN CODE INDEX META (do not edit) ---
-// ContentHash: 8110e3f3e19e83eea7d3514507a5cf5f825111e62c7ec1e7d56bf234cff046a4
-// IndexVersion: 2
-// --- END CODE INDEX META ---
 using LagoVista.CloudStorage.Storage;
-using LagoVista.Core;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
-using LagoVista.IoT.Logging.Loggers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
-    public class DeviceStatusChangeRepo : TableStorageBase<DeviceStatusDTO>, IDeviceStatusChangeRepo
+    public class DeviceStatusChangeRepo : IDeviceStatusChangeRepo
     {
-        public DeviceStatusChangeRepo(IAdminLogger logger) : base(logger)
+        private readonly IOperationalDataStore<DeviceCurrentStatusRecord> _currentStore;
+        private readonly IActivityRecordStore<DeviceStatusHistoryActivityRecord> _historyStore;
+        public DeviceStatusChangeRepo(IOperationalDataStore<DeviceCurrentStatusRecord> currentStore, IActivityRecordStore<DeviceStatusHistoryActivityRecord> historyStore)
         {
+            _currentStore = currentStore ?? throw new ArgumentNullException(nameof(currentStore));
+            _historyStore = historyStore ?? throw new ArgumentNullException(nameof(historyStore));
         }
-
-        public Task AddDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
-        {
-            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-
-            return InsertAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
-        }
-
-        public Task AddDeviceStatusHistoryAsync(DeviceRepository deviceRepo, DeviceStatus status)
-        {
-            SetTableName(deviceRepo.GetDeviceStatusHistoryStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-
-            return InsertAsync(new DeviceStatusDTO(status, System.DateTime.UtcNow.ToInverseTicksRowKey()));
-        }
-
-        public Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
-        {
-            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-
-            return UpdateAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
-        }
-
+        public Task AddDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status) => _currentStore.UpsertAsync(DeviceCurrentStatusRecord.From(deviceRepo, status));
+        public Task AddDeviceStatusHistoryAsync(DeviceRepository deviceRepo, DeviceStatus status) => _historyStore.InsertAsync(DeviceStatusHistoryActivityRecord.From(deviceRepo, status));
+        public Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status) => _currentStore.UpsertAsync(DeviceCurrentStatusRecord.From(deviceRepo, status));
         public async Task<ListResponse<DeviceStatus>> GetDeviceStatusHistoryAsync(DeviceRepository deviceRepo, string deviceId, ListRequest request)
         {
-            SetTableName(deviceRepo.GetDeviceStatusHistoryStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-
-            var result = await base.GetPagedResultsAsync(deviceId, request);
-            return new ListResponse<DeviceStatus>()
-            {
-                Model = result.Model.Select(dto => dto.ToDeviceStatus()),
-                NextPartitionKey = result.NextPartitionKey,
-                NextRowKey = result.NextRowKey,
-                PageIndex = result.PageIndex,
-                PageCount = result.PageCount,
-                PageSize = result.PageSize
-            };
+            var query = new HistoryQuery<DeviceStatusHistoryActivityRecord>()
+                .Where<string>(record => record.OrganizationId, StorageFilterOperator.Equal, deviceRepo.Id)
+                .Where<string>(record => record.DeviceUniqueId, StorageFilterOperator.Equal, deviceId)
+                .WithPage(new StoragePageRequest(request?.PageSize > 0 ? request.PageSize : 100));
+            var page = await _historyStore.QueryAsync(query);
+            return new ListResponse<DeviceStatus> { Model = page.Items.Select(item => item.ToModel()).ToList(), HasMoreRecords = page.HasMoreRecords, PageSize = request?.PageSize ?? 100, PageIndex = request?.PageIndex ?? 0 };
         }
-
         public async Task<DeviceStatus> GetDeviceStatusAsync(DeviceRepository deviceRepo, string deviceUniqueId)
         {
-            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-
-            var dto = await GetAsync(deviceUniqueId);
-            return dto.ToDeviceStatus();
+            var record = await _currentStore.GetAsync(deviceRepo.Id, deviceUniqueId);
+            return record?.ToModel();
         }
-
         public async Task<ListResponse<DeviceStatus>> GetWatchdogDeviceStatusAsync(DeviceRepository deviceRepo, ListRequest request)
         {
-            SetTableName(deviceRepo.GetDeviceCurrentStatusStorageName());
-            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
-            var result = await base.GetByFilterAsync();
-            return new ListResponse<DeviceStatus>()
-            {
-                Model = result.Select(dto => dto.ToDeviceStatus()),
-            };
+            var query = new StorageQuery<DeviceCurrentStatusRecord>()
+                .Where<string>(record => record.OrganizationId, StorageFilterOperator.Equal, deviceRepo.Id)
+                .WithPage(new StoragePageRequest(request?.PageSize > 0 ? request.PageSize : 100));
+            var page = await _currentStore.QueryAsync(query);
+            return new ListResponse<DeviceStatus> { Model = page.Items.Select(item => item.ToModel()).ToList(), HasMoreRecords = page.HasMoreRecords, PageSize = request?.PageSize ?? 100, PageIndex = request?.PageIndex ?? 0 };
         }
     }
 }
