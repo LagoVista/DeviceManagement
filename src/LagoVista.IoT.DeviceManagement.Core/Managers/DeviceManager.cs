@@ -885,7 +885,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             result.Timings.Add(new ResultTiming() { Key = "getcustomstatus", Ms = sw.ElapsedMilliseconds });
             sw.Restart();
 
-            var newDeviceState = deviceStates.Value.States.Where(st => st.Key.Value.ToLower() == customstatus.ToLower()).FirstOrDefault();
+            var newDeviceState = deviceStates.Value.States.Where(st => st.Key.ToLower() == customstatus.ToLower()).FirstOrDefault();
             if (newDeviceState == null)
             {
                 return InvokeResult.FromError("Invalid status.");
