@@ -19,7 +19,7 @@
         <dependency id="LagoVista.Core.Networking" version="7.0.14" />
         <dependency id="LagoVista.Core.Rpc" version="7.0.14" />
         <dependency id="LagoVista.IoT.DeviceAdmin" version="7.0.4" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.4" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.5" />
         <dependency id="LagoVista.MediaServices" version="7.0.21" />
         <dependency id="LagoVista.PDFServices" version="7.0.14" />
         <dependency id="QRCoder" version="1.7.0" />
