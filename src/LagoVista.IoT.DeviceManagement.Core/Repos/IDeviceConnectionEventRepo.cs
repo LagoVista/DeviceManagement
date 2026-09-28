@@ -3,6 +3,7 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Models;
 using System;
@@ -13,5 +14,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     public interface IDeviceConnectionEventRepo
     {
         Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, String deviceId, ListRequest request);
+        Task<InvokeResult> AddDeviceConnectionEventAsync(DeviceRepository deviceRepo, DeviceConnectionEvent connectionEvent);
     }
 }
