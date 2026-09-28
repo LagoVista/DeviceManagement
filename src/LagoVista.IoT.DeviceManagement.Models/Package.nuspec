@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
     <id>LagoVista.IoT.DeviceManagement.Models</id>
@@ -16,9 +16,9 @@
     <repository url="https://www.github.com/lagovista" type="git" branch="master"></repository>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="7.0.3" />
-        <dependency id="LagoVista.MediaServices.Models" version="7.0.4" />
-        <dependency id="LagoVista.UserAdmin" version="7.0.4" />
+        <dependency id="LagoVista.IoT.DeviceAdmin.Models" version="7.0.4" />
+        <dependency id="LagoVista.MediaServices.Models" version="7.0.21" />
+        <dependency id="LagoVista.UserAdmin" version="7.0.12" />
       </group>
     </dependencies>
   </metadata>
