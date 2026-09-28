@@ -17,8 +17,8 @@
     <dependencies>
       <group targetFramework="net9.0">
         <dependency id="LagoVista.AspNetCore.Identity" version="7.0.12" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="7.0.5" />
-        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.5" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Core" version="7.0.6" />
+        <dependency id="LagoVista.IoT.DeviceManagement.Models" version="7.0.6" />
         <dependency id="LagoVista.IoT.Web.Common" version="7.0.15" />
       </group>
     </dependencies>
