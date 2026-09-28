@@ -3,6 +3,7 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.Core.Models.UIMetaData;
+using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Models;
@@ -17,6 +18,15 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
     {
         public DeviceConnectionEventRepo(IAdminLogger logger) : base(logger)
         {
+        }
+
+        public async Task<InvokeResult> AddDeviceConnectionEventAsync(DeviceRepository deviceRepo, DeviceConnectionEvent connectionEvent)
+        {
+            SetTableName(deviceRepo.GetDeviceConnectionEventStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            await base.InsertAsync(new DeviceConnectionEventDTO(connectionEvent, false));
+            return InvokeResult.Success;
         }
 
         public async Task<ListResponse<DeviceConnectionEvent>> GetConnectionEventsForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest)
