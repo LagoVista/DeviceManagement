@@ -3,6 +3,7 @@
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.CloudStorage.Storage;
+using LagoVista.Core;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
@@ -26,6 +27,14 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
 
             return InsertAsync(new DeviceStatusDTO(status, status.DeviceUniqueId));
+        }
+
+        public Task AddDeviceStatusHistoryAsync(DeviceRepository deviceRepo, DeviceStatus status)
+        {
+            SetTableName(deviceRepo.GetDeviceStatusHistoryStorageName());
+            SetConnection(deviceRepo.DeviceArchiveStorageSettings.AccountId, deviceRepo.DeviceArchiveStorageSettings.AccessKey);
+
+            return InsertAsync(new DeviceStatusDTO(status, System.DateTime.UtcNow.ToInverseTicksRowKey()));
         }
 
         public Task UpdateDeviceStatusAsync(DeviceRepository deviceRepo, DeviceStatus status)
