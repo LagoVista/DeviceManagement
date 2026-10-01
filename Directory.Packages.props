@@ -1,10 +1,10 @@
-<Project>
+﻿<?xml version="1.0" encoding="utf-8"?><Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.12" />
-    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.59" />
+    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.72" />
     <PackageVersion Include="LagoVista.Core.Configuration" Version="7.0.14" />
     <PackageVersion Include="LagoVista.Core.Networking" Version="7.0.14" />
     <PackageVersion Include="LagoVista.Core.Retry" Version="7.0.14" />
@@ -15,7 +15,7 @@
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin" Version="7.0.4" />
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin.Models" Version="7.0.4" />
     <PackageVersion Include="LagoVista.IoT.Logging" Version="7.0.8" />
-    <PackageVersion Include="LagoVista.IoT.Web.Common" Version="7.0.15" />
+    <PackageVersion Include="LagoVista.IoT.Web.Common" Version="7.0.16" />
     <PackageVersion Include="LagoVista.MediaServices" Version="7.0.21" />
     <PackageVersion Include="LagoVista.MediaServices.Models" Version="7.0.21" />
     <PackageVersion Include="LagoVista.PDFServices" Version="7.0.14" />

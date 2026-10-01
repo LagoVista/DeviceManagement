@@ -15,6 +15,17 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
     [TestClass]
     public class DeviceOwnerManagerTests
     {
+        private const string OrgId = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        private const string OtherOrgId = "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+        private const string UserId = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+        private const string RepoId = "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
+        private const string OwnerId = "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD";
+        private const string OtherOwnerId = "11111111111111111111111111111111";
+        private const string AssociationId = "22222222222222222222222222222222";
+        private const string DeviceId = "33333333333333333333333333333333";
+        private const string DeviceTypeId = "44444444444444444444444444444444";
+        private const string ProductId = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+
         private Mock<IDeviceOwnerRepo> _ownerRepo;
         private Mock<IDeviceRepositoryManager> _repoManager;
         private Mock<IDeviceManager> _deviceManager;
@@ -32,15 +43,15 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             _deviceManager = new Mock<IDeviceManager>();
             _deviceTypeRepo = new Mock<IDeviceTypeRepo>();
             _manager = new DeviceOwnerManager(_ownerRepo.Object, _repoManager.Object, _deviceManager.Object, _deviceTypeRepo.Object);
-            _org = EntityHeader.Create("org1", "Org One");
-            _user = EntityHeader.Create("user1", "Admin");
-            _repo = new DeviceRepository { Id = "repo1", Name = "Repo One", OwnerOrganization = _org };
+            _org = EntityHeader.Create(OrgId, "Org One");
+            _user = EntityHeader.Create(UserId, "Admin");
+            _repo = new DeviceRepository { Id = RepoId, Name = "Repo One", OwnerOrganization = _org };
         }
 
         [TestMethod]
         public async Task CreateOwnerRejectsDifferentOrganization()
         {
-            var owner = CreateOwner("owner1", "org2");
+            var owner = CreateOwner(OwnerId, OtherOrgId);
 
             var result = await _manager.CreateOwnerAsync(owner, _org, _user);
 
@@ -51,9 +62,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestMethod]
         public async Task GetOwnerRejectsDifferentOrganization()
         {
-            _ownerRepo.Setup(x => x.FindByIdAsync("owner1")).ReturnsAsync(CreateOwner("owner1", "org2"));
+            _ownerRepo.Setup(x => x.FindByIdAsync(OwnerId)).ReturnsAsync(CreateOwner(OwnerId, OtherOrgId));
 
-            var result = await _manager.GetOwnerByIdAsync("owner1", _org, _user);
+            var result = await _manager.GetOwnerByIdAsync(OwnerId, _org, _user);
 
             Assert.IsFalse(result.Successful);
         }
@@ -61,9 +72,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestMethod]
         public async Task AssignOwnerAddsAssociationAndSetsDeviceOwner()
         {
-            var owner = CreateOwner("owner1", "org1");
+            var owner = CreateOwner(OwnerId, OrgId);
             var device = CreateDevice();
-            var deviceType = new DeviceType { Product = EntityHeader.Create("product1", "Product One") };
+            var deviceType = new DeviceType { Product = EntityHeader.Create(ProductId, "Product One") };
 
             _ownerRepo.Setup(x => x.FindByIdAsync(owner.Id)).ReturnsAsync(owner);
             _deviceManager.Setup(x => x.GetDeviceByIdAsync(_repo, device.Id, _org, _user, false))
@@ -86,9 +97,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestMethod]
         public async Task AssignOwnerDoesNotReplaceExistingOwnerWithoutConfirmation()
         {
-            var owner = CreateOwner("owner1", "org1");
+            var owner = CreateOwner(OwnerId, OrgId);
             var device = CreateDevice();
-            device.DeviceOwner = EntityHeader.Create("owner2", "Other Owner");
+            device.DeviceOwner = EntityHeader.Create(OtherOwnerId, "Other Owner");
 
             _ownerRepo.Setup(x => x.FindByIdAsync(owner.Id)).ReturnsAsync(owner);
             _deviceManager.Setup(x => x.GetDeviceByIdAsync(_repo, device.Id, _org, _user, false))
@@ -104,12 +115,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestMethod]
         public async Task RemoveOwnerRemovesAssociationAndClearsDeviceOwner()
         {
-            var owner = CreateOwner("owner1", "org1");
+            var owner = CreateOwner(OwnerId, OrgId);
             var device = CreateDevice();
             device.DeviceOwner = owner.ToEntityHeader();
             var association = new DeviceOwnerDevices
             {
-                Id = "assoc1",
+                Id = AssociationId,
                 Device = device.ToEntityHeader(),
                 DeviceId = device.DeviceId,
                 DeviceRepository = _repo.ToEntityHeader()
@@ -143,12 +154,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
 
         private Device CreateDevice() => new Device
         {
-            Id = "device1",
+            Id = DeviceId,
             Key = "device1",
             Name = "Device One",
             DeviceId = "serial-1",
             DeviceRepository = _repo.ToEntityHeader(),
-            DeviceType = EntityHeader<DeviceType>.Create(new DeviceType { Id = "type1", Name = "Type One" })
+            DeviceType = EntityHeader<DeviceType>.Create(new DeviceType { Id = DeviceTypeId, Name = "Type One" })
         };
     }
 }
