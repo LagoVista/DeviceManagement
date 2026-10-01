@@ -77,9 +77,30 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             return await _deviceOwnerRepo.UpdateUserAsync(owner);
         }
 
-        public Task<ListResponse<DeviceOwnerUserSummary>> GetOwnersAsync(ListRequest listRequest, EntityHeader org, EntityHeader user)
+        public async Task<ListResponse<DeviceOwnerUserSummary>> GetOwnersAsync(ListRequest listRequest, EntityHeader org, EntityHeader user)
         {
-            return _deviceOwnerRepo.GetAllForOrgAsync(org.Id, listRequest);
+            var response = await _deviceOwnerRepo.GetAllAsync(listRequest);
+            if (!response.Successful)
+                return response;
+
+            response.Model = response.Model.Where(summary =>
+            {
+                return true;
+            }).ToArray();
+
+            // GetAllAsync returns summary projections without organization data. Resolve each
+            // summary before returning it so organization boundaries remain enforced here.
+            var authorized = new System.Collections.Generic.List<DeviceOwnerUserSummary>();
+            foreach (var summary in response.Model)
+            {
+                var owner = await _deviceOwnerRepo.FindByIdAsync(summary.Id);
+                if (owner != null && !EntityHeader.IsNullOrEmpty(owner.OwnerOrganization) && owner.OwnerOrganization.Id == org.Id)
+                    authorized.Add(summary);
+            }
+
+            response.Model = authorized;
+            response.RecordCount = authorized.Count;
+            return response;
         }
 
         public async Task<ListResponse<DeviceOwnerUser>> GetOwnersForDeviceAsync(DeviceRepository deviceRepo, string deviceId, ListRequest listRequest, EntityHeader org, EntityHeader user)
