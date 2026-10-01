@@ -182,6 +182,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     {
         private readonly IDeviceRepositoryManager _repoManager;
         private readonly IDeviceManager _deviceManager;
+        private readonly IDeviceOwnerManager _deviceOwnerManager;
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
         private readonly IDeviceOwnerRepo _deviceOwnerRepo;
         private readonly ISmsSender _smsSender;
@@ -192,11 +193,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
         const string CODE_HASH_COOKIE_NAME = "authvalue";
 
-        public OwnedDeviceController(IDeviceRepositoryManager repoManager, ISmsSender smsSender, IDeviceOwnerRepo deviceOwnerRepo, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigurationManager, 
+        public OwnedDeviceController(IDeviceRepositoryManager repoManager, ISmsSender smsSender, IDeviceOwnerRepo deviceOwnerRepo, IDeviceManager deviceManager, IDeviceOwnerManager deviceOwnerManager, IRemoteConfigurationManager remoteConfigurationManager, 
                                      IDeviceConfigHelper deviceConfigHelper, IAdminLogger adminLogger, IDeviceTypeRepo deviceTypeRepo, SignInManager<AppUser> signInManager) : base(adminLogger)
         {
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
+            _deviceOwnerManager = deviceOwnerManager ?? throw new ArgumentNullException(nameof(deviceOwnerManager));
             _remoteConfigurationManager = remoteConfigurationManager ?? throw new ArgumentNullException(nameof(remoteConfigurationManager));
             _deviceOwnerRepo = deviceOwnerRepo ?? throw new ArgumentNullException(nameof(deviceOwnerRepo));
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
@@ -432,11 +434,8 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<InvokeResult> LookupPhoneNumber(string phoneNumber)
         {
             phoneNumber = phoneNumber.CleanPhoneNumber();
-            var user = await _deviceOwnerRepo.FindByPhoneNumberAsync(phoneNumber);
-            if (user == null)
-                return InvokeResult.FromError("User not found");
-
-            return InvokeResult.Success;
+            var user = await _deviceOwnerManager.GetOwnerByPhoneAsync(phoneNumber, OrgEntityHeader, UserEntityHeader);
+            return user.Successful ? InvokeResult.Success : user.ToInvokeResult();
         }
 
         [HttpGet("/api/deviceowner/account/{phoneNumber}/{code}/create")]
@@ -546,11 +545,15 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         [HttpPost("/api/device/owner")]
         public async Task<InvokeResult> SetOwnerInfo([FromBody] DeviceOwnerUserUpdateFields updates)
         {
-            var owner = await _deviceOwnerRepo.FindByIdAsync(CurrentUserId);
+            var ownerResult = await _deviceOwnerManager.GetOwnerByIdAsync(CurrentUserId, OrgEntityHeader, UserEntityHeader);
+            if (!ownerResult.Successful)
+                return ownerResult.ToInvokeResult();
+
+            var owner = ownerResult.Result;
             owner.FirstName = updates.FirstName;
             owner.LastName = updates.LastName;
             owner.EmailAddress = updates.Email;
-            return await _deviceOwnerRepo.UpdateUserAsync(owner);
+            return await _deviceOwnerManager.UpdateOwnerAsync(owner, OrgEntityHeader, UserEntityHeader);
         }
 
 
