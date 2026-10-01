@@ -234,8 +234,11 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
                     return InvokeResult<DeviceOwnerUser>.FromError("Invalid Code.");
             }
 
-            var deviceUser = await _deviceOwnerRepo.FindByPhoneNumberAsync(phoneNumber);
-                        
+            var ownerResult = await _deviceOwnerManager.GetOwnerByPhoneAsync(phoneNumber, OrgEntityHeader, UserEntityHeader);
+            if (!ownerResult.Successful)
+                return ownerResult;
+
+            var deviceUser = ownerResult.Result;
             deviceUser.CurrentDevice = CurrentDevice;
             deviceUser.CurrentDeviceId = CurrentDeviceId;
             deviceUser.CurrentRepo = CurrentDeviceRepo;
@@ -247,7 +250,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
 
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
-            result.Result.DeviceOwner = deviceUser.ToEntityHeader();
+            if (!result.Successful)
+                return InvokeResult<DeviceOwnerUser>.FromInvokeResult(result.ToInvokeResult());
+
+            var assignResult = await _deviceOwnerManager.AssignOwnerToDeviceAsync(repo, CurrentDevice.Id, deviceUser.Id, true, OrgEntityHeader, UserEntityHeader);
+            if (!assignResult.Successful)
+                return InvokeResult<DeviceOwnerUser>.FromInvokeResult(assignResult);
 
             var homePages = await _deviceConfigHelper.GetHomePagesAsync(result.Result.DeviceConfiguration.Id, OrgEntityHeader, UserEntityHeader);
             deviceUser.HomePage = homePages.CustomPage;
@@ -489,30 +497,24 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             deviceUser.CreatedBy = EntityHeader.Create(deviceUser.Id, "REGISTRATION");
             deviceUser.LastUpdatedBy = deviceUser.CreatedBy;
 
-            var appuser = deviceUser.ToAppUser();
-
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(CurrentDeviceRepo.Id, OrgEntityHeader, UserEntityHeader);
             var result = await _deviceManager.GetDeviceByIdAsync(repo, CurrentDevice.Id, OrgEntityHeader, UserEntityHeader);
-            result.Result.DeviceOwner = deviceUser.ToEntityHeader();
+            if (!result.Successful)
+                return InvokeResult<DeviceOwnerUser>.FromInvokeResult(result.ToInvokeResult());
 
             var homePages = await _deviceConfigHelper.GetHomePagesAsync(result.Result.DeviceConfiguration.Id, OrgEntityHeader, UserEntityHeader);
             deviceUser.HomePage = homePages.CustomPage;
             deviceUser.MobileHomePage = homePages.CustomMobilePage;
 
-            await _deviceManager.UpdateDeviceAsync(repo, result.Result, OrgEntityHeader, UserEntityHeader);
+            var createResult = await _deviceOwnerManager.CreateOwnerAsync(deviceUser, OrgEntityHeader, UserEntityHeader);
+            if (!createResult.Successful)
+                return InvokeResult<DeviceOwnerUser>.FromInvokeResult(createResult);
 
-            var deviceType = await _deviceTypeRepo.GetDeviceTypeAsync(result.Result.DeviceType.Id); 
+            var assignResult = await _deviceOwnerManager.AssignOwnerToDeviceAsync(repo, CurrentDevice.Id, deviceUser.Id, true, OrgEntityHeader, UserEntityHeader);
+            if (!assignResult.Successful)
+                return InvokeResult<DeviceOwnerUser>.FromInvokeResult(assignResult);
 
-            await _deviceOwnerRepo.AddUserAsync(deviceUser);
-            await _deviceOwnerRepo.AddOwnedDeviceAsync(OrgEntityHeader.Id, deviceUser.Id, new DeviceOwnerDevices()
-            {
-                Device = result.Result.ToEntityHeader(),
-                DeviceId = result.Result.DeviceId,
-                DeviceRepository = result.Result.DeviceRepository,
-                Product = deviceType.Product
-            }); 
-
-            await _signInManager.SignInAsync(appuser, true);
+            await _signInManager.SignInAsync(deviceUser.ToAppUser(), true);
 
             return InvokeResult<DeviceOwnerUser>.Create(deviceUser);
         }
