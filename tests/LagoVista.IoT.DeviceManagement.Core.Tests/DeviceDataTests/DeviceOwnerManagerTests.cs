@@ -142,6 +142,49 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             _deviceManager.Verify(x => x.UpdateDeviceAsync(_repo, device, _org, _user), Times.Once);
         }
 
+        [TestMethod]
+        public async Task CreateOwnerUsesCurrentOrganizationAndPersists()
+        {
+            var owner = CreateOwner(OwnerId, OrgId);
+            _ownerRepo.Setup(x => x.AddUserAsync(owner)).ReturnsAsync(InvokeResult.Success);
+
+            var result = await _manager.CreateOwnerAsync(owner, _org, _user);
+
+            Assert.IsTrue(result.Successful);
+            Assert.AreEqual(OrgId, owner.OwnerOrganization.Id.ToString());
+            _ownerRepo.Verify(x => x.AddUserAsync(owner), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task UpdateOwnerPreservesStoredOrganization()
+        {
+            var existing = CreateOwner(OwnerId, OrgId);
+            var update = CreateOwner(OwnerId, OtherOrgId);
+            update.FirstName = "Updated";
+
+            _ownerRepo.Setup(x => x.FindByIdAsync(OwnerId)).ReturnsAsync(existing);
+            _ownerRepo.Setup(x => x.UpdateUserAsync(update)).ReturnsAsync(InvokeResult.Success);
+
+            var result = await _manager.UpdateOwnerAsync(update, _org, _user);
+
+            Assert.IsTrue(result.Successful);
+            Assert.AreEqual(OrgId, update.OwnerOrganization.Id.ToString());
+            _ownerRepo.Verify(x => x.UpdateUserAsync(update), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task DeleteOwnerWithoutDevicesDeletesOwnerRecord()
+        {
+            var owner = CreateOwner(OwnerId, OrgId);
+            _ownerRepo.Setup(x => x.FindByIdAsync(OwnerId)).ReturnsAsync(owner);
+            _ownerRepo.Setup(x => x.DeleteUserAsync(_org.Id, owner.Id)).ReturnsAsync(InvokeResult.Success);
+
+            var result = await _manager.DeleteOwnerAsync(owner.Id, _org, _user);
+
+            Assert.IsTrue(result.Successful);
+            _ownerRepo.Verify(x => x.DeleteUserAsync(_org.Id, owner.Id), Times.Once);
+        }
+
         private static DeviceOwnerUser CreateOwner(string id, string orgId) => new DeviceOwnerUser
         {
             Id = id,
