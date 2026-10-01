@@ -44,6 +44,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
     public class DeviceManagementController : LagoVistaBaseController
     {
         private readonly IDeviceManager _deviceManager;
+        private readonly IDeviceOwnerManager _deviceOwnerManager;
         private readonly IOrganizationManager _orgManager;
         private readonly IDeviceRepositoryManager _repoManager;
         private readonly IRemoteConfigurationManager _remoteConfigurationManager;
@@ -52,11 +53,12 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly UserManager<AppUser> _userManager;
         
-        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, IDeviceManager deviceManager, IRemoteConfigurationManager remoteConfigMgr,
+        public DeviceManagementController(IDeviceRepositoryManager repoManager, IDistributionManager distroManager, IDeviceManager deviceManager, IDeviceOwnerManager deviceOwnerManager, IRemoteConfigurationManager remoteConfigMgr,
                                           ILocalizationService localizationService, ITimeZoneServices timeZoneServices, IOrganizationManager orgManager, UserManager<AppUser> userManager, IAdminLogger logger) : base(userManager, logger)
         {
             _orgManager = orgManager ?? throw new ArgumentNullException(nameof(orgManager));
             _deviceManager = deviceManager ?? throw new ArgumentNullException(nameof(deviceManager));
+            _deviceOwnerManager = deviceOwnerManager ?? throw new ArgumentNullException(nameof(deviceOwnerManager));
             _repoManager = repoManager ?? throw new ArgumentNullException(nameof(repoManager));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _remoteConfigurationManager = remoteConfigMgr ?? throw new ArgumentNullException(nameof(distroManager));
@@ -267,8 +269,7 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         public async Task<ListResponse<DeviceOwnerUser>> GetDevicesOwnersForDeviceRepo(string devicerepoid, string deviceid)
         {
             var repo = await _repoManager.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            var result = await _deviceManager.GetDeviceOwnersForDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
-            return result;
+            return await _deviceOwnerManager.GetOwnersForDeviceAsync(repo, deviceid, GetListRequestFromHeader(), OrgEntityHeader, UserEntityHeader);
         }
 
         /// <summary>
