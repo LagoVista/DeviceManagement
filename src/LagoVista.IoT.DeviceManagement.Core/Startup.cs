@@ -18,6 +18,7 @@ namespace LagoVista.IoT.DeviceManagement.Core
         {
             services.AddTransient<IDeviceGroupManager, DeviceGroupManager>();
             services.AddTransient<IDeviceManager, DeviceManager>();
+            services.AddTransient<IDeviceOwnerManager, DeviceOwnerManager>();
             services.AddTransient<IDevicePEMManager, DevicePEMManager>();
             services.AddTransient<IDeviceLogManager, DeviceLogManager>();
             services.AddTransient<IDeviceRepositoryManager, DeviceRepositoryManager>();
