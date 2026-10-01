@@ -86,7 +86,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             var device = await _deviceManager.GetDeviceByIdAsync(deviceRepo, deviceId, org, user);
             if (!device.Successful)
-                return ListResponse<DeviceOwnerUser>.FromInvokeResult(device.ToInvokeResult());
+                return ListResponse<DeviceOwnerUser>.FromError(device.Errors.FirstOrDefault()?.Message ?? "Device could not be loaded.");
 
             return await _deviceOwnerRepo.GetDeviceOwnersForDeviceAsync(deviceId, listRequest);
         }
