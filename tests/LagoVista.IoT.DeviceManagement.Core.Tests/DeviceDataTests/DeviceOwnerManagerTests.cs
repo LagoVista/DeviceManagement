@@ -77,7 +77,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             var result = await _manager.AssignOwnerToDeviceAsync(_repo, device.Id, owner.Id, false, _org, _user);
 
             Assert.IsTrue(result.Successful);
-            Assert.AreEqual(owner.Id, device.DeviceOwner.Id);
+            Assert.AreEqual(owner.Id.ToString(), device.DeviceOwner.Id.ToString());
             _ownerRepo.Verify(x => x.AddOwnedDeviceAsync(_org.Id, owner.Id,
                 It.Is<DeviceOwnerDevices>(d => d.Device.Id == device.Id && d.DeviceId == device.DeviceId)), Times.Once);
             _deviceManager.Verify(x => x.UpdateDeviceAsync(_repo, device, _org, _user), Times.Once);
