@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" />
     <PackageReference Include="LagoVista.MediaServices.Models" />
-    <PackageReference Include="LagoVista.UserAdmin" Version="7.0.15" />
+    <PackageReference Include="LagoVista.UserAdmin" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\DeviceManagementResources.resx">

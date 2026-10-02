@@ -3,7 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.15" />
+    <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.13" />
     <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.72" />
     <PackageVersion Include="LagoVista.Core.Configuration" Version="7.0.14" />
     <PackageVersion Include="LagoVista.Core.Networking" Version="7.0.14" />
@@ -19,7 +19,7 @@
     <PackageVersion Include="LagoVista.MediaServices" Version="7.0.21" />
     <PackageVersion Include="LagoVista.MediaServices.Models" Version="7.0.21" />
     <PackageVersion Include="LagoVista.PDFServices" Version="7.0.14" />
-    <PackageVersion Include="LagoVista.UserAdmin" Version="7.0.15" />
+    <PackageVersion Include="LagoVista.UserAdmin" Version="7.0.13" />
     <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
     <PackageVersion Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
     <PackageVersion Include="QRCoder" Version="1.7.0" />
