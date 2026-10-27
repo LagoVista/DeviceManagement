@@ -10,7 +10,6 @@
     <PackageVersion Include="LagoVista.Core.Retry" Version="7.0.14" />
     <PackageVersion Include="LagoVista.Core.Rpc" Version="7.0.14" />
     <PackageVersion Include="LagoVista.Core.Rpc.Client" Version="7.0.14" />
-    <PackageVersion Include="LagoVista.Core.Rpc.Client.ServiceBus" Version="3.0.3231.410" />
     <PackageVersion Include="LagoVista.Core.TestBase" Version="7.0.14" />
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin" Version="7.0.4" />
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin.Models" Version="7.0.4" />
@@ -21,7 +20,6 @@
     <PackageVersion Include="LagoVista.PDFServices" Version="7.0.14" />
     <PackageVersion Include="LagoVista.UserAdmin" Version="7.0.15" />
     <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
-    <PackageVersion Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
     <PackageVersion Include="QRCoder" Version="1.7.0" />
   </ItemGroup>
 </Project>
