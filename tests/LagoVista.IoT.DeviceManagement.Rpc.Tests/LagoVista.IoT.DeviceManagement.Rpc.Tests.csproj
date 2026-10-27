@@ -10,9 +10,7 @@
     <PackageReference Include="LagoVista.Core.Retry" />
     <PackageReference Include="LagoVista.Core.Rpc" />
     <PackageReference Include="LagoVista.Core.Rpc.Client" />
-    <PackageReference Include="LagoVista.Core.Rpc.Client.ServiceBus" />
     <PackageReference Include="LagoVista.IoT.Logging" />
-    <PackageReference Include="Microsoft.Azure.ServiceBus" />
     <PackageReference Include="LagoVista.Core.TestBase" />
   </ItemGroup>
   <ItemGroup>
