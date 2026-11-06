@@ -5,6 +5,7 @@
   <ItemGroup>
     <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.35" />
     <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.107" />
+    <PackageVersion Include="LagoVista.Core" Version="7.0.65" />
     <PackageVersion Include="LagoVista.Core.Configuration" Version="7.0.61" />
     <PackageVersion Include="LagoVista.Core.Networking" Version="7.0.61" />
     <PackageVersion Include="LagoVista.Core.Retry" Version="7.0.61" />
