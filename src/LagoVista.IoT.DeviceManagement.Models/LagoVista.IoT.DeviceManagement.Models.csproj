@@ -11,6 +11,7 @@
     <AssemblyOriginatorKeyFile>LagoVista.IoT.DeviceManagement.Models.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LagoVista.Core" />
     <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" />
     <PackageReference Include="LagoVista.MediaServices.Models" />
     <PackageReference Include="LagoVista.UserAdmin" />
