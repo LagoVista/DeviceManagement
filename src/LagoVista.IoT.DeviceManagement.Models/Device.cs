@@ -49,6 +49,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         GetListUrl: "/api/devices/{devicerepoid}", GetUrl: "/api/device/{devicerepoid}/{id}",
         FactoryUrl: "/api/device/{devicerepoid}/factory",
         SaveUrl: "/api/device/{devicerepoid}", DeleteUrl: "/api/device/{devicerepoid}/{id}")]
+    [SkipProducedArtifactGeneration]
     public class Device : EntityBase, IValidateable, IFormDescriptorAdvanced, IFormDescriptor, IFormDescriptorAdvancedCol2, ISummaryFactory, ICustomerOwnedEntity
     {
         public const string New = "new";
