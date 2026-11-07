@@ -19,7 +19,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
         [TestMethod]
         public void ActivityRecordPreservesDeviceConnectionFields()
         {
-            var repository = new DeviceRepository { Id = "device-repository", Name = "Test Repository" };
+            var repository = new DeviceRepository { Id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Name = "Test Repository" };
             var connectionEvent = new DeviceConnectionEvent
             {
                 DeviceId = "device-123",
@@ -33,7 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             var record = DeviceConnectionActivityRecord.From(repository, connectionEvent);
 
             Assert.IsFalse(String.IsNullOrWhiteSpace(record.Id));
-            Assert.AreEqual("device-repository", record.OrganizationId);
+            Assert.AreEqual("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", record.OrganizationId);
             Assert.AreEqual(repository.Name, record.Organization);
             Assert.AreEqual(connectionEvent.DeviceId, record.DeviceUniqueId);
             Assert.AreEqual(new DateTime(2026, 11, 7, 6, 0, 0, DateTimeKind.Utc), record.CreationDate);
@@ -58,12 +58,12 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             var repo = new DeviceConnectionEventRepo(store.Object);
 
             var result = await repo.AddDeviceConnectionEventAsync(
-                new DeviceRepository { Id = "device-repository", Name = "Test Repository" },
+                new DeviceRepository { Id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Name = "Test Repository" },
                 new DeviceConnectionEvent { DeviceId = "device-123", Reconnect = true });
 
             Assert.IsTrue(result.Successful);
             Assert.IsNotNull(captured);
-            Assert.AreEqual("device-repository", captured.OrganizationId);
+            Assert.AreEqual("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", captured.OrganizationId);
             Assert.AreEqual("device-123", captured.DeviceUniqueId);
             Assert.IsTrue(captured.Reconnect);
         }
@@ -77,7 +77,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 new DeviceConnectionActivityRecord
                 {
                     Id = "event-1",
-                    OrganizationId = "device-repository",
+                    OrganizationId = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                     DeviceUniqueId = "device-123",
                     DeviceId = "device-123",
                     Timestamp = "2026-11-07T06:00:00Z",
@@ -89,7 +89,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             var repo = new DeviceConnectionEventRepo(store.Object);
 
             var result = await repo.GetConnectionEventsForDeviceAsync(
-                new DeviceRepository { Id = "device-repository" },
+                new DeviceRepository { Id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 "device-123",
                 new ListRequest { PageSize = 25 });
 
