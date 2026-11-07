@@ -68,6 +68,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
             };
 
             _deviceManagementRepo.Setup<Task<Device>>(dev => dev.GetDeviceByIdAsync(_repo.Object, DEVICEID, true)).ReturnsAsync(_device);
+            _deviceManagementRepo.Setup<Task<Device>>(dev => dev.GetDeviceByIdAsync(_repo.Object, DEVICEID, false)).ReturnsAsync(_device);
 
             _deviceGroup = new DeviceGroup()
             {
@@ -189,7 +190,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceGroups
         {
             var result = await _groupManager.RemoveDeviceFromGroupAsync(_repo.Object, GROUPID, DEVICEID, _org, _user);
             Assert.AreEqual(0, _deviceGroup.Devices.Count);
-            AssertInvalidError(result, "The device [device001] does not belong to this device group and can not be removed again.");
+            AssertInvalidError(result, $"The device [{DEVICEID}] does not belong to this device group and can not be removed again.");
 
 
         }

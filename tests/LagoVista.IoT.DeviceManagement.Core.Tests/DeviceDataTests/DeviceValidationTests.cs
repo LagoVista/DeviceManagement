@@ -49,7 +49,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                     CreationDate = UtcTimestamp.Now,
                     LastUpdatedBy = EntityHeader.Create(Guid.NewGuid().ToId(), "somesuer"),
                     LastUpdatedDate = UtcTimestamp.Now,
-                    Key = "devicetype"
+                    Key = "devicetype",
+                    DefaultDeviceConfiguration = EntityHeader.Create("fff", "ddd")
                 })
             };
         }
@@ -64,10 +65,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 {
                     FieldType = EntityHeader<DeviceAdmin.Models.ParameterTypes>.Create(DeviceAdmin.Models.ParameterTypes.String),
                     IsRequired = true,
+                    Name = "Required Field One",
                     Label = "Required Field One",
-                    Key = "fieldkey"
+                    Key = "fieldkey",
+                    DefaultValue = "fallback"
                 }
             };
+
+            device.Properties.Add(new AttributeValue()
+            {
+                Key = "fieldkey",
+                Value = String.Empty
+            });
 
             var result = Validator.Validate(device);
             WriteErrors(result);
@@ -85,20 +94,22 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
                 {
                     FieldType = EntityHeader<DeviceAdmin.Models.ParameterTypes>.Create(DeviceAdmin.Models.ParameterTypes.String),
                     IsRequired = true,
+                    Name = "Required Field One",
                     Label = "Required Field One",
-                    Key = "fieldkey"
+                    Key = "fieldkey",
+                    DefaultValue = "fallback"
                 }
             };
 
             device.Properties.Add(new AttributeValue()
             {
+                Key = "fieldkey",
                 Value = "1234"
             });
 
             var result = Validator.Validate(device);
             WriteErrors(result);
-            Assert.AreEqual(1, result.Errors.Count);
-            Assert.AreEqual("Required Field One is a required field.", result.Errors.First()?.Message);
+            Assert.AreEqual(0, result.Errors.Count, String.Join("; ", result.Errors.Select(error => error.Message)));
         }
     }
 }

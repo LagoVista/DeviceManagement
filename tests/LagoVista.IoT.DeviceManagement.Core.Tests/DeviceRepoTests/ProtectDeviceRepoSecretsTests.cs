@@ -107,7 +107,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             var repoManager = GetRepoManager();
             var repo = GetValidRepo();
             var result = await repoManager.AddDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(2));
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(3));
             _deviceRepositoryRepo.Verify(drp => drp.AddDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.PEMStorageSettingsSecureId == "passingid" && rep.PEMStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.PEMStorageSettings);
@@ -119,7 +119,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             var repoManager = GetRepoManager();
             var repo = GetValidRepo();
             var result = await repoManager.AddDeviceRepositoryAsync(repo, _org, _user);
-            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(2));
+            _secureStorage.Verify(srs => srs.AddSecretAsync(_org, _defaultTSJson), Times.Exactly(3));
             _deviceRepositoryRepo.Verify(drp => drp.AddDeviceRepositoryAsync(It.Is<DeviceRepository>(rep => rep.DeviceArchiveStorageSettingsSecureId == "passingid" && rep.DeviceArchiveStorageSettings == null)), Times.Once);
             AssertSuccessful(result);
             Assert.IsNull(repo.DeviceArchiveStorageSettings);
@@ -136,6 +136,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
             repo.DeviceWatchdogStorageSecureId = "securewdid123";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
@@ -154,6 +155,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
             repo.DeviceWatchdogStorageSecureId = "securewdid123";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
@@ -171,6 +173,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
             repo.DeviceWatchdogStorageSecureId = "securewdid123";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
             _secureStorage.Verify(srs => srs.AddSecretAsync(_org, It.IsAny<String>()), Times.Never);
@@ -189,6 +192,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
+            repo.DeviceWatchdogStorageSecureId = "watchdog-id";
             repo.DeviceStorageSettings = _deviceStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
@@ -207,6 +212,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
+            repo.DeviceWatchdogStorageSecureId = "watchdog-id";
             repo.PEMStorageSettings = _defaultTableStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
@@ -224,6 +231,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceRepoTests
             repo.DeviceArchiveStorageSettingsSecureId = "settingid1";
             repo.PEMStorageSettingsSecureId = "settingid2";
             repo.DeviceStorageSecureSettingsId = "settingid3";
+            repo.SensorArchiveStorageSettingsSecureId = "sensor-archive-id";
+            repo.DeviceWatchdogStorageSecureId = "watchdog-id";
             repo.DeviceArchiveStorageSettings = _defaultTableStorageSettings;
 
             var result = await repoManager.UpdateDeviceRepositoryAsync(repo, _org, _user);
