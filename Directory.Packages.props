@@ -3,8 +3,8 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.41" />
-    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.118" />
+    <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.42" />
+    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.124" />
     <PackageVersion Include="LagoVista.Core" Version="7.0.66" />
     <PackageVersion Include="LagoVista.Core.Configuration" Version="7.0.66" />
     <PackageVersion Include="LagoVista.Core.Networking" Version="7.0.66" />
@@ -15,11 +15,11 @@
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin" Version="7.0.9" />
     <PackageVersion Include="LagoVista.IoT.DeviceAdmin.Models" Version="7.0.9" />
     <PackageVersion Include="LagoVista.IoT.Logging" Version="7.0.16" />
-    <PackageVersion Include="LagoVista.IoT.Web.Common" Version="7.0.68" />
-    <PackageVersion Include="LagoVista.MediaServices" Version="7.0.35" />
-    <PackageVersion Include="LagoVista.MediaServices.Models" Version="7.0.35" />
+    <PackageVersion Include="LagoVista.IoT.Web.Common" Version="7.0.70" />
+    <PackageVersion Include="LagoVista.MediaServices" Version="7.0.36" />
+    <PackageVersion Include="LagoVista.MediaServices.Models" Version="7.0.36" />
     <PackageVersion Include="LagoVista.PDFServices" Version="7.0.66" />
-    <PackageVersion Include="LagoVista.UserAdmin" Version="7.0.41" />
+    <PackageVersion Include="LagoVista.UserAdmin" Version="7.0.42" />
     <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
     <PackageVersion Include="QRCoder" Version="1.7.0" />
   </ItemGroup>
