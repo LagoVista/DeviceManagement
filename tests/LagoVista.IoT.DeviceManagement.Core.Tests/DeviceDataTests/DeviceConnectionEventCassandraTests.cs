@@ -98,5 +98,57 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             Assert.AreEqual(1, result.Model.Count());
             Assert.IsTrue(result.Model.Single().Reconnect);
         }
+
+        [TestMethod]
+        public async Task GetEventsAcceptsAndReturnsContinuationTokens()
+        {
+            var store = new Mock<IActivityRecordStore<DeviceConnectionActivityRecord>>();
+            HistoryQuery<DeviceConnectionActivityRecord> observed = null;
+            store.Setup(s => s.QueryAsync(It.IsAny<HistoryQuery<DeviceConnectionActivityRecord>>(), It.IsAny<CancellationToken>()))
+                .Callback<HistoryQuery<DeviceConnectionActivityRecord>, CancellationToken>((query, _) => observed = query)
+                .ReturnsAsync(new StoragePageResult<DeviceConnectionActivityRecord>(
+                    new[] { new DeviceConnectionActivityRecord { DeviceId = "device-123" } },
+                    "next-cassandra-token"));
+
+            var repo = new DeviceConnectionEventRepo(store.Object);
+            var response = await repo.GetConnectionEventsForDeviceAsync(
+                new DeviceRepository { Id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                "device-123",
+                new ListRequest
+                {
+                    PageIndex = 2,
+                    PageSize = 20,
+                    NextPartitionKey = "device-123",
+                    NextRowKey = "previous-cassandra-token"
+                });
+
+            Assert.AreEqual("previous-cassandra-token", observed.Page.ContinuationToken);
+            Assert.AreEqual("device-123", response.NextPartitionKey);
+            Assert.AreEqual("next-cassandra-token", response.NextRowKey);
+            Assert.IsTrue(response.HasMoreRecords);
+            store.Verify(s => s.QueryAsync(It.IsAny<HistoryQuery<DeviceConnectionActivityRecord>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task GetEventsCanAdvancePageIndexWithoutCursor()
+        {
+            var store = new Mock<IActivityRecordStore<DeviceConnectionActivityRecord>>();
+            store.SetupSequence(s => s.QueryAsync(It.IsAny<HistoryQuery<DeviceConnectionActivityRecord>>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new StoragePageResult<DeviceConnectionActivityRecord>(
+                    new[] { new DeviceConnectionActivityRecord { DeviceId = "device-123", FirmwareSKU = "first" } },
+                    "next-cassandra-token"))
+                .ReturnsAsync(new StoragePageResult<DeviceConnectionActivityRecord>(
+                    new[] { new DeviceConnectionActivityRecord { DeviceId = "device-123", FirmwareSKU = "second" } }));
+
+            var repo = new DeviceConnectionEventRepo(store.Object);
+            var response = await repo.GetConnectionEventsForDeviceAsync(
+                new DeviceRepository { Id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                "device-123",
+                new ListRequest { PageIndex = 2, PageSize = 20 });
+
+            Assert.AreEqual("second", response.Model.Single().FirmwareSKU);
+            Assert.IsFalse(response.HasMoreRecords);
+            store.Verify(s => s.QueryAsync(It.IsAny<HistoryQuery<DeviceConnectionActivityRecord>>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
     }
 }
