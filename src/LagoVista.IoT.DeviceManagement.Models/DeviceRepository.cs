@@ -227,6 +227,9 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_OfflineNotification, HelpResource: DeviceManagementResources.Names.DeviceRepository_OfflineNotification_Help, FieldType: FieldTypes.EntityHeaderPicker, EntityHeaderPickerUrl: "/api/notifications", ResourceType: typeof(DeviceManagementResources), WaterMark: DeviceManagementResources.Names.DeviceRepository_OfflineNotification_Select, IsRequired: false, IsUserEditable: true)]
         public EntityHeader DeviceOfflinNotification { get; set; }
 
+        [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepository_MuteDeviceOnlineOfflineNotifications, HelpResource: DeviceManagementResources.Names.DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help, FieldType: FieldTypes.CheckBox, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true, IsRequired: false)]
+        public bool MuteDeviceOnlineOfflineNotifications { get; set; } = false;
+
 
         [FormField(LabelResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes, HelpResource: DeviceManagementResources.Names.DeviceRepo_DeviceTimeoutNotificationIntervalMinutes_Help, FieldType: FieldTypes.Integer, ResourceType: typeof(DeviceManagementResources), IsUserEditable: true)]
         public int DeviceTimeoutNotificationIntervalMinutes { get; set; }
@@ -376,6 +379,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Models
                 nameof(OfflineDistributionList),
                 nameof(DeviceOnlinNotification),
                 nameof(DeviceOfflinNotification),
+                nameof(MuteDeviceOnlineOfflineNotifications),
                 nameof(UserOwnedDevicesOnly),
                 nameof(ServiceBoard),
                 nameof(SecureUserOwnedDevices),

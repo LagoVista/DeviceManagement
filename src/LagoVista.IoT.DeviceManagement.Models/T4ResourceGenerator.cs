@@ -551,6 +551,10 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
         public static string DeviceRepository_Logo { get { return GetResourceString("DeviceRepository_Logo"); } }
 //Resources:DeviceManagementResources:DeviceRepository_Logo_Help
         public static string DeviceRepository_Logo_Help { get { return GetResourceString("DeviceRepository_Logo_Help"); } }
+//Resources:DeviceManagementResources:DeviceRepository_MuteDeviceOnlineOfflineNotifications
+        public static string DeviceRepository_MuteDeviceOnlineOfflineNotifications { get { return GetResourceString("DeviceRepository_MuteDeviceOnlineOfflineNotifications"); } }
+//Resources:DeviceManagementResources:DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help
+        public static string DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help { get { return GetResourceString("DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help"); } }
 //Resources:DeviceManagementResources:DeviceRepository_OfflineNotification
         public static string DeviceRepository_OfflineNotification { get { return GetResourceString("DeviceRepository_OfflineNotification"); } }
 //Resources:DeviceManagementResources:DeviceRepository_OfflineNotification_Help
@@ -1123,6 +1127,8 @@ namespace LagoVista.IoT.DeviceManagement.Models.Resources
             public const string DeviceRepository_DefaultTestingDevice_Select = "DeviceRepository_DefaultTestingDevice_Select";
             public const string DeviceRepository_Logo = "DeviceRepository_Logo";
             public const string DeviceRepository_Logo_Help = "DeviceRepository_Logo_Help";
+            public const string DeviceRepository_MuteDeviceOnlineOfflineNotifications = "DeviceRepository_MuteDeviceOnlineOfflineNotifications";
+            public const string DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help = "DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help";
             public const string DeviceRepository_OfflineNotification = "DeviceRepository_OfflineNotification";
             public const string DeviceRepository_OfflineNotification_Help = "DeviceRepository_OfflineNotification_Help";
             public const string DeviceRepository_OfflineNotification_Select = "DeviceRepository_OfflineNotification_Select";

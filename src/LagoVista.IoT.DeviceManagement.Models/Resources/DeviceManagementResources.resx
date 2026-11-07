@@ -1236,6 +1236,12 @@
   <data name="Device_NotificationContacts" xml:space="preserve">
     <value>Notification Contacts</value>
   </data>
+  <data name="DeviceRepository_MuteDeviceOnlineOfflineNotifications" xml:space="preserve">
+    <value>Mute Device Online/Offline Notifications</value>
+  </data>
+  <data name="DeviceRepository_MuteDeviceOnlineOfflineNotifications_Help" xml:space="preserve">
+    <value>Suppress device online and offline notifications for this repository without disabling watchdog monitoring or device status tracking.</value>
+  </data>
   <data name="DeviceRepository_OfflineNotification" xml:space="preserve">
     <value>Offline Notification</value>
   </data>
