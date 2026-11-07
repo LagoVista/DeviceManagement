@@ -33,7 +33,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Tests.DeviceDataTests
             var record = DeviceConnectionActivityRecord.From(repository, connectionEvent);
 
             Assert.IsFalse(String.IsNullOrWhiteSpace(record.Id));
-            Assert.AreEqual(repository.Id, record.OrganizationId);
+            Assert.AreEqual("device-repository", record.OrganizationId);
             Assert.AreEqual(repository.Name, record.Organization);
             Assert.AreEqual(connectionEvent.DeviceId, record.DeviceUniqueId);
             Assert.AreEqual(new DateTime(2026, 11, 7, 6, 0, 0, DateTimeKind.Utc), record.CreationDate);
