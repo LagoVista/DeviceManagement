@@ -38,6 +38,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddActivityRecordStore<SensorDataArchiveActivityRecord, CassandraActivityRecordStore<SensorDataArchiveActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddActivityRecordStore<DeviceExceptionActivityRecord, CassandraActivityRecordStore<DeviceExceptionActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddActivityRecordStore<DeviceStatusHistoryActivityRecord, CassandraActivityRecordStore<DeviceStatusHistoryActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
+            services.AddActivityRecordStore<DeviceConnectionActivityRecord, CassandraActivityRecordStore<DeviceConnectionActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddOperationalDataStore<DeviceCurrentStatusRecord, CassandraOperationalDataStore<DeviceCurrentStatusRecord>>();
         }
     }
