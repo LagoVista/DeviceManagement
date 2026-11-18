@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Include="Models\DeviceProximityObservation.cs" />
     <EmbeddedResource Remove="Models\**" />
     <None Remove="Models\**" />
   </ItemGroup>
