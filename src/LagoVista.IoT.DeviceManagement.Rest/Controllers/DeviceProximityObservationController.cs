@@ -31,26 +31,6 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
             _deviceRepos = deviceRepos ?? throw new ArgumentNullException(nameof(deviceRepos));
         }
 
-        /// <summary>Runtime service-to-service endpoint. Accepts one or many normalized readings.</summary>
-        [HttpPost("/api/device/proximity/observations")]
-        public async Task<InvokeResult> WriteAsync([FromBody] List<DeviceProximityObservation> observations)
-        {
-            if (observations == null || observations.Count == 0 || observations.Count > 100)
-                return InvokeResult.FromError("A batch must contain between 1 and 100 observations.");
-
-            if (observations.Any(item => item == null || item.TimeStamp == default(DateTime) ||
-                    item.TimeStamp > DateTime.UtcNow.AddMinutes(5) ||
-                    item.TimeStamp < DateTime.UtcNow.AddDays(-14) ||
-                    String.IsNullOrWhiteSpace(item.OrganizationId) ||
-                    String.IsNullOrWhiteSpace(item.DeviceRepoId) ||
-                    String.IsNullOrWhiteSpace(item.DeviceUniqueId) ||
-                    String.IsNullOrWhiteSpace(item.ObservedDeviceId)))
-                return InvokeResult.FromError("Invalid proximity observation batch.");
-
-            await _observations.WriteAsync(observations);
-            return InvokeResult.Success;
-        }
-
         /// <summary>Query a reporting device's observations using ListRequest header paging and date bounds.</summary>
         [ConfirmedUser]
         [HttpGet("/api/device/{devicerepoid}/proximity/{deviceuniqueid}")]
