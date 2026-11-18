@@ -21,6 +21,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<IDeviceArchiveRepo, Repos.DeviceArchiveRepo>();
             services.AddTransient<IDeviceExceptionRepo, Repos.DeviceExceptionRepo>();
             services.AddTransient<IDeviceConnectionEventRepo, Repos.DeviceConnectionEventRepo>();
+            services.AddTransient<IDeviceProximityObservationRepo, Repos.DeviceProximityObservationRepo>();
             services.AddTransient<IDeviceStatusChangeRepo, Repos.DeviceStatusChangeRepo>();
             services.AddTransient<IDeviceGroupRepo, Repos.DeviceGroupRepo>();
             services.AddTransient<IDeviceLogRepo, Repos.DeviceLogRepo>();
@@ -39,6 +40,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddActivityRecordStore<DeviceExceptionActivityRecord, CassandraActivityRecordStore<DeviceExceptionActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddActivityRecordStore<DeviceStatusHistoryActivityRecord, CassandraActivityRecordStore<DeviceStatusHistoryActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddActivityRecordStore<DeviceConnectionActivityRecord, CassandraActivityRecordStore<DeviceConnectionActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
+            services.AddActivityRecordStore<DeviceProximityObservationActivityRecord, CassandraActivityRecordStore<DeviceProximityObservationActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceRepoId).PartitionBy(r => r.DeviceUniqueId).RetainFor(TimeSpan.FromDays(14)));
             services.AddOperationalDataStore<DeviceCurrentStatusRecord, CassandraOperationalDataStore<DeviceCurrentStatusRecord>>();
         }
     }
