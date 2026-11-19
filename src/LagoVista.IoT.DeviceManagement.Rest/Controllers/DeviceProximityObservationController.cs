@@ -34,11 +34,13 @@ namespace LagoVista.IoT.DeviceManagement.Rest.Controllers
         /// <summary>Query a reporting device's observations using ListRequest header paging and date bounds.</summary>
         [ConfirmedUser]
         [HttpGet("/api/device/{devicerepoid}/proximity/{deviceuniqueid}")]
-        public async Task<ListResponse<DeviceProximityObservation>> GetAsync(string devicerepoid, string deviceuniqueid)
+        public async Task<ListResponse<DeviceProximityObservation>> GetAsync(string devicerepoid, string deviceuniqueid,
+            [FromQuery] DateTimeOffset? startUtc = null, [FromQuery] DateTimeOffset? endUtc = null)
         {
             // This authorization check also enforces repository ownership/visibility.
             var repo = await _deviceRepos.GetDeviceRepositoryWithSecretsAsync(devicerepoid, OrgEntityHeader, UserEntityHeader);
-            return await _observations.QueryAsync(OrgEntityHeader.Id, repo.Id, deviceuniqueid, GetListRequestFromHeader());
+            return await _observations.QueryAsync(OrgEntityHeader.Id, repo.Id, deviceuniqueid,
+                GetListRequestFromHeader(), startUtc?.UtcDateTime, endUtc?.UtcDateTime);
         }
     }
 }
