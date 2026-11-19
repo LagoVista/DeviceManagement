@@ -8,6 +8,6 @@ namespace LagoVista.IoT.DeviceManagement.Core.Repos
     public interface IDeviceProximityObservationRepo
     {
         Task WriteAsync(IReadOnlyList<DeviceProximityObservation> observations);
-        Task<ListResponse<DeviceProximityObservation>> QueryAsync(string organizationId, string deviceRepoId, string deviceUniqueId, ListRequest request);
+        Task<ListResponse<DeviceProximityObservation>> QueryAsync(string organizationId, string deviceRepoId, string deviceUniqueId, ListRequest request, System.DateTime? startUtc = null, System.DateTime? endUtc = null);
     }
 }
