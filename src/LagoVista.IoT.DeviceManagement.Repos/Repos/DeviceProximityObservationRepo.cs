@@ -32,7 +32,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             }
         }
 
-        public async Task<ListResponse<DeviceProximityObservation>> QueryAsync(string organizationId, string deviceRepoId, string deviceUniqueId, ListRequest request)
+        public async Task<ListResponse<DeviceProximityObservation>> QueryAsync(string organizationId, string deviceRepoId, string deviceUniqueId, ListRequest request, DateTime? startUtc = null, DateTime? endUtc = null)
         {
             var pageSize = Math.Min(1000, request?.PageSize > 0 ? request.PageSize : 100);
             var pageIndex = Math.Max(1, request?.PageIndex ?? 1);
@@ -43,7 +43,10 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
                 .Where<string>(item => item.OrganizationId, StorageFilterOperator.Equal, organizationId)
                 .Where<string>(item => item.DeviceRepoId, StorageFilterOperator.Equal, deviceRepoId)
                 .Where<string>(item => item.DeviceUniqueId, StorageFilterOperator.Equal, deviceUniqueId);
-            if (request?.StartDate.HasValue == true || request?.EndDate.HasValue == true)
+            // Exact UTC bounds take precedence; retain legacy calendar-day headers for other callers.
+            if (startUtc.HasValue || endUtc.HasValue)
+                query.Between(startUtc, endUtc);
+            else if (request?.StartDate.HasValue == true || request?.EndDate.HasValue == true)
                 query.Between(request.StartDate?.ToDateTime(), request.EndDate?.ToDateTime());
 
             var token = hasCursor ? request.NextRowKey : null;
