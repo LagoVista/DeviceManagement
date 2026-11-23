@@ -1701,14 +1701,18 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                 }
             }
 
-            // Avoid duplicate entries, including stale imported references.
+            // Re-associating to the same room must not silently lose its saved position.
+            var existingPosition = shape.Devices.FirstOrDefault(dvc =>
+                dvc?.Device?.Id == id && dvc.DeviceRepository?.Id == deviceRepo.Id);
             shape.Devices.RemoveAll(dvc => dvc?.Device?.Id == id &&
                 dvc.DeviceRepository?.Id == deviceRepo.Id);
 
             shape.Devices.Add(new DeviceReference()
             {
                 DeviceRepository = deviceRepo.ToEntityHeader(),
-                Device = result.Result.ToEntityHeader()
+                Device = result.Result.ToEntityHeader(),
+                X = existingPosition?.X,
+                Y = existingPosition?.Y
             });
 
             result.Result.DiagramReference = diagramReference;
@@ -1724,20 +1728,36 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
 
         public async Task<InvokeResult<Device>> RemoveFromDiagramAsync(DeviceRepository deviceRepo, string id, EntityHeader org, EntityHeader user)
         {
-
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (!result.Successful || result.Result == null)
+                return InvokeResult<Device>.FromError("Device could not be loaded for diagram removal.");
+
             var diagramReference = result.Result.DiagramReference;
-            if (result.Result.DiagramReference == null)
-                return InvokeResult<Device>.FromError("Device is not attached to a diagram");
+            if (diagramReference == null)
+                return InvokeResult<Device>.FromError("Device is not attached to a diagram.");
 
-            var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
-            var layer = diagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
-            var shape = layer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
-            var existing = shape.Devices.FirstOrDefault(dvc => dvc.Device.Id == id);
-            shape.Devices.Remove(existing);
+            if (!String.IsNullOrEmpty(diagramReference.LocationDiagram?.Id))
+            {
+                var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
+                if (diagram != null)
+                {
+                    if (diagram.OwnerOrganization?.Id != org.Id)
+                        throw new NotAuthorizedException("Org mismatch between diagram and current user.");
+
+                    // Imported layouts can leave stale reverse references. Clearing the
+                    // device reference must work even when its old layer/shape is gone.
+                    var layer = diagram.Layers?.FirstOrDefault(lyr =>
+                        lyr.Id == diagramReference.LocationDiagramLayer?.Id);
+                    var shape = layer?.Shapes?.FirstOrDefault(shp =>
+                        shp.Id == diagramReference.LocationDiagramShape?.Id);
+                    var removed = shape?.Devices?.RemoveAll(dvc =>
+                        dvc?.Device?.Id == id && dvc.DeviceRepository?.Id == deviceRepo.Id) ?? 0;
+                    if (removed > 0)
+                        await _diagramRepo.UpdateLocationDiagramAsync(diagram);
+                }
+            }
+
             result.Result.DiagramReference = null;
-
-            await _diagramRepo.UpdateLocationDiagramAsync(diagram);
             await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
 
             return InvokeResult<Device>.Create(result.Result);
