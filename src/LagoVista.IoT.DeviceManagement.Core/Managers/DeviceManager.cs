@@ -1677,6 +1677,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             var previousReference = result.Result.DiagramReference;
             var sameDiagram = previousReference?.LocationDiagram?.Id == diagram.Id;
             LagoVista.UserAdmin.Models.Orgs.LocationDiagram previousDiagram = null;
+            DeviceReference previousPosition = null;
 
             if (previousReference != null && !String.IsNullOrEmpty(previousReference.LocationDiagram?.Id))
             {
@@ -1697,7 +1698,11 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
                     var previousDevice = previousShape?.Devices?.FirstOrDefault(dvc =>
                         dvc?.Device?.Id == id && dvc.DeviceRepository?.Id == deviceRepo.Id);
                     if (previousDevice != null)
+                    {
+                        if (sameDiagram && previousLayer?.Id == layer.Id && previousShape?.Id == shape.Id)
+                            previousPosition = previousDevice;
                         previousShape.Devices.Remove(previousDevice);
+                    }
                 }
             }
 
@@ -1711,8 +1716,8 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
             {
                 DeviceRepository = deviceRepo.ToEntityHeader(),
                 Device = result.Result.ToEntityHeader(),
-                X = existingPosition?.X,
-                Y = existingPosition?.Y
+                X = existingPosition?.X ?? previousPosition?.X,
+                Y = existingPosition?.Y ?? previousPosition?.Y
             });
 
             result.Result.DiagramReference = diagramReference;
