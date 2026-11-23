@@ -1654,33 +1654,69 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             ValidationCheck(diagramReference, Actions.Create);
             var result = await GetDeviceByIdAsync(deviceRepo, id, org, user);
+            if (!result.Successful || result.Result == null)
+                return InvokeResult<Device>.FromError("Device could not be loaded for diagram association.");
 
-            if (null != result.Result.DiagramReference)
-            {
-                var previousDiagram = await _diagramRepo.GetLocationDiagramAsync(result.Result.DiagramReference.LocationDiagram.Id);
-                var previousLayer = previousDiagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
-                var previousShape = previousLayer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
-                var existing = previousShape.Devices.FirstOrDefault(dvc => dvc.Device.Id == id);
-                previousShape.Devices.Remove(existing); await _diagramRepo.UpdateLocationDiagramAsync(previousDiagram);
-                await _diagramRepo.UpdateLocationDiagramAsync(previousDiagram);
-            }
-
+            // Validate the destination before changing the device or its previous diagram.
             var diagram = await _diagramRepo.GetLocationDiagramAsync(diagramReference.LocationDiagram.Id);
-            if (diagram.OwnerOrganization.Id != org.Id)
+            if (diagram == null)
+                return InvokeResult<Device>.FromError("Destination diagram was not found.");
+            if (diagram.OwnerOrganization?.Id != org.Id)
                 throw new NotAuthorizedException("Org mismatch between diagram and current user.");
 
-            var layer = diagram.Layers.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
-            var shape = layer.Shapes.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
-            var deviceReference = new DeviceReference()
+            var layer = diagram.Layers?.FirstOrDefault(lyr => lyr.Id == diagramReference.LocationDiagramLayer.Id);
+            if (layer == null)
+                return InvokeResult<Device>.FromError("Destination diagram layer was not found.");
+
+            var shape = layer.Shapes?.FirstOrDefault(shp => shp.Id == diagramReference.LocationDiagramShape.Id);
+            if (shape == null)
+                return InvokeResult<Device>.FromError("Destination diagram shape was not found.");
+
+            // Older and imported diagrams may deserialize a null Devices collection.
+            shape.Devices ??= new List<DeviceReference>();
+            var previousReference = result.Result.DiagramReference;
+            var sameDiagram = previousReference?.LocationDiagram?.Id == diagram.Id;
+            LagoVista.UserAdmin.Models.Orgs.LocationDiagram previousDiagram = null;
+
+            if (previousReference != null && !String.IsNullOrEmpty(previousReference.LocationDiagram?.Id))
+            {
+                previousDiagram = sameDiagram
+                    ? diagram
+                    : await _diagramRepo.GetLocationDiagramAsync(previousReference.LocationDiagram.Id);
+
+                if (previousDiagram != null)
+                {
+                    if (previousDiagram.OwnerOrganization?.Id != org.Id)
+                        throw new NotAuthorizedException("Org mismatch between previous diagram and current user.");
+
+                    // Use the PREVIOUS reference when detaching, not the destination IDs.
+                    var previousLayer = previousDiagram.Layers?.FirstOrDefault(lyr =>
+                        lyr.Id == previousReference.LocationDiagramLayer?.Id);
+                    var previousShape = previousLayer?.Shapes?.FirstOrDefault(shp =>
+                        shp.Id == previousReference.LocationDiagramShape?.Id);
+                    var previousDevice = previousShape?.Devices?.FirstOrDefault(dvc =>
+                        dvc?.Device?.Id == id && dvc.DeviceRepository?.Id == deviceRepo.Id);
+                    if (previousDevice != null)
+                        previousShape.Devices.Remove(previousDevice);
+                }
+            }
+
+            // Avoid duplicate entries, including stale imported references.
+            shape.Devices.RemoveAll(dvc => dvc?.Device?.Id == id &&
+                dvc.DeviceRepository?.Id == deviceRepo.Id);
+
+            shape.Devices.Add(new DeviceReference()
             {
                 DeviceRepository = deviceRepo.ToEntityHeader(),
                 Device = result.Result.ToEntityHeader()
-            };
-
-            shape.Devices.Add(deviceReference);
+            });
 
             result.Result.DiagramReference = diagramReference;
             await UpdateDeviceAsync(deviceRepo, result.Result, org, user);
+
+            // A reassignment within the same diagram is persisted in one write.
+            if (previousDiagram != null && !sameDiagram)
+                await _diagramRepo.UpdateLocationDiagramAsync(previousDiagram);
             await _diagramRepo.UpdateLocationDiagramAsync(diagram);
 
             return InvokeResult<Device>.Create(result.Result);
