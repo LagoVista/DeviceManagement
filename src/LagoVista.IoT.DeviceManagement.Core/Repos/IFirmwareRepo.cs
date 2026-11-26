@@ -1,11 +1,10 @@
 // --- BEGIN CODE INDEX META (do not edit) ---
-// ContentHash: df821bb78982b25164ba4024534a179a52c36fa9e6977d8305bdf51c21dfa4f9
+// ContentHash: df821bb78982b25164ba4024534a179a52c36fa9e6977d8305bdf51c21dfa4f
 // IndexVersion: 2
 // --- END CODE INDEX META ---
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LagoVista.IoT.DeviceManagement
@@ -20,15 +19,11 @@ namespace LagoVista.IoT.DeviceManagement
         Task<bool> QueryKeyInUseAsync(string key, string org);
 
         Task<FirmwareDownloadRequest> GetDownloadRequestAsync(string id);
-
-        Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string deviceRepoId, string deviceId);
-
-
+        Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string orgId, string deviceRepoId, string deviceId);
         Task AddDownloadRequestAsync(FirmwareDownloadRequest request);
         Task UpdateDownloadRequestAsync(FirmwareDownloadRequest request);
 
         Task<string> AddFirmwareRevisionAsync(string type, string firmwareId, string revisionId, byte[] buffer);
-
         Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string type, string firmwareId, string revisionId);
     }
 }
