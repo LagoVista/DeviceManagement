@@ -137,7 +137,7 @@ public sealed class FirmwareDownloadRequestRepoTests
     public void StartupRegistersFirmwareRequestIndexesForApplicationData()
     {
         var services = new ServiceCollection();
-        Startup.ConfigureServices(services);
+        LagoVista.IoT.DeviceManagement.Repos.Startup.ConfigureServices(services);
 
         var options = services
             .Single(descriptor => descriptor.ServiceType == typeof(ApplicationDataStoreOptions<FirmwareDownloadRequestRecord>))
