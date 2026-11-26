@@ -1,14 +1,9 @@
-// --- BEGIN CODE INDEX META (do not edit) ---
-// ContentHash: 191901470745292a9f90a91dfeb9169cc687f78041d096ac7321e14e59d607e9
-// IndexVersion: 2
-// --- END CODE INDEX META ---
 using LagoVista.CloudStorage.DocumentDB;
 using LagoVista.CloudStorage.Interfaces;
 using LagoVista.Core.Models.UIMetaData;
 using LagoVista.Core.Validation;
 using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
-using LagoVista.IoT.Logging.Loggers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,21 +12,21 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 {
     public class FirmwareRepo : DocumentDBRepoBase<Firmware>, IFirmwareRepo
     {
-        private readonly IFirmwareRepoSettings _repoSettings;
-        private readonly IAdminLogger _adminLogger;
+        private readonly FirmwareDownloadRequestRepo _downloadRequestRepo;
         private readonly ICloudFileStorageClient _cloudFileStorageClient;
 
-        public FirmwareRepo(IFirmwareRepoSettings repoSettings, ICloudFileStorageClient cloudFileStorageClient, IDocumentCloudCachedServices services) : base(services)
+        public FirmwareRepo(
+            FirmwareDownloadRequestRepo downloadRequestRepo,
+            ICloudFileStorageClient cloudFileStorageClient,
+            IDocumentCloudCachedServices services) : base(services)
         {
-            _repoSettings = repoSettings ?? throw new ArgumentNullException(nameof(repoSettings));
-            _adminLogger = services.AdminLogger ?? throw new ArgumentNullException(nameof(services.AdminLogger));
+            _downloadRequestRepo = downloadRequestRepo ?? throw new ArgumentNullException(nameof(downloadRequestRepo));
             _cloudFileStorageClient = cloudFileStorageClient ?? throw new ArgumentNullException(nameof(cloudFileStorageClient));
         }
 
         public Task AddDownloadRequestAsync(FirmwareDownloadRequest request)
         {
-            var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
-            return downloadRequestRepo.AddRequestAsync(request);
+            return _downloadRequestRepo.AddRequestAsync(request);
         }
 
         public Task AddFirmwareAsync(Firmware firmware)
@@ -59,8 +54,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task<FirmwareDownloadRequest> GetDownloadRequestAsync(string id)
         {
-            var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
-            return downloadRequestRepo.GetRequestAsync(id);
+            return _downloadRequestRepo.GetRequestAsync(id);
         }
 
         public Task<InvokeResult<byte[]>> GetFirmareBinaryAsync(string type, string firmwareId, string revisionId)
@@ -86,8 +80,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
 
         public Task UpdateDownloadRequestAsync(FirmwareDownloadRequest request)
         {
-            var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
-            return downloadRequestRepo.UpdateRequestAsync(request);
+            return _downloadRequestRepo.UpdateRequestAsync(request);
         }
 
         public Task UpdateFirmwareAsync(Firmware firmware)
@@ -95,11 +88,9 @@ namespace LagoVista.IoT.DeviceManagement.Repos.Repos
             return UpsertDocumentAsync(firmware);
         }
 
-        public async Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string deviceRepoId, string deviceId)
+        public async Task<ListResponse<FirmwareDownloadRequest>> GetDownloadRequestsForDeviceAsync(string orgId, string deviceRepoId, string deviceId)
         {
-            var downloadRequestRepo = new FirmwareDownloadRequestRepo(_repoSettings.FirmwareRequestSettings.AccountId, _repoSettings.FirmwareRequestSettings.AccessKey, _adminLogger);
-            var requests = await downloadRequestRepo.GetForDeviceAsync(deviceRepoId, deviceId);
-            requests = requests.OrderByDescending(rqst => rqst.Timestamp);
+            var requests = await _downloadRequestRepo.GetForDeviceAsync(orgId, deviceRepoId, deviceId).ConfigureAwait(false);
             return ListResponse<FirmwareDownloadRequest>.Create(requests);
         }
     }
