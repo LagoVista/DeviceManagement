@@ -5,6 +5,7 @@ using LagoVista.IoT.DeviceManagement.Core;
 using LagoVista.IoT.DeviceManagement.Core.Models;
 using LagoVista.IoT.DeviceManagement.Core.Repos;
 using LagoVista.IoT.DeviceManagement.Repos.DTOs;
+using LagoVista.IoT.DeviceManagement.Repos.Repos;
 using LagoVista.IoT.Logging.Loggers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace LagoVista.IoT.DeviceManagement.Repos
     public class Startup
     {
         private static readonly TimeSpan RuntimeHistoryRetention = TimeSpan.FromDays(90);
+
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IDeviceManagementRepo, Repos.DeviceManagementRepo>();
@@ -29,11 +31,18 @@ namespace LagoVista.IoT.DeviceManagement.Repos
             services.AddTransient<IDeviceMediaItemRepo, Repos.DeviceMediaItemRepo>();
             services.AddTransient<IDeviceMediaRepo, Repos.DeviceMediaRepo>();
             services.AddTransient<IDeviceRepositoryRepo, Repos.DeviceRepositoryRepo>();
+            services.AddTransient<FirmwareDownloadRequestRepo>();
             services.AddTransient<IFirmwareRepo, Repos.FirmwareRepo>();
             services.AddTransient<ISensorDataArchiveRepo, Repos.SensorDataArchiveRepo>();
             services.AddTransient<ISilencedAlarmsRepo, Repos.SilencedAlarmsRepo>();
             services.AddTransient<IDeviceManagementSettings, DeviceManagementSettings>();
-            services.AddTransient<IFirmwareRepoSettings, FirmwareRepoSettings>();
+
+            services.ConfigureApplicationData<FirmwareDownloadRequestRecord>(definition =>
+            {
+                definition.Index(record => record.DeviceRepoId);
+                definition.Index(record => record.DeviceId);
+                definition.Index(record => record.Timestamp);
+            });
 
             services.AddActivityRecordStore<DeviceArchiveActivityRecord, CassandraActivityRecordStore<DeviceArchiveActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
             services.AddActivityRecordStore<SensorDataArchiveActivityRecord, CassandraActivityRecordStore<SensorDataArchiveActivityRecord>>(d => d.PartitionBy(r => r.OrganizationId).PartitionBy(r => r.DeviceUniqueId).RetainFor(RuntimeHistoryRetention));
