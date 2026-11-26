@@ -190,7 +190,7 @@ namespace LagoVista.IoT.DeviceManagement.Core.Managers
         {
             await AuthorizeOrgAccessAsync(user, org.Id, typeof(FirmwareDownloadRequest), Actions.Read);
 
-            return await _repo.GetDownloadRequestsForDeviceAsync(deviceRepoId, deviceId);
+            return await _repo.GetDownloadRequestsForDeviceAsync(org.Id, deviceRepoId, deviceId);
         }
 
         public async Task<InvokeResult> UpdateFirmwareAsync(Firmware firmware, EntityHeader org, EntityHeader user)
