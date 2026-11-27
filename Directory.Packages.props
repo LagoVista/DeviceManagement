@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="LagoVista.AspNetCore.Identity" Version="7.0.53" />
-    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.148" />
+    <PackageVersion Include="LagoVista.CloudStorage" Version="7.0.149" />
     <PackageVersion Include="LagoVista.Core" Version="7.0.74" />
     <PackageVersion Include="LagoVista.Core.Configuration" Version="7.0.74" />
     <PackageVersion Include="LagoVista.Core.Networking" Version="7.0.74" />
